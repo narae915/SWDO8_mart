@@ -3,9 +3,20 @@
 	  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	  "http://mybatis.org/dtd/mybatis-3-config.dtd">
 	<configuration>
- 	<typeAliases> 
+ 	<typeAliases>
+		<typeAlias type="com.project.market.vo.CartVO" alias="Cart"/> 
+		<typeAlias type="com.project.market.vo.EmpVO" alias="Emp"/> 
+		<typeAlias type="com.project.market.vo.FileListVO" alias="File"/> 
+		<typeAlias type="com.project.market.vo.ItemVO" alias="Item"/> 
+		<typeAlias type="com.project.market.vo.OrderVO" alias="Order"/> 
+		<typeAlias type="com.project.market.vo.RecipeVO" alias="Recipe"/> 
+		<typeAlias type="com.project.market.vo.ReplyVO" alias="Reply"/>
+		<typeAlias type="com.project.market.vo.UserVO" alias="User"/> 
 	</typeAliases>
  	 <mappers>
+	 	<mapper resource="mappers/AdminMapper.xml" />
+	 	<mapper resource="mappers/OrderMapper.xml" />
+	 	<mapper resource="mappers/RecipeMapper.xml" />
 	 	<mapper resource="mappers/UserMapper.xml" />
 	 </mappers> 
 </configuration>
