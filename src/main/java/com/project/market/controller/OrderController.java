@@ -1,17 +1,77 @@
 package com.project.market.controller;
 
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.market.service.OrderService;
+import com.project.market.util.PageNavigator;
+import com.project.market.vo.OrderVO;
 
 @Controller
+@RequestMapping(value = "/order")
 public class OrderController {
 
 	private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
-	
+	private static final int COUNT_PER_PAGE = 5;
+	private static final int PAGE_PER_GROUP = 5;
 	@Autowired
 	private OrderService service;
+	
+	// 2022-03-24~2022-03-25 노채린
+	// 1.주문 리스트 불러오기 및 페이지 열기 시작
+	@RequestMapping(value = "/orderList", method = RequestMethod.GET)
+	public String orderList(@RequestParam(defaultValue = "1") int currentPage, HttpSession session, Model model, String searchWord) {
+		logger.info("orderList 메소드 실행(GET).");
+		
+		// 페이징
+		// 검색하지 않았을 때
+		if(searchWord == null) {
+			searchWord = "";
+		}
+		int totalRecordsCount = service.getTotalRecordsCount(searchWord);
+		PageNavigator navi = new PageNavigator(COUNT_PER_PAGE, PAGE_PER_GROUP, currentPage, totalRecordsCount);
+		model.addAttribute("navi", navi);
+		
+		// 1-1.주문 리스트 불러오기 메소드
+		// String userMail = (String)session.getAttribute("loginMail");
+		// ArrayList<OrderVO> orderList = service.getOrderList(userMail, navi.getStartRecord(), COUNT_PER_PAGE, searchWord);
+		
+		// 1-2.주문 리스트 불러오기 임시 메소드(로그인 정보 받아올 수 있을 때 비활성화)
+		ArrayList<OrderVO> orderList = service.getOrderList(navi.getStartRecord(), COUNT_PER_PAGE, searchWord);
+		
+		// logger.info("orderList: {}", orderList);
+		model.addAttribute("orderList", orderList);
+		
+		
+		return "/order/orderList";
+	}
+	
+	// 2022-03-25~2022-03-26 노채린
+	// 2.주문 취소 시작
+	@RequestMapping(value = "orderCancle", method = RequestMethod.POST)
+	public String orderCancle(String[] orderNum) {
+		logger.info("orderCancle 메소드 실행(POST)");
+		
+		// 2.주문 취소 메소드
+		boolean result = service.orderCancle(orderNum);
+		
+		if(result) {
+			logger.info("주문 취소 성공");
+			
+		} else {
+			logger.info("주문 취소 실패");
+		}
+		
+		return "redirect:/order/orderList";
+	}
+	
 }

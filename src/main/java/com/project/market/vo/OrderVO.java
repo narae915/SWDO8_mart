@@ -14,4 +14,9 @@ public class OrderVO {
 	private String orderCall;
 	private int amount;
 	private String indate;
+	
+// 22-03-24 노채린
+	private String userMail;
+	private String itemName;
+	private int price;
 }

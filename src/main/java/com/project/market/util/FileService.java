@@ -25,7 +25,7 @@ public class FileService {
 		
 		// 파일을 저장할 경로가 존재하지 않으면 폴더를 생성.
 		File path = new File(uploadPath); 
-		if (!path.isDirectory()) { //폴더로 가는 경로가 없니?아니니?
+		if (!path.isDirectory()) { //폴더로 가는 경로가 없니?아니니? //zzzㅋㅋㅋ아니니? 누군가에게 물어보고있어
 			path.mkdirs(); //그럼 폴더를(make directorys)만들어줘
 		}
 		
