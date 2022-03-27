@@ -1,0 +1,130 @@
+/* 테이블 관련 */
+.table-basic {
+    		border: 3px solid #E7AB3C;
+    		border-left: 5px solid #E7AB3C;
+    		border-right: 5px solid #E7AB3C;
+    		border-bottom: 5px solid #E7AB3C;
+    		border-collapse: collapse;
+    		text-align: center;
+    		width: 400;
+    		height: 300;
+    	}
+   
+    	th, td {
+    		border: 3px solid #E7AB3C;
+    		height: 10%;
+    		width: 10%;
+    	}
+    	
+    	th {
+    		border-bottom: 3px solid #E7AB3C;
+    		background-color: #A68523;
+    		color: #EBE8C7;
+    		font-weight: bolder;
+    		font-size: 20px;
+    	}
+    	
+    	td {
+			background-color: #9C9576;
+			color: #E8E2C8;    	
+    	}
+    	
+    	/* 버튼 관련 */
+    	button {
+			border:none;
+			position:relative;
+			transition:800ms ease all;
+			outline:none;
+		}
+		
+		button:hover {
+			background:#000;
+			color:#E7AB3C;
+		}
+		
+		button:before,button:after {
+			content:'';
+			position:absolute;
+			top:0;
+			right:0;
+			height:2px;
+			width:0;
+			background: #E7AB3C;
+			transition:400ms ease all;
+		}
+		
+		button:after {
+			right:inherit;
+			top:inherit;
+			left:0;
+			bottom:0;
+		}
+		
+		button:hover:before, button:hover:after {
+			width:100%;
+			transition:800ms ease all;
+		}
+		
+		#cancle-button {
+			border-radius: 5px;
+			margin-left: 3px;
+			margin-bottom: 20px;
+		}
+		
+		#search-button {
+			width:5px;
+			height:45.5px;
+			border-radius:5px;
+			left: 10em;
+			bottom:-3.27em
+		}
+		
+/* 본문 관련 */
+		h5 {
+			color: #E7AB3C;
+			font-weight: bold;
+			padding-left: 20px;
+			margin-top: 3px;
+			font-weight: 2000;
+		}
+		
+		.container-h5 {
+			background: linear-gradient(-45deg, #f3f5f0 50%, #EBE8C7 50%);
+			border-style: solid;
+			border-width: 5px;
+			border-color: #E7AB3C;
+			border-radius: 15px;
+		}
+		
+		#searchWord {
+			 width: 25%;
+			 height: 45px;
+			 position:relative;
+			 left: 10em;
+			 bottom:-2.9em;
+			 border: none;
+			 font-size: 16px;
+			 border: #E7AB3C solid 3px;
+			 border-radius: 5px;
+			 color: #000;
+			 padding-right: 20px;
+		}
+		
+		#content-title {
+			color: #E7AB3C;
+			font-weight: 900;
+			text-shadow: 1px 5px 7px rgb(231,231,231),0 0 0 rgba(5,77,74,0.8), 1px 5px 7px rgb(231,231,231);
+		}
+		
+		.th-top {
+			border-bottom: 5px double #E7AB3C;
+		}
+		
+		#image-not {
+			 width: 30px;
+			 height: 30px;
+			 display:block;
+			 margin:auto;
+			 margin-top: 10%;
+			 margin-bottom:3%;
+		}

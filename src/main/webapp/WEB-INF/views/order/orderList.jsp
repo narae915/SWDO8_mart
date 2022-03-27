@@ -27,133 +27,8 @@
     <link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
-    <script type="text/javascript">
-    	// 주문 취소
-    	function valueChk() {
-    		var cancelNum = [];
-			
-    		$("input[name=orderNum]:checked").each(function() {
-    			cancelNum.push($(this).val());
-    		});
-    		
-    		if(cancelNum == "") { // 체크박스가 체크되어있지 않은 경우 경고창을 띄우며 취소를 진행하지 않음.
-    			alert("선택된 항목이 없습니다.");
-    			
-    			return false;
-    		} else { // 체크박스가 체크된 경우 확인 절차를 진행함.
-				var cancelChk = confirm("정말 취소하시겠습니까?");
-				if(cancelChk == true) {
-					return true;	
-				} else {
-					return false;
-				}
-    		}
-    	}
-    	
-    	// 검색어 유효성 검사
-    	function searchChk() {
-    		var searchWord = $.trim($("input[name=searchWord]").val());
-    		var len_check = /([^{2,20}])/i;
-    		if (len_check.test(searchWord)) {
-    			alert("2글자 이상, 20글자 이하로 입력해주십시오.");
-    			
-    			return false;
-    		} else {
-    			var kor_check = /([^가-힣ㄱ-ㅎㅏ-ㅣ\x20a-zA-Z0-9])/i;
-    			if (kor_check.test(searchWord)){
-    				alert("한글, 영어, 숫자만 입력 가능합니다.");
-    				return false
-    			} else {
-    				return true;
-    			}
-    		}
-    	}
-    		
-    </script>
-    
-    <style>
-    	.table-basic {
-    		border: 3px solid #E7AB3C;
-    		border-left: 5px solid #E7AB3C;
-    		border-right: 5px solid #E7AB3C;
-    		border-bottom: 5px solid #E7AB3C;
-    		border-collapse: collapse;
-    		text-align: center;
-    		width: 400;
-    		height: 300;
-    	}
-   
-    	th, td {
-    		border: 3px solid #E7AB3C;
-    		height: 10%;
-    		width: 10%;
-    	}
-    	
-    	th {
-    		border-bottom: 3px solid #E7AB3C;
-    		border-right: 3px solid #E7AB3C;
-    		background-color: #A68523;
-    		color: #EBE8C7;
-    		font-weight: bolder;
-    		font-size: 20px;
-    	}
-    	
-    	td {
-			background-color: #9C9576;
-			color: #E8E2C8;    	
-    	}
-    	
-    	button {
-			border:none;
-			position:relative;
-			transition:800ms ease all;
-			outline:none;
-		}
-		
-		button:hover {
-			background:#000;
-			color:#E7AB3C;
-		}
-		
-		button:before,button:after {
-			content:'';
-			position:absolute;
-			top:0;
-			right:0;
-			height:2px;
-			width:0;
-			background: #E7AB3C;
-			transition:400ms ease all;
-		}
-		
-		button:after {
-			right:inherit;
-			top:inherit;
-			left:0;
-			bottom:0;
-		}
-		
-		button:hover:before, button:hover:after {
-			width:100%;
-			transition:800ms ease all;
-		}
+    <link rel="stylesheet" href="/resources/css/orderList.css" type="text/css">
 
-		h5 {
-			color: #E7AB3C;
-			font-weight: bold;
-			padding-left: 20px;
-			margin-top: 3px;
-			font-weight: 2000;
-		}
-		
-		.container-h5 {
-			background: linear-gradient(-45deg, #f3f5f0 50%, #EBE8C7 50%);
-			border-style: solid;
-			border-width: 5px;
-			border-color: #E7AB3C;
-			border-radius: 15px;
-		}
-    </style>
 </head>
 
 <body>
@@ -347,7 +222,7 @@
                 <div class="col-lg-12"> <!-- 본문을 우측으로 조금 변경 -->
                     <div class="faq-accordin"> <!-- 폰트 크기, 아이콘 -->
                     <!-- 22/03/24~22/03/25 노채린 -->
-                    <h1 style="color: #E7AB3C; font-weight: 900; text-shadow: 1px 5px 7px rgb(231,231,231),0 0 0 rgba(5,77,74,0.8), 1px 5px 7px rgb(231,231,231);">주문 조회</h1>
+                    <h1 id="content-title">주문 조회</h1>
                     <br>
                     <div class="container-h5">
                     <br>
@@ -359,19 +234,19 @@
                     <c:if test="${not empty orderList }">
 	                    <!-- 주문 검색 -->
 	                    <form action="orderList" method="get" onsubmit="return searchChk();">
-	                    	<input type="text" name="searchWord" placeholder="상품의 이름을 정확히 입력해주세요." style="width: 25%; height: 45px; position:relative; left: 10em; bottom:-2.9em; border: none; font-size: 16px; border: #E7AB3C solid 3px; border-radius: 5px; color: #000; padding-right: 20px;">
-	                    	<button type="submit" class="primary-btn" style="width:5px; height:45.5px; border-radius:5px; left: 10em; bottom:-3.27em"><i class="ti-search"></i></button>
+	                    	<input type="text" name="searchWord" id="searchWord" placeholder="상품의 이름을 정확히 입력해주세요.">
+	                    	<button type="submit" class="primary-btn" id="search-button"><i class="ti-search"></i></button>
 	                    </form>
 	                    <!-- 주문 취소 및 주문 조회 -->
 	                    <form action="orderCancle" method="post" onsubmit="return valueChk();">
-	                    	<button type="submit" class="primary-btn" style="border-radius: 5px; margin-left: 3px; margin-bottom: 20px;">주문 취소</button>
+	                    	<button type="submit" class="primary-btn" id="cancle-button">주문 취소</button>
 	                    		
 	                    	<!-- 주문 조회 테이블 시작 -->
 	                        <table class="table-basic">
 	                        	<thead>
 	                        		<tr>
-	                        			<th colspan="5" style="border-bottom: 5px double #E7AB3C;">주문정보</th>
-	                        			<th colspan="3" style="border-right: 3px solid #E7AB3C; border-bottom: 5px double #E7AB3C;">수취인 정보</th>
+	                        			<th colspan="5" class="th-top">주문정보</th>
+	                        			<th colspan="3" class="th-top">수취인 정보</th>
 	                        		</tr>
 	                        		<tr>
 	                        			<th rowspan="2">체크</th>
@@ -380,7 +255,7 @@
 	                        			<th rowspan="2">주문량(개)</th>
 	                        			<th rowspan="2">주소</th>
 	                        			<th rowspan="2">전화번호</th>
-	                        			<th rowspan="2" style="border-right: 3px solid #E7AB3C;">이메일</th>
+	                        			<th rowspan="2">이메일</th>
 	                        			<tr>
 	                        			<th>주문일시</th>
 	                        		</tr>
@@ -449,7 +324,7 @@
 					<c:if test="${empty orderList }">
 					<div class="container-h5">
 					<a href="https://www.flaticon.com/kr/free-icons/" title="금지 아이콘">
-					<img src="/resources/img/not.png" alt="금지 아이콘  제작자: Freepik - Flaticon" style="width: 30px; height: 30px; display:block; margin:auto; margin-top: 10%;margin-bottom:3%;">
+					<img src="/resources/img/not.png" alt="금지 아이콘  제작자: Freepik - Flaticon" id="image-not">
 					</a>
 					<h2 style="color: #E7AB3C; text-align: center;font-weight: 900; margin-bottom:25%">주문 정보가 없습니다</h2>
 					</div>
@@ -581,6 +456,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="/resources/js/jquery.slicknav.js"></script>
     <script src="/resources/js/owl.carousel.min.js"></script>
     <script src="/resources/js/main.js"></script>
+    <script src="/resources/js/orderList.js"></script>
 </body>
 
 </html>

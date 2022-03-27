@@ -10,5 +10,7 @@ public class ItemVO {
 	private int price;
 	private int itemAmount;
 	private int categoryNum;
-
+	
+	//22-03-27 노채린
+	private String categoryName;
 }

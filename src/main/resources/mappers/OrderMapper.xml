@@ -9,36 +9,34 @@
  		select
  			count(*)
  		from
- 			order_table
+ 			order_table ot
  		<where>
  			<if test = "searchWord != ''">
- 				item_num = (select item_Num
- 					from item_table
- 					where item_name = #{searchWord })
+ 				ot.item_num in (select item_Num
+		 					from item_table
+		 					where item_name like '%'||#{searchWord }||'%')
  			</if>
  		</where>
  	</select>
 
-	<!-- 1-2.주문 리스트 불러오기 -->
+	<!-- 1.1.2.주문 리스트 불러오기 -->
 	<select id="getOrderList" resultType="Order" parameterType="HashMap">
 		select 
 		    ot.order_num as orderNum,
-			(select distinct it.item_name
-        		from item_table it,
-        			order_table ot
-				where it.item_num = ot.item_num) as itemName,
+			(select distinct item_name
+        		from item_table
+				where item_num = ot.item_num) as itemName,
 		    ot.order_address as orderAddress,
 		    ot.order_mail as orderMail,
 		    ot.order_call as orderCall,
 		    ot.amount as amount,
 		    to_char(ot.indate, 'yy/mm/dd hh24:mi:ss') as indate,
-            (select distinct it.price
-                from item_table it,
-                	order_table ot
-                where it.item_num = ot.item_num) as price
+            (select distinct price
+                from item_table 
+                where item_num = ot.item_num) as price
 		from   
 		    order_table ot,
-		    (select distinct
+		    (select
 		    	rownum as rn,
 		    	order_num as ln
 		    from
@@ -46,19 +44,19 @@
 		    order by
 		    	order_num) rt
 		where
+		<if test = "searchWord != ''">
+			ot.item_num in (select item_num
+			        			from item_table
+								where item_name like '%'||#{searchWord }||'%')
+			and
+		</if>
 			ot.order_num = rt.ln
 		and
 			rt.rn between #{startRecord } + 1 and #{startRecord } + #{countPerPage }
 		and		
-		    ot.user_num = (select distinct ut.user_num
-		                        from user_table ut
-		                        where ut.user_mail= 'abc@gmail.com')
-		<if test = "searchWord != ''">
-		and
-			ot.item_num = (select distinct it.item_num
-        		from item_table it
-				where it.item_name like '%'||#{searchWord }||'%')
-		</if>
+		    ot.user_num = (select distinct user_num
+		                        from user_table
+		                        where user_mail= 'abc@gmail.com')
 		order by order_num
 	</select>
 	
