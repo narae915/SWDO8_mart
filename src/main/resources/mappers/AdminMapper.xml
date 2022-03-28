@@ -36,4 +36,100 @@
 			rt.rn between #{startRecord } + 1 and #{startRecord } + #{countPerPage }
  		order by item_num
  	</select>
+ 	
+ 	<!-- 관리자 ID 등록 -->
+	<insert id="adminRegister" parameterType="Emp">
+		insert into emp_table
+		values
+		(
+			emp_num_seq.nextval,
+			#{empPw },
+			#{empName },
+			#{empCall },
+			#{position }
+		)	
+	</insert>
+	
+	<!-- 로그인 -->
+	<select id="getEmpInfoList" parameterType="HashMap" resultType="Emp">
+		select
+			emp_name as empName,
+			position
+		from
+			emp_table
+		where
+			emp_num = #{empNum }
+			and
+			emp_Pw = #{empPw }
+	</select>
+	
+	<!-- 직원 리스트 조회 -->
+	<select id="getEmpList" parameterType="String" resultType="Emp">
+		select
+			et.emp_num as empNum,
+		    et.emp_name as empName,
+		    et.position,
+		    et.emp_call as empCall
+		from
+		   emp_table et,
+		   (select
+		        rownum as rn,
+		        emp_num as en
+		    from
+		        emp_table
+		    order by
+		        emp_num desc) rt
+		where
+			et.emp_num = rt.en
+			<if test="startRecord != -1">
+			and
+		    rt.rn between #{startRecord } + 1 and #{startRecord } + #{countPerPage }
+			</if>
+			<if test="searchWord != ''">
+			and
+				<if test="searchType == 'searchEmpNum'">
+					et.emp_num like '%' || #{searchWord } || '%'
+				</if>			
+				<if test="searchType == 'searchEmpName'">
+					et.emp_name like '%' || #{searchWord } || '%'
+				</if>			
+				<if test="searchType == 'searchPosition'">
+					et.position like '%' || #{searchWord } || '%'
+				</if>			
+			</if>
+		order by emp_num desc
+	</select>
+	
+	<!-- 직원 번호로 해당 직원 정보 조회 -->
+	<select id="readEmp" parameterType="int" resultType="Emp">
+		select
+			emp_num as empNum,
+			emp_name as empName,
+			emp_call as empCall,
+			position as position
+		from
+			emp_table
+		where 
+			emp_num = #{empNum }
+	</select>
+	
+	<!-- 직원 정보 수정 -->
+	<update id="empUpdate" parameterType="Emp">
+		update 
+			emp_table
+		set
+			emp_pw = #{empPw },
+			emp_name = #{empName },
+			emp_call = #{empCall },
+			position = #{position }
+		where
+			emp_num = #{empNum }
+	</update>
+	
+	<!-- 직원 정보 삭제 -->
+	<delete id="empDelete" parameterType="int">
+		delete from emp_table
+		where
+			emp_num = #{empNum }
+	</delete>
 </mapper>
