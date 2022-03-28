@@ -15,6 +15,7 @@
 	</typeAliases>
  	 <mappers>
 	 	<mapper resource="mappers/AdminMapper.xml" />
+		<mapper resource="mappers/ItemMapper.xml" />
 	 	<mapper resource="mappers/OrderMapper.xml" />
 	 	<mapper resource="mappers/RecipeMapper.xml" />
 	 	<mapper resource="mappers/UserMapper.xml" />

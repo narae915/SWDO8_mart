@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.market.dao.ItemMapper">
+
+<!-- 카테고리 테이블 조회 -->
+<select id="getCategoryList" resultType="HashMap">
+	select 
+		category_num as categoryNum,
+		category_name as categoryName
+	from
+		category_table
+</select>
+
+<!-- 상품 리스트 불러오기 -->
+<select id="getItemList" parameterType="HashMap" resultType="Item">
+select
+		rt.item_num as itemNum,
+		c.category_num as categoryNum,
+		c.category_name as categoryName,
+		rt.item_name as itemName,
+		rt.price as price,
+		rt.item_amount as itemAmount
+	from
+		(select
+            rownum as rn,
+            item_num,
+            category_num,
+            item_name,
+            price,
+            item_amount
+		from
+			item_table
+        <where>
+			<if test="categoryNum != 0">
+    	        category_num = #{categoryNum }
+    	    </if>
+        </where>
+		order by
+			item_num desc) rt, category_table c
+	where
+		rt.category_num = c.category_num
+		and
+			rt.rn between 1 and #{countPerPage }
+		<if test="sorting == 'high'">
+			order by price desc
+		</if>
+		<if test="sorting == 'low'">
+			order by price asc
+		</if>
+		<if test="sorting == 'new'">
+			order by item_num desc
+		</if>
+</select>
+
+<!-- 상품 1개의 정보 불러오기 -->
+<select id="getOneItem" resultType="Item">
+	select
+		i.item_num as itemNum,
+        c.category_name as categoryName,
+		i.item_name as itemName,
+		i.price as price,
+		i.item_amount as itemAmount
+	from
+		item_table i, category_table c
+    where
+        i.category_num = c.category_num
+	and
+		i.item_num = #{itemNum }
+</select>
+</mapper>
