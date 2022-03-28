@@ -50,7 +50,7 @@
                     <a href="#" class="login-panel"><i class="fa fa-user"></i>Login</a>
                     <div class="lan-selector">
                         <select class="language_drop" name="countries" id="countries" style="width:300px;">
-                            <option value='yt' data-image="/resources/flag-1.jpg" data-imagecss="flag yt"
+                            <option value='yt' data-image="/resources/img/flag-1.jpg" data-imagecss="flag yt"
                                 data-title="English">English</option>
                             <option value='yu' data-image="/resources/img/flag-2.jpg" data-imagecss="flag yu"
                                 data-title="Bangladesh">German </option>
@@ -747,6 +747,9 @@
                             <a href="#"><i class="fa fa-twitter"></i></a>
                             <a href="#"><i class="fa fa-pinterest"></i></a>
                         </div>
+                         <ul>
+                        	<li><a href="admin/adminLogin">스토어 관리</a></li>
+                        </ul>
                     </div>
                 </div>
                 <div class="col-lg-2 offset-lg-1">

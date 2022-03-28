@@ -3,21 +3,16 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.market.dao.AdminMapper">
-	<select id = "getTotalRecordsCount" resultType = "int" parameterType = "String">
+	<!-- 1.페이징 -->
+	<select id = "getTotalRecordsCount" resultType = "int">
  		select
  			count(*)
  		from
- 			item_table it
- 		<where>
- 			<if test = "searchWord != ''">
- 				it.item_num in (select item_Num
-		 					from item_table
-		 					where item_name like '%'||#{searchWord }||'%')
- 			</if>
- 		</where>
+ 			item_table
  	</select>
  	
- 	<select id = "getItemList" resultType = "Item" parameterType = "HashMap">
+ 	<!-- 1.2.상품 리스트 불러오기 -->
+ 	<select id = "getItemList" resultType = "Item">
  		select distinct
  			it.item_num as itemNum,
  			it.item_name as itemName,
@@ -38,39 +33,10 @@
  		where
  			it.item_num = rt.ln
 		and
-		<if test = "searchWord != ''">
-			it.item_num in (select item_num
-			        			from item_table
-								where item_name like '%'||#{searchWord }||'%')
-			and
-		</if>
 			rt.rn between #{startRecord } + 1 and #{startRecord } + #{countPerPage }
  		order by item_num
  	</select>
  	
-<<<<<<< HEAD
- 	<delete id = "itemDelete" parameterType = "int">
- 		delete from item_table
- 		where item_num = #{itemNum }
- 	</delete>
- 	
- 	<insert id = "itemInsert" parameterType = "HashMap">
- 		insert into item_table(
-			item_num,
-			category_num,
-			item_name,
-			price,
-			item_amount 		
- 		)
- 		values (
- 			item_num_seq.nextval,
- 			#{category },
- 			#{itemName },
- 			#{intPrice },
- 			#{itemAmount }
- 		)
- 	</insert>
-=======
  	<!-- 관리자 ID 등록 -->
 	<insert id="adminRegister" parameterType="Emp">
 		insert into emp_table
@@ -174,5 +140,4 @@
 		where
 			emp_num = #{empNum }
 	</delete>
->>>>>>> main
 </mapper>

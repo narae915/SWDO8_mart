@@ -3,4 +3,24 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.market.dao.UserMapper">
+
+<!-- 회원가입 -->
+<insert id="signUpUser" parameterType="User">
+	insert into user_table(
+		user_num,
+		user_name,
+		user_mail,
+		user_pw,
+		user_call,
+		user_address
+	)values(
+		user_num_seq.nextval,
+		#{userName },
+		#{userMail },
+		#{userPw },
+		#{userCall },
+		#{userAddress }
+	)
+</insert>
+
 </mapper>
