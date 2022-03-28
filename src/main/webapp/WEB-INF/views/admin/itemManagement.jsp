@@ -63,6 +63,67 @@
 		border-bottom: 2px #D1D1D1 solid;
 	}
 	
+	#searchWord {
+		width: 25%;
+		height: 45px;
+		border: none;
+		font-size: 16px;
+		border: #E7AB3C solid 3px;
+		border-radius: 5px;
+		color: #000;
+		padding-right: 20px;
+		position:relative;
+		top:47px;
+	}
+	
+    button {
+		border:none;
+		position:relative;
+		transition:800ms ease all;
+		outline:none;
+	}
+	
+	button:hover {
+		background:#000;
+		color:#E7AB3C;
+	}
+	
+	button:before,button:after {
+		content:'';
+		position:absolute;
+		top:0;
+		right:0;
+		height:2px;
+		width:0;
+		background: #E7AB3C;
+		transition:400ms ease all;
+	}
+	
+	button:after {
+		right:inherit;
+		top:inherit;
+		left:0;
+		bottom:0;
+	}
+	
+	button:hover:before, button:hover:after {
+		width:100%;
+		transition:800ms ease all;
+	}
+	#search-button {
+		width:5px;
+		height:45.5px;
+		border-radius:5px;
+		top:3.4em;
+		right:2em;
+	}
+	
+	#insert-button {
+		vertical-align:center;
+		border-radius:5px;
+		left:30%;
+		margin:5px;
+	}
 	</style>
 </head>
 <body>
@@ -256,8 +317,20 @@
             <div class="row"> <!-- flex 설정 -->
                 <div class="col-lg-12"> <!-- 본문을 우측으로 조금 변경 -->
                     <div class="faq-accordin"> <!-- 폰트 크기, 아이콘 -->
-                    <!-- 22/03/27 노채린 -->
-                    <form action="itemMangement" method="GET">
+                    
+                    <!-- 22/03/27~22/03/28 노채린 -->
+                    <!-- 상품 검색 -->
+                    <form action="itemManagement" method="get" onsubmit="return searchChk();">
+                    	<input type="text" name="searchWord" id="searchWord" placeholder="상품의 이름을 정확히 입력해주세요.">
+	                    	<button type="submit" class="primary-btn" id="search-button"><i class="ti-search"></i></button>
+                    </form>
+                    
+                    <!-- 상품 추가 -->
+                    <form action="itemInsert" method="get">
+	                    	<button type="submit" class="primary-btn" id="insert-button">상품 추가</button>
+                    </form>
+                    
+                    <form action="itemDelete" method="post">
                    	<!-- 상품 관리 테이블 시작 -->
                        <table>
                        	<thead>
@@ -281,8 +354,8 @@
                        			<td style="width:15%;">${Item.itemAmount }</td>
                        			<td>${Item.categoryName }</td>
                        			<td class="button-cell">
-                       				<button type="button">수정</button>
-                       				<button type="button">삭제</button>
+                       				<button type="button" onclick="itemInsert">수정</button>
+                       				<button type="submit" name="itemNum" value="${Item.itemNum }">삭제</button>
                        			</td>
                        		</tr>
                        		</c:forEach>
@@ -454,6 +527,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="/resources/js/jquery.slicknav.js"></script>
     <script src="/resources/js/owl.carousel.min.js"></script>
     <script src="/resources/js/main.js"></script>
+	<script src="/resources/js/orderList.js"></script>
 </body>
 
 </html>

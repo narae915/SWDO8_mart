@@ -4,26 +4,26 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.market.dao.OrderMapper">
 	
-	<!-- 1.페이징 -->
 	<select id = "getTotalRecordsCount" parameterType="String" resultType = "int">
  		select
  			count(*)
  		from
  			order_table ot
- 		<where>
+ 		where		   
+				user_num = (select distinct user_num
+							from user_table
+							where user_mail= 'abc@gmail.com')
  			<if test = "searchWord != ''">
  				ot.item_num in (select item_Num
 		 					from item_table
 		 					where item_name like '%'||#{searchWord }||'%')
  			</if>
- 		</where>
  	</select>
 
-	<!-- 1.1.2.주문 리스트 불러오기 -->
 	<select id="getOrderList" resultType="Order" parameterType="HashMap">
 		select 
 		    ot.order_num as orderNum,
-			(select distinct item_name
+			(select item_name
         		from item_table
 				where item_num = ot.item_num) as itemName,
 		    ot.order_address as orderAddress,
@@ -31,7 +31,7 @@
 		    ot.order_call as orderCall,
 		    ot.amount as amount,
 		    to_char(ot.indate, 'yy/mm/dd hh24:mi:ss') as indate,
-            (select distinct price
+            (select price
                 from item_table 
                 where item_num = ot.item_num) as price
 		from   
@@ -41,6 +41,10 @@
 		    	order_num as ln
 		    from
 		    	order_table
+			where		   
+				user_num = (select distinct user_num
+							from user_table
+							where user_mail= 'abc@gmail.com')
 		    order by
 		    	order_num) rt
 		where
@@ -53,14 +57,9 @@
 			ot.order_num = rt.ln
 		and
 			rt.rn between #{startRecord } + 1 and #{startRecord } + #{countPerPage }
-		and		
-		    ot.user_num = (select distinct user_num
-		                        from user_table
-		                        where user_mail= 'abc@gmail.com')
 		order by order_num
 	</select>
 	
-	<!-- 2.주문 취소 -->
 	<delete id="orderCancle" parameterType="ArrayList">
 		delete from order_table
 		where order_num = 

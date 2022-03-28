@@ -263,13 +263,25 @@
 	                        	<tbody>
 		                        	<c:forEach var="Order" items="${orderList }">
 		                        		<td rowspan="2"><input type="checkbox" name="orderNum" value="${Order.orderNum }" style="width:30px; height:30px;" /></td> <!-- 주문취소셀렉트 -->
-		                        		<td>${Order.price * Order.amount }₩</td> <!-- 금액 -->
+		                        		<c:if test="${Order.price  == 0}"> <!-- 상품정보 없을 시 금액 -->
+		                        			<td>- ₩</td> 
+		                        		</c:if>
+		                        		<c:if test="${Order.price  != 0}"> <!-- 상품정보 있을 시 금액 -->
+		                        			<td>${Order.price * Order.amount } ₩</td>
+		                        		</c:if>
+		                        		
 		                        		<td rowspan="2"><img src="/resources/img/cart-page/product-1.jpg" alt="임시사진"></td><!-- 상품사진 -->
+		                        		
+		                        		<c:if test="${Order.itemName == null }"> <!-- 상품정보 없을 시 상품명 -->
+		                        		<td rowspan="2">판매 중지된 상품</td> 
+		                        		</c:if>
+		                        		<c:if test="${Order.itemName != null }"> <!-- 상품정보 있을 시 상품명 -->
 		                        		<td rowspan="2">
 		                        			<a href="/item/itemList?itemNum=${itemNum }" style="color: #E8E2C8">
 		                        				${Order.itemName }
 		                        			</a>
-		                        		</td> <!-- 상품명 -->
+		                        		</td> 
+		                        		</c:if>
 		                        		<td rowspan="2">${Order.amount }</td> <!-- 주문량 -->
 		                        		<td rowspan="2">${Order.orderAddress }</td> <!-- 배송지 -->
 		                        		<td rowspan="2">${fn:substring(Order.orderCall,0,3) }&nbsp;-&nbsp;${fn:substring(Order.orderCall,3,7) }&nbsp;-&nbsp;${fn:substring(Order.orderCall,7,11) }</td> <!-- 수취인 전화번호 -->

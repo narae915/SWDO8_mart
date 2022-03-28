@@ -1,9 +1,9 @@
 /* 테이블 관련 */
 .table-basic {
-    		border: 3px solid #E7AB3C;
-    		border-left: 5px solid #E7AB3C;
-    		border-right: 5px solid #E7AB3C;
-    		border-bottom: 5px solid #E7AB3C;
+    		border: 3px solid #EBE8C7;
+    		border-left: 5px solid #EBE8C7;
+    		border-right: 5px solid #EBE8C7;
+    		border-bottom: 5px solid #EBE8C7;
     		border-collapse: collapse;
     		text-align: center;
     		width: 400;
@@ -11,13 +11,13 @@
     	}
    
     	th, td {
-    		border: 3px solid #E7AB3C;
+    		border: 3px solid #EBE8C7;
     		height: 10%;
     		width: 10%;
     	}
     	
     	th {
-    		border-bottom: 3px solid #E7AB3C;
+    		border-bottom: 3px solid #EBE8C7;
     		background-color: #A68523;
     		color: #EBE8C7;
     		font-weight: bolder;
@@ -29,6 +29,10 @@
 			color: #E8E2C8;    	
     	}
     	
+		.th-top {
+			border-bottom: 5px double #EBE8C7;
+		}
+		
     	/* 버튼 관련 */
     	button {
 			border:none;
@@ -115,11 +119,7 @@
 			font-weight: 900;
 			text-shadow: 1px 5px 7px rgb(231,231,231),0 0 0 rgba(5,77,74,0.8), 1px 5px 7px rgb(231,231,231);
 		}
-		
-		.th-top {
-			border-bottom: 5px double #E7AB3C;
-		}
-		
+	
 		#image-not {
 			 width: 30px;
 			 height: 30px;
