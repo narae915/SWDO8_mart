@@ -170,13 +170,13 @@ public class AdminController {
 		logger.info("searchType: {}", searchType);
 		logger.info("searchWord: {}", searchWord);
 		
-		if ( searchType == null || searchWord == null )
+		if ( searchWord == null )
 		{
 			searchWord = "";
 		}
 		
 		// 총 직원 수를 가져옴
-		int totalRecordsCount = service.getTotalRecordsCount();
+		int totalRecordsCount = service.getEmpTotalRecordsCount();
 		logger.info("전체 직원 수: {}", totalRecordsCount);
 		
 		// 페이징 처리를 위한 내비게이터 객체 생성

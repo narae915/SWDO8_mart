@@ -59,6 +59,12 @@ public class AdminService {
 		
 		return dao.getEmpList(map);
 	}
+	
+	/* 총 직원 수 조회  (페이징) */
+	public int getEmpTotalRecordsCount() 
+	{
+		return dao.getEmpTotalRecordsCount();
+	}
 
 	/* 직원 번호로 해당 직원 정보 조회 */
 	public EmpVO readEmp(int empNum) 

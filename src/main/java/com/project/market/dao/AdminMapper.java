@@ -9,6 +9,8 @@ import com.project.market.vo.ItemVO;
 public interface AdminMapper {
 
 	int getTotalRecordsCount();
+	
+	int getEmpTotalRecordsCount(); // 총 직원 수 조회 (페이징)
 
 	ArrayList<ItemVO> getItemList(HashMap<String, Object> map);
 
@@ -23,4 +25,5 @@ public interface AdminMapper {
 	int empUpdate(EmpVO updateEmp); // 직원 정보 수정
 	
 	int empDelete(int empNum); // 직원 정보 삭제
+
 }
