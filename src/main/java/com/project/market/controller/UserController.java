@@ -14,6 +14,7 @@ import com.project.market.service.UserService;
 import com.project.market.vo.UserVO;
 
 @Controller
+@RequestMapping(value = "/user")
 public class UserController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
