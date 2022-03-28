@@ -93,7 +93,7 @@
 		where
 			emp_num = #{empNum }
 			and
-			emp_Pw = #{empPw }
+			emp_pw = #{empPw }
 	</select>
 	
 	<!-- 직원 리스트 조회 및 직원 검색 -->
@@ -139,6 +139,18 @@
 			count(*)
 		from
 			emp_table
+		<if test="searchWord != null">
+		where
+			<if test="searchType == 'searchEmpNum'">
+				et.emp_num like '%' || #{searchWord } || '%'
+			</if>			
+			<if test="searchType == 'searchEmpName'">
+				et.emp_name like '%' || #{searchWord } || '%'
+			</if>			
+			<if test="searchType == 'searchPosition'">
+				et.position like '%' || #{searchWord } || '%'
+			</if>			
+		</if>
 	</select>
 	
 	<!-- 직원 번호로 해당 직원 정보 조회 -->

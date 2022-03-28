@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
     
+    <script src="/resources/js/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -136,15 +137,15 @@
                             </div>
                             <div class="group-input gi-check">
                                 <div class="gi-more">
-                                    <label for="save-pass">
-                                        Save Password
-                                        <input type="checkbox" id="save-pass">
+                                    <label for="saveIdChk">
+                                        ID 기억하기
+                                        <input type="checkbox" id="saveIdChk">
                                         <span class="checkmark"></span>
                                     </label>
                                     <a href="#" class="forget-pass">Forget your Password</a>
                                 </div>
                             </div>
-                            <button type="submit" class="site-btn login-btn">로그인</button>
+                            <button type="submit" id="loginBtn" class="site-btn login-btn">로그인</button>
                         </form>
                         <div class="switch-login">
                             <a class="or-login">관리자 페이지에 오신 것을 환영합니다.</a>
@@ -232,7 +233,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <!-- Footer Section End -->
 
     <!-- Js Plugins -->
-    <script src="/resources/js/jquery-3.6.0.min.js"></script>
     <script src="/resources/js/bootstrap.min.js"></script>
     <script src="/resources/js/jquery-ui.min.js"></script>
     <script src="/resources/js/jquery.countdown.min.js"></script>

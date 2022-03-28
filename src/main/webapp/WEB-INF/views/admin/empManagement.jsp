@@ -216,8 +216,8 @@
 						<!-- Emp Search Begin -->
 						<form action="empManagement" method="get" onsubmit="return searchEmp();">
 							<select id="searchType" name="searchType" style="width: 15%; height: 45px; position:relative; left: 20em; bottom:-1em; border: none; font-size: 16px; border: #e7ab3c solid 3px; border-radius: 5px; color: #000; padding-right: 20px;"">
+								<option value="searchEmpName">이름</option>
 								<option value="searchEmpNum">사원 번호</option>
-								<option value="searchEmpName" selected="selected">이름</option>
 								<option value="searchPosition">직급</option>
 							</select>
 							<input type="text" id="searchWord" name="searchWord" placeholder="검색어를 입력해주세요." style="width: 25%; height: 45px; position:relative; left: 20em; bottom:-1em; border: none; font-size: 16px; border: #e7ab3c solid 3px; border-radius: 5px; color: #000; padding-right: 20px;">

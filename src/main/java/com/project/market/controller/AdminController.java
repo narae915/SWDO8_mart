@@ -248,7 +248,6 @@ public class AdminController {
 			logger.info("직원 조회 실패.");
 		}
 		
-		
 		return "admin/empManagement";
 	}
 	
@@ -327,6 +326,5 @@ public class AdminController {
 		}
 		
 		return "redirect:empManagement";
-
 	}
 }
