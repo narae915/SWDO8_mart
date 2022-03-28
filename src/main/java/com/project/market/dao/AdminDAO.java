@@ -63,6 +63,9 @@ public class AdminDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		return result;
+	}
 
 	/* 관리자 ID 등록 */
 	public int adminRegister(EmpVO newEmp) 

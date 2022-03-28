@@ -48,7 +48,6 @@
  		order by item_num
  	</select>
  	
-<<<<<<< HEAD
  	<delete id = "itemDelete" parameterType = "int">
  		delete from item_table
  		where item_num = #{itemNum }
@@ -70,7 +69,7 @@
  			#{itemAmount }
  		)
  	</insert>
-=======
+
  	<!-- 관리자 ID 등록 -->
 	<insert id="adminRegister" parameterType="Emp">
 		insert into emp_table
@@ -174,5 +173,4 @@
 		where
 			emp_num = #{empNum }
 	</delete>
->>>>>>> main
 </mapper>

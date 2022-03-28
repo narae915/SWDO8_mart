@@ -45,6 +45,7 @@ public class AdminService {
 		map.put("itemAmount", itemAmount);
 		
 		return dao.itemInsert(map) > 0;
+	}
 
 	/* 관리자 ID 등록 */
 	public boolean adminRegister(String empPw, String empName, String position, String empCall) 
