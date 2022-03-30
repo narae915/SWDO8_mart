@@ -27,7 +27,25 @@
     <link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
-
+	
+	<script type="text/javascript">
+	function deButton() {
+		$.ajax({
+			url: "/admin/itemDelete",
+			data: {
+				itemNum: $("#delete-button").val()
+			},
+			success: function(res, url) {
+				if(res == "success") {
+					alert("삭제되었습니다.");
+					location.href = "/admin/itemManagement";
+				}
+			} 
+		});
+	}
+	
+	</script>
+	
 	<style type="text/css">
 	table, th, tr, td {
 		text-align: center;
@@ -46,10 +64,6 @@
     }
     	
 	th {
-		/* padding-right: 25px;
-		padding-left: 25px;
-		padding-bottom: 15px;
-		padding-top: 15px; */
 		border: #fff 1px solid;
 		background-color: black;
 		color: #fff; 
@@ -112,18 +126,35 @@
 	}
 	#search-button {
 		width:5px;
-		height:45.5px;
+		height:45.7px;
 		border-radius:5px;
-		top:3.4em;
-		right:2em;
+		top:3.3em;
+		right:1.8em;
 	}
 	
 	#insert-button {
 		vertical-align:center;
 		border-radius:5px;
-		left:30%;
-		margin:5px;
+		left: 42%;
+		margin: 5px;
+		bottom: 3px;
 	}
+	#image-not {
+		 width: 50px;
+		 height: 50px;
+		 display:block;
+		 margin:auto;
+		 margin-top: 10%;
+		 margin-bottom:3%;
+	}
+	
+	.container-h5 {
+			background: linear-gradient(-45deg, #f3f5f0 50%, #969696 50%);
+			border-style: solid;
+			border-width: 5px;
+			border-color: #E3E3E3;
+			border-radius: 15px;
+		}
 	</style>
 </head>
 <body>
@@ -317,89 +348,108 @@
             <div class="row"> <!-- flex 설정 -->
                 <div class="col-lg-12"> <!-- 본문을 우측으로 조금 변경 -->
                     <div class="faq-accordin"> <!-- 폰트 크기, 아이콘 -->
-                    
-                    <!-- 22/03/27~22/03/28 노채린 -->
-                    <!-- 상품 검색 -->
-                    <form action="itemManagement" method="get" onsubmit="return searchChk();">
-                    	<input type="text" name="searchWord" id="searchWord" placeholder="상품의 이름을 정확히 입력해주세요.">
-	                    	<button type="submit" class="primary-btn" id="search-button"><i class="ti-search"></i></button>
-                    </form>
-                    
-                    <!-- 상품 추가 -->
-                    <form action="itemInsert" method="get">
-	                    	<button type="submit" class="primary-btn" id="insert-button">상품 추가</button>
-                    </form>
-                    
-                    <form action="itemDelete" method="post">
-                   	<!-- 상품 관리 테이블 시작 -->
-                       <table>
-                       	<thead>
-                       		<tr>
-                       			<th style="padding-top:15px; padding-bottom:15px">IMAGE</th>
-                       			<th>상품 번호</th>
-                       			<th>이름</th>
-                       			<th>가격</th>
-                       			<th>재고</th>
-                       			<th>카테고리</th>
-                       			<th class="button-cell">수정/삭제</th>
-                       		</tr>
-						</thead>
-                       	<tbody>
-                       		<c:forEach var="Item" items="${itemList }">
-                       		<tr>
-                       			<td style="width:20%; height: 200px;"><img src="/resources/img/cart-page/product-1.jpg" alt="임시사진"></td>
-                       			<td style="width:10%;">${Item.itemNum }</td>
-                       			<td style="width:10%;">${Item.itemName }</td>
-                       			<td style="width:15%;">${Item.price}</td>
-                       			<td style="width:15%;">${Item.itemAmount }</td>
-                       			<td>${Item.categoryName }</td>
-                       			<td class="button-cell">
-                       				<button type="button" onclick="itemInsert">수정</button>
-                       				<button type="submit" name="itemNum" value="${Item.itemNum }">삭제</button>
-                       			</td>
-                       		</tr>
-                       		</c:forEach>
-                       	</tbody>
-                       </table>
-                       <!--상품 관리 테이블 끝  -->
-                       
-                        <!-- 페이징 시작 -->
-                        <div style="text-align: center; margin-top: 20px;">
-							<span>
-								<c:if test="${navi.currentPage > 1 }">
-									<a href="/admin/itemManagement?currentPage=${(navi.currentGroup - 1) * 5 + 1 }" style="color: #E7AB3C; text-decoration: none; text-align: center; font-size: 1.5em;">
-										< 이전&nbsp;
-
-									</a>
-								</c:if>
-								<c:forEach begin="${navi.startPageGroup }" end="${navi.endPageGroup }"
-									var="pageNum">
-									<c:if test="${pageNum == navi.currentPage }">
-										<a href="/admin/itemManagement?currentPage=${pageNum }" style="text-decoration:none; text-align: center; font-size: 1.5em;">
-											<span style="color: #E7AB3C; border: 1px solid;">
-												&nbsp;${pageNum }
-											</span>
-										</a>
-										&nbsp;
-									</c:if>
-									<c:if test="${pageNum != navi.currentPage }">
-										<a href="/admin/itemManagement?currentPage=${pageNum }" style="color: black; text-decoration:none; text-align: center; font-size: 1.5em;">
-											<span>
-												${pageNum }&nbsp;
-											</span>
-										</a>
-									</c:if>
-								</c:forEach>
-
-								<c:if test="${navi.currentPage < navi.totalPageCount }">
-									<a href="/admin/itemManagement?currentPage=${(navi.currentGroup + 1) * 5 + 1 }" style="color: #E7AB3C; text-decoration:none;text-align: center; font-size: 1.5em;">
-										다음 >
-									</a>
-								</c:if>
-							</span>
-						</div>
-						<!-- 페이징 끝 -->
-					</form>
+	                    
+	                    <!-- 22/03/27~22/03/28 노채린 -->
+	                    <!-- 상품 검색 -->
+	                    <form action="itemManagement" method="get" onsubmit="return searchChk();">
+							<select name="category" style="position:relative; top:2.9em; left:0.2em; height:45px;">
+								<option value="">카테고리 선택</option>
+								<option value="10">육류</option>
+								<option value="20">어패류</option>
+								<option value="30">과일</option>
+								<option value="40">채소</option>
+								<option value="50">조미료</option>
+								<option value="60">음료</option>
+								<option value="70">그 외</option>
+							</select>
+	                    	<input type="text" name="searchWord" id="searchWord" placeholder="상품의 이름을 정확히 입력해주세요.">
+		                    	<button type="submit" class="primary-btn" id="search-button"><i class="ti-search"></i></button>
+	                    </form>
+	                    
+	                    <!-- 상품 추가 -->
+	                    <form action="itemInsert" method="get">
+		                    	<button type="submit" class="primary-btn" id="insert-button">상품 추가</button>
+	                    </form>
+	                    <c:if test="${not empty itemList }">
+		                    <form action="itemDelete" method="get">
+		                   	<!-- 상품 관리 테이블 시작 -->
+		                       <table>
+		                       	<thead>
+		                       		<tr>
+		                       			<th style="padding-top:15px; padding-bottom:15px">IMAGE</th>
+		                       			<th>상품 번호</th>
+		                       			<th>이름</th>
+		                       			<th>가격</th>
+		                       			<th>재고</th>
+		                       			<th>카테고리</th>
+		                       			<th class="button-cell">수정/삭제</th>
+		                       		</tr>
+								</thead>
+		                       	<tbody>
+		                       		<c:forEach var="Item" items="${itemList }">
+		                       		<tr>
+		                       			<td style="width:20%; height: 200px;"><img src="/resources/img/cart-page/product-1.jpg" alt="임시사진"></td>
+		                       			<td style="width:10%;">${Item.itemNum }</td>
+		                       			<td style="width:10%;">${Item.itemName }</td>
+		                       			<td style="width:15%;">${Item.price}</td>
+		                       			<td style="width:15%;">${Item.itemAmount }</td>
+		                       			<td>${Item.categoryName }</td>
+		                       			<td class="button-cell">
+		                       				<input type="button" onclick="itemInsert" class="primary-btn" value="수정" style="height:40px; border-radius:5px;">
+		                       				<input type="button" id="delete-button" name="itemNum" class="primary-btn" style="height:40px; border-radius:5px;" value="삭제" onclick ="deButton(${Item.itemNum });">
+		                       			</td>
+		                       		</tr>
+		                       		</c:forEach>
+		                       	</tbody>
+		                       </table>
+		                       <!--상품 관리 테이블 끝  -->
+		                        <!-- 페이징 시작 -->
+		                        <div style="text-align: center; margin-top: 20px;">
+									<span>
+										<c:if test="${navi.currentPage > 1 }">
+											<a href="/admin/itemManagement?currentPage=${(navi.currentGroup - 1) * 5 + 1 }" style="color: #E7AB3C; text-decoration: none; text-align: center; font-size: 1.5em;">
+												< 이전&nbsp;
+		
+											</a>
+										</c:if>
+										<c:forEach begin="${navi.startPageGroup }" end="${navi.endPageGroup }"
+											var="pageNum">
+											<c:if test="${pageNum == navi.currentPage }">
+												<a href="/admin/itemManagement?currentPage=${pageNum }" style="text-decoration:none; text-align: center; font-size: 1.5em;">
+													<span style="color: #E7AB3C; border: 1px solid;">
+														&nbsp;${pageNum }
+													</span>
+												</a>
+												&nbsp;
+											</c:if>
+											<c:if test="${pageNum != navi.currentPage }">
+												<a href="/admin/itemManagement?currentPage=${pageNum }" style="color: black; text-decoration:none; text-align: center; font-size: 1.5em;">
+													<span>
+														${pageNum }&nbsp;
+													</span>
+												</a>
+											</c:if>
+										</c:forEach>
+		
+										<c:if test="${navi.currentPage < navi.totalPageCount }">
+											<a href="/admin/itemManagement?currentPage=${(navi.currentGroup + 1) * 5 + 1 }" style="color: #E7AB3C; text-decoration:none;text-align: center; font-size: 1.5em;">
+												다음 >
+											</a>
+										</c:if>
+										
+									</span>
+								</div>
+								<!-- 페이징 끝 -->
+							</form>
+						</c:if>
+						<c:if test="${empty itemList }">
+							<div class="container-h5">
+								<a href="https://www.flaticon.com/kr/free-icons/" title="금지 아이콘">
+									<img src="/resources/img/not.png" alt="금지 아이콘  제작자: Freepik - Flaticon" id="image-not">
+								</a>
+								<h2 style="color: #3B4A3F; text-align: center;font-weight: 900; margin-bottom:25%">상품 정보가 없습니다</h2>
+							</div>
+						</c:if>
                     </div>
                 </div>
             </div>

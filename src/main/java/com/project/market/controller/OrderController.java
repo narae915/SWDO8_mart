@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.market.service.OrderService;
 import com.project.market.util.PageNavigator;
@@ -57,21 +58,27 @@ public class OrderController {
 	
 	// 2022-03-25~2022-03-26 노채린
 	// 2.주문 취소 시작
+	@ResponseBody
 	@RequestMapping(value = "orderCancle", method = RequestMethod.POST)
 	public String orderCancle(String[] orderNum) {
 		logger.info("orderCancle 메소드 실행(POST)");
-		
+		logger.info("orderNum:{}",orderNum);
+		if(orderNum== null) {
+			logger.info("null!!");
+		}
 		// 2.주문 취소 메소드
 		boolean result = service.orderCancle(orderNum);
 		
 		if(result) {
 			logger.info("주문 취소 성공");
-			
+	
+			return "success";
 		} else {
 			logger.info("주문 취소 실패");
+			
+			return null;
 		}
 		
-		return "redirect:/order/orderList";
 	}
 	
 }

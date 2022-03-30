@@ -17,13 +17,13 @@ public class AdminDAO {
 	private SqlSession session;
 
 	// 1.페이징
-	public int getTotalRecordsCount(String searchWord) {
+	public int getTotalRecordsCount(HashMap<String, Object> map) {
 		int result = 0;
 		AdminMapper mapper = null;
 
 		try {
 			mapper = session.getMapper(AdminMapper.class);
-			result = mapper.getTotalRecordsCount(searchWord);
+			result = mapper.getTotalRecordsCount(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
