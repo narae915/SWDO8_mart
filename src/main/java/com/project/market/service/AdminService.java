@@ -14,6 +14,11 @@ public class AdminService {
 	@Autowired
 	private AdminDAO dao;
 
+	//직원인지 확인
+	public String StaffOnlyChk(String chkMessage) {
+		return dao.StaffOnlyChk(chkMessage);
+	}
+	
 	public int getTotalRecordsCount() {
 		return dao.getTotalRecordsCount();
 	}

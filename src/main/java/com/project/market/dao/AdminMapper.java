@@ -8,6 +8,8 @@ import com.project.market.vo.ItemVO;
 
 public interface AdminMapper {
 
+	String StaffOnlyChk(String chkMessage); //직원인지 확인
+	
 	int getTotalRecordsCount();
 	
 	int getEmpTotalRecordsCount(); // 총 직원 수 조회 (페이징)

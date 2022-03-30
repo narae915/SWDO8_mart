@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.market.service.AdminService;
 import com.project.market.util.PageNavigator;
@@ -29,6 +30,24 @@ public class AdminController {
 	
 	@Autowired
 	private AdminService service;
+	
+	// 직원인지 확인
+	@ResponseBody
+	@RequestMapping(value = "/staffOnlyChk", method = RequestMethod.GET)
+	public String staffOnlyChk(String chkMessage) {
+		logger.info("staffOnlyChk 메소드(GET)");
+		logger.info("사용자가 입력한 텍스트 : {} ", chkMessage);
+		
+		String staffInfo = service.StaffOnlyChk(chkMessage);
+		logger.info("staffInfo:{}", staffInfo);
+		
+		if (staffInfo != null) {
+			staffInfo = "yes";
+		} else {
+			staffInfo = "no";
+		}
+		return staffInfo;
+	}
 	
 	// 2022-03-27 노채린
 	// 상품 목록 불러오기
