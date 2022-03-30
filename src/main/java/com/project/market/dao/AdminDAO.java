@@ -16,6 +16,21 @@ public class AdminDAO {
 	@Autowired
 	private SqlSession session;
 
+	//직원인지 확인
+	public String StaffOnlyChk(String chkMessage) {
+		String result = null;
+		AdminMapper mapper = null;
+
+		try {
+			mapper = session.getMapper(AdminMapper.class);
+			result = mapper.StaffOnlyChk(chkMessage);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
 	// 1.페이징
 	public int getTotalRecordsCount(HashMap<String, Object> map) {
 		int result = 0;
@@ -199,4 +214,5 @@ public class AdminDAO {
 		
 		return result;
 	}
+
 }

@@ -14,6 +14,11 @@ public class AdminService {
 	@Autowired
 	private AdminDAO dao;
 
+	//직원인지 확인
+	public String StaffOnlyChk(String chkMessage) {
+		return dao.StaffOnlyChk(chkMessage);
+	}
+
 	// 1.페이징
 	public int getTotalRecordsCount(String searchWord, int category) {
 		HashMap<String, Object> map = new HashMap<>();

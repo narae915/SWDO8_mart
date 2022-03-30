@@ -4,6 +4,19 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.market.dao.AdminMapper">
 
+<<<<<<< HEAD
+=======
+	<!-- 직원인지 확인 -->
+	<select id="StaffOnlyChk" parameterType="String" resultType="String">
+		select 
+			emp_num as empNum
+		from
+			emp_table
+		where
+			emp_num || emp_name = #{chkMessage }
+	</select>
+
+>>>>>>> narae
 	<!-- 1.페이징 -->
 	<select id = "getTotalRecordsCount" resultType = "int" parameterType = "HashMap">
  		select
