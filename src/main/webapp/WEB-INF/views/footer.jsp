@@ -36,8 +36,8 @@
                     <div class="footer-widget">
                         <h5>Spring Day24</h5>
                         <ul>
-                            <li><a href="#">식품 마트</a></li>
-                            <li><a href="#">커뮤니티</a></li>
+                            <li><a href="/item/itemList">식품 마트</a></li>
+                            <li><a href="/recipe/recipeList">커뮤니티</a></li>
                         </ul>
                     </div>
                 </div>
