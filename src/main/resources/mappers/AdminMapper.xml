@@ -3,7 +3,9 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.market.dao.AdminMapper">
-	<select id = "getTotalRecordsCount" resultType = "int" parameterType = "String">
+
+	<!-- 1.페이징 -->
+	<select id = "getTotalRecordsCount" resultType = "int" parameterType = "HashMap">
  		select
  			count(*)
  		from
@@ -14,9 +16,14 @@
 		 					from item_table
 		 					where item_name like '%'||#{searchWord }||'%')
  			</if>
+ 			<if test = "category != 0">
+ 			and
+ 				it.category_num = #{category }
+ 			</if>
  		</where>
  	</select>
  	
+ 	<!-- 상품목록 불러오기 -->
  	<select id = "getItemList" resultType = "Item" parameterType = "HashMap">
  		select distinct
  			it.item_num as itemNum,
@@ -44,15 +51,21 @@
 								where item_name like '%'||#{searchWord }||'%')
 			and
 		</if>
+ 		<if test = "category != 0">
+			category_num = #{category }
+			and
+		</if>
 			rt.rn between #{startRecord } + 1 and #{startRecord } + #{countPerPage }
  		order by item_num
  	</select>
  	
+ 	<!-- 상품 삭제 -->
  	<delete id = "itemDelete" parameterType = "int">
  		delete from item_table
  		where item_num = #{itemNum }
  	</delete>
  	
+ 	<!-- 상품 등록 -->
  	<insert id = "itemInsert" parameterType = "HashMap">
  		insert into item_table(
 			item_num,

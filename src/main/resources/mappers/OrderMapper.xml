@@ -4,6 +4,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.market.dao.OrderMapper">
 	
+	<!-- 1. 페이징 -->
 	<select id = "getTotalRecordsCount" parameterType="String" resultType = "int">
  		select
  			count(*)
@@ -20,6 +21,7 @@
  			</if>
  	</select>
 
+	<!-- 1. 주문목록 불러오기 -->
 	<select id="getOrderList" resultType="Order" parameterType="HashMap">
 		select 
 		    ot.order_num as orderNum,
@@ -60,6 +62,7 @@
 		order by order_num
 	</select>
 	
+	<!-- 2. 주문 취소 -->
 	<delete id="orderCancle" parameterType="ArrayList">
 		delete from order_table
 		where order_num = 

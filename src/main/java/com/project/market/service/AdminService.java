@@ -15,16 +15,21 @@ public class AdminService {
 	private AdminDAO dao;
 
 	// 1.페이징
-	public int getTotalRecordsCount(String searchWord) {
-		return dao.getTotalRecordsCount(searchWord);
+	public int getTotalRecordsCount(String searchWord, int category) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("searchWord", searchWord);
+		map.put("category", category);
+		
+		return dao.getTotalRecordsCount(map);
 	}
 
 	// 1. 상품 리스트 불러오기 메소드
-	public ArrayList<ItemVO> getItemList(int startRecord, int countPerPage, String searchWord) {
+	public ArrayList<ItemVO> getItemList(int startRecord, int countPerPage, String searchWord, int category) {
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("startRecord", startRecord);
 		map.put("countPerPage", countPerPage);
 		map.put("searchWord", searchWord);
+		map.put("category", category);
 
 		return dao.getItemList(map);
 	}

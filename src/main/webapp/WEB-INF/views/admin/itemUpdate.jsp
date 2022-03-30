@@ -28,6 +28,29 @@
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
 
+	<script type="text/javascript">
+
+	function inButton() {
+		$.ajax({
+			url: "/admin/itemInsert",
+			type: "post",
+			data: {
+				category: $("#category").val(),
+				itemName: $("#itemName").val(),
+				price: $("#price").val(),
+				itemAmount: $("#itemAmount").val()
+			},
+			async: false,
+			success: function(res, url) {
+				if(res == "success") {
+					alert("등록되었습니다.");
+					location.href = "/admin/itemManagement";
+				}
+			} 
+		});
+	}
+	</script>
+	
 
 	<style type="text/css">
 	table, th, tr, td {
@@ -47,6 +70,7 @@
     }
     	
 	th {
+		font-weight: 800;
 		border: #fff 1px solid;
 		background-color: black;
 		color: #fff; 
@@ -58,6 +82,42 @@
 	
 	.text-type {
 		width:150px;
+	}
+	
+		
+    button {
+		border:none;
+		position:relative;
+		transition:800ms ease all;
+		outline:none;
+	}
+	
+	button:hover {
+		background:#000;
+		color:#E7AB3C;
+	}
+	
+	button:before,button:after {
+		content:'';
+		position:absolute;
+		top:0;
+		right:0;
+		height:2px;
+		width:0;
+		background: #E7AB3C;
+		transition:400ms ease all;
+	}
+	
+	button:after {
+		right:inherit;
+		top:inherit;
+		left:0;
+		bottom:0;
+	}
+	
+	button:hover:before, button:hover:after {
+		width:100%;
+		transition:800ms ease all;
 	}
 	</style>
 
@@ -258,6 +318,7 @@
                     <!-- 22/03/28 노채린 -->
                     <!-- 상품 추가 -->
                     <!-- 수정 구현 후 수정을 메인으로 변경할 것. -->
+                    <!-- <form action="itemInsert" method="post" onsubmit="inButton();"> -->
                     <form action="itemInsert" method="post">
                        <table>
                        		<tr>
@@ -265,8 +326,8 @@
                        			<td style="width:20%; height: 200px;"><img src="/resources/img/cart-page/product-1.jpg" alt="임시사진"></td>
                        			<th>카테고리</th>
                        			<td>
-                       				<select name="category">
-	                       				<option value="">카테고리 선택</option>
+                       				<select name="category" id="category">
+	                       				<!-- <option value="">카테고리 선택</option> -->
 	                       				<option value="10">육류</option>
 	                       				<option value="20">어패류</option>
 	                       				<option value="30">과일</option>
@@ -280,21 +341,25 @@
                        		<tr>
                        			<th style="height:80px; width:20%">상품 이름</th>
                        			<td>
-                       				<input type="text" name="itemName" class="text-type">
+                       				<input type="text" name="itemName" class="text-type" id="itemName">
                        			</td>
                        			<th style="width:18%">가격</th>
                        			<td>
-                       				<input type="text" name="price" class="text-type">
+                       				<input type="text" name="price" class="text-type" id="price">
                        			</td>
                        		</tr>
                        		<tr>
                        			<th style="height:80px;">재고</th>
                        			<td style="width:40%">
-                       				<input type="text" name="itemAmount" class="text-type">
+                       				<input type="text" name="itemAmount" class="text-type" id="itemAmount">
                        			</td>
                        			<th></th>
                        			<td style="width:50%">
-                       				<button type="submit">완료</button>
+                       			
+                       			
+                       				<!-- <button type="submit" class="primary-btn" style="height:40px; border-radius:5px;">완료</button> -->
+                       				
+                       				<input type="button" class="primary-btn" style="height:40px; border-radius:5px;"value="완료" onclick="inButton();">
                        			</td>
                        		</tr>
                        </table>
