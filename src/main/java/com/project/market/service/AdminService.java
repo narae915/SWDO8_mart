@@ -127,19 +127,4 @@ public class AdminService {
 
 	}
 
-	// 4.상품 수정 리스트 불러오기 메소드
-	/*
-	public ItemVO readItem(int upItemNum) {
-		
-		return dao.readItem(upItemNum);
-	}
-	*/
-
-	public ArrayList<ItemVO> itemUpdateList(List<String> updateNum) {
-		List<Integer> intUpdateNum = updateNum.stream().map(s -> Integer.parseInt(s)).collect(Collectors.toList());
-//		int intUpdateNum = Integer.parseInt(itemUpdateNum.toString());
-		
-		return dao.itemUpdateList(intUpdateNum);
-	}
-
 }

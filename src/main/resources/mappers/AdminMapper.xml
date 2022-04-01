@@ -208,21 +208,4 @@
 			emp_num = #{empNum }
 	</delete>
 	
-	<!-- 상품 수정 페이지 불러오기 -->
-	<select id="itemUpdateList" parameterType="List" resultType="Item">
-		select
-			it.item_num as itemNum, 
-			(select ct.category_name
- 				from category_table ct
- 				where it.category_num = ct.category_num) as categoryName,
- 			it.category_num as categoryNum, 
- 			it.item_name as itemName, 
- 			it.price as price, 
- 			it.item_amount as itemAmount
-		from item_table it
-		where item_num = 
-		<foreach collection='list' index="index" item='item' separator="or order_num =" open=" " close=" ">
-		#{item }
-		</foreach>
-	</select>
 </mapper>
