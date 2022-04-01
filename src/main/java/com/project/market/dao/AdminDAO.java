@@ -18,6 +18,22 @@ public class AdminDAO {
 	private SqlSession session;
 
 	// 페이징
+	//직원인지 확인
+	public String StaffOnlyChk(String chkMessage) {
+		String result = null;
+		AdminMapper mapper = null;
+
+		try {
+			mapper = session.getMapper(AdminMapper.class);
+			result = mapper.StaffOnlyChk(chkMessage);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	// 1.페이징
 	public int getTotalRecordsCount(HashMap<String, Object> map) {
 		int result = 0;
 		AdminMapper mapper = null;
@@ -201,38 +217,5 @@ public class AdminDAO {
 		
 		return result;
 	}
-
-	// 4.상품 정보 수정 리스트 메소드
-	public ItemVO readItem(int upItemNum) {
-		ItemVO item = null;
-		AdminMapper mapper = null;
-		
-		try
-		{
-			mapper = session.getMapper(AdminMapper.class);
-			item = mapper.readitem(upItemNum);
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-		
-		return item;
-	}
-
-	public ArrayList<ItemVO> itemUpdateList(List<Integer> intUpdateNum) {
-			ArrayList<ItemVO> result = null;
-			AdminMapper mapper = null;
-			
-			try {
-				mapper = session.getMapper(AdminMapper.class);
-				result = mapper.itemUpdateList(intUpdateNum);
-			} 
-			catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-			return result;
-		}
 
 }

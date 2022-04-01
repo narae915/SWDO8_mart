@@ -12,6 +12,8 @@ public interface AdminMapper {
 
 	int getTotalRecordsCount(HashMap<String, Object> map); // zzz페이징
 
+	String StaffOnlyChk(String chkMessage); //직원인지 확인
+
 	int getEmpTotalRecordsCount(); // 총 직원 수 조회 (페이징)
 
 	ArrayList<ItemVO> getItemList(HashMap<String, Object> map); // 1.상품 리스트 불러오기 메소드
