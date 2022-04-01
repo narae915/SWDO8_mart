@@ -2,6 +2,7 @@ package com.project.market.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.project.market.vo.CartVO;
 import com.project.market.vo.ItemVO;
@@ -19,7 +20,7 @@ public interface OrderMapper {
 	ArrayList<OrderVO> getOrderList(HashMap<String, Object> map);
 
 	// 2.주문 취소 메소드
-	int orderCancle(ArrayList<String> orderNumList);
+	int orderCancel(List<Integer> intCancelNum);
 
 	//장바구니에 상품넣기 - 박나래
 	int insertCart(HashMap<String, Object> map);

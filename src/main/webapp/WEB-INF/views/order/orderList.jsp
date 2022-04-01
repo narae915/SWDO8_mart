@@ -238,8 +238,8 @@
 	                    	<button type="submit" class="primary-btn" id="search-button"><i class="ti-search"></i></button>
 	                    </form>
 	                    <!-- 주문 취소 및 주문 조회 -->
-	                    <form action="ordercancle" method="post" id="cancleForm">
-	                    	<input type="button" class="primary-btn" id="cancle-button" value="주문 취소" onclick="return valueChk();">
+	                    <form action="ordercancel" method="post" id="cancelForm">
+	                    	<button type="button" class="primary-btn" id="cancel-button" onclick="return valueChk();">주문 취소</button>
 	                    		
 	                    	<!-- 주문 조회 테이블 시작 -->
 	                        <table class="table-basic">

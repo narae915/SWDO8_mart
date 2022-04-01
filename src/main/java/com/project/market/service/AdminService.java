@@ -2,6 +2,9 @@ package com.project.market.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.project.market.dao.AdminDAO;
@@ -40,11 +43,12 @@ public class AdminService {
 	}
 
 	// 2.상품 삭제 메소드
-	public boolean itemDelete(int itemNum) {
-		
-		return dao.itemDelete(itemNum) > 0;
+	public boolean itemDelete(List<String> cancelNum) {
+		List<Integer> intCancelNum = cancelNum.stream().map(s -> Integer.parseInt(s)).collect(Collectors.toList());
+		return dao.itemDelete(intCancelNum) >0;
 	}
 
+	// 3.상품 추가 메소드
 	public boolean itemInsert(int category, String itemName, String price, String itemAmount) {
 		int intPrice = Integer.parseInt(price);
 		
@@ -122,4 +126,5 @@ public class AdminService {
 		return dao.empDelete(empNum) > 0;
 
 	}
+
 }
