@@ -1,7 +1,7 @@
 package com.project.market.controller;
 
 import java.util.ArrayList;
-
+import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,20 +59,19 @@ public class OrderController {
 	// 2022-03-25~2022-03-26 노채린
 	// 2.주문 취소 시작
 	@ResponseBody
-	@RequestMapping(value = "orderCancle", method = RequestMethod.POST)
-	public String orderCancle(String[] orderNum) {
-		logger.info("orderCancle 메소드 실행(POST)");
-		logger.info("orderNum:{}",orderNum);
-		if(orderNum== null) {
-			logger.info("null!!");
-		}
-		// 2.주문 취소 메소드
-		boolean result = service.orderCancle(orderNum);
+	@RequestMapping(value = "/orderCancel", method = RequestMethod.POST)
+	public String orderCancel(@RequestParam(value="cancelNumArray[]") List<String> cancelNum) {
+		logger.info("orderCancel 메소드 실행");
+		logger.info("cancelNum:{}", cancelNum);
+		
+		 // 상품 목록 삭제 메소드
+		boolean result = service.orderCancel(cancelNum);
 		
 		if(result) {
 			logger.info("주문 취소 성공");
-	
+			
 			return "success";
+			
 		} else {
 			logger.info("주문 취소 실패");
 			

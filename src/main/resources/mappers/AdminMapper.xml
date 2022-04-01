@@ -9,16 +9,16 @@
  		select
  			count(*)
  		from
- 			item_table it
+ 			item_table
  		<where>
  			<if test = "searchWord != ''">
- 				it.item_num in (select item_Num
-		 					from item_table
-		 					where item_name like '%'||#{searchWord }||'%')
+ 				item_num in (select item_Num
+			 					from item_table
+			 					where item_name like '%'||#{searchWord }||'%')
  			</if>
  			<if test = "category != 0">
  			and
- 				it.category_num = #{category }
+ 				category_num = #{category }
  			</if>
  		</where>
  	</select>
@@ -32,23 +32,19 @@
  			it.item_amount as itemAmount,
  			(select distinct ct.category_name
  				from category_table ct
- 				where it.category_num = ct.category_num) as categoryName
+ 				where ct.category_num = it.category_num) as categoryName
  		from
  			item_table it,
- 			(select
- 				rownum as rn,
- 				item_num as ln
- 			from
- 				item_table
- 			order by
- 				item_num) rt
+ 			(select rownum as rn, item_num as ln
+ 			from item_table
+ 			order by item_num) rt
  		where
  			it.item_num = rt.ln
 		and
 		<if test = "searchWord != ''">
 			it.item_num in (select item_num
-			        			from item_table
-								where item_name like '%'||#{searchWord }||'%')
+		        			from item_table
+							where item_name like '%'||#{searchWord }||'%')
 			and
 		</if>
  		<if test = "category != 0">
@@ -60,9 +56,12 @@
  	</select>
  	
  	<!-- 상품 삭제 -->
- 	<delete id = "itemDelete" parameterType = "int">
+ 	<delete id = "itemDelete" parameterType = "List">
  		delete from item_table
- 		where item_num = #{itemNum }
+ 		where item_num = 
+ 		<foreach collection='list' index="index" item='item' separator="or item_num =" open=" " close=" ">
+		#{item }
+		</foreach>
  	</delete>
  	
  	<!-- 상품 등록 -->
@@ -198,4 +197,22 @@
 		where
 			emp_num = #{empNum }
 	</delete>
+	
+	<!-- 상품 수정 페이지 불러오기 -->
+	<select id="itemUpdateList" parameterType="List" resultType="Item">
+		select
+			it.item_num as itemNum, 
+			(select ct.category_name
+ 				from category_table ct
+ 				where it.category_num = ct.category_num) as categoryName,
+ 			it.category_num as categoryNum, 
+ 			it.item_name as itemName, 
+ 			it.price as price, 
+ 			it.item_amount as itemAmount
+		from item_table it
+		where item_num = 
+		<foreach collection='list' index="index" item='item' separator="or order_num =" open=" " close=" ">
+		#{item }
+		</foreach>
+	</select>
 </mapper>

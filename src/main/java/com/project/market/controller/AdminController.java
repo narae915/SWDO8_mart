@@ -1,6 +1,7 @@
 package com.project.market.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -34,25 +35,24 @@ public class AdminController {
 	// 2022-03-27 노채린
 	// 상품 목록 불러오기
 	@RequestMapping(value = "/itemManagement", method = RequestMethod.GET)
-	public String itemManagement(@RequestParam(defaultValue = "1") int currentPage, HttpSession session, Model model, String searchWord, Integer category) {
+	public String itemManagement(@RequestParam(defaultValue = "1") int currentPage, String searchWord,
+									Integer category, HttpSession session, Model model) {
 		logger.info("itemManagement 메소드 실행(GET).");
 		
-		// 페이징
-		// 검색하지 않았을 때
 		if(searchWord == null) {
 			searchWord = "";
 		}
 		
-		// 셀렉트박스 값이 비어있을 때
 		if(category == null) {
 			category = 0;
 		}
 		
+		// 페이징
 		int totalRecordsCount = service.getTotalRecordsCount(searchWord, category);
 		PageNavigator navi = new PageNavigator(COUNT_PER_PAGE, PAGE_PER_GROUP, currentPage, totalRecordsCount);
 		model.addAttribute("navi", navi);
 		
-		// 1. 상품 리스트 불러오기 메소드
+		// 상품 리스트 불러오기 메소드
 		ArrayList<ItemVO> itemList = service.getItemList(navi.getStartRecord(), COUNT_PER_PAGE, searchWord, category);
 		model.addAttribute("itemList", itemList);
 		
@@ -64,10 +64,12 @@ public class AdminController {
 	// 상품 목록 삭제
 	@ResponseBody
 	@RequestMapping(value = "/itemDelete", method = RequestMethod.GET)
-	public String itemDelete(int itemNum, Model model) {
+	public String itemDelete(@RequestParam(value="cancelNumArray[]") List<String> cancelNum) {
 		logger.info("itemDelete 메소드 실행");
-
-		boolean result = service.itemDelete(itemNum);
+		logger.info("cancelNum:{}", cancelNum);
+		
+		 // 상품 목록 삭제 메소드
+		boolean result = service.itemDelete(cancelNum);
 		
 		if(result) {
 			logger.info("상품 삭제 성공");
@@ -80,40 +82,10 @@ public class AdminController {
 			return null;
 		}
 		
+		
 	}
 	
-	// 상품 목록 추가 페이지
-	@RequestMapping(value = "/itemInsert", method = RequestMethod.GET)
-	public String itemInsert(HttpSession session, Model model){
-		logger.info("itemInsert 메소드 실행(GET).");
-
-		return "/admin/itemUpdate";
-	}
 	
-	// 상품 목록 추가
-	@ResponseBody
-	@RequestMapping(value ="/itemInsert", method = RequestMethod.POST)
-	public String itemInsert(Integer category, String itemName, String price, String itemAmount) {
-		logger.info("itemInsert 메소드 실행(POST)");
-		
-		// 셀렉트박스 값이 비어있을 때
-		if(category == null) {
-			category = 0;
-		}
-		
-		boolean result = service.itemInsert(category, itemName, price, itemAmount);
-		
-		if(result) {
-			logger.info("상품 추가 성공");
-			
-			return "success";
-		} else {
-			logger.info("상품 추가 실패");
-			
-			return null;
-		}
-
-	}
 	/* 관리자용 메인페이지로 이동 */
 	@RequestMapping(value = "/adminMain", method = RequestMethod.GET)
 	public String adminMain()

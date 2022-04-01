@@ -2,6 +2,8 @@ package com.project.market.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,15 +47,11 @@ public class OrderService {
 	}
 
 	// 2.주문 취소 메소드
-	public boolean orderCancle(String[] orderNum) {
-		// ArrayList로 변환
-		ArrayList<String> orderNumList = new ArrayList<>();
-		for (int i = 0; i < orderNum.length; i++) {
-			orderNumList.add(i, orderNum[i]);
-			// System.out.print(orderNumList.get(i));
-		}
+	public boolean orderCancel(List<String> cancelNum) {
 		
-		return dao.orderCancle(orderNumList) > 0;
+		List<Integer> intCancelNum = cancelNum.stream().map(s -> Integer.parseInt(s)).collect(Collectors.toList());
+		
+		return dao.orderCancel(intCancelNum) > 0;
 	}
 
 }

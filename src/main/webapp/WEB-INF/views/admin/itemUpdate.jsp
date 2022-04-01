@@ -28,30 +28,6 @@
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
 
-	<script type="text/javascript">
-
-	function inButton() {
-		$.ajax({
-			url: "/admin/itemInsert",
-			type: "post",
-			data: {
-				category: $("#category").val(),
-				itemName: $("#itemName").val(),
-				price: $("#price").val(),
-				itemAmount: $("#itemAmount").val()
-			},
-			async: false,
-			success: function(res, url) {
-				if(res == "success") {
-					alert("등록되었습니다.");
-					location.href = "/admin/itemManagement";
-				}
-			} 
-		});
-	}
-	</script>
-	
-
 	<style type="text/css">
 	table, th, tr, td {
 		text-align: center;
@@ -300,7 +276,7 @@
                         <a href="#"><i class="fa fa-home"></i> Home</a>
                         <a href="#">Employee</a>
                         <a href="#">상품 조회</a>
-                        <span>상품 추가</span>
+                        <span>상품 수정 및 추가</span>
                     </div>
                 </div>
             </div>
@@ -315,19 +291,19 @@
                 <div class="col-lg-12"> <!-- 본문을 우측으로 조금 변경 -->
                     <div class="faq-accordin"> <!-- 폰트 크기, 아이콘 -->
                     
-                    <!-- 22/03/28 노채린 -->
-                    <!-- 상품 추가 -->
-                    <!-- 수정 구현 후 수정을 메인으로 변경할 것. -->
-                    <!-- <form action="itemInsert" method="post" onsubmit="inButton();"> -->
-                    <form action="itemInsert" method="post">
+                    <!-- 22/03/30 노채린 -->
+                    <!-- 상품 수정 -->
+                    <input type="button" class="primary-btn" style="height:40px; border-radius:5px;"value="수정" onclick="return itemUpdate();">
+                    <form action="itemUpdate" method="POST">
                        <table>
+                       <%-- <c:forEach var="Item" items="${itemList }"> --%>
                        		<tr>
                        			<th style="padding-top:15px; padding-bottom:15px">IMAGE</th>
                        			<td style="width:20%; height: 200px;"><img src="/resources/img/cart-page/product-1.jpg" alt="임시사진"></td>
                        			<th>카테고리</th>
                        			<td>
                        				<select name="category" id="category">
-	                       				<!-- <option value="">카테고리 선택</option> -->
+	                       				<option value="">카테고리 선택</option>
 	                       				<option value="10">육류</option>
 	                       				<option value="20">어패류</option>
 	                       				<option value="30">과일</option>
@@ -355,16 +331,12 @@
                        			</td>
                        			<th></th>
                        			<td style="width:50%">
-                       			
-                       			
-                       				<!-- <button type="submit" class="primary-btn" style="height:40px; border-radius:5px;">완료</button> -->
-                       				
-                       				<input type="button" class="primary-btn" style="height:40px; border-radius:5px;"value="완료" onclick="inButton();">
+                       				<button type="submit" class="primary-btn" style="height:40px; border-radius:5px;">완료</button>
                        			</td>
                        		</tr>
+                       		<%-- </c:forEach> --%>
                        </table>
                        <!--상품 관리 테이블 끝  -->
-                       
 					</form>
                     </div>
                 </div>

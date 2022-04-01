@@ -2,6 +2,7 @@ package com.project.market.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class AdminDAO {
 	@Autowired
 	private SqlSession session;
 
-	// 1.페이징
+	// 페이징
 	public int getTotalRecordsCount(HashMap<String, Object> map) {
 		int result = 0;
 		AdminMapper mapper = null;
@@ -40,19 +41,20 @@ public class AdminDAO {
 	}
 
 	// 2.상품 삭제 메소드
-	public int itemDelete(int itemNum) {
+	public int itemDelete(List<Integer> intCancelNum) {
 		int result = 0;
 		AdminMapper mapper = null;
 		
 		try {
 			mapper = session.getMapper(AdminMapper.class);
-			result = mapper.itemDelete(itemNum);
+			result = mapper.itemDelete(intCancelNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return result;
 	}
 
+	// 3.상품 추가 메소드
 	public int itemInsert(HashMap<String, Object> map) {
 		int result = 0;
 		AdminMapper mapper = null;
@@ -199,4 +201,38 @@ public class AdminDAO {
 		
 		return result;
 	}
+
+	// 4.상품 정보 수정 리스트 메소드
+	public ItemVO readItem(int upItemNum) {
+		ItemVO item = null;
+		AdminMapper mapper = null;
+		
+		try
+		{
+			mapper = session.getMapper(AdminMapper.class);
+			item = mapper.readitem(upItemNum);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return item;
+	}
+
+	public ArrayList<ItemVO> itemUpdateList(List<Integer> intUpdateNum) {
+			ArrayList<ItemVO> result = null;
+			AdminMapper mapper = null;
+			
+			try {
+				mapper = session.getMapper(AdminMapper.class);
+				result = mapper.itemUpdateList(intUpdateNum);
+			} 
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			return result;
+		}
+
 }

@@ -1,26 +1,27 @@
-	// 주문 취소
-	function valueChk() {
-	var cancleNum = [];
+
+//주문 취소
+function valueChk() {
+	var cancelNum = [];
 	
 	$("input[name=orderNum]:checked").each(function() {
-		cancleNum.push($(this).val());
+		cancelNum.push($(this).val());
 	});
 	
-	if(cancleNum == "") { // 체크박스가 체크되어있지 않은 경우 경고창을 띄우며 취소를 진행하지 않음.
+	var allData = {"cancelNumArray": cancelNum};
+	
+	if(cancelNum == "") { // 체크박스가 체크되어있지 않은 경우 경고창을 띄우며 취소를 진행하지 않음.
 		alert("선택된 항목이 없습니다.");
 		
 		return false;
 	} else { // 체크박스가 체크된 경우 확인 절차를 진행함.
-		var cancleChk = confirm("정말 취소하시겠습니까?");
-		if(cancleChk == true) {
+		var cancelChk = confirm("정말 취소하시겠습니까?");
+		if(cancelChk == true) {
 
 			$.ajax({
-				url: "/order/ordercancle",
+				url: "/order/orderCancel",
 				type: "post",
-				data: {
-					orderNum: $("#orderNum").val()			
-				},
-				success: function(res, url) {
+				data: allData,
+				success: function(res) {
 					if(res == "success") {
 						alert("취소되었습니다.");
 						location.href = "/order/orderList";
@@ -34,6 +35,7 @@
 			return false;
 		}
 	}
+	
 }
 	
 	// 검색어 유효성 검사

@@ -2,25 +2,23 @@ package com.project.market.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.project.market.vo.EmpVO;
 import com.project.market.vo.ItemVO;
 
 public interface AdminMapper {
 
-	// 1.페이징
-	int getTotalRecordsCount(HashMap<String, Object> map); 
+
+	int getTotalRecordsCount(HashMap<String, Object> map); // zzz페이징
 
 	int getEmpTotalRecordsCount(); // 총 직원 수 조회 (페이징)
 
-	// 1.상품 리스트 불러오기 메소드
-	ArrayList<ItemVO> getItemList(HashMap<String, Object> map);
+	ArrayList<ItemVO> getItemList(HashMap<String, Object> map); // 1.상품 리스트 불러오기 메소드
 
-	// 2.상품 삭제 메소드
-	int itemDelete(int itemNum);
+	int itemDelete(List<Integer> intCancelNum);// 2.상품 삭제 메소드
 
-	// 3.상품 추가 메소드	
-	int itemInsert(HashMap<String, Object> map);
+	int itemInsert(HashMap<String, Object> map); // 3.상품 추가 메소드
 
 	int adminRegister(EmpVO newEmp); // 관리자 ID 등록
 
@@ -33,5 +31,11 @@ public interface AdminMapper {
 	int empUpdate(EmpVO updateEmp); // 직원 정보 수정
 	
 	int empDelete(int empNum); // 직원 정보 삭제
+
+	ItemVO readitem(int upItemNum);
+
+	ArrayList<ItemVO> itemUpdateList(List<Integer> intUpdateNum);
+
+
 
 }

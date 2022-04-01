@@ -27,25 +27,41 @@
     <link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
-	
+	<!-- 
 	<script type="text/javascript">
-	function deButton() {
-		$.ajax({
-			url: "/admin/itemDelete",
-			data: {
-				itemNum: $("#delete-button").val()
-			},
-			success: function(res, url) {
-				if(res == "success") {
-					alert("삭제되었습니다.");
-					location.href = "/admin/itemManagement";
-				}
-			} 
-		});
-	}
+		function itemUpdate(){
+			var updateNum = [];
+			var checked = $("input[name=itemChk]:checked");
+			checked.each(function() {
+				updateNum.push($(this).val());
+			});
+			
+			var allData = {"updateNumArray": updateNum};
 	
-	</script>
-	
+			if(updateNum.length >= 2){
+				alert("한 개만 선택해주세요.");
+				
+				return false;
+			}
+			
+			if(updateNum == "") { // 체크박스가 체크되어있지 않은 경우 경고창을 띄우며 수정을 진행하지 않음.
+				alert("선택된 항목이 없습니다.");
+				
+				return false;
+			} else {
+				 $.ajax({
+					url: "/admin/itemUpdate",
+					data: allData,
+					success: function(res) {
+							alert("fff");
+					}
+				});
+					
+				return true;
+			}
+		}
+	</script> -->
+		
 	<style type="text/css">
 	table, th, tr, td {
 		text-align: center;
@@ -133,11 +149,15 @@
 	}
 	
 	#insert-button {
+		display: inline-block;
 		vertical-align:center;
 		border-radius:5px;
-		left: 42%;
-		margin: 5px;
-		bottom: 3px;
+		left: 21%;
+		margin: 10px;
+		height: 40px;
+		position: relative;
+		top: 50px;
+		padding: 12px 30px;
 	}
 	#image-not {
 		 width: 50px;
@@ -162,7 +182,6 @@
     <div id="preloder">
         <div class="loader"></div>
     </div>
-
     <!-- Header Section Begin -->
     <header class="header-section">
         <div class="header-top">
@@ -367,40 +386,41 @@
 	                    </form>
 	                    
 	                    <!-- 상품 추가 -->
-	                    <form action="itemInsert" method="get">
-		                    	<button type="submit" class="primary-btn" id="insert-button">상품 추가</button>
-	                    </form>
+		                <button type="button" class="primary-btn" id="insert-button" onclick="">상품 추가</button>
+		                
 	                    <c:if test="${not empty itemList }">
+		                    
 		                    <form action="itemDelete" method="get">
+		                    <input type="button" id="upButton" class="primary-btn" value="상품 수정" style="height:40px; border-radius:5px; border:none" onclick = "return itemUpdate();">
+		                    <input type="button" name="itemNum" class="primary-btn" style="height:40px; border-radius:5px; border:none" value="상품 삭제" onclick ="return deValueChk();">
 		                   	<!-- 상품 관리 테이블 시작 -->
 		                       <table>
 		                       	<thead>
 		                       		<tr>
+		                       			<th>선택</th>
 		                       			<th style="padding-top:15px; padding-bottom:15px">IMAGE</th>
 		                       			<th>상품 번호</th>
 		                       			<th>이름</th>
 		                       			<th>가격</th>
 		                       			<th>재고</th>
 		                       			<th>카테고리</th>
-		                       			<th class="button-cell">수정/삭제</th>
 		                       		</tr>
 								</thead>
 		                       	<tbody>
 		                       		<c:forEach var="Item" items="${itemList }">
 		                       		<tr>
+		                       			<td><input type="checkbox" id="itemChk" name="itemChk" value="${Item.itemNum }" style="width:30px; height:30px;" /></td>
 		                       			<td style="width:20%; height: 200px;"><img src="/resources/img/cart-page/product-1.jpg" alt="임시사진"></td>
 		                       			<td style="width:10%;">${Item.itemNum }</td>
-		                       			<td style="width:10%;">${Item.itemName }</td>
-		                       			<td style="width:15%;">${Item.price}</td>
-		                       			<td style="width:15%;">${Item.itemAmount }</td>
-		                       			<td>${Item.categoryName }</td>
-		                       			<td class="button-cell">
-		                       				<input type="button" onclick="itemInsert" class="primary-btn" value="수정" style="height:40px; border-radius:5px;">
-		                       				<input type="button" id="delete-button" name="itemNum" class="primary-btn" style="height:40px; border-radius:5px;" value="삭제" onclick ="deButton(${Item.itemNum });">
-		                       			</td>
+		                       			<td id="itemName" style="width:10%;">${Item.itemName }</td>
+		                       			<td id="price" style="width:15%;">${Item.price}</td>
+		                       			
+		                       			<td id="itemAmount" style="width:15%;">${Item.itemAmount }</td>
+		                       			
+		                       			<td id="itemCategory">${Item.categoryName }</td>
 		                       		</tr>
 		                       		</c:forEach>
-		                       	</tbody>
+		                       </tbody>
 		                       </table>
 		                       <!--상품 관리 테이블 끝  -->
 		                        <!-- 페이징 시작 -->
@@ -577,7 +597,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="/resources/js/jquery.slicknav.js"></script>
     <script src="/resources/js/owl.carousel.min.js"></script>
     <script src="/resources/js/main.js"></script>
-	<script src="/resources/js/orderList.js"></script>
+    <script src="/resources/js/itemManager.js"></script>
 </body>
 
 </html>

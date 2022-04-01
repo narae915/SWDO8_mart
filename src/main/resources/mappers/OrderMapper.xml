@@ -63,7 +63,7 @@
 	</select>
 	
 	<!-- 2. 주문 취소 -->
-	<delete id="orderCancle" parameterType="ArrayList">
+	<delete id="orderCancel" parameterType="List">
 		delete from order_table
 		where order_num = 
 		<foreach collection='list' index="index" item='item' separator="or order_num =" open=" " close=" ">
