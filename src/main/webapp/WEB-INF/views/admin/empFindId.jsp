@@ -11,7 +11,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>직원 정보 수정</title>
+    <title>직원 ID 등록</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -127,41 +127,16 @@
             <div class="row">
                 <div class="col-lg-6 offset-lg-3">
                     <div class="register-form">
-                        <h2>직원 정보 수정</h2>
-                        <form action="empUpdate" method="post" onsubmit="return checkForm();">
-                        	
-                        	<input type="hidden" name="empNum" value="${emp.empNum }">
+                        <h2>ID 찾기</h2>
+                        <form action="empFindId" method="post" onsubmit="return checkForm();">
                         
-                            <div class="group-input">
-                                <input type="text" id="empName" name="empName" value="${emp.empName }" readonly="readonly">
+                        	<div class="group-input">
+                                <input type="text" id="empMail" name="empMail" placeholder="메일을 입력해주세요.">
                             </div>
                             <div class="group-input">
-                                <input type="text" id="empNum" value="${emp.empNum }" readonly="readonly">
+                                <input type="text" id="pinNumChk" name="pinNumChk" placeholder="인증번호를 입력해주세요.">
                             </div>
-                            <div class="group-input">
-                                <input type="password" id="empPw" name="empPw" placeholder="비밀번호">
-                            </div>
-                            
-                            <div class="group-input">
-                                <input type="password" id="empPwCheck" name="empPwCheck" placeholder="비밀번호 확인">
-                            </div>
-                            <div class="group-input">
-                               <input type="text" id="empCall" name="empCall" value="${emp.empCall }" placeholder="연락처">
-                            </div>
-                            <c:if test="${sessionScope.loginPosition eq '사장' || '부장'}">
-                            <div class="group-input">
-								<select id="position" name="position" style="width: 450px; height: 50px;">
-									<option value="0" disabled="disabled" selected="selected">직급</option>
-									<option value="사원">사원</option>
-									<option value="주임">주임</option>
-									<option value="대리">대리</option>
-									<option value="과장">과장</option>
-									<option value="차장">차장</option>
-									<option value="부장">부장</option>
-								</select>
-                            </div>
-                            </c:if>
-                            <button type="submit" onclick="updateEmp();'" class="site-btn register-btn">수정</button>
+                            <button type="submit" class="site-btn register-btn">다음</button>
                         </form>
                     </div>
                 </div>
@@ -256,7 +231,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="/resources/js/jquery.slicknav.js"></script>
     <script src="/resources/js/owl.carousel.min.js"></script>
     <script src="/resources/js/main.js"></script>
-    <script src="/resources/js/adminJs/empUpdate.js"></script>
+    <script src="/resources/js/adminJs/adminRegister.js"></script>
 </body>
 
 </html>

@@ -26,8 +26,8 @@
     <link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/resources/css/adminCss/adminLogin.css" type="text/css">
     
-    <script src="/resources/js/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -142,7 +142,11 @@
                                         <input type="checkbox" id="saveIdChk">
                                         <span class="checkmark"></span>
                                     </label>
-                                    <a href="#" class="forget-pass">Forget your Password</a>
+                                    <ul class="find">
+                                    	<li>
+                                    	<a href="empFindPw" class="forget-pass">/&ensp;&ensp;비밀번호 찾기</a></li>
+                                    	<li><a href="empFindId" class="forget-pass">ID 찾기&ensp;&ensp;</a></li>
+                                    </ul>
                                 </div>
                             </div>
                             <button type="submit" id="loginBtn" class="site-btn login-btn">로그인</button>
@@ -233,6 +237,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <!-- Footer Section End -->
 
     <!-- Js Plugins -->
+    <script src="/resources/js/jquery-3.6.0.min.js"></script>
     <script src="/resources/js/bootstrap.min.js"></script>
     <script src="/resources/js/jquery-ui.min.js"></script>
     <script src="/resources/js/jquery.countdown.min.js"></script>

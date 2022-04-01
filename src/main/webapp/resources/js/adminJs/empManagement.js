@@ -3,7 +3,6 @@ function empDelete(empNum)
 {
 	var result = confirm("정말 삭제하시겠습니까?");
 	var positionCheck = "${loginPosition}";
-	console.log(positionCheck)
 	
 	if ( result )
 	{

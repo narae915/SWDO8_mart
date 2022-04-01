@@ -1,0 +1,18 @@
+#pinNumChk_false
+{
+    background-color:#ebebe4;
+}
+ 
+#pinNumChk_true
+{
+    background-color:white;
+}
+
+.correct
+{
+    color : green;
+}
+.incorrect
+{
+    color : red;
+}
