@@ -2314,6 +2314,7 @@ ol {
 
 .product-details .quantity .primary-btn.pd-cart {
 	padding: 14px 70px 10px;
+	cursor: pointer;
 }
 
 .product-details .pd-tags {

@@ -9,7 +9,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Fashi | Template</title>
+    <title>SpringDay | 메인</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -81,7 +81,7 @@
                     <div class="single-banner">
                         <img src="/resources/img/banner-1.jpg" alt="">
                         <div class="inner-text">
-                            <h4>Men’s</h4>
+                            <h4>육류</h4>
                         </div>
                     </div>
                 </div>
@@ -89,7 +89,7 @@
                     <div class="single-banner">
                         <img src="/resources/img/banner-2.jpg" alt="">
                         <div class="inner-text">
-                            <h4>Women’s</h4>
+                            <h4>생선/해산물</h4>
                         </div>
                     </div>
                 </div>
@@ -97,7 +97,7 @@
                     <div class="single-banner">
                         <img src="/resources/img/banner-3.jpg" alt="">
                         <div class="inner-text">
-                            <h4>Kid’s</h4>
+                            <h4>청과류</h4>
                         </div>
                     </div>
                 </div>
@@ -223,43 +223,6 @@
     </section>
     <!-- Women Banner Section End -->
 
-    <!-- Deal Of The Week Section Begin-->
-    <section class="deal-of-week set-bg spad" data-setbg="/resources/img/time-bg.jpg">
-        <div class="container">
-            <div class="col-lg-6 text-center">
-                <div class="section-title">
-                    <h2>Deal Of The Week</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed<br /> do ipsum dolor sit amet,
-                        consectetur adipisicing elit </p>
-                    <div class="product-price">
-                        $35.00
-                        <span>/ HanBag</span>
-                    </div>
-                </div>
-                <div class="countdown-timer" id="countdown">
-                    <div class="cd-item">
-                        <span>56</span>
-                        <p>Days</p>
-                    </div>
-                    <div class="cd-item">
-                        <span>12</span>
-                        <p>Hrs</p>
-                    </div>
-                    <div class="cd-item">
-                        <span>40</span>
-                        <p>Mins</p>
-                    </div>
-                    <div class="cd-item">
-                        <span>52</span>
-                        <p>Secs</p>
-                    </div>
-                </div>
-                <a href="#" class="primary-btn">Shop Now</a>
-            </div>
-        </div>
-    </section>
-    <!-- Deal Of The Week Section End -->
-
     <!-- Man Banner Section Begin -->
     <section class="man-banner spad">
         <div class="container-fluid">
@@ -377,47 +340,6 @@
     </section>
     <!-- Man Banner Section End -->
 
-    <!-- Instagram Section Begin -->
-    <div class="instagram-photo">
-        <div class="insta-item set-bg" data-setbg="/resources/img/insta-1.jpg">
-            <div class="inside-text">
-                <i class="ti-instagram"></i>
-                <h5><a href="#">colorlib_Collection</a></h5>
-            </div>
-        </div>
-        <div class="insta-item set-bg" data-setbg="/resources/img/insta-2.jpg">
-            <div class="inside-text">
-                <i class="ti-instagram"></i>
-                <h5><a href="#">colorlib_Collection</a></h5>
-            </div>
-        </div>
-        <div class="insta-item set-bg" data-setbg="/resources/img/insta-3.jpg">
-            <div class="inside-text">
-                <i class="ti-instagram"></i>
-                <h5><a href="#">colorlib_Collection</a></h5>
-            </div>
-        </div>
-        <div class="insta-item set-bg" data-setbg="/resources/img/insta-4.jpg">
-            <div class="inside-text">
-                <i class="ti-instagram"></i>
-                <h5><a href="#">colorlib_Collection</a></h5>
-            </div>
-        </div>
-        <div class="insta-item set-bg" data-setbg="/resources/img/insta-5.jpg">
-            <div class="inside-text">
-                <i class="ti-instagram"></i>
-                <h5><a href="#">colorlib_Collection</a></h5>
-            </div>
-        </div>
-        <div class="insta-item set-bg" data-setbg="/resources/img/insta-6.jpg">
-            <div class="inside-text">
-                <i class="ti-instagram"></i>
-                <h5><a href="#">colorlib_Collection</a></h5>
-            </div>
-        </div>
-    </div>
-    <!-- Instagram Section End -->
-
     <!-- Latest Blog Section Begin -->
     <section class="latest-blog spad">
         <div class="container">
@@ -501,8 +423,8 @@
                                 <img src="/resources/img/icon-1.png" alt="">
                             </div>
                             <div class="sb-text">
-                                <h6>Free Shipping</h6>
-                                <p>For all order over 99$</p>
+                                <h6>무료배송 서비스</h6>
+                                <p>총 30,000원 이상 구매시 무료배송</p>
                             </div>
                         </div>
                     </div>
@@ -512,8 +434,8 @@
                                 <img src="/resources/img/icon-2.png" alt="">
                             </div>
                             <div class="sb-text">
-                                <h6>Delivery On Time</h6>
-                                <p>If good have prolems</p>
+                                <h6>정시 배송</h6>
+                                <p>배송 시각을 지킵니다.</p>
                             </div>
                         </div>
                     </div>
@@ -523,8 +445,8 @@
                                 <img src="/resources/img/icon-1.png" alt="">
                             </div>
                             <div class="sb-text">
-                                <h6>Secure Payment</h6>
-                                <p>100% secure payment</p>
+                                <h6>안전 배송</h6>
+                                <p>파손/환불 100%</p>
                             </div>
                         </div>
                     </div>

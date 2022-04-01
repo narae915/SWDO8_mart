@@ -23,7 +23,7 @@
 					<div class="catagory-name">${item.categoryName }</div>
 					<a href="#"><h5>${item.itemName }</h5></a>
 					<!-- 가격사이에 ,를 찍기 위해 fmt 사용 -->
-					<div class="product-price"><fmt:formatNumber value="${item.price }" pattern="#,###"/></div>
+					<div class="product-price"><fmt:formatNumber value="${item.price }" pattern="#,###원"/></div>
 				</div>
 			</div>
 		</div>

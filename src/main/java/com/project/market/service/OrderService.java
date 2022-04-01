@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.market.dao.OrderDAO;
+import com.project.market.vo.CartVO;
+import com.project.market.vo.ItemVO;
 import com.project.market.vo.OrderVO;
 
 
@@ -54,6 +56,32 @@ public class OrderService {
 		}
 		
 		return dao.orderCancle(orderNumList) > 0;
+	}
+
+	//장바구니에 상품넣기
+	public boolean insertCart(int itemNum, int cartAmount) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("itemNum", itemNum);
+		map.put("cartAmount", cartAmount);
+		return dao.insertCart(map) > 0;
+	}
+
+	//장바구니 상품 조회
+	public ArrayList<ItemVO> selectCartList() {
+		return dao.selectCartList();
+	}
+
+	//장바구니에 같은 상품이 있는지 확인
+	public CartVO checkCart(int itemNum) {
+		return dao.checkCart(itemNum);
+	}
+
+	//장바구니에 같은 상품이 있다면 수량을 증가
+	public boolean updateCartAmount(int itemNum, int cartAmount) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("itemNum", itemNum);
+		map.put("cartAmount", cartAmount);
+		return dao.updateCartAmount(map) > 0;
 	}
 
 }

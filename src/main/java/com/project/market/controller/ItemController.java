@@ -28,7 +28,7 @@ public class ItemController {
 	
 	//상품 선택 페이지 이동
 	@RequestMapping(value = "/itemList", method = RequestMethod.GET)
-	public String itemList(Model model) {
+	public String itemList(@RequestParam(defaultValue = "0") int categoryNum, Model model) {
 		logger.info("상품 선택 페이지(GET)");
 
 		//DB에 저장된 카테고리 테이블 출력
@@ -38,7 +38,6 @@ public class ItemController {
 		model.addAttribute("categoryList", category);
 
 		String sorting = null;
-		int categoryNum = 0;
 		model.addAttribute("countPerPage", countPerPage);
 		ArrayList<ItemVO> itemList = service.getItemList(countPerPage, sorting, categoryNum);
 		logger.info("itemList:{}", itemList);
@@ -63,29 +62,28 @@ public class ItemController {
 		return "item/itemListAjax";
 	}
 	
-	//정렬하기, 카테고리 별로 보기
-		// @ResponseBody
-		@RequestMapping(value = "/loading", method = RequestMethod.POST)
-		public String loading(String startCount, String viewCount, String sorting, String searchNum, Model model) {
-			logger.info("loading 메소드 실행(GET)");
-			logger.info("startCount:{}", startCount);
-			logger.info("viewCount:{}", viewCount);
-			logger.info("searchNum:{}", searchNum);
-			logger.info("sorting:{}", sorting);
+	//정렬하기, 카테고리 별로 보기( 더보기 눌렀을 때 ajax)
+	@RequestMapping(value = "/loading", method = RequestMethod.POST)
+	public String loading(String startCount, String viewCount, String sorting, String searchNum, Model model) {
+		logger.info("loading 메소드 실행(GET)");
+		logger.info("startCount:{}", startCount);
+		logger.info("viewCount:{}", viewCount);
+		logger.info("searchNum:{}", searchNum);
+		logger.info("sorting:{}", sorting);
+	
+		int categoryNum = Integer.parseInt(searchNum);
+		int startNum = Integer.parseInt(startCount);
+		int viewNum = Integer.parseInt(viewCount);
 		
-			int categoryNum = Integer.parseInt(searchNum);
-			int startNum = Integer.parseInt(startCount);
-			int viewNum = Integer.parseInt(viewCount);
-			
-			int countPerPage = startNum + viewNum;
+		int countPerPage = startNum + viewNum;
 
-			ArrayList<ItemVO> itemList = service.getItemList(countPerPage, sorting,categoryNum);
-			logger.info("itemList:{}", itemList);
-			
-			model.addAttribute("itemList", itemList);
+		ArrayList<ItemVO> itemList = service.getItemList(countPerPage, sorting,categoryNum);
+		logger.info("itemList:{}", itemList);
+		
+		model.addAttribute("itemList", itemList);
 
-			return "item/itemListAjax";
-		}
+		return "item/itemListAjax";
+	}
 	
 	
 	//상품 상세 페이지 이동
