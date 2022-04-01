@@ -1,7 +1,7 @@
 package com.project.market.controller;
 
 import java.util.ArrayList;
-
+import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,9 +11,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.market.service.OrderService;
 import com.project.market.util.PageNavigator;
+import com.project.market.vo.CartVO;
+import com.project.market.vo.ItemVO;
 import com.project.market.vo.OrderVO;
 
 @Controller
@@ -25,6 +28,55 @@ public class OrderController {
 	private static final int PAGE_PER_GROUP = 5;
 	@Autowired
 	private OrderService service;
+	
+	//장바구니에 상품넣기
+	@ResponseBody
+	@RequestMapping(value = "/insertCart", method = RequestMethod.GET)
+	public String insertCart(int itemNum, int cartAmount, Model model) {
+		logger.info("itemNum : {}", itemNum);
+		logger.info("cartAmount : {}", cartAmount);
+		String res = null;
+		
+		// 1. 장바구니에 같은 상품이 있는지 확인
+		CartVO cart = service.checkCart(itemNum);
+		
+		// 같은 상품이 없다면
+		if(cart == null) {
+			// 장바구니에 상품 정보를 입력
+			boolean result1 = service.insertCart(itemNum,cartAmount);
+			if(result1) {
+				res = "yes";
+			} else {
+				res = "no";
+			}
+		} else { // 같은 상품이 있다면 cart의 amount를 업데이트
+			boolean result2 = service.updateCartAmount(itemNum,cartAmount);
+			
+			if(result2) {
+				res = "yes";
+			} else {
+				res = "no";
+			}
+		}
+		
+		ArrayList<ItemVO> cartList = service.selectCartList();
+		logger.info("cartList :{}", cartList);
+		
+		model.addAttribute("cartList", cartList);
+		
+		return res;
+	}
+	
+	//마우스 오버시 cartList조회
+	@RequestMapping(value="/selectCartList", method = RequestMethod.POST)
+	public String selectCartList(Model model) {
+		ArrayList<ItemVO> cartList = service.selectCartList();
+		logger.info("cartList :{}", cartList);
+		
+		model.addAttribute("cartList", cartList);
+		
+		return "/order/cartListAjax";
+	}
 	
 	// 2022-03-24~2022-03-25 노채린
 	// 1.주문 리스트 불러오기 및 페이지 열기 시작
@@ -57,21 +109,26 @@ public class OrderController {
 	
 	// 2022-03-25~2022-03-26 노채린
 	// 2.주문 취소 시작
-	@RequestMapping(value = "orderCancle", method = RequestMethod.POST)
-	public String orderCancle(String[] orderNum) {
-		logger.info("orderCancle 메소드 실행(POST)");
+	@ResponseBody
+	@RequestMapping(value = "/orderCancel", method = RequestMethod.POST)
+	public String orderCancel(@RequestParam(value="cancelNumArray[]") List<String> cancelNum) {
+		logger.info("orderCancel 메소드 실행");
+		logger.info("cancelNum:{}", cancelNum);
 		
-		// 2.주문 취소 메소드
-		boolean result = service.orderCancle(orderNum);
+		 // 상품 목록 삭제 메소드
+		boolean result = service.orderCancel(cancelNum);
 		
 		if(result) {
 			logger.info("주문 취소 성공");
 			
+			return "success";
+			
 		} else {
 			logger.info("주문 취소 실패");
+			
+			return null;
 		}
 		
-		return "redirect:/order/orderList";
 	}
 	
 }

@@ -426,7 +426,6 @@ ol {
 
 .inner-header .advanced-search {
 	height: 50px;
-	border: 1px solid #ebebeb;
 }
 
 .inner-header .advanced-search .category-btn {
@@ -457,7 +456,6 @@ ol {
 	position: absolute;
 	right: 11px;
 	top: 10px;
-	content: "3";
 	font-family: "ElegantIcons";
 	font-size: 16px;
 	color: #b2b2b2;
@@ -471,7 +469,7 @@ ol {
 .inner-header .advanced-search .input-group input {
 	width: 100%;
 	height: 100%;
-	border: none;
+	border: 1px solid #ebebeb;
 	font-size: 16px;
 	color: #d1d1d1;
 	padding-left: 20px;
@@ -2316,6 +2314,7 @@ ol {
 
 .product-details .quantity .primary-btn.pd-cart {
 	padding: 14px 70px 10px;
+	cursor: pointer;
 }
 
 .product-details .pd-tags {
@@ -3890,9 +3889,6 @@ ol {
 /* ------------------------------ Responsive Media Styles ---------------------------- */
 
 @media only screen and (min-width: 1200px) and (max-width: 1920px) {
-	.inner-header .advanced-search .input-group button {
-		right: -14px;
-	}
 	.product-item .pi-pic ul li a {
 		padding: 16px 12px 12px 11px;
 	}

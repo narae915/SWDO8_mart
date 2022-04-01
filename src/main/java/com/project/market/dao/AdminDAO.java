@@ -2,6 +2,7 @@ package com.project.market.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +17,30 @@ public class AdminDAO {
 	@Autowired
 	private SqlSession session;
 
+	// 페이징
+	//직원인지 확인
+	public String StaffOnlyChk(String chkMessage) {
+		String result = null;
+		AdminMapper mapper = null;
+
+		try {
+			mapper = session.getMapper(AdminMapper.class);
+			result = mapper.StaffOnlyChk(chkMessage);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
 	// 1.페이징
-	public int getTotalRecordsCount(String searchWord) {
+	public int getTotalRecordsCount(HashMap<String, Object> map) {
 		int result = 0;
 		AdminMapper mapper = null;
 
 		try {
 			mapper = session.getMapper(AdminMapper.class);
-			result = mapper.getTotalRecordsCount(searchWord);
+			result = mapper.getTotalRecordsCount(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -40,19 +57,20 @@ public class AdminDAO {
 	}
 
 	// 2.상품 삭제 메소드
-	public int itemDelete(int itemNum) {
+	public int itemDelete(List<Integer> intCancelNum) {
 		int result = 0;
 		AdminMapper mapper = null;
 		
 		try {
 			mapper = session.getMapper(AdminMapper.class);
-			result = mapper.itemDelete(itemNum);
+			result = mapper.itemDelete(intCancelNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return result;
 	}
 
+	// 3.상품 추가 메소드
 	public int itemInsert(HashMap<String, Object> map) {
 		int result = 0;
 		AdminMapper mapper = null;
@@ -199,4 +217,5 @@ public class AdminDAO {
 		
 		return result;
 	}
+
 }

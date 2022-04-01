@@ -2,11 +2,15 @@ package com.project.market.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.market.dao.OrderDAO;
+import com.project.market.vo.CartVO;
+import com.project.market.vo.ItemVO;
 import com.project.market.vo.OrderVO;
 
 
@@ -45,15 +49,37 @@ public class OrderService {
 	}
 
 	// 2.주문 취소 메소드
-	public boolean orderCancle(String[] orderNum) {
-		// ArrayList로 변환
-		ArrayList<String> orderNumList = new ArrayList<>();
-		for (int i = 0; i < orderNum.length; i++) {
-			orderNumList.add(i, orderNum[i]);
-			// System.out.print(orderNumList.get(i));
-		}
+	public boolean orderCancel(List<String> cancelNum) {
 		
-		return dao.orderCancle(orderNumList) > 0;
+		List<Integer> intCancelNum = cancelNum.stream().map(s -> Integer.parseInt(s)).collect(Collectors.toList());
+		
+		return dao.orderCancel(intCancelNum) > 0;
+	}
+
+	//장바구니에 상품넣기
+	public boolean insertCart(int itemNum, int cartAmount) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("itemNum", itemNum);
+		map.put("cartAmount", cartAmount);
+		return dao.insertCart(map) > 0;
+	}
+
+	//장바구니 상품 조회
+	public ArrayList<ItemVO> selectCartList() {
+		return dao.selectCartList();
+	}
+
+	//장바구니에 같은 상품이 있는지 확인
+	public CartVO checkCart(int itemNum) {
+		return dao.checkCart(itemNum);
+	}
+
+	//장바구니에 같은 상품이 있다면 수량을 증가
+	public boolean updateCartAmount(int itemNum, int cartAmount) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("itemNum", itemNum);
+		map.put("cartAmount", cartAmount);
+		return dao.updateCartAmount(map) > 0;
 	}
 
 }

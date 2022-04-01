@@ -2,6 +2,7 @@ package com.project.market.controller;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -39,23 +40,46 @@ public class AdminController {
 	@Autowired
 	private AdminService service;
 	
+	// 직원인지 확인
+	@ResponseBody
+	@RequestMapping(value = "/staffOnlyChk", method = RequestMethod.GET)
+	public String staffOnlyChk(String chkMessage) {
+		logger.info("staffOnlyChk 메소드(GET)");
+		logger.info("사용자가 입력한 텍스트 : {} ", chkMessage);
+		
+		String staffInfo = service.StaffOnlyChk(chkMessage);
+		logger.info("staffInfo:{}", staffInfo);
+		
+		if (staffInfo != null) {
+			staffInfo = "yes";
+		} else {
+			staffInfo = "no";
+		}
+		return staffInfo;
+	}
+	
 	// 2022-03-27 노채린
 	// 상품 목록 불러오기
 	@RequestMapping(value = "/itemManagement", method = RequestMethod.GET)
-	public String itemManagement(@RequestParam(defaultValue = "1") int currentPage, HttpSession session, Model model, String searchWord) {
+	public String itemManagement(@RequestParam(defaultValue = "1") int currentPage, String searchWord,
+									Integer category, HttpSession session, Model model) {
 		logger.info("itemManagement 메소드 실행(GET).");
 		
-		// 페이징
-		// 검색하지 않았을 때
 		if(searchWord == null) {
 			searchWord = "";
 		}
-		int totalRecordsCount = service.getTotalRecordsCount(searchWord);
+		
+		if(category == null) {
+			category = 0;
+		}
+		
+		// 페이징
+		int totalRecordsCount = service.getTotalRecordsCount(searchWord, category);
 		PageNavigator navi = new PageNavigator(COUNT_PER_PAGE, PAGE_PER_GROUP, currentPage, totalRecordsCount);
 		model.addAttribute("navi", navi);
 		
-		// 1. 상품 리스트 불러오기 메소드
-		ArrayList<ItemVO> itemList = service.getItemList(navi.getStartRecord(), COUNT_PER_PAGE, searchWord);
+		// 상품 리스트 불러오기 메소드
+		ArrayList<ItemVO> itemList = service.getItemList(navi.getStartRecord(), COUNT_PER_PAGE, searchWord, category);
 		model.addAttribute("itemList", itemList);
 		
 		return "/admin/itemManagement";
@@ -64,51 +88,30 @@ public class AdminController {
 
 	// 2022-03-28 노채린
 	// 상품 목록 삭제
-	@RequestMapping(value = "/itemDelete", method = RequestMethod.POST)
-	public String itemDelete(int itemNum) {
+	@ResponseBody
+	@RequestMapping(value = "/itemDelete", method = RequestMethod.GET)
+	public String itemDelete(@RequestParam(value="cancelNumArray[]") List<String> cancelNum) {
 		logger.info("itemDelete 메소드 실행");
-		logger.info("itemNum:{}", itemNum);
-		boolean result = service.itemDelete(itemNum);
+		logger.info("cancelNum:{}", cancelNum);
+		
+		 // 상품 목록 삭제 메소드
+		boolean result = service.itemDelete(cancelNum);
 		
 		if(result) {
 			logger.info("상품 삭제 성공");
+			
+			return "success";
+			
 		} else {
 			logger.info("상품 삭제 실패");
+			
+			return null;
 		}
 		
-		// 삭제 알림 표시해주기
-		return "redirect:/admin/itemManagement";
+		
 	}
 	
-	// 상품 목록 추가 페이지
-	@RequestMapping(value = "/itemInsert", method = RequestMethod.GET)
-	public String itemInsert(HttpSession session, Model model){
-		logger.info("itemInsert 메소드 실행(GET).");
-
-		return "/admin/itemUpdate";
-	}
 	
-	@RequestMapping(value ="/itemInsert", method = RequestMethod.POST)
-	public String itemInsert(int category, String itemName, String price, String itemAmount) {
-		logger.info("itemInsert 메소드 실행");
-		
-		logger.info("category:{}", category);
-		logger.info("itemName:{}", itemName);
-		logger.info("price:{}", price);
-		logger.info("itemAmount:{}", itemAmount);
-
-		boolean result = service.itemInsert(category, itemName, price, itemAmount);
-		
-		if(result) {
-			logger.info("상품 추가 성공");
-		} else {
-			logger.info("상품 추가 실패");
-		}
-		
-		// 추가됐다는 알림 표시해주기
-		return "redirect:/admin/itemManagement";
-
-	}
 	/* 관리자용 메인페이지로 이동 */
 	@RequestMapping(value = "/adminMain", method = RequestMethod.GET)
 	public String adminMain()

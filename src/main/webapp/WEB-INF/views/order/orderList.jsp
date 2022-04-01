@@ -238,8 +238,8 @@
 	                    	<button type="submit" class="primary-btn" id="search-button"><i class="ti-search"></i></button>
 	                    </form>
 	                    <!-- 주문 취소 및 주문 조회 -->
-	                    <form action="orderCancle" method="post" onsubmit="return valueChk();">
-	                    	<button type="submit" class="primary-btn" id="cancle-button">주문 취소</button>
+	                    <form action="ordercancel" method="post" id="cancelForm">
+	                    	<button type="button" class="primary-btn" id="cancel-button" onclick="return valueChk();">주문 취소</button>
 	                    		
 	                    	<!-- 주문 조회 테이블 시작 -->
 	                        <table class="table-basic">
@@ -262,7 +262,7 @@
 	                        	</thead>
 	                        	<tbody>
 		                        	<c:forEach var="Order" items="${orderList }">
-		                        		<td rowspan="2"><input type="checkbox" name="orderNum" value="${Order.orderNum }" style="width:30px; height:30px;" /></td> <!-- 주문취소셀렉트 -->
+		                        		<td rowspan="2"><input type="checkbox" id="orderNum" name="orderNum" value="${Order.orderNum }" style="width:30px; height:30px;" /></td> <!-- 주문취소셀렉트 -->
 		                        		<c:if test="${Order.price  == 0}"> <!-- 상품정보 없을 시 금액 -->
 		                        			<td>- ₩</td> 
 		                        		</c:if>

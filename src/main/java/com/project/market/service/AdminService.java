@@ -2,6 +2,9 @@ package com.project.market.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.project.market.dao.AdminDAO;
@@ -14,27 +17,38 @@ public class AdminService {
 	@Autowired
 	private AdminDAO dao;
 
+	//직원인지 확인
+	public String StaffOnlyChk(String chkMessage) {
+		return dao.StaffOnlyChk(chkMessage);
+	}
+
 	// 1.페이징
-	public int getTotalRecordsCount(String searchWord) {
-		return dao.getTotalRecordsCount(searchWord);
+	public int getTotalRecordsCount(String searchWord, int category) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("searchWord", searchWord);
+		map.put("category", category);
+		
+		return dao.getTotalRecordsCount(map);
 	}
 
 	// 1. 상품 리스트 불러오기 메소드
-	public ArrayList<ItemVO> getItemList(int startRecord, int countPerPage, String searchWord) {
+	public ArrayList<ItemVO> getItemList(int startRecord, int countPerPage, String searchWord, int category) {
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("startRecord", startRecord);
 		map.put("countPerPage", countPerPage);
 		map.put("searchWord", searchWord);
+		map.put("category", category);
 
 		return dao.getItemList(map);
 	}
 
 	// 2.상품 삭제 메소드
-	public boolean itemDelete(int itemNum) {
-		
-		return dao.itemDelete(itemNum) > 0;
+	public boolean itemDelete(List<String> cancelNum) {
+		List<Integer> intCancelNum = cancelNum.stream().map(s -> Integer.parseInt(s)).collect(Collectors.toList());
+		return dao.itemDelete(intCancelNum) >0;
 	}
 
+	// 3.상품 추가 메소드
 	public boolean itemInsert(int category, String itemName, String price, String itemAmount) {
 		int intPrice = Integer.parseInt(price);
 		
@@ -112,4 +126,5 @@ public class AdminService {
 		return dao.empDelete(empNum) > 0;
 
 	}
+
 }

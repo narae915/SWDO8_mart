@@ -28,7 +28,6 @@
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
 
-
 	<style type="text/css">
 	table, th, tr, td {
 		text-align: center;
@@ -47,6 +46,7 @@
     }
     	
 	th {
+		font-weight: 800;
 		border: #fff 1px solid;
 		background-color: black;
 		color: #fff; 
@@ -58,6 +58,42 @@
 	
 	.text-type {
 		width:150px;
+	}
+	
+		
+    button {
+		border:none;
+		position:relative;
+		transition:800ms ease all;
+		outline:none;
+	}
+	
+	button:hover {
+		background:#000;
+		color:#E7AB3C;
+	}
+	
+	button:before,button:after {
+		content:'';
+		position:absolute;
+		top:0;
+		right:0;
+		height:2px;
+		width:0;
+		background: #E7AB3C;
+		transition:400ms ease all;
+	}
+	
+	button:after {
+		right:inherit;
+		top:inherit;
+		left:0;
+		bottom:0;
+	}
+	
+	button:hover:before, button:hover:after {
+		width:100%;
+		transition:800ms ease all;
 	}
 	</style>
 
@@ -240,7 +276,7 @@
                         <a href="#"><i class="fa fa-home"></i> Home</a>
                         <a href="#">Employee</a>
                         <a href="#">상품 조회</a>
-                        <span>상품 추가</span>
+                        <span>상품 수정 및 추가</span>
                     </div>
                 </div>
             </div>
@@ -255,17 +291,18 @@
                 <div class="col-lg-12"> <!-- 본문을 우측으로 조금 변경 -->
                     <div class="faq-accordin"> <!-- 폰트 크기, 아이콘 -->
                     
-                    <!-- 22/03/28 노채린 -->
-                    <!-- 상품 추가 -->
-                    <!-- 수정 구현 후 수정을 메인으로 변경할 것. -->
-                    <form action="itemInsert" method="post">
+                    <!-- 22/03/30 노채린 -->
+                    <!-- 상품 수정 -->
+                    <input type="button" class="primary-btn" style="height:40px; border-radius:5px;"value="수정" onclick="return itemUpdate();">
+                    <form action="itemUpdate" method="POST">
                        <table>
+                       <%-- <c:forEach var="Item" items="${itemList }"> --%>
                        		<tr>
                        			<th style="padding-top:15px; padding-bottom:15px">IMAGE</th>
                        			<td style="width:20%; height: 200px;"><img src="/resources/img/cart-page/product-1.jpg" alt="임시사진"></td>
                        			<th>카테고리</th>
                        			<td>
-                       				<select name="category">
+                       				<select name="category" id="category">
 	                       				<option value="">카테고리 선택</option>
 	                       				<option value="10">육류</option>
 	                       				<option value="20">어패류</option>
@@ -280,26 +317,26 @@
                        		<tr>
                        			<th style="height:80px; width:20%">상품 이름</th>
                        			<td>
-                       				<input type="text" name="itemName" class="text-type">
+                       				<input type="text" name="itemName" class="text-type" id="itemName">
                        			</td>
                        			<th style="width:18%">가격</th>
                        			<td>
-                       				<input type="text" name="price" class="text-type">
+                       				<input type="text" name="price" class="text-type" id="price">
                        			</td>
                        		</tr>
                        		<tr>
                        			<th style="height:80px;">재고</th>
                        			<td style="width:40%">
-                       				<input type="text" name="itemAmount" class="text-type">
+                       				<input type="text" name="itemAmount" class="text-type" id="itemAmount">
                        			</td>
                        			<th></th>
                        			<td style="width:50%">
-                       				<button type="submit">완료</button>
+                       				<button type="submit" class="primary-btn" style="height:40px; border-radius:5px;">완료</button>
                        			</td>
                        		</tr>
+                       		<%-- </c:forEach> --%>
                        </table>
                        <!--상품 관리 테이블 끝  -->
-                       
 					</form>
                     </div>
                 </div>
