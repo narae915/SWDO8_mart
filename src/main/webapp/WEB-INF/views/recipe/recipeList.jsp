@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -26,6 +27,18 @@
     <link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
+    
+    <style type="text/css">
+	    .star-container span{
+			font-size:12px;
+			letter-spacing:-4px;
+			display:inline-block;
+			color:#ccc;
+		}
+		.star-container span.on {
+			color:#ffa500;
+		}
+    </style>
 </head>
 
 <body>
@@ -58,60 +71,26 @@
                 <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1">
                     <div class="blog-sidebar">
                         <div class="search-form">
-                            <h4>Search</h4>
-                            <form action="#">
-                                <input type="text" placeholder="Search . . .  ">
-                                <button type="submit"><i class="fa fa-search"></i></button>
+                            <h4>레시피 검색</h4>
+                            <form id="searchForm">
+                                <input type="text" name="searchword" placeholder="검색어 ">
+                                <button type="button" onclick="search();"><i class="fa fa-search"></i></button>
                             </form>
                         </div>
-                        <div class="blog-catagory">
-                            <h4>Categories</h4>
-                            <ul>
-                                <li><a href="#">Fashion</a></li>
-                                <li><a href="#">Travel</a></li>
-                                <li><a href="#">Picnic</a></li>
-                                <li><a href="#">Model</a></li>
-                            </ul>
-                        </div>
                         <div class="recent-post">
-                            <h4>Recent Post</h4>
+                            <h4>최신글</h4>
                             <div class="recent-blog">
-                                <a href="#" class="rb-item">
-                                    <div class="rb-pic">
-                                        <img src="/resources/img/blog/recent-1.jpg" alt="">
-                                    </div>
-                                    <div class="rb-text">
-                                        <h6>The Personality Trait That Makes...</h6>
-                                        <p>Fashion <span>- May 19, 2019</span></p>
-                                    </div>
-                                </a>
-                                <a href="#" class="rb-item">
-                                    <div class="rb-pic">
-                                        <img src="/resources/img/blog/recent-2.jpg" alt="">
-                                    </div>
-                                    <div class="rb-text">
-                                        <h6>The Personality Trait That Makes...</h6>
-                                        <p>Fashion <span>- May 19, 2019</span></p>
-                                    </div>
-                                </a>
-                                <a href="#" class="rb-item">
-                                    <div class="rb-pic">
-                                        <img src="/resources/img/blog/recent-3.jpg" alt="">
-                                    </div>
-                                    <div class="rb-text">
-                                        <h6>The Personality Trait That Makes...</h6>
-                                        <p>Fashion <span>- May 19, 2019</span></p>
-                                    </div>
-                                </a>
-                                <a href="#" class="rb-item">
-                                    <div class="rb-pic">
-                                        <img src="/resources/img/blog/recent-4.jpg" alt="">
-                                    </div>
-                                    <div class="rb-text">
-                                        <h6>The Personality Trait That Makes...</h6>
-                                        <p>Fashion <span>- May 19, 2019</span></p>
-                                    </div>
-                                </a>
+                            	<c:forEach items="${recipeList }" var="recipe" varStatus="status">
+									<a href="/recipe/readRecipe?recipeNum=${recipe.recipeNum }" class="rb-item">
+	                                    <div class="rb-pic">
+	                                        <img src="/resources/img/blog/recent-${status.count }.jpg" alt="">
+	                                    </div>
+	                                    <div class="rb-text">
+	                                        <h6>${recipe.title }</h6>
+	                                        <p><span>${recipe.indate }</span></p>
+	                                    </div>
+                                	</a>
+								</c:forEach>
                             </div>
                         </div>
                         <div class="blog-tags">
@@ -129,85 +108,31 @@
                     </div>
                 </div>
                 <div class="col-lg-9 order-1 order-lg-2">
-                    <div class="row">
-                        <div class="col-lg-6 col-sm-6">
+                    <div class="row" id="getRecipeList">
+                    	<c:forEach items="${recipeList }" var="recipe" varStatus="status">
+							<div class="col-lg-6 col-sm-6">
+							<input type="hidden" id="recipe${status.count }" value="${recipe.score }">
                             <div class="blog-item">
                                 <div class="bi-pic">
-                                    <img src="/resources/img/blog/blog-1.jpg" alt="">
+                                    <img src="/resources/img/blog/blog-${status.count }.jpg" alt="">
                                 </div>
                                 <div class="bi-text">
-                                    <a href="./blog-details.html">
-                                        <h4>The Personality Trait That Makes People Happier</h4>
+                                    <a href="/recipe/readRecipe?recipeNum='${recipe.recipeNum }'">
+                                        <h4>${recipe.title }</h4>
                                     </a>
-                                    <p>travel <span>- May 19, 2019</span></p>
+                                    <p><span>${recipe.indate } - </span>
+                                    </p>
+                                   	<span class="star-container" id="star-con${status.count }">
+										<span id="star1">★</span>
+										<span id="star2">★</span>
+										<span id="star3">★</span>
+										<span id="star4">★</span>
+										<span id="star5">★</span>
+									</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-sm-6">
-                            <div class="blog-item">
-                                <div class="bi-pic">
-                                    <img src="/resources/img/blog/blog-2.jpg" alt="">
-                                </div>
-                                <div class="bi-text">
-                                    <a href="./blog-details.html">
-                                        <h4>This was one of our first days in Hawaii last week.</h4>
-                                    </a>
-                                    <p>Fashion <span>- May 19, 2019</span></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-sm-6">
-                            <div class="blog-item">
-                                <div class="bi-pic">
-                                    <img src="/resources/img/blog/blog-3.jpg" alt="">
-                                </div>
-                                <div class="bi-text">
-                                    <a href="./blog-details.html">
-                                        <h4>Last week I had my first work trip of the year to Sonoma Valley</h4>
-                                    </a>
-                                    <p>travel <span>- May 19, 2019</span></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-sm-6">
-                            <div class="blog-item">
-                                <div class="bi-pic">
-                                    <img src="/resources/img/blog/blog-4.jpg" alt="">
-                                </div>
-                                <div class="bi-text">
-                                    <a href="./blog-details.html">
-                                        <h4>Happppppy New Year! I know I am a little late on this post</h4>
-                                    </a>
-                                    <p>Fashion <span>- May 19, 2019</span></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-sm-6">
-                            <div class="blog-item">
-                                <div class="bi-pic">
-                                    <img src="/resources/img/blog/blog-5.jpg" alt="">
-                                </div>
-                                <div class="bi-text">
-                                    <a href="./blog-details.html">
-                                        <h4>Absolue collection. The Lancome team has been one…</h4>
-                                    </a>
-                                    <p>Model <span>- May 19, 2019</span></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-sm-6">
-                            <div class="blog-item">
-                                <div class="bi-pic">
-                                    <img src="/resources/img/blog/blog-6.jpg" alt="">
-                                </div>
-                                <div class="bi-text">
-                                    <a href="./blog-details.html">
-                                        <h4>Writing has always been kind of therapeutic for me</h4>
-                                    </a>
-                                    <p>Fashion <span>- May 19, 2019</span></p>
-                                </div>
-                            </div>
-                        </div>
+						</c:forEach>
                         <div class="col-lg-12">
                             <div class="loading-more">
                                 <i class="icon_loading"></i>
@@ -237,6 +162,39 @@
     <script src="/resources/js/jquery.slicknav.js"></script>
     <script src="/resources/js/owl.carousel.min.js"></script>
     <script src="/resources/js/main.js"></script>
+    <script type="text/javascript">
+  //리뷰 별 채우기
+    $(function() {
+    	var score = $('input:hidden').length; //hidden태그의 value
+    	console.log(score);
+    	   
+    	for(var i=1; i<=score; i++) {
+    		$("#star-con"+i+" span").removeAttr("class");
+    		var test = $("#recipe" + i).val();
+    		for(var j=1; j<=test; j++) {
+    			console.log(test);
+    			$("#star-con"+i+" #star"+j).attr("class", "on");
+    		}
+		}
+	});
+
+	function search(){
+		var searchword = $("input[name='searchword']").val();
+		console.log(searchword);
+		
+	  	$.ajax({
+			url: "/recipe/search",
+			data: {
+				searchword:searchword
+			},
+			success: function(res){
+				console.log("검색 성공");
+				$(".row > .col-lg-4 col-sm-6").remove();
+				$("#getRecipeList").html(res);
+			}
+	  	});
+	}
+    </script>
 </body>
 
 </html>

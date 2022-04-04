@@ -211,6 +211,14 @@
     <script src="/resources/js/main.js"></script>
     <script type="text/javascript">
 	
+	 // ajax 통신을 위한 csrf 설정
+/*     var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    $(document).ajaxSend(function(e, xhr, options) {
+        xhr.setRequestHeader(header, token);
+    }); */
+
+    
     //카테고리 번호 찾기(정렬 select에서 categoryNum을 알 수 없기 때문)
     function searchCategoryNum(categoryNum) {
     	var searchNum = $("#cate-num").val();

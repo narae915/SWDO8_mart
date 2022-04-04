@@ -372,10 +372,6 @@ ol {
 	margin-right: 5px;
 }
 
-.header-top .ht-right {
-	float: right;
-}
-
 .header-top .ht-right .login-panel {
 	float: right;
 	font-size: 14px;
@@ -3223,6 +3219,7 @@ ol {
 
 .blog-item .bi-text p {
 	margin-bottom: 0;
+	display: inline-block;
 	font-size: 14px;
 	font-weight: 700;
 	text-transform: uppercase;
