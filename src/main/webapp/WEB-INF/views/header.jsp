@@ -1,8 +1,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 <!DOCTYPE html>
 <html lang="zxx">
+
 <head>
     <title>SpringDay | Header</title>
 </head>
@@ -23,7 +25,13 @@
                     </div>
                 </div>
                 <div class="ht-right">
+                	<c:if test="${sessionScope.loginMail == null}" >
                     <a href="/user/login" class="login-panel"><i class="fa fa-user"></i>로그인</a>
+					</c:if>
+					<c:if test="${sessionScope.loginMail != null}" >
+					<!-- 로그아웃(form안의 내용을 가지고감) -->
+                    <a href="/user/logout" class="login-panel"><i class="fa fa-user"></i>로그아웃</a>
+					</c:if>
                     <div class="lan-selector">
                         <select class="language_drop" name="countries" id="countries" style="width:300px;">
                             <option value='yt' data-image="/resources/img/flag-1.jpg" data-imagecss="flag yt"
@@ -61,7 +69,7 @@
                                 <span>""님 환영합니다.
                                 </span>
                             <li class="cart-icon">
-                                <a href="/order/cart">
+                                <a href="#" onmouseover="selectCartList();">
                                     <i class="icon_bag_alt"></i>
                                     <span>+</span>
                                 </a>
@@ -131,20 +139,37 @@
     <!-- Header End -->
     <script src="/resources/js/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
+    
+    function selectCartList(){
+    	var str = "";
+   		$.ajax({
+   			url: "/order/selectCartList",
+   			type: "POST",
+   			success: function(res){
+   				$("#cartList").remove();
+   				$(".select-items").html(res);
+       		},
+   			error: function(e){
+   				console.log(e);
+   				console.log("실패");
+   			}
+   		});
+    }
+    
     	$(".icon_bag_alt").mouseover(function(){
-    		var str = "";
-    		$.ajax({
-    			url: "/order/selectCartList",
-    			type: "POST",
-    			success: function(res){
-    				$("#cartList").remove();
-    				$(".select-items").html(res);
-        		},
-    			error: function(e){
-    				console.log("실패");
-    			}
-    		});
-    	});
+   		var str = "";
+   		$.ajax({
+   			url: "/order/selectCartList",
+   			type: "POST",
+   			success: function(res){
+   				$("#cartList").remove();
+   				$(".select-items").html(res);
+       		},
+   			error: function(e){
+   				console.log("실패");
+   			}
+   		});
+   	}); 
     </script>
 </body>
 </html>
