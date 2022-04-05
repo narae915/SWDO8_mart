@@ -22,5 +22,4 @@
 		#{userAddress }
 	)
 </insert>
-
 </mapper>

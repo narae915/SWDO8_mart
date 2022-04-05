@@ -1,11 +1,14 @@
 package com.project.market.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -21,6 +24,9 @@ public class UserController {
 	@Autowired
 	private UserService service;
 	
+	@Autowired
+	private BCryptPasswordEncoder pwdEncoder;
+	
 	//회원가입 페이지 이동
 		@RequestMapping(value = "/signUp", method = RequestMethod.GET)
 		public String signUp() {
@@ -31,10 +37,13 @@ public class UserController {
 		
 		//회원가입 시도
 		@RequestMapping(value = "/signUp", method = RequestMethod.POST)
-		public String signUp(UserVO user) {
+		public String signUp(HttpServletRequest request, Model model, UserVO user) {
 			logger.info("회원가입 페이지(POST)");
 			logger.info("user : {}", user);
 
+			String userPw = pwdEncoder.encode(user.getUserPw());
+			user.setUserPw(userPw);
+			
 			boolean result = service.signUpUser(user);
 			String returnUrl = null;
 
@@ -55,6 +64,8 @@ public class UserController {
 			
 			return "user/login";
 		}
+		
+		
 		
 		//로그아웃
 		@RequestMapping(value = "/logout", method = RequestMethod.GET)
