@@ -22,4 +22,10 @@
 		#{userAddress }
 	)
 </insert>
+
+<!-- 회원 탈퇴 -->
+<!-- <delete id = "userDelete" parameterType="String">
+	delete from user_table
+	where user_mail = #{userMail }
+</delete> -->
 </mapper>

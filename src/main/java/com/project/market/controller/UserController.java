@@ -76,4 +76,33 @@ public class UserController {
 			return "home";
 		}
 		
+		// 22-04-05 노채린
+		// 회원정보 수정 페이지
+		@RequestMapping(value="/mypage", method = RequestMethod.GET)
+		public String mypage() {
+			logger.info("회원정보 수정 페이지(GET)");
+			
+			return "user/mypage";
+		}
+		
+		/*
+		// 22-04-05 노채린
+		// 회원 탈퇴
+		@RequestMapping(value="/userDelete", method = RequestMethod.GET)
+		public String userDelete(HttpSession session) {
+			logger.info("회원탙퇴 실행(GET)");
+			
+			String userMail = (String) session.getAttribute("loginMail");
+			
+			boolean result = service.userDelete(userMail);
+			
+			if(result) {
+				logger.info("회원 탈퇴 성공");
+			} else {
+				logger.info("회원 탈퇴 실패");
+			}
+			
+			return "redirect:/";
+		}
+		*/
 }

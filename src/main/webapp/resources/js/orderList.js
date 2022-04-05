@@ -1,4 +1,4 @@
-
+/*
 //주문 취소
 function valueChk() {
 	var cancelNum = [];
@@ -14,10 +14,8 @@ function valueChk() {
 		
 		return false;
 	} else { // 체크박스가 체크된 경우 확인 절차를 진행함.
-	
-		$('#confirm-modal').modal('show');
-		$('body').removeClass('modal-open');
-		$('.modal-backdrop').remove();
+		
+		모달창
 		
 		$('#yes-button').click(function() {
 			$.ajax({
@@ -26,15 +24,22 @@ function valueChk() {
 				data: allData,
 				success: function(res) {
 					if(res == 'success') {
-						$('#confirm-modal').modal('hide');
-						$('#result-modal').modal();
+
+						무언가						
 					}
+					
 				}
 			});
 		});
 	}
 	
 }
+	*/
+	
+	
+	
+	
+	
 	
 	// 검색어 유효성 검사
 	function searchChk() {

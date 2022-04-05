@@ -26,5 +26,21 @@ public class UserDAO {
 		return result;
 	}
 
+	/*
+	// 회원 탈퇴
+	public int userDelete(String userMail) {
+		int result = 0;
+		UserMapper mapper = null;
+		
+		try {
+			mapper = session.getMapper(UserMapper.class);
+			result = mapper.userDelete(userMail);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+*/
 
 }

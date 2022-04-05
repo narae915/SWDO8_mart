@@ -29,6 +29,12 @@
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/orderList.css" type="text/css">
 
+<script type="text/javascript">
+ function show(str){
+	 
+ }
+</script>
+
 <style>
 	.modal {
 		position: fixed;
@@ -58,14 +64,32 @@
     <!-- Header -->
 	<%@ include file="/WEB-INF/views/header.jsp" %>
 	
-	<!-- 모달 -->
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" id="title"></h4>
+        </div>
+        <div class="modal-body">
+          <p id="content"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>  
+
+	<!-- 
 	<div class="modal" id="result-modal">
 		<div class="modal_content" title="클릭하면 창이 닫힙니다.">
 			<br><br><br><b>주문이 취소되었습니다.</b><br><br>
 			<button class="primary-btn" style="border-radius:5px" onclick="location.href = '/order/orderList'">닫기</button>
 		</div>
-	</div>
-	
+	</div> -->
+<!-- 	
 	<div class="modal" id="confirm-modal">
 		<div class="modal_content">
 			<br><br><br><b>정말 취소하시겠습니까?</b><br><br>
@@ -73,7 +97,7 @@
 			<button class="primary-btn" id="no-button"  style="border-radius:5px">아니오</button>
 		</div>
 	</div>
-	
+	 -->
 	
     <!-- Breadcrumb Section Begin -->
     <div class="breacrumb-section">
@@ -143,7 +167,7 @@
 			                        			<td>- ₩</td> 
 			                        		</c:if>
 			                        		<c:if test="${Order.price  != 0}"> <!-- 상품정보 있을 시 금액 -->
-			                        			<td>${Order.price * Order.amount } ₩</td>
+			                        			<td><fmt:formatNumber value="${Order.price * Order.amount }" pattern='#,### ₩'/></td>
 			                        		</c:if>
 			                        		
 			                        		<td rowspan="2"><img src="/resources/img/cart-page/product-1.jpg" alt="임시사진"></td><!-- 상품사진 -->
@@ -174,38 +198,74 @@
 	                        <!-- 페이징 시작 -->
 	                        <div style="text-align: center; margin-top: 20px;">
 								<span>
-									<c:if test="${navi.currentPage > 1 }">
-										<a href="/order/orderList?currentPage=${(navi.currentGroup - 1) * 5 + 1 }" style="color: #E7AB3C; text-decoration: none; text-align: center; font-size: 1.5em;">
-											< 이전&nbsp;
-	
-										</a>
-									</c:if>
-									<c:forEach begin="${navi.startPageGroup }" end="${navi.endPageGroup }"
-										var="pageNum">
-										<c:if test="${pageNum == navi.currentPage }">
-											<a href="/order/orderList?currentPage=${pageNum }" style="text-decoration:none; text-align: center; font-size: 1.5em;">
-												<span style="color: #E7AB3C; border: 1px solid;">
-													&nbsp;${pageNum }
-												</span>
-											</a>
-											&nbsp;
-										</c:if>
-										<c:if test="${pageNum != navi.currentPage }">
-											<a href="/order/orderList?currentPage=${pageNum }" style="color: black; text-decoration:none; text-align: center; font-size: 1.5em;">
-												<span>
-													${pageNum }&nbsp;
-												</span>
+									<c:choose>
+									<c:when test="${searchWord eq '' }">
+										<c:if test="${navi.currentPage > 1 }">
+											<a href="/order/orderList?currentPage=${(navi.currentGroup - 1) * 5 + 1 }" style="color: #E7AB3C; text-decoration: none; text-align: center; font-size: 1.5em;">
+												< 이전&nbsp;
+		
 											</a>
 										</c:if>
-									</c:forEach>
-	
-									<c:if test="${navi.currentPage < navi.totalPageCount }">
-										<a href="/order/orderList?currentPage=${(navi.currentGroup + 1) * 5 + 1 }" style="color: #E7AB3C; text-decoration:none;text-align: center; font-size: 1.5em;">
-											다음 >
-										</a>
-									</c:if>
-	
+										<c:forEach begin="${navi.startPageGroup }" end="${navi.endPageGroup }"
+											var="pageNum">
+											<c:if test="${pageNum == navi.currentPage }">
+												<a href="/order/orderList?currentPage=${pageNum }" style="text-decoration:none; text-align: center; font-size: 1.5em;">
+													<span style="color: #E7AB3C; border: 1px solid;">
+														&nbsp;${pageNum }
+													</span>
+												</a>
+												&nbsp;
+											</c:if>
+											<c:if test="${pageNum != navi.currentPage }">
+												<a href="/order/orderList?currentPage=${pageNum }" style="color: black; text-decoration:none; text-align: center; font-size: 1.5em;">
+													<span>
+														${pageNum }&nbsp;
+													</span>
+												</a>
+											</c:if>
+										</c:forEach>
+										<c:if test="${navi.currentPage < navi.totalPageCount }">
+											<a href="/order/orderList?currentPage=${(navi.currentGroup + 1) * 5 + 1 }" style="color: #E7AB3C; text-decoration:none;text-align: center; font-size: 1.5em;">
+												다음 >
+											</a>
+										</c:if>
+									</c:when>
+
+									<c:otherwise>
+										<c:if test="${navi.currentPage > 1 }">
+											<a href="/order/orderList?searchWord=${searchWord }&currentPage=${(navi.currentGroup - 1) * 5 + 1 }" style="color: #E7AB3C; text-decoration: none; text-align: center; font-size: 1.5em;">
+												< 이전&nbsp;
+		
+											</a>
+										</c:if>
+										<c:forEach begin="${navi.startPageGroup }" end="${navi.endPageGroup }"
+											var="pageNum">
+											<c:if test="${pageNum == navi.currentPage }">
+												<a href="/order/orderList?searchWord=${searchWord }&currentPage=${pageNum }" style="text-decoration:none; text-align: center; font-size: 1.5em;">
+													<span style="color: #E7AB3C; border: 1px solid;">
+														&nbsp;${pageNum }
+													</span>
+												</a>
+												&nbsp;
+											</c:if>
+											<c:if test="${pageNum != navi.currentPage }">
+												<a href="/order/orderList?searchWord=${searchWord }&currentPage=${pageNum }" style="color: black; text-decoration:none; text-align: center; font-size: 1.5em;">
+													<span>
+														${pageNum }&nbsp;
+													</span>
+												</a>
+											</c:if>
+										</c:forEach>
+		
+										<c:if test="${navi.currentPage < navi.totalPageCount }">
+											<a href="/order/orderList?searchWord=${searchWord }&currentPage=${(navi.currentGroup + 1) * 5 + 1 }" style="color: #E7AB3C; text-decoration:none;text-align: center; font-size: 1.5em;">
+												다음 >
+											</a>
+										</c:if>
+									</c:otherwise>
+									</c:choose>
 								</span>
+								
 							</div>
 							<!-- 페이징 끝 -->
 						</form>

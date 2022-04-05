@@ -266,6 +266,8 @@
 		                        <!-- 페이징 시작 -->
 		                        <div style="text-align: center; margin-top: 20px;">
 									<span>
+									 <c:choose>
+									<c:when test="${searchWord eq '' }">
 										<c:if test="${navi.currentPage > 1 }">
 											<a href="/admin/itemManagement?currentPage=${(navi.currentGroup - 1) * 5 + 1 }" style="color: #E7AB3C; text-decoration: none; text-align: center; font-size: 1.5em;">
 												< 이전&nbsp;
@@ -296,7 +298,40 @@
 												다음 >
 											</a>
 										</c:if>
-										
+										</c:when>
+									<c:otherwise>
+										<c:if test="${navi.currentPage > 1 }">
+											<a href="/admin/itemManagement?searchWord=${searchWord }&currentPage=${(navi.currentGroup - 1) * 5 + 1 }" style="color: #E7AB3C; text-decoration: none; text-align: center; font-size: 1.5em;">
+												< 이전&nbsp;
+		
+											</a>
+										</c:if>
+										<c:forEach begin="${navi.startPageGroup }" end="${navi.endPageGroup }"
+											var="pageNum">
+											<c:if test="${pageNum == navi.currentPage }">
+												<a href="/admin/itemManagement?searchWord=${searchWord }&currentPage=${pageNum }" style="text-decoration:none; text-align: center; font-size: 1.5em;">
+													<span style="color: #E7AB3C; border: 1px solid;">
+														&nbsp;${pageNum }
+													</span>
+												</a>
+												&nbsp;
+											</c:if>
+											<c:if test="${pageNum != navi.currentPage }">
+												<a href="/admin/itemManagement?searchWord=${searchWord }&currentPage=${pageNum }" style="color: black; text-decoration:none; text-align: center; font-size: 1.5em;">
+													<span>
+														${pageNum }&nbsp;
+													</span>
+												</a>
+											</c:if>
+										</c:forEach>
+		
+										<c:if test="${navi.currentPage < navi.totalPageCount }">
+											<a href="/admin/itemManagement?searchWord=${searchWord }&currentPage=${(navi.currentGroup + 1) * 5 + 1 }" style="color: #E7AB3C; text-decoration:none;text-align: center; font-size: 1.5em;">
+												다음 >
+											</a>
+										</c:if>
+									</c:otherwise>
+									</c:choose>
 									</span>
 								</div>
 								<!-- 페이징 끝 -->

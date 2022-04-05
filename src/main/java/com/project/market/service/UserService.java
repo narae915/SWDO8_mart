@@ -17,4 +17,12 @@ public class UserService {
 	public boolean signUpUser(UserVO user) {
 		return dao.signUpUser(user) > 0;
 	}
+
+	/*
+	// 회원 탈퇴
+	public boolean userDelete(String userMail) {
+
+		return dao.userDelete(userMail) > 0;
+	}
+	*/
 }

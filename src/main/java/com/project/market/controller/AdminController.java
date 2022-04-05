@@ -77,7 +77,7 @@ public class AdminController {
 		int totalRecordsCount = service.getTotalRecordsCount(searchWord, category);
 		PageNavigator navi = new PageNavigator(COUNT_PER_PAGE, PAGE_PER_GROUP, currentPage, totalRecordsCount);
 		model.addAttribute("navi", navi);
-		
+		model.addAttribute("searchWord", searchWord);
 		// 상품 리스트 불러오기 메소드
 		ArrayList<ItemVO> itemList = service.getItemList(navi.getStartRecord(), COUNT_PER_PAGE, searchWord, category);
 		model.addAttribute("itemList", itemList);

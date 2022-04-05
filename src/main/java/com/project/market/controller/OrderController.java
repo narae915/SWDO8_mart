@@ -88,13 +88,10 @@ public class OrderController {
 			searchWord = "";
 		}
 		
+		model.addAttribute("searchWord", searchWord);
+		
 		// 주문 리스트 페이징
 		int totalRecordsCount = service.getTotalRecordsCount(searchWord);
-
-		logger.info("COUNT_PER_PAGE:{}",COUNT_PER_PAGE);
-		logger.info("PAGE_PER_GROUP:{}",PAGE_PER_GROUP);
-		logger.info("currentPage:{}",currentPage);
-		logger.info("totalRecordsCount:{}",totalRecordsCount);
 		
 		PageNavigator navi = new PageNavigator(COUNT_PER_PAGE, PAGE_PER_GROUP, currentPage, totalRecordsCount);
 		model.addAttribute("navi", navi);

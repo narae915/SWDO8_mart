@@ -14,7 +14,7 @@
 			emp_num || emp_name = #{chkMessage }
 	</select>
 
-	<!-- 1.페이징 -->
+	<!-- 페이징 -->
 	<select id = "getTotalRecordsCount" resultType = "int" parameterType = "HashMap">
  		select
  			count(*)
@@ -47,7 +47,18 @@
  			item_table it,
  			(select rownum as rn, item_num as ln
  			from item_table
- 			order by item_num) rt
+ 			 <where>
+ 			<if test = "searchWord != ''">
+			item_num in (select item_num
+		        			from item_table
+							where item_name like '%'||#{searchWord }||'%')
+			</if>
+ 			<if test = "category != 0">
+ 			and
+				category_num = #{category }
+			</if>
+			</where>
+ 				order by item_num) rt
  		where
  			it.item_num = rt.ln
 		and

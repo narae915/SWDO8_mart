@@ -15,6 +15,7 @@
 							from user_table
 							where user_mail= 'abc@gmail.com')
  			<if test = "searchWord != ''">
+ 			and
  				ot.item_num in (select item_Num
 		 					from item_table
 		 					where item_name like '%'||#{searchWord }||'%')
@@ -47,6 +48,12 @@
 				user_num = (select distinct user_num
 							from user_table
 							where user_mail= 'abc@gmail.com')
+			<if test = "searchWord != ''">
+			and
+				item_num in (select item_num
+			        			from item_table
+								where item_name like '%'||#{searchWord }||'%')
+			</if>
 		    order by
 		    	order_num) rt
 		where
