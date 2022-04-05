@@ -11,7 +11,7 @@ public class UserDAO {
 
 	@Autowired
 	private SqlSession session;
-
+	
 	//회원 가입
 	public int signUpUser(UserVO user) {
 		int result = 0;
@@ -25,5 +25,6 @@ public class UserDAO {
 		}
 		return result;
 	}
+
 
 }

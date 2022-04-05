@@ -7,7 +7,7 @@ import com.project.market.dao.UserDAO;
 import com.project.market.vo.UserVO;
 
 
-@Service
+@Service("userService")
 public class UserService {
 
 	@Autowired
