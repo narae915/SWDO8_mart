@@ -4,7 +4,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.market.dao.OrderMapper">
 	
-	<!-- 1. 페이징 -->
+	<!-- 주문 리스트 페이징 -->
 	<select id = "getTotalRecordsCount" parameterType="String" resultType = "int">
  		select
  			count(*)
@@ -21,7 +21,7 @@
  			</if>
  	</select>
 
-	<!-- 1. 주문목록 불러오기 -->
+	<!-- 주문목록 불러오기 -->
 	<select id="getOrderList" resultType="Order" parameterType="HashMap">
 		select 
 		    ot.order_num as orderNum,
@@ -62,12 +62,62 @@
 		order by order_num
 	</select>
 	
-	<!-- 2. 주문 취소 -->
+	<!-- 주문 취소 -->
 	<delete id="orderCancel" parameterType="List">
 		delete from order_table
 		where order_num = 
 		<foreach collection='list' index="index" item='item' separator="or order_num =" open=" " close=" ">
 		#{item }
 		</foreach>
+	</delete>
+	
+	<!-- 장바구니 페이징 -->
+	<select id = "getCartTotalRecordsCount" resultType = "int">
+ 		select
+ 			count(*)
+ 		from
+ 			cart_table
+ 		where		   
+			user_num = (select distinct user_num
+						from user_table
+						where user_mail= 'abc@gmail.com')
+ 	</select>
+	
+	<!-- 장바구니 불러오기 -->
+	<select id="getCartList" resultType="Cart" parameterType="HashMap">
+		select 
+		    ct.cart_num as cartNum,
+		    item_num as itemNum,
+			(select item_name
+        		from item_table
+				where item_num = ct.item_num) as itemName,
+		    cart_amount as cartAmount,
+            (select price
+                from item_table 
+                where item_num = ct.item_num) as price
+		from   
+		    cart_table ct,
+		    (select
+		    	rownum as rn,
+		    	cart_num as ln
+		    from
+		    	cart_table
+			where		   
+				user_num = (select distinct user_num
+							from user_table
+							where user_mail= 'abc@gmail.com')
+		    order by
+		    	cart_num) rt
+		where
+			ct.cart_num = rt.ln
+		and
+			rt.rn between #{startRecord } + 1 and #{startRecord } + #{countPerPage }
+		order by cart_num
+	</select>
+	
+	<!-- 장바구니 삭제 -->
+	<delete id="cartCancel" parameterType="int">
+		delete from cart_table
+		where cart_num = #{cartNum }
 	</delete>
 </mapper>
