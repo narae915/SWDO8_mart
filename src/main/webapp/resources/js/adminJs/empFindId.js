@@ -3,50 +3,13 @@
 /* 유효성 검사 */
 function checkForm()
 {
-	var empPw = document.getElementById("empPw").value;				// 입력한 비밀번호
-	var empPwCheck = document.getElementById("empPwCheck").value;	// 입력한 비밀번호 확인
-	var empName = document.getElementById("empName").value;			// 입력한 이름
-	var position = $("#position").find("option:selected");			// 선택한 직급
-	var empCall = document.getElementById("empCall").value;			// 입력한 연락처
-	var empMail = $("#empMail").val();								// 입력한 이메일
-	var inputPinNum = $("#pinNumChk").val();						// 입력한 이메일 인증번호
+	var empMail = $("#empMail").val();			// 입력한 이메일
+	var inputPinNum = $("#pinNumChk").val();	// 입력한 이메일 인증번호
 	
 	// 정규식
 	var emailChk = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // 이메일 정규식
 	
 	var result = false;
-	
-	if ( empName.length == 0 )
-	{
-		modalContent();
-		$("#modalAlert_content").prepend("이름을 입력해주세요.");
-		showModalAlert();
-		return result;
-	}
-	
-	if ( empPw.length == 0 )
-	{
-		modalContent();
-		$("#modalAlert_content").prepend("비밀번호를 입력해주세요.");
-		showModalAlert();
-		return result;
-	}
-	
-	if ( empPw != empPwCheck )
-	{
-		modalContent();
-		$("#modalAlert_content").prepend("비밀번호가 일치하지 않습니다.");
-		showModalAlert();
-		return result;
-	}
-	
-	if ( empCall.length == 0 || empCall.length != 11 || isNaN(empCall) )
-	{
-		modalContent();
-		$("#modalAlert_content").prepend("연락처를 올바르게 입력해주세요.");
-		showModalAlert();
-		return result;
-	}
 	
 	if ( empMail.length == 0 || !(emailChk.test(empMail)) )
 	{
@@ -74,44 +37,10 @@ function checkForm()
 		}
 	}
 	
-	if ( position.val() == 0 )
-	{
-		modalContent();
-		$("#modalAlert_content").prepend("직급을 선택해주세요.");
-		showModalAlert();
-		return result;
-	}
-	
 	result = true;
 	
 	return result;
 }
-
-/* 비밀번호 확인 후 화면에 표시 */
-$("#empPwCheck").blur(function()
-{
-	var inputEmpPw = document.getElementById("empPw").value;	// 입력한 비밀번호
-	var pwChk = document.getElementById("empPwCheck").value;	// 입력한 비밀번호 확인
-	var pwWarn = $("#pw_warn");									// 비교 결과
-	
-	if ( inputEmpPw == 0 || pwChk == 0 ) // 입력하지 않았을 경우
-	{
-		return false;
-	}
-	else // 입력한 경우
-	{
-		if ( inputEmpPw == pwChk ) // 일치하는지 확인
-		{
-			pwWarn.html("일치합니다.");
-			pwWarn.attr("class", "correct");       
-		}
-		else 
-		{
-			pwWarn.html("다시 확인해주세요.");
-			pwWarn.attr("class", "incorrect");
-		} 
-	}
-});
 
 /* 인증번호 이메일 전송 */
 $("#sendMailBtn").click(function()

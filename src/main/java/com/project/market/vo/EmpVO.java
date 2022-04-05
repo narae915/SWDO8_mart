@@ -9,5 +9,6 @@ public class EmpVO {
 	private String empPw;		// 사원 PW
 	private String empName;		// 사원 이름
 	private String empCall;		// 사원 연락처
+	private String empMail;		// 사원 메일
 	private String position;	// 사원 직급
 }

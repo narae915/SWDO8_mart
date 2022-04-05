@@ -38,75 +38,8 @@
         <div class="loader"></div>
     </div>
 
-	<!-- Header Section Begin -->
-    <header class="header-section">
-        <div class="container">
-            <div class="inner-header">
-                <div class="row">
-                    <div class="col-lg-2 col-md-2">
-                        <div class="logo">
-                            <a href="adminMain">
-                                <img src="/resources/img/logo.png" alt="">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-7 col-md-7">
-                        <div class="advanced-search">
-                            <button type="button" class="category-btn">All Categories</button>
-                            <div class="input-group">
-                                <input type="text" placeholder="What do you need?">
-                                <button type="button"><i class="ti-search"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="nav-item">
-            <div class="container">
-                <div class="nav-depart">
-                    <div class="depart-btn">
-                        <i class="ti-menu"></i>
-                        <span>Quick Memu</span>
-                        <ul class="depart-hover">
-                            <li><a href="itemManagement">상품 관리</a></li>
-                            <li><a href="userManagement">회원 관리</a></li>
-                            <li><a href="empManagement">직원 관리</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <nav class="nav-menu mobile-menu">
-                    <ul>
-                        <li><a href="itemManagement">Item</a>
-                        	<ul class="dropdown">
-                                <li><a href="itemManagement">상품 조회</a></li>
-                                <li><a href="#">상품 등록</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="userManagement">User</a></li>
-                        <li><a href="empManagement">Employee</a>
-                       		<ul class="dropdown">
-                        		<li><a href="empManagement">직원 조회</a></li>
-                        	<c:if test="${sessionScope.loginPosition eq '사장' || '부장'}">
-                        		<li><a href="adminRegister">직원 등록</a>
-                       		</c:if>
-                            </ul>
-                        </li>
-                        <!-- <li><a href="messenger">Messenger</a></li> -->
-                        <c:if test="${empty sessionScope.loginName }">
-                        	<li class="active"><a href="adminLogin"><i class="fa fa-user"></i> Login</a></li>
-                        </c:if>
-                        <c:if test="${not empty sessionScope.loginName }">
-                        	<li class="active"><a> ${loginName } ${loginPosition }님 환영합니다.</a></li>
-                        	<li class="active"><a href="adminLogout"><i class="fa fa-user"></i> Logout</a></li>
-                        </c:if>
-                    </ul>
-                </nav>
-                <div id="mobile-menu-wrap"></div>
-            </div>
-        </div>
-    </header>
-    <!-- Header End -->
+	<!-- Header -->
+    <%@ include file="/WEB-INF/views/admin/adminHeader.jsp" %>
 
     <!-- Breadcrumb Section Begin -->
     <div class="breacrumb-section">
@@ -138,6 +71,7 @@
                                     <th style="color: white;">이름</th>
                                     <th style="color: white;">직급</th>
                                     <th style="color: white;">연락처</th>
+                                    <th style="color: white;">e-mail</th>
                                     <th style="color: white;">수정/삭제</th>
                                 </tr>
                             </thead>
@@ -145,7 +79,7 @@
                             	<c:choose>
 									<c:when test="${empty empList }">
 										<tr>
-											<td colspan="6">직원이 존재하지 않습니다.</td>
+											<td colspan="7" style="text-align: center;">직원이 존재하지 않습니다.</td>
 										</tr>
 									</c:when>
 									<c:otherwise>
@@ -156,16 +90,21 @@
 												<td>${emp.empName }</td>
 												<td>${emp.position }</td>
 												<td>${fn:substring(emp.empCall,0,3) }&nbsp;-&nbsp;${fn:substring(emp.empCall,3,7) }&nbsp;-&nbsp;${fn:substring(emp.empCall,7,11) }</td>
+												<td>${emp.empMail }</td>
 												<td>
 												<c:choose>
-													<c:when test="${sessionScope.loginPosition eq '사장' || '부장' || sessionScope.loginId == emp.empNum }">
+													<c:when test="${sessionScope.loginPosition eq '사장' || sessionScope.loginPosition eq '부장'}">
 														<input type="button" value="수정" onclick="empUpdate(${emp.empNum });">
 														<input type="button" value="삭제" onclick="empDelete(${emp.empNum});">
 													</c:when>
-													<c:when test="${ !(sessionScope.loginPosition eq '사장' || '부장') || !(sessionScope.loginId == emp.empNum) }">
-														<input type="button" value="수정" disabled>
+													<c:when test="${ sessionScope.loginId == emp.empNum }">
+														<input type="button" value="수정" onclick="empUpdate(${emp.empNum });">
 														<input type="button" value="삭제" disabled>
 													</c:when>
+													<c:otherwise>
+														<input type="button" value="수정" disabled>
+														<input type="button" value="삭제" disabled>
+													</c:otherwise>
 												</c:choose>
 												</td>
 											</tr>
@@ -190,7 +129,7 @@
 								<!-- 출력하고자 하는 페이지 번호가 현재 접속한 페이지와 같은 경우 강조 표시 -->
 								<c:if test="${pageNum == navi.currentPage }">
 									<a href="/admin/empManagement?currentPage=${pageNum }" style="color: #e7ab3c; text-decoration: none; font-size: 1.5em; text-align: center;">
-										<span style="color: #E7AB3C; border: 1px solid;">
+										<span style="color: #e7ab3c; border: 1px solid;">
 											&nbsp;${pageNum }
 										</span>
 									</a>&nbsp;
@@ -214,14 +153,14 @@
 						<!-- Paging End -->
 						<hr>
 						<!-- Emp Search Begin -->
-						<form action="empManagement" method="get" onsubmit="return searchEmp();">
-							<select id="searchType" name="searchType" style="width: 15%; height: 45px; position:relative; left: 20em; bottom:-1em; border: none; font-size: 16px; border: #e7ab3c solid 3px; border-radius: 5px; color: #000; padding-right: 20px;"">
+						<form action="searchEmp" method="get" onsubmit="return searchEmp();">
+							<select id="searchType" name="searchType" style="width: 15%; height: 45px; position:relative; left: 20em; bottom:-1em; border: none; font-size: 16px; border: #e7ab3c solid 3px; border-radius: 5px; color: #000; padding-right: 20px;">
 								<option value="searchEmpName">이름</option>
 								<option value="searchEmpNum">사원 번호</option>
 								<option value="searchPosition">직급</option>
 							</select>
 							<input type="text" id="searchWord" name="searchWord" placeholder="검색어를 입력해주세요." style="width: 25%; height: 45px; position:relative; left: 20em; bottom:-1em; border: none; font-size: 16px; border: #e7ab3c solid 3px; border-radius: 5px; color: #000; padding-right: 20px;">
-							<button type="submit" class="primary-btn" style="width:5px; height:45px; border-radius:5px; left: 20em; bottom:-1.07em"><i class="ti-search"></i></button>
+							<button type="submit" class="primary-btn" style="width:5px; height:45px; border-radius:5px; left: 20em; bottom:-1.12em"><i class="ti-search"></i></button>
 						</form>
 						<!-- Emp Search End -->
 					</div>
@@ -231,81 +170,15 @@
     </section>
     <!-- EmpManagement Section End -->
 
- 	<!-- Footer Section Begin -->
-    <footer class="footer-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="footer-left">
-                        <div class="footer-logo">
-                            <a href="#"><img src="/resources/img/footer-logo.png" alt=""></a>
-                        </div>
-                        <ul>
-                            <li>Address: 60-49 Road 11378 New York</li>
-                            <li>Phone: +65 11.188.888</li>
-                            <li>Email: hello.colorlib@gmail.com</li>
-                        </ul>
-                        <div class="footer-social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-pinterest"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 offset-lg-1">
-                    <div class="footer-widget">
-                        <h5>Information</h5>
-                        <ul>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Checkout</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Serivius</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="footer-widget">
-                        <h5>My Account</h5>
-                        <ul>
-                            <li><a href="#">My Account</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Shopping Cart</a></li>
-                            <li><a href="#">Shop</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="newslatter-item">
-                        <h5>Join Our Newsletter Now</h5>
-                        <p>Get E-mail updates about our latest shop and special offers.</p>
-                        <form action="#" class="subscribe-form">
-                            <input type="text" placeholder="Enter Your Mail">
-                            <button type="button">Subscribe</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="copyright-reserved">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="copyright-text">
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        </div>
-                        <div class="payment-pic">
-                            <img src="/resources/img/payment-method.png" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- Footer Section End -->
-
+ 	<!-- Footer -->
+    <%@ include file="/WEB-INF/views/admin/adminFooter.jsp" %>
+	
+	<!-- modal -->
+	<div class="modalAlert">
+		<div class="modalAlert_content" id="modalAlert_content">
+		</div>
+	</div>
+	
     <!-- Js Plugins -->
     <script src="/resources/js/jquery-3.6.0.min.js"></script>
     <script src="/resources/js/bootstrap.min.js"></script>
@@ -318,5 +191,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="/resources/js/owl.carousel.min.js"></script>
     <script src="/resources/js/main.js"></script>
     <script src="/resources/js/adminJs/empManagement.js"></script>
-
+	<script type="text/javascript">
+	var positionCheck = "${loginPosition }"; // 로그인한 직원의 직급
+	</script>
 </html>

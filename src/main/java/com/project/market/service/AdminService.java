@@ -61,19 +61,30 @@ public class AdminService {
 		return dao.itemInsert(map) > 0;
 	}
 
-	/* 관리자 ID 등록 */
-	public boolean adminRegister(String empPw, String empName, String position, String empCall) 
+	/* 직원 ID 등록 */
+	public boolean adminRegister(String empName, String empPw, String empCall, String empMail, String position) 
 	{
 		EmpVO newEmp = new EmpVO();
-		newEmp.setEmpPw(empPw);
 		newEmp.setEmpName(empName);
-		newEmp.setPosition(position);
+		newEmp.setEmpPw(empPw);
 		newEmp.setEmpCall(empCall);
+		newEmp.setEmpMail(empMail);
+		newEmp.setPosition(position);
 		
 		return dao.adminRegister(newEmp) > 0;
 	}
-
+	
 	/* 로그인 */
+	public String selectEmpNm(int empNum, String empPw) 
+	{
+		EmpVO emp = new EmpVO();
+		emp.setEmpNum(empNum);
+		emp.setEmpPw(empPw);
+		
+		return dao.selectEmpNm(emp);
+	}
+	
+	/* 로그인 정보 가져오기 */
 	public ArrayList<EmpVO> getEmpInfoList(int empNum, String empPw) 
 	{
 		HashMap<String, Object> map = new HashMap<>();
@@ -83,22 +94,36 @@ public class AdminService {
 		return dao.getEmpInfoList(map);
 	}
 
-	/* 직원 리스트 조회 및 직원 검색 */
+	/* 직원 리스트 조회 */
 	public ArrayList<EmpVO> getEmpList(int startRecord, int countPerPage, String searchType, String searchWord) 
 	{
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("startRecord", startRecord);
 		map.put("countPerPage", countPerPage);
-		map.put("searchWord", searchWord);
 		map.put("searchType", searchType);
+		map.put("searchWord", searchWord);
 		
 		return dao.getEmpList(map);
 	}
 	
-	/* 총 직원 수 조회  (페이징) */
-	public int getEmpTotalRecordsCount() 
+	/* 직원 검색 */
+	public ArrayList<EmpVO> searchEmp(String searchType, String searchWord) 
 	{
-		return dao.getEmpTotalRecordsCount();
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("searchType", searchType);
+		map.put("searchWord", searchWord);
+				
+		return dao.searchEmp(map);
+	}
+	
+	/* 총 직원 수 조회  (페이징) */
+	public int getEmpTotalRecordsCount(String searchType, String searchWord) 
+	{
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("searchType", searchType);
+		map.put("searchWord", searchWord);
+		
+		return dao.getEmpTotalRecordsCount(map);
 	}
 
 	/* 직원 번호로 해당 직원 정보 조회 */
@@ -108,13 +133,14 @@ public class AdminService {
 	}
 	
 	/* 직원 정보 수정 */
-	public boolean empUpdate(int empNum, String empName, String empPw, String empCall, String position) 
+	public boolean empUpdate(int empNum, String empName, String empPw, String empCall, String empMail, String position) 
 	{
 		EmpVO updateEmp = new EmpVO();
 		updateEmp.setEmpNum(empNum);
 		updateEmp.setEmpName(empName);
 		updateEmp.setEmpPw(empPw);
 		updateEmp.setEmpCall(empCall);
+		updateEmp.setEmpMail(empMail);
 		updateEmp.setPosition(position);
 		
 		return dao.empUpdate(updateEmp) > 0;
@@ -125,6 +151,16 @@ public class AdminService {
 	{
 		return dao.empDelete(empNum) > 0;
 
+	}
+	
+	/* ID 찾기 */
+	public int selectEmpId(String empName, String empMail) 
+	{
+		EmpVO findEmp = new EmpVO();
+		findEmp.setEmpName(empName);
+		findEmp.setEmpMail(empMail);
+		
+		return dao.selectEmpId(findEmp);
 	}
 
 }

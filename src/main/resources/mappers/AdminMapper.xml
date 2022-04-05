@@ -103,7 +103,7 @@
  		)
  	</insert>
 
- 	<!-- 관리자 ID 등록 -->
+ 	<!-- 직원 ID 등록 -->
 	<insert id="adminRegister" parameterType="Emp">
 		insert into emp_table
 		values
@@ -112,11 +112,24 @@
 			#{empPw },
 			#{empName },
 			#{empCall },
+			#{empMail },
 			#{position }
 		)	
 	</insert>
 	
 	<!-- 로그인 -->
+	<select id="selectEmpNm" parameterType="Emp" resultType="String">
+		select
+			emp_name as empName
+		from
+			emp_table
+		where
+			emp_num = #{empNum }
+			and
+			emp_pw = #{empPw }
+	</select>
+	
+	<!-- 로그인 정보 가져오기 -->
 	<select id="getEmpInfoList" parameterType="HashMap" resultType="Emp">
 		select
 			emp_name as empName,
@@ -129,13 +142,14 @@
 			emp_pw = #{empPw }
 	</select>
 	
-	<!-- 직원 리스트 조회 및 직원 검색 -->
-	<select id="getEmpList" parameterType="String" resultType="Emp">
+	<!-- 직원 리스트 조회 -->
+	<select id="getEmpList" parameterType="HashMap" resultType="Emp">
 		select
 			et.emp_num as empNum,
 		    et.emp_name as empName,
-		    et.position,
-		    et.emp_call as empCall
+		    et.position as position,
+		    et.emp_call as empCall,
+		    et.emp_mail as empMail
 		from
 		   emp_table et,
 		   (select
@@ -145,45 +159,69 @@
 		        emp_table
 		    order by
 		        emp_num desc) rt
-		where
-			et.emp_num = rt.en
-			<if test="startRecord != -1">
-			and
-		    rt.rn between #{startRecord } + 1 and #{startRecord } + #{countPerPage }
+		<where>
+			<if test = "searchWord != '' || searchWord != null">
+				et.emp_num = rt.en
+				and
+			    rt.rn between #{startRecord } + 1 and #{startRecord } + #{countPerPage }
+		    </if>
+			<if test="searchType == 'searchEmpName'">
+				and
+				et.emp_name like '%' || #{searchWord } || '%'
 			</if>
-			<if test="searchWord != ''">
-			and
-				<if test="searchType == 'searchEmpNum'">
-					et.emp_num like '%' || #{searchWord } || '%'
-				</if>			
-				<if test="searchType == 'searchEmpName'">
-					et.emp_name like '%' || #{searchWord } || '%'
-				</if>			
-				<if test="searchType == 'searchPosition'">
-					et.position like '%' || #{searchWord } || '%'
-				</if>			
+			<if test="searchType == 'searchEmpNum'">
+				and
+				et.emp_num like '%' || #{searchWord } || '%'
 			</if>
+			<if test="searchType == 'searchPosition'">
+				and
+				et.position like '%' || #{searchWord } || '%'
+			</if>
+		</where>
+		order by emp_num desc
+	</select>
+	
+	<!-- 직원 검색 -->
+	<select id="searchEmp" parameterType="HashMap" resultType="Emp">
+		select
+			emp_num as empNum,
+		    emp_name as empName,
+		    position,
+		    emp_call as empCall,
+		    emp_mail as empMail
+		from
+		   emp_table
+		<where>
+			<if test="searchType == 'searchEmpName'">
+				emp_name like '%' || #{searchWord } || '%'
+			</if>
+			<if test="searchType == 'searchEmpNum'">
+				emp_num like '%' || #{searchWord } || '%'
+			</if>
+			<if test="searchType == 'searchPosition'">
+				position like '%' || #{searchWord } || '%'
+			</if>			
+		</where>
 		order by emp_num desc
 	</select>
 	
 	<!-- 총 직원 수 조회  (페이징) -->
-	<select id="getEmpTotalRecordsCount" resultType="int">
+	<select id="getEmpTotalRecordsCount" parameterType="HashMap" resultType="int">
 		select
 			count(*)
 		from
 			emp_table
-		<if test="searchWord != null">
-		where
-			<if test="searchType == 'searchEmpNum'">
-				et.emp_num like '%' || #{searchWord } || '%'
-			</if>			
+		<where>
 			<if test="searchType == 'searchEmpName'">
-				et.emp_name like '%' || #{searchWord } || '%'
-			</if>			
+				emp_name like '%' || #{searchWord } || '%'
+			</if>
+			<if test="searchType == 'searchEmpNum'">
+				emp_num like '%' || #{searchWord } || '%'
+			</if>
 			<if test="searchType == 'searchPosition'">
-				et.position like '%' || #{searchWord } || '%'
+				position like '%' || #{searchWord } || '%'
 			</if>			
-		</if>
+		</where>
 	</select>
 	
 	<!-- 직원 번호로 해당 직원 정보 조회 -->
@@ -192,6 +230,7 @@
 			emp_num as empNum,
 			emp_name as empName,
 			emp_call as empCall,
+			emp_mail as empMail,
 			position as position
 		from
 			emp_table
@@ -207,6 +246,7 @@
 			emp_pw = #{empPw },
 			emp_name = #{empName },
 			emp_call = #{empCall },
+			emp_mail = #{empMail },
 			position = #{position }
 		where
 			emp_num = #{empNum }
@@ -218,5 +258,17 @@
 		where
 			emp_num = #{empNum }
 	</delete>
+	
+	<!-- ID 찾기 -->
+	<select id="selectEmpId" parameterType="Emp" resultType="int">
+		select
+			emp_num as empNum
+		from
+			emp_table
+		where
+			emp_name = #{empName }
+			and
+			emp_mail = #{empMail }
+	</select>
 	
 </mapper>

@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/adminCss/adminRegister.css" type="text/css">
-
+	
 </head>
 
 <body>
@@ -35,77 +35,10 @@
     <div id="preloder">
         <div class="loader"></div>
     </div>
-
-	<!-- Header Section Begin -->
-    <header class="header-section">
-        <div class="container">
-            <div class="inner-header">
-                <div class="row">
-                    <div class="col-lg-2 col-md-2">
-                        <div class="logo">
-                            <a href="adminMain">
-                                <img src="/resources/img/logo.png" alt="">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-7 col-md-7">
-                        <div class="advanced-search">
-                            <button type="button" class="category-btn">All Categories</button>
-                            <div class="input-group">
-                                <input type="text" placeholder="What do you need?">
-                                <button type="button"><i class="ti-search"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="nav-item">
-            <div class="container">
-                <div class="nav-depart">
-                    <div class="depart-btn">
-                        <i class="ti-menu"></i>
-                        <span>Quick Memu</span>
-                        <ul class="depart-hover">
-                            <li><a href="itemManagement">상품 관리</a></li>
-                            <li><a href="userManagement">회원 관리</a></li>
-                            <li><a href="empManagement">직원 관리</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <nav class="nav-menu mobile-menu">
-                    <ul>
-                        <li><a href="itemManagement">Item</a>
-                        	<ul class="dropdown">
-                                <li><a href="itemManagement">상품 조회</a></li>
-                                <li><a href="#">상품 등록</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="userManagement">User</a></li>
-                        <li><a href="empManagement">Employee</a>
-                       		<ul class="dropdown">
-                        		<li><a href="empManagement">직원 조회</a></li>
-                        	<c:if test="${sessionScope.loginPosition eq '사장' || '부장'}">
-                        		<li><a href="adminRegister">직원 등록</a>
-                       		</c:if>
-                            </ul>
-                        </li>
-                        <!-- <li><a href="messenger">Messenger</a></li> -->
-                        <c:if test="${empty sessionScope.loginName }">
-                        	<li class="active"><a href="adminLogin"><i class="fa fa-user"></i> Login</a></li>
-                        </c:if>
-                        <c:if test="${not empty sessionScope.loginName }">
-                        	<li class="active"><a> ${loginName } ${loginPosition }님 환영합니다.</a></li>
-                        	<li class="active"><a href="adminLogout"><i class="fa fa-user"></i> Logout</a></li>
-                        </c:if>
-                    </ul>
-                </nav>
-                <div id="mobile-menu-wrap"></div>
-            </div>
-        </div>
-    </header>
-    <!-- Header End -->
-
+	
+	<!-- Header -->
+    <%@ include file="/WEB-INF/views/admin/adminHeader.jsp" %>
+	
     <!-- Breadcrumb Section Begin -->
     <div class="breacrumb-section">
         <div class="container">
@@ -134,13 +67,14 @@
                                 <input type="text" id="empName" name="empName" placeholder="이름">
                             </div>
                             <div class="group-input">
-                                <input type="text" id="empNum" placeholder="사원 번호 (자동으로 생성됩니다.)" disabled="disabled">
+                                <input type="text" id="empNum" placeholder="사원 번호 (자동으로 생성됩니다.)" disabled="disabled" style="background-color: #ebebe4;">
                             </div>
                             <div class="group-input">
                                 <input type="password" id="empPw" name="empPw" placeholder="비밀번호">
                             </div>
                             <div class="group-input">
                                 <input type="password" id="empPwCheck" name="empPwCheck" placeholder="비밀번호 확인">
+                                <span id="pw_warn" style="position: absolute; left: 2.23em; bottom: 22em;"></span>
                             </div>
                             <div class="group-input">
                                <input type="text" id="empCall" name="empCall" placeholder="연락처">
@@ -149,14 +83,15 @@
                                <input type="text" id="empMail" name="empMail" placeholder="e-mail">
                             </div>
                             <div class="group-input" id="pinNumChk_false">
-                               <input type="text" id="pinNumChk" name="pinNumChk" placeholder="인증번호 확인" disabled="disabled">
-							   <span id="pinNumChk_warn"></span>
+                               <input type="text" id="pinNumChk" name="pinNumChk" placeholder="인증번호" disabled="disabled">
+                               <input type="button" id="pinNumChk_Btn" value="확인" disabled="disabled" style="position: absolute; left: 24.5em; bottom: 9.5em;">
+							   <span id="pinNumChk_warn" style="position: absolute; left: 2.23em; bottom: 7.95em;"></span>
                             </div>
                             <div class="group-input">
-                               <input type="button" id="sendMailBtn" value="인증번호 전송" onclick="return sendMail(); this.onclick='';">
+								<input type="button" id="sendMailBtn" value="인증번호 전송" style="background-color: #434445; position: absolute; width: 30%; height:50px; border-radius:5px; left: 24.5em; bottom: 14.2em; color: white;">
                             </div>
                             <div class="group-input">
-								<select id="position" name="position" style="width: 450px; height: 50px;">
+								<select id="position" name="position" style="width: 100%; height: 50px;">
 									<option value="0" disabled="disabled" selected="selected">직급</option>
 									<option value="사원">사원</option>
 									<option value="주임">주임</option>
@@ -175,80 +110,14 @@
     </div>
     <!-- Register Form Section End -->
 	
-    <!-- Footer Section Begin -->
-    <footer class="footer-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="footer-left">
-                        <div class="footer-logo">
-                            <a href="#"><img src="/resources/img/footer-logo.png" alt=""></a>
-                        </div>
-                        <ul>
-                            <li>Address: 60-49 Road 11378 New York</li>
-                            <li>Phone: +65 11.188.888</li>
-                            <li>Email: hello.colorlib@gmail.com</li>
-                        </ul>
-                        <div class="footer-social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-pinterest"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 offset-lg-1">
-                    <div class="footer-widget">
-                        <h5>Information</h5>
-                        <ul>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Checkout</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Serivius</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="footer-widget">
-                        <h5>My Account</h5>
-                        <ul>
-                            <li><a href="#">My Account</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Shopping Cart</a></li>
-                            <li><a href="#">Shop</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="newslatter-item">
-                        <h5>Join Our Newsletter Now</h5>
-                        <p>Get E-mail updates about our latest shop and special offers.</p>
-                        <form action="#" class="subscribe-form">
-                            <input type="text" placeholder="Enter Your Mail">
-                            <button type="button">Subscribe</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="copyright-reserved">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="copyright-text">
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        </div>
-                        <div class="payment-pic">
-                            <img src="/resources/img/payment-method.png" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- Footer Section End -->
+    <!-- Footer -->
+    <%@ include file="/WEB-INF/views/admin/adminFooter.jsp" %>
+   
+   <!-- modal -->
+	<div class="modalAlert">
+		<div class="modalAlert_content" id="modalAlert_content">
+		</div>
+	</div>
 
     <!-- Js Plugins -->
     <script src="/resources/js/jquery-3.6.0.min.js"></script>
