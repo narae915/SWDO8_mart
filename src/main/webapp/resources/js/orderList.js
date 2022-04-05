@@ -14,26 +14,24 @@ function valueChk() {
 		
 		return false;
 	} else { // 체크박스가 체크된 경우 확인 절차를 진행함.
-		var cancelChk = confirm("정말 취소하시겠습니까?");
-		if(cancelChk == true) {
-
+	
+		$('#confirm-modal').modal('show');
+		$('body').removeClass('modal-open');
+		$('.modal-backdrop').remove();
+		
+		$('#yes-button').click(function() {
 			$.ajax({
 				url: "/order/orderCancel",
 				type: "post",
 				data: allData,
 				success: function(res) {
-					if(res == "success") {
-						alert("취소되었습니다.");
-						location.href = "/order/orderList";
+					if(res == 'success') {
+						$('#confirm-modal').modal('hide');
+						$('#result-modal').modal();
 					}
-				
 				}
 			});
-			
-			return true;	
-		} else {
-			return false;
-		}
+		});
 	}
 	
 }
@@ -50,4 +48,16 @@ function valueChk() {
 			}
 		
 	}
+	
+	// 모달창	
+	$(function(){
+		$("button").click(function(){
+			$(".modal").fadeIn();
+		});
+		
+		$(".modal_content").click(function(){
+			$(".modal").fadeOut();
+		});
+	});
+	
     		

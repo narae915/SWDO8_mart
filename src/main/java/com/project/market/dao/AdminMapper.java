@@ -10,13 +10,13 @@ import com.project.market.vo.ItemVO;
 public interface AdminMapper {
 
 
-	int getTotalRecordsCount(HashMap<String, Object> map); // zzz페이징
+	int getTotalRecordsCount(HashMap<String, Object> map); // 페이징
 
 	String StaffOnlyChk(String chkMessage); //직원인지 확인
 
 	int getEmpTotalRecordsCount(); // 총 직원 수 조회 (페이징)
 
-	ArrayList<ItemVO> getItemList(HashMap<String, Object> map); // 1.상품 리스트 불러오기 메소드
+	ArrayList<ItemVO> getItemList(HashMap<String, Object> map); // 상품 리스트 불러오기 메소드
 
 	int itemDelete(List<Integer> intCancelNum);// 2.상품 삭제 메소드
 

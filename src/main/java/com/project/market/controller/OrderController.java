@@ -79,16 +79,15 @@ public class OrderController {
 	}
 	
 	// 2022-03-24~2022-03-25 노채린
-	// 1.주문 리스트 불러오기 및 페이지 열기 시작
+	// 주문 리스트 불러오기 및 페이지 열기 시작
 	@RequestMapping(value = "/orderList", method = RequestMethod.GET)
 	public String orderList(@RequestParam(defaultValue = "1") int currentPage, HttpSession session, Model model, String searchWord) {
 		logger.info("orderList 메소드 실행(GET).");
 		
-		// 페이징
-		// 검색하지 않았을 때
 		if(searchWord == null) {
 			searchWord = "";
 		}
+		// 주문 리스트 페이징
 		int totalRecordsCount = service.getTotalRecordsCount(searchWord);
 		PageNavigator navi = new PageNavigator(COUNT_PER_PAGE, PAGE_PER_GROUP, currentPage, totalRecordsCount);
 		model.addAttribute("navi", navi);
@@ -100,7 +99,6 @@ public class OrderController {
 		// 1-2.주문 리스트 불러오기 임시 메소드(로그인 정보 받아올 수 있을 때 비활성화)
 		ArrayList<OrderVO> orderList = service.getOrderList(navi.getStartRecord(), COUNT_PER_PAGE, searchWord);
 		
-		// logger.info("orderList: {}", orderList);
 		model.addAttribute("orderList", orderList);
 		
 		
@@ -131,4 +129,54 @@ public class OrderController {
 		
 	}
 	
+	// 2022-04-01 노채린
+	// 장바구니 페이지 열기
+	@RequestMapping(value = "/cart", method = RequestMethod.GET)
+	public String cart(@RequestParam(defaultValue = "1") int currentPage, HttpSession session, Model model) {
+		logger.info("cart 메소드 실행(GET).");
+		
+		// 페이징
+		int totalRecordsCount = service.getCartTotalRecordsCount();
+		PageNavigator navi = new PageNavigator(COUNT_PER_PAGE, PAGE_PER_GROUP, currentPage, totalRecordsCount);
+		model.addAttribute("navi", navi);
+		
+		logger.info("currentPage:{}", currentPage);
+		logger.info("COUNT_PER_PAGE:{}", COUNT_PER_PAGE);
+		logger.info("PAGE_PER_GROUP:{}", PAGE_PER_GROUP);
+		logger.info("totalRecordsCount:{}", totalRecordsCount);
+		
+		// 1-1.장바구니 리스트 불러오기 메소드
+		// String userMail = (String)session.getAttribute("loginMail");
+		// ArrayList<OrderVO> cart = service.getcart(userMail, navi.getStartRecord(), COUNT_PER_PAGE, searchWord);
+		
+//		 1-2.장바구니 리스트 불러오기 임시 메소드(로그인 정보 받아올 수 있을 때 비활성화)
+		 ArrayList<CartVO> cartList = service.getCartList(navi.getStartRecord(), COUNT_PER_PAGE);
+		
+		 model.addAttribute("cartList", cartList);
+		
+		
+		return "/order/cart";
+	}
+	
+	// 22-04-04 노채린
+	// 장바구니 삭제
+	@ResponseBody
+	@RequestMapping(value = "/cartCancel", method = RequestMethod.POST)
+	public String cartCancel(int cartNum) {
+		logger.info("cartCancel 메소드 실행(POST)");
+		logger.info("cartNum:{}", cartNum);
+		
+		 // 장바구니 삭제 메소드
+		boolean result = service.cartCancel(cartNum);
+		
+		if(result) {
+			logger.info("장바구니 삭제 성공");
+			
+			return "success";
+		} else {
+			logger.info("장바구니 삭제 실패");
+			
+			return null;
+		}
+	}
 }

@@ -18,7 +18,7 @@ public class OrderDAO {
 	@Autowired
 	private SqlSession session;
 
-	// 1.페이징
+	// 주문 리스트 페이징
 	public int getTotalRecordsCount(String searchWord) {
 		int result = 0;
 		OrderMapper mapper = null;
@@ -51,7 +51,7 @@ public class OrderDAO {
 		return orderList;
 	}
 
-	// 2.주문 취소 메소드
+	// 주문 취소 메소드
 	public int orderCancel(List<Integer> intCancelNum) {
 		int result = 0;
 		OrderMapper mapper = null;
@@ -65,6 +65,44 @@ public class OrderDAO {
 		return result;
 	}
 
+
+	// 장바구니 페이징
+	public int getCartTotalRecordsCount() {
+		int result = 0;
+		OrderMapper mapper = null;
+
+		try {
+			mapper = session.getMapper(OrderMapper.class);
+			result = mapper.getCartTotalRecordsCount();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	// 장바구니 리스트 불러오기 메소드
+	public ArrayList<CartVO> getCartList(HashMap<String, Object> map) {
+		OrderMapper mapper = session.getMapper(OrderMapper.class);
+		ArrayList<CartVO> cartList = mapper.getCartList(map);
+		
+		return cartList;
+	}
+
+	// 장바구니 삭제
+	public int cartCancel(int cartNum) {
+		int result = 0;
+		OrderMapper mapper = null;
+		
+		try {
+			mapper = session.getMapper(OrderMapper.class);
+			result = mapper.cartCancel(cartNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+		
+	}
 	//장바구니에 상품 넣기
 	public int insertCart(HashMap<String, Object> map) {
 		int result = 0;
