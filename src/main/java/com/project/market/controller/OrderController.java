@@ -83,14 +83,22 @@ public class OrderController {
 	@RequestMapping(value = "/orderList", method = RequestMethod.GET)
 	public String orderList(@RequestParam(defaultValue = "1") int currentPage, HttpSession session, Model model, String searchWord) {
 		logger.info("orderList 메소드 실행(GET).");
-		
+
 		if(searchWord == null) {
 			searchWord = "";
 		}
+		
 		// 주문 리스트 페이징
 		int totalRecordsCount = service.getTotalRecordsCount(searchWord);
+
+		logger.info("COUNT_PER_PAGE:{}",COUNT_PER_PAGE);
+		logger.info("PAGE_PER_GROUP:{}",PAGE_PER_GROUP);
+		logger.info("currentPage:{}",currentPage);
+		logger.info("totalRecordsCount:{}",totalRecordsCount);
+		
 		PageNavigator navi = new PageNavigator(COUNT_PER_PAGE, PAGE_PER_GROUP, currentPage, totalRecordsCount);
 		model.addAttribute("navi", navi);
+		
 		
 		// 1-1.주문 리스트 불러오기 메소드
 		// String userMail = (String)session.getAttribute("loginMail");
@@ -98,7 +106,7 @@ public class OrderController {
 		
 		// 1-2.주문 리스트 불러오기 임시 메소드(로그인 정보 받아올 수 있을 때 비활성화)
 		ArrayList<OrderVO> orderList = service.getOrderList(navi.getStartRecord(), COUNT_PER_PAGE, searchWord);
-		
+		logger.info("orderList:{}",orderList);
 		model.addAttribute("orderList", orderList);
 		
 		
@@ -139,12 +147,7 @@ public class OrderController {
 		int totalRecordsCount = service.getCartTotalRecordsCount();
 		PageNavigator navi = new PageNavigator(COUNT_PER_PAGE, PAGE_PER_GROUP, currentPage, totalRecordsCount);
 		model.addAttribute("navi", navi);
-		
-		logger.info("currentPage:{}", currentPage);
-		logger.info("COUNT_PER_PAGE:{}", COUNT_PER_PAGE);
-		logger.info("PAGE_PER_GROUP:{}", PAGE_PER_GROUP);
-		logger.info("totalRecordsCount:{}", totalRecordsCount);
-		
+
 		// 1-1.장바구니 리스트 불러오기 메소드
 		// String userMail = (String)session.getAttribute("loginMail");
 		// ArrayList<OrderVO> cart = service.getcart(userMail, navi.getStartRecord(), COUNT_PER_PAGE, searchWord);

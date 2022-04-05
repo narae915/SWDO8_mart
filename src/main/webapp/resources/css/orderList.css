@@ -1,5 +1,5 @@
 /* 테이블 관련 */
-.table-basic {
+		.table-basic {
     		border: 3px solid #EBE8C7;
     		border-left: 5px solid #EBE8C7;
     		border-right: 5px solid #EBE8C7;
@@ -10,13 +10,13 @@
     		height: 300;
     	}
    
-    	#orderTable<th, #orderTable<td {
+    	.table-basic th, .table-basic td {
     		border: 3px solid #EBE8C7;
     		height: 10%;
     		width: 10%;
     	}
     	
-    	#orderTable<th {
+    	.table-basic th {
     		border-bottom: 3px solid #EBE8C7;
     		background-color: #A68523;
     		color: #EBE8C7;
@@ -24,7 +24,7 @@
     		font-size: 20px;
     	}
     	
-    	#orderTable<td {
+    	.table-basic td {
 			background-color: #9C9576;
 			color: #E8E2C8;    	
     	}

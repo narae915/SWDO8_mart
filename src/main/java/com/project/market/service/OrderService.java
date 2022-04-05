@@ -22,6 +22,7 @@ public class OrderService {
 
 	// 주문 리스트 페이징
 	public int getTotalRecordsCount(String searchWord) {
+		
 		return dao.getTotalRecordsCount(searchWord);
 	}
 	

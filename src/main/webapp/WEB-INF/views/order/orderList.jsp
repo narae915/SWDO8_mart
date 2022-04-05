@@ -160,7 +160,7 @@
 			                        		</c:if>
 			                        		<td rowspan="2">${Order.amount }</td> <!-- 주문량 -->
 			                        		<td rowspan="2">${Order.orderAddress }</td> <!-- 배송지 -->
-			                        		<td rowspan="2"><fmt:formatNumber value="${Order.orderCall }" pattern="###-####-####"></fmt:formatNumber></td>
+			                        		<td rowspan="2">${fn:substring(Order.orderCall,0,3) }&nbsp;-&nbsp;${fn:substring(Order.orderCall,3,7) }&nbsp;-&nbsp;${fn:substring(Order.orderCall,7,11) }</td>
 			                        		<td rowspan="2">${Order.orderMail}</td> <!-- 수취인 이메일 -->
 			                        		<tr>
 			                        			<td>${Order.indate }</td> <!-- 주문일시 -->
