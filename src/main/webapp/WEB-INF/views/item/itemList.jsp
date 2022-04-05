@@ -11,7 +11,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>SpringDay | Shop</title>
+    <title>SpringDay | 식품 마트</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -26,6 +26,48 @@
     <link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
+    
+    <!-- CSS -->
+    <style type="text/css">
+		.modal-button {
+			font-size: 16px;
+			color: #ffffff;
+			border: 1px solid #e7ab3c;
+			background: #e7ab3c;
+			height: 45px;
+			padding: 12px 16px 12px;
+		}
+		
+		.modal-button1 {
+			font-size: 16px;
+			color: #ffffff;
+			border: 1px solid #787878;
+			background: #787878;
+			height: 45px;
+			padding: 12px 16px 12px;
+		}
+		
+		.modal{
+			position: fixed;
+			top:0; left: 0; bottom: 0; right: 0;
+			background: rgba(0, 0, 0, 0.8); /* 투명도 */
+		}
+		
+		#ri-modal_content{
+			position: absolute;  /* 배경 내에서 위치 조정 */
+			top: calc(50vh - 100px); left: calc(50vw - 200px);
+			background-color: white;
+			border-radius: 10px;
+			width: 400px;
+			height: 200px;
+			display: flex;
+			flex-wrap: wrap;
+			flex-direction: row;
+			align-content: center;
+			justify-content: center;
+		}
+		
+    </style>
 </head>
 
 <body>
@@ -43,7 +85,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="/"><i class="fa fa-home"></i> Home</a>
-                        <span onclick="location.href='/item/itemList';" style="cursor:pointer;">상품</span>
+                        <span>상품</span>
                     </div>
                 </div>
             </div>
@@ -106,7 +148,7 @@
 										<img src="/resources/img/products/product-${status.count }.jpg" alt="">
 										<!-- 세일상품 <div class="sale pp-sale">Sale</div> -->
 										<ul>
-											<li class="w-icon active" onclick="insertCart();"><a href="#"><i class="icon_bag_alt"></i></a></li>
+											<li class="w-icon active" onclick="insertCart(${item.itemNum });"><a href="#"><i class="icon_bag_alt"></i></a></li>
 											<li class="quick-view"><a href="/item/readItem?itemNum=${item.itemNum }">+ 상세 보기</a></li>
 										</ul>
 									</div>
@@ -114,7 +156,7 @@
 										<div class="catagory-name">${item.categoryName }</div>
 										<a href="#"><h5>${item.itemName }</h5></a>
 										<!-- 가격사이에 ,를 찍기 위해 fmt 사용 -->
-										<div class="product-price"><fmt:formatNumber value="${item.price }" pattern="#,###"/></div>
+										<div class="product-price"><fmt:formatNumber value="${item.price }" pattern="#,###원"/></div>
 									</div>
 								</div>
 							</div>
@@ -135,6 +177,24 @@
     </section>
     <!-- Product Shop Section End -->
 
+	<!-- 모달 -->
+	<div class="modal" id="il-modal">
+		<div class="modal_content" id="il-modal_content">
+			장바구니에 추가하시겠습니까?<br>
+			<input type="button" class="modal-button" id="il-modal-button" value="네, 추가할래요">
+			<input type="button" class="modal-button1" value="아니요, 다른 상품을 볼래요">
+		</div>
+	</div>
+
+    <!-- 모달 -->
+	<div class="modal" id="ri-modal">
+		<div class="modal_content" id="ri-modal_content">
+			장바구니에 추가되었습니다. 확인하시겠습니까?
+			<input type="button" class="modal-button" id="ri-modal-button" value="장바구니로">
+			<input type="button" class="modal-button1" value="쇼핑 계속하기">
+		</div>
+	</div>
+
     <!-- Footer -->
     <%@ include file="/WEB-INF/views/footer.jsp" %>
     
@@ -151,6 +211,14 @@
     <script src="/resources/js/main.js"></script>
     <script type="text/javascript">
 	
+	 // ajax 통신을 위한 csrf 설정
+/*     var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    $(document).ajaxSend(function(e, xhr, options) {
+        xhr.setRequestHeader(header, token);
+    }); */
+
+    
     //카테고리 번호 찾기(정렬 select에서 categoryNum을 알 수 없기 때문)
     function searchCategoryNum(categoryNum) {
     	var searchNum = $("#cate-num").val();
@@ -192,6 +260,7 @@
 		});
 	}//함수 닫기
 	
+	//더보기 실행하기(페이징)
 	function loadingMore(cnt){
 		var temp = $("#productList>div>div>div>ul").length;
 		console.log(temp);
@@ -229,11 +298,51 @@
 		});
 	}
 	
-	function insertCart() {
-		var result = confirm("장바구니에 넣으시겠습니까?");
-		if(result) {
-			
-		}
+	//장바구니에 넣기
+	function insertCart(itemNum) {
+		console.log(itemNum);
+		itemNum = parseInt(itemNum);
+		var cartAmount = 1;
+
+		//장바구니에 넣을 것인지 확인하는 모달창
+		ilShowModal();
+		
+		//넣는다고 했을 경우
+		$("#il-modal-button").click(function(){
+			$.ajax({
+				url: "/order/insertCart",
+				type: "GET", 
+				data: {
+					itemNum : itemNum,
+					cartAmount : cartAmount
+				},
+				success: function(res) { //cart테이블에 입력
+					if(res = "yes") {
+						//장바구니로 이동할 것인지 확인
+						showModal();
+						$("#ri-modal-button").click(function(){
+							location.href="/order/cart";
+						});
+					}
+				}
+			});
+		});
+	}
+	
+	function ilShowModal() {
+		$("#il-modal").fadeIn();
+		
+		$(".modal-button1").click(function(){
+			$("#il-modal").fadeOut();
+		});
+	}
+	
+	function showModal() {
+		$("#ri-modal").fadeIn();
+		
+		$(".modal-button1").click(function(){
+			$("#ri-modal").fadeOut();
+		});
 	}
     </script>
 </body>

@@ -1,10 +1,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 <!DOCTYPE html>
 <html lang="zxx">
+
 <head>
-    <title>Fashi | Template</title>
+    <title>SpringDay | Header</title>
 </head>
 
 <body>
@@ -23,7 +25,13 @@
                     </div>
                 </div>
                 <div class="ht-right">
-                    <a href="#" class="login-panel"><i class="fa fa-user"></i>로그인</a>
+                	<c:if test="${sessionScope.loginMail == null}" >
+                    <a href="/user/login" class="login-panel"><i class="fa fa-user"></i>로그인</a>
+					</c:if>
+					<c:if test="${sessionScope.loginMail != null}" >
+					<!-- 로그아웃(form안의 내용을 가지고감) -->
+                    <a href="/user/logout" class="login-panel"><i class="fa fa-user"></i>로그아웃</a>
+					</c:if>
                     <div class="lan-selector">
                         <select class="language_drop" name="countries" id="countries" style="width:300px;">
                             <option value='yt' data-image="/resources/img/flag-1.jpg" data-imagecss="flag yt"
@@ -61,48 +69,34 @@
                                 <span>""님 환영합니다.
                                 </span>
                             <li class="cart-icon">
-                                <a href="/order/cart">
+                                <a href="#" onmouseover="selectCartList();">
                                     <i class="icon_bag_alt"></i>
-                                    <span>3</span>
+                                    <span>+</span>
                                 </a>
                                 <div class="cart-hover">
                                     <div class="select-items">
-                                        <table>
+                                        <table id="cartList">
                                             <tbody>
+                                            	<c:forEach items="${cartList }" var="cart">
                                                 <tr>
                                                     <td class="si-pic"><img src="/resources/img/select-product-1.jpg" alt=""></td>
                                                     <td class="si-text">
                                                         <div class="product-selected">
-                                                            <p>$60.00 x 1</p>
-                                                            <h6>Kabino Bedside Table</h6>
+                                                            <p>${cart.price } x ${cart.cartAmount }</p>
+                                                            <h6>${cart.itemName }</h6>
                                                         </div>
                                                     </td>
                                                     <td class="si-close">
                                                         <i class="ti-close"></i>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td class="si-pic"><img src="/resources/img/select-product-2.jpg" alt=""></td>
-                                                    <td class="si-text">
-                                                        <div class="product-selected">
-                                                            <p>$60.00 x 1</p>
-                                                            <h6>Kabino Bedside Table</h6>
-                                                        </div>
-                                                    </td>
-                                                    <td class="si-close">
-                                                        <i class="ti-close"></i>
-                                                    </td>
-                                                </tr>
+                                                </c:forEach>
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="select-total">
-                                        <span>total:</span>
-                                        <h5>$120.00</h5>
-                                    </div>
                                     <div class="select-button">
-                                        <a href="#" class="primary-btn view-card">VIEW CARD</a>
-                                        <a href="#" class="primary-btn checkout-btn">CHECK OUT</a>
+                                        <a href="/order/cart" class="primary-btn view-card">장바구니 바로가기</a>
+                                        <a href="/order/orderList" class="primary-btn checkout-btn">결제 바로가기</a>
                                     </div>
                                 </div>
                             </li>
@@ -143,6 +137,39 @@
         </div>
     </header>
     <!-- Header End -->
+    <script src="/resources/js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+    
+    function selectCartList(){
+    	var str = "";
+   		$.ajax({
+   			url: "/order/selectCartList",
+   			type: "POST",
+   			success: function(res){
+   				$("#cartList").remove();
+   				$(".select-items").html(res);
+       		},
+   			error: function(e){
+   				console.log(e);
+   				console.log("실패");
+   			}
+   		});
+    }
+    
+    	$(".icon_bag_alt").mouseover(function(){
+   		var str = "";
+   		$.ajax({
+   			url: "/order/selectCartList",
+   			type: "POST",
+   			success: function(res){
+   				$("#cartList").remove();
+   				$(".select-items").html(res);
+       		},
+   			error: function(e){
+   				console.log("실패");
+   			}
+   		});
+   	}); 
+    </script>
 </body>
-
 </html>

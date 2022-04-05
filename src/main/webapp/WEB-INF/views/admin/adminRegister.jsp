@@ -26,7 +26,8 @@
     <link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
-    
+    <link rel="stylesheet" href="/resources/css/adminCss/adminRegister.css" type="text/css">
+
 </head>
 
 <body>
@@ -138,12 +139,21 @@
                             <div class="group-input">
                                 <input type="password" id="empPw" name="empPw" placeholder="비밀번호">
                             </div>
-                            
                             <div class="group-input">
                                 <input type="password" id="empPwCheck" name="empPwCheck" placeholder="비밀번호 확인">
                             </div>
                             <div class="group-input">
                                <input type="text" id="empCall" name="empCall" placeholder="연락처">
+                            </div>
+                            <div class="group-input">
+                               <input type="text" id="empMail" name="empMail" placeholder="e-mail">
+                            </div>
+                            <div class="group-input" id="pinNumChk_false">
+                               <input type="text" id="pinNumChk" name="pinNumChk" placeholder="인증번호 확인" disabled="disabled">
+							   <span id="pinNumChk_warn"></span>
+                            </div>
+                            <div class="group-input">
+                               <input type="button" id="sendMailBtn" value="인증번호 전송" onclick="return sendMail(); this.onclick='';">
                             </div>
                             <div class="group-input">
 								<select id="position" name="position" style="width: 450px; height: 50px;">

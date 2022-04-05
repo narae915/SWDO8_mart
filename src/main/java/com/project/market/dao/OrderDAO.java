@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project.market.vo.CartVO;
+import com.project.market.vo.ItemVO;
 import com.project.market.vo.OrderVO;
 
 @Repository
@@ -88,6 +89,7 @@ public class OrderDAO {
 		return cartList;
 	}
 
+	// 장바구니 삭제
 	public int cartCancel(int cartNum) {
 		int result = 0;
 		OrderMapper mapper = null;
@@ -95,6 +97,62 @@ public class OrderDAO {
 		try {
 			mapper = session.getMapper(OrderMapper.class);
 			result = mapper.cartCancel(cartNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+		
+	}
+	//장바구니에 상품 넣기
+	public int insertCart(HashMap<String, Object> map) {
+		int result = 0;
+		OrderMapper mapper = null;
+		
+		try {
+			mapper = session.getMapper(OrderMapper.class);
+			result = mapper.insertCart(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	//장바구니 상품 조회
+	public ArrayList<ItemVO> selectCartList() {
+		ArrayList<ItemVO> result = null;
+		OrderMapper mapper = null;
+		
+		try {
+			mapper = session.getMapper(OrderMapper.class);
+			result = mapper.selectCartList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	//장바구니에 같은 상품이 있는지 확인
+	public CartVO checkCart(int itemNum) {
+		CartVO result = null;
+		OrderMapper mapper = null;
+		
+		try {
+			mapper = session.getMapper(OrderMapper.class);
+			result = mapper.checkCart(itemNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	//장바구니에 같은 상품이 있다면 수량을 증가
+	public int updateCartAmount(HashMap<String, Object> map) {
+		int result = 0;
+		OrderMapper mapper = null;
+		
+		try {
+			mapper = session.getMapper(OrderMapper.class);
+			result = mapper.updateCartAmount(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

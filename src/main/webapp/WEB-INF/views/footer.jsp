@@ -7,6 +7,36 @@
 
     <title>Fashi | Template</title>
 
+	<!-- CSS -->
+	<style>
+		.modal-button {
+			font-size: 16px;
+			color: #ffffff;
+			border: 1px solid #e7ab3c;
+			background: #e7ab3c;
+			height: 45px;
+			padding: 12px 16px 12px;
+		}
+		
+		.modal{
+			position: fixed;
+			top:0; left: 0; bottom: 0; right: 0;
+			background: rgba(0, 0, 0, 0.8); /* 투명도 */
+		}
+		
+		.modal_content{
+			position: absolute;  /* 배경 내에서 위치 조정 */
+			top: calc(50vh - 100px); left: calc(50vw - 200px);
+			background-color: white;
+			display: flex; 
+			justify-content: center;
+			align-items: center;
+			border-radius: 10px;
+			width: 400px;
+			height: 200px;
+			flex-direction: column;
+		}
+	</style>
 </head>
 
 <body>
@@ -77,7 +107,16 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> 1조 
     </footer>
     <!-- Footer Section End -->
 
+	<!-- 모달 연습 -->
+	<div class="modal" id="staff-modal">
+		<div class="modal_content" id="staff-modal-centent">
+			관계자만 접속할 수 있습니다.<br><br>
+			<input type="button" class="modal-button" id="staff-modal-button" value="창 닫기">
+		</div>
+	</div>
+	
     <!-- Js Plugins -->
+    <script src="/resources/js/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
     	//이름과 사원번호를 합쳐서 입력하면 관리자 페이지로 이동하는 ajax 만들기
     	function staffOnlyChk() {
@@ -96,7 +135,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> 1조 
         			if(res == "yes") {
         				result = true;
         			} else {
-            			alert("관계자만 접속할 수 있습니다.");
+        				showStaffModal();
             			result = false;
         			}
         		},
@@ -108,6 +147,13 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> 1조 
     		return result;
     	}
     	
+    	function showStaffModal() {
+    		$("#staff-modal").fadeIn();
+    		
+    		$("#staff-modal-button").click(function(){
+    			$("#staff-modal").fadeOut();
+    		});
+    	}
     </script>
 </body>
 

@@ -6,36 +6,55 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
 	<!-- db.properties 읽어오기 -->
-      <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-         <property name="location">
-            <value>classpath:db.properties</value>
-         </property>
-      </bean>
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	   <property name="location">
+	      <value>classpath:db.properties</value>
+	   </property>
+	</bean>
+	
+	<!-- db.properties의 설정 값을 읽어서 setting -->
+	<bean id="dataSource"
+	   class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	   <property name="driverClassName" value="${driver}" />
+	   <property name="url" value="${url}" />
+	   <property name="username" value="${username}" />
+	   <property name="password" value="${password}" />
+	</bean>
+	
+	<!-- 트랙잭션 관리를 위한 빈설정 -->
+	<bean id="transactionManager"
+	   class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	   <property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!-- sqlSessionTemplete -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	   <property name="dataSource" ref="dataSource" />
+	   <property name="configLocation" value="classpath:mybatis-config.xml" />
+	</bean>
+	
+	<!-- sqlSession -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+	   <constructor-arg index="0" name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+      
+	<!-- navermail설정 -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"> 
+		<property name="host" value="smtp.naver.com"/> <!-- 메이서버 호스트 -->
+		<property name="port" value="465"/> <!-- 메이서버 포트번호 -->
+		<property name="username" value="kings3517"/> <!-- 자신의 이메일 아이디 -->
+		<property name="password" value="qwerahnchan1997"/> <!-- 자신의 비밀번호 -->
+		<!-- 보안연결 SSL과 관련된 설정 -->
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.smtps.checkserveridentity">true</prop>
+				<prop key="mail.smtps.ssl.trust">*</prop>
+				<prop key="mail.debug">true</prop>
+				<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+			</props>
+		</property>
+	</bean>
 
-      <!-- db.properties의 설정 값을 읽어서 setting -->
-      <bean id="dataSource"
-         class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-         <property name="driverClassName" value="${driver}" />
-         <property name="url" value="${url}" />
-         <property name="username" value="${username}" />
-         <property name="password" value="${password}" />
-      </bean>
-
-      <!-- 트랙잭션 관리를 위한 빈설정 -->
-      <bean id="transactionManager"
-         class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-         <property name="dataSource" ref="dataSource" />
-      </bean>
-   
-      <!-- sqlSessionTemplete -->
-      <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-         <property name="dataSource" ref="dataSource" />
-         <property name="configLocation" value="classpath:mybatis-config.xml" />
-      </bean>
-   
-      <!-- sqlSession -->
-      <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
-         <constructor-arg index="0" name="sqlSessionFactory" ref="sqlSessionFactory" />
-      </bean>
-		
 </beans>

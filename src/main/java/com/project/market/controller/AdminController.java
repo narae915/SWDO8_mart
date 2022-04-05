@@ -1,6 +1,7 @@
 package com.project.market.controller;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -8,12 +9,16 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.mail.internet.MimeMessage;
+import org.springframework.mail.javamail.MimeMessageHelper;
 
 import com.project.market.service.AdminService;
 import com.project.market.util.PageNavigator;
@@ -28,6 +33,9 @@ public class AdminController {
 	private static final int PAGE_PER_GROUP = 5; // 한 그룹 당 보여줄 최대 페이지 수
 
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
+	
+	@Autowired
+	private JavaMailSender mailSender;
 	
 	@Autowired
 	private AdminService service;
@@ -330,6 +338,70 @@ public class AdminController {
 		}
 		
 		return "redirect:empManagement";
+	}
+	
+	/* 메일 보내기 */
+	@ResponseBody
+	@RequestMapping(value = "/mailCheck", method = RequestMethod.GET)
+    public String mailCheck(String empMail)
+	{
+		 logger.info("mailCheck 메소드 실행(GET).");
+	     logger.info("empMail: {}", empMail);
+	     
+	     /* 인증번호 생성 */
+	     Random random = new Random();
+	     int pinNum = random.nextInt(888888) + 111111;
+	     logger.info("pinNum: {}", pinNum);
+	     
+	     /* 이메일 보내기 */
+        String setFrom = "kings3517@naver.com";
+        String toMail = empMail;
+        String title = "회원가입 인증 이메일 입니다.";
+        String content = 
+                "봄날 식자재 직원 등록 인증 메일 확인입니다." +
+                "<br><br>" + 
+                "인증 번호는 " + pinNum + "입니다." + 
+                "<br>" + 
+                "해당 인증번호를 인증번호 확인란에 기입해주시기 바랍니다.";
+        
+        try 
+        {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, "utf-8");
+            helper.setFrom(setFrom);
+            helper.setTo(toMail);
+            helper.setSubject(title);
+            helper.setText(content,true);
+            mailSender.send(message);
+            
+        }
+        catch(Exception e) 
+        {
+            e.printStackTrace();
+        }
+        
+        String checkNum = Integer.toString(pinNum);
+        
+        return checkNum;
+    }
+
+	
+	/* ID 찾기 페이지 이동 */
+	@RequestMapping (value = "/empFindId", method = RequestMethod.GET)
+	public String adminFindId(Model model, HttpSession session) 
+	{
+		logger.info("empFindId 메소드 실행(GET).");
+		
+		return "admin/empFindId";
+	}
+	
+	/* ID 찾기 */
+	@RequestMapping (value = "/empFindId", method = RequestMethod.POST)
+	public String adminFindId() 
+	{
+		logger.info("empFindId 메소드 실행(POST).");
+		
+		return "admin/empFindId";
 	}
 	
 }

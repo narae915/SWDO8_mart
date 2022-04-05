@@ -10,13 +10,13 @@
     		height: 300;
     	}
    
-    	th, td {
+    	#orderTable<th, #orderTable<td {
     		border: 3px solid #EBE8C7;
     		height: 10%;
     		width: 10%;
     	}
     	
-    	th {
+    	#orderTable<th {
     		border-bottom: 3px solid #EBE8C7;
     		background-color: #A68523;
     		color: #EBE8C7;
@@ -24,7 +24,7 @@
     		font-size: 20px;
     	}
     	
-    	td {
+    	#orderTable<td {
 			background-color: #9C9576;
 			color: #E8E2C8;    	
     	}

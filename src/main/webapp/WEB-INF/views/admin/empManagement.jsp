@@ -221,7 +221,7 @@
 								<option value="searchPosition">직급</option>
 							</select>
 							<input type="text" id="searchWord" name="searchWord" placeholder="검색어를 입력해주세요." style="width: 25%; height: 45px; position:relative; left: 20em; bottom:-1em; border: none; font-size: 16px; border: #e7ab3c solid 3px; border-radius: 5px; color: #000; padding-right: 20px;">
-							<button type="submit" class="primary-btn" style="width:5px; height:45px; border-radius:5px; left: 20em; bottom:-1.09em"><i class="ti-search"></i></button>
+							<button type="submit" class="primary-btn" style="width:5px; height:45px; border-radius:5px; left: 20em; bottom:-1.07em"><i class="ti-search"></i></button>
 						</form>
 						<!-- Emp Search End -->
 					</div>
