@@ -1,14 +1,46 @@
-.find ul
+#pinNumChk_false
 {
-	list-style: none;
-	margin-left: auto;
-	margin-right: auto;
+    background-color: #ebebe4;
+}
+ 
+#pinNumChk_true
+{
+    background-color: white;
 }
 
-.find li
+#pinNumChk_Btn
 {
-	display: inline-block;
-	float: right;
+	background-color: #ebebe4; 
+	width: 30%; 
+	height: 50px; 
+	color: #ebebe4;
+}
+
+#pinNumChk_Btn_true
+{
+	background-color: #434445;
+	width: 30%; 
+	height: 50px; 
+	border-radius: 5px;
+	color: white;
+}
+
+#sendMailBtn
+{
+	background-color: #434445; 
+	width: 30%; 
+	height:50px; 
+	border-radius:5px; 
+	color: white;
+}
+
+.correct
+{
+    color : green;
+}
+.incorrect
+{
+    color : red;
 }
 
 /* modal */

@@ -5,7 +5,7 @@
 <html lang="zxx">
 <head>
 
-    <title>SpringDay | Footer</title>
+    <title>SpringDay관리자 | Footer</title>
 
 	<!-- CSS -->
 	<style>
@@ -107,7 +107,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> 1조 
     </footer>
     <!-- Footer Section End -->
 
-	<!-- 모달 연습 -->
+	<!-- 모달 -->
 	<div class="modal" id="staff-modal">
 		<div class="modal_content" id="staff-modal-centent">
 			관계자만 접속할 수 있습니다.<br><br>

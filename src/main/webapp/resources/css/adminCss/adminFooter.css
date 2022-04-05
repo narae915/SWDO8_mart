@@ -1,17 +1,3 @@
-.find ul
-{
-	list-style: none;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.find li
-{
-	display: inline-block;
-	float: right;
-}
-
-/* modal */
 .modalAlert
 {
 	position: fixed;
@@ -35,7 +21,6 @@
 	width: 400px;
 	height: 200px;
 	flex-direction: column;
-	font-weight: bold;
 }
 
 .modalClose 

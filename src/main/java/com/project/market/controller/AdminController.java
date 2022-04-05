@@ -130,18 +130,19 @@ public class AdminController {
 		return "admin/adminRegister";
 	}
 	
-	/* 관리자 ID 등록 */
+	/* 직원 ID 등록 */
 	@RequestMapping(value = "/adminRegister", method = RequestMethod.POST)
-	public String adminRegister(String empPw, String empName, String position, String empCall)
+	public String adminRegister(String empName, String empPw, String empCall, String empMail, String position)
 	{
 		logger.info("adminRegister 메소드 실행 (POST).");
 		
-		logger.info("empPw: {}", empPw);
 		logger.info("empName: {}", empName);
-		logger.info("position: {}", position);
+		logger.info("empPw: {}", empPw);
 		logger.info("empCall: {}", empCall);
+		logger.info("empMail: {}", empMail);
+		logger.info("position: {}", position);
 		
-		boolean result = service.adminRegister(empPw, empName, position, empCall);
+		boolean result = service.adminRegister(empName, empPw, empCall, empMail, position);
 		String returnUrl = "admin/adminRegister";
 		
 		if ( result )
@@ -169,7 +170,7 @@ public class AdminController {
 	
 	/* 로그인 */
 	@RequestMapping(value = "/adminLogin", method = RequestMethod.POST)
-	public String adminLogin(int empNum, String empPw, HttpSession session)
+	public String adminLogin(int empNum, String empPw, HttpSession session, Model model)
 	{
 		logger.info("login 메소드 실행(POST).");
 		
@@ -177,8 +178,12 @@ public class AdminController {
 		logger.info("empNum: {}", empNum);
 		logger.info("empPW: {}", empPw);
 		
+		String loginEmpName = service.selectEmpNm(empNum, empPw);
+		
 		// ID, PW를 데이터베이스에 전달해서 사원 이름과 직급을 가져옴
 		ArrayList<EmpVO> empInfoList = service.getEmpInfoList(empNum, empPw);
+		
+		String errorMessage = "아이디 또는 비밀번호를 잘못 입력하셨습니다.";
 		
 		String returnUrl = null;
 		
@@ -194,7 +199,6 @@ public class AdminController {
 			
 			if ( empName != null )
 			{
-				logger.info("로그인 성공.");
 				session.setAttribute("loginName", empName);
 				session.setAttribute("loginId", empNum);
 				session.setAttribute("loginPosition", position);
@@ -202,9 +206,20 @@ public class AdminController {
 			}
 			else
 			{
-				logger.info("로그인 실패.");
 				returnUrl = "admin/adminLogin";
 			}
+		}
+		
+		if ( loginEmpName != null )
+		{
+			logger.info("로그인 성공.");
+			returnUrl = "redirect:adminMain";
+		}
+		else
+		{
+			logger.info("로그인 실패.");
+			model.addAttribute("errorMessage", errorMessage);
+			returnUrl = "admin/adminLogin";
 		}
 		
 		return returnUrl;
@@ -221,7 +236,7 @@ public class AdminController {
 		return "redirect:adminLogin";
 	}
 	
-	/* 직원 리스트 조회 및 직원 검색 */
+	/* 직원 리스트 조회 */
 	@RequestMapping(value = "/empManagement", method = RequestMethod.GET)
 	public String empList(@RequestParam(defaultValue = "1") int currentPage, Model model, String searchType, String searchWord) 
 	{
@@ -232,22 +247,25 @@ public class AdminController {
 		logger.info("searchType: {}", searchType);
 		logger.info("searchWord: {}", searchWord);
 		
-		if ( searchWord == null )
+		if ( searchType == null ) 
+		{
+			searchType = "";
+		}
+		if ( searchWord == null ) 
 		{
 			searchWord = "";
 		}
 		
 		// 총 직원 수를 가져옴
-		int totalRecordsCount = service.getEmpTotalRecordsCount();
-		logger.info("전체 직원 수: {}", totalRecordsCount);
+		int totalRecordsCount = service.getEmpTotalRecordsCount(searchType, searchWord);
+		logger.info("직원 수: {}", totalRecordsCount);
 		
 		// 페이징 처리를 위한 내비게이터 객체 생성
 		PageNavigator navi = new PageNavigator(COUNT_PER_PAGE, PAGE_PER_GROUP, currentPage, totalRecordsCount);
 		model.addAttribute("navi", navi);
 		
-		// 게시글 시작 번호, 불러올 게시글 수를 전달해서 현재 페이지에 해당하는 10개의 게시글만 가져오도록 설정
-		ArrayList<EmpVO> empList = new ArrayList<>();
-		empList = service.getEmpList(navi.getStartRecord(), COUNT_PER_PAGE, searchType, searchWord);
+		// 게시글 시작 번호, 불러올 게시글 수를 전달해서 현재 페이지에 해당하는 5개의 게시글만 가져오도록 설정
+		ArrayList<EmpVO> empList = service.getEmpList(navi.getStartRecord(), COUNT_PER_PAGE, searchType, searchWord);
 		logger.info("empList: {}", empList);
 		
 		if ( empList != null )
@@ -258,6 +276,32 @@ public class AdminController {
 		else
 		{
 			logger.info("직원 조회 실패.");
+		}
+		
+		return "admin/empManagement";
+	}
+	
+	/* 직원 검색 */
+	@RequestMapping(value = "/searchEmp", method = RequestMethod.GET)
+	public String searchEmp(String searchType, String searchWord, Model model) 
+	{
+		logger.info("searchEmp 메소드 실행(GET).");
+		
+		// 입력된 검색종류와 검색어 출력
+		logger.info("searchType: {}", searchType);
+		logger.info("searchWord: {}", searchWord);
+		
+		ArrayList<EmpVO> empList = service.searchEmp(searchType, searchWord);
+		logger.info("empList: {}", empList);
+		
+		if ( empList != null )
+		{
+			logger.info("직원 검색 성공.");
+			model.addAttribute("empList", empList);
+		}
+		else
+		{
+			logger.info("직원 검색 실패.");
 		}
 		
 		return "admin/empManagement";
@@ -288,7 +332,7 @@ public class AdminController {
 	
 	/* 직원 정보 수정 */
 	@RequestMapping (value = "/empUpdate", method = RequestMethod.POST)
-	public String empUpdate(int empNum, String empName, String empPw, String empCall, String position, HttpSession session) 
+	public String empUpdate(int empNum, String empName, String empPw, String empCall, String empMail, String position, HttpSession session) 
 	{
 		logger.info("empUpdate 메소드 실행(POST).");
 		
@@ -296,9 +340,10 @@ public class AdminController {
 		logger.info("empName: {}", empName);
 		logger.info("empPw: {}", empPw);
 		logger.info("empCall: {}", empCall);
+		logger.info("empMail: {}", empMail);
 		logger.info("position: {}", position);
 		
-		boolean result = service.empUpdate(empNum, empName, empPw, empCall, position);
+		boolean result = service.empUpdate(empNum, empName, empPw, empCall, empMail, position);
 		
 		String returnUrl = null;
 		
@@ -320,7 +365,7 @@ public class AdminController {
 	
 	/* 직원 정보 삭제 */
 	@RequestMapping(value = "/empDelete", method = RequestMethod.GET)
-	public String empDelete(int empNum, HttpSession session) 
+	public String empDelete(int empNum) 
 	{
 		logger.info("empDelete 메소드 실행(GET).");
 		
@@ -388,7 +433,7 @@ public class AdminController {
 	
 	/* ID 찾기 페이지 이동 */
 	@RequestMapping (value = "/empFindId", method = RequestMethod.GET)
-	public String adminFindId(Model model, HttpSession session) 
+	public String empFindId() 
 	{
 		logger.info("empFindId 메소드 실행(GET).");
 		
@@ -397,11 +442,40 @@ public class AdminController {
 	
 	/* ID 찾기 */
 	@RequestMapping (value = "/empFindId", method = RequestMethod.POST)
-	public String adminFindId() 
+	public String empFindId(String empName, String empMail, Model model) 
 	{
 		logger.info("empFindId 메소드 실행(POST).");
 		
-		return "admin/empFindId";
+		// ID찾기를 시도하려고 하는 이름, PW를 출력
+		logger.info("empName: {}", empName);
+		logger.info("empMail: {}", empMail);
+		
+		int findEmpId = service.selectEmpId(empName, empMail);
+		
+		String returnUrl = null;
+		
+		if ( findEmpId != 0 )
+		{
+			logger.info("ID 찾기 성공.");
+			model.addAttribute("findId", findEmpId);
+			returnUrl = "redirect:empFindView";
+		}
+		else
+		{
+			logger.info("ID 찾기 실패.");
+			returnUrl = "empFindId";
+		}
+		
+		return returnUrl;
+	}
+	
+	/* ID/PW 찾기결과 페이지 이동 */
+	@RequestMapping (value = "/empFindView", method = RequestMethod.GET)
+	public String empFindView() 
+	{
+		logger.info("empFindView 메소드 실행(GET).");
+		
+		return "admin/empFindView";
 	}
 	
 }

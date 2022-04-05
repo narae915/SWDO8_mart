@@ -85,7 +85,7 @@ public class AdminDAO {
 		return result;
 	}
 
-	/* 관리자 ID 등록 */
+	/* 직원 ID 등록 */
 	public int adminRegister(EmpVO newEmp) 
 	{
 		int result = 0;
@@ -105,6 +105,25 @@ public class AdminDAO {
 	}
 	
 	/* 로그인 */
+	public String selectEmpNm(EmpVO emp) 
+	{
+		String result = null;
+		AdminMapper mapper = null;
+		
+		try 
+		{
+			mapper = session.getMapper(AdminMapper.class);
+			result = mapper.selectEmpNm(emp);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	/* 로그인 정보 가져오기 */
 	public ArrayList<EmpVO> getEmpInfoList(HashMap<String, Object> map) 
 	{
 		ArrayList<EmpVO> result = null;
@@ -123,7 +142,7 @@ public class AdminDAO {
 		return result;
 	}
 	
-	/* 직원 리스트 조회 및 직원 검색  */
+	/* 직원 리스트  */
 	public ArrayList<EmpVO> getEmpList(HashMap<String, Object> map) 
 	{
 		ArrayList<EmpVO> result = null;
@@ -143,7 +162,7 @@ public class AdminDAO {
 	}
 	
 	/* 총 직원 수 조회  (페이징) */
-	public int getEmpTotalRecordsCount() 
+	public int getEmpTotalRecordsCount(HashMap<String, Object> map) 
 	{
 		int result = 0;
 		AdminMapper mapper = null;
@@ -151,12 +170,31 @@ public class AdminDAO {
 		try 
 		{
 			mapper = session.getMapper(AdminMapper.class);
-			result = mapper.getEmpTotalRecordsCount();
+			result = mapper.getEmpTotalRecordsCount(map);
 		} 
 		catch (Exception e) 
 		{
 			e.printStackTrace();
 		}
+		
+		return result;
+	}
+	
+	/* 직원 검색 */
+	public ArrayList<EmpVO> searchEmp(HashMap<String, Object> map) 
+	{
+		ArrayList<EmpVO> result = null;
+		AdminMapper mapper = null;
+		
+		try
+		{
+			mapper = session.getMapper(AdminMapper.class);
+			result = mapper.searchEmp(map);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		} 
 		
 		return result;
 	}
@@ -209,6 +247,25 @@ public class AdminDAO {
 		{
 			mapper = session.getMapper(AdminMapper.class);
 			result = mapper.empDelete(empNum);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	/* ID 찾기 */
+	public int selectEmpId(EmpVO findEmp) 
+	{
+		int result = 0;
+		AdminMapper mapper = null;
+		
+		try 
+		{
+			mapper = session.getMapper(AdminMapper.class);
+			result = mapper.selectEmpId(findEmp);
 		} 
 		catch (Exception e) 
 		{
