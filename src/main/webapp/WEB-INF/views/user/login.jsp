@@ -57,15 +57,16 @@
                 <div class="col-lg-6 offset-lg-3">
                     <div class="login-form">
                         <h2>로그인</h2>
-                        <form action="/user/login" method= "post">
+                        <form action="/user/auth" method= "post">
                             <div class="group-input">
                                 <label for="username">로그인ID(메일주소) *</label>
                                 <input type="text" id="username" name="userMail">
                             </div>
                             <div class="group-input">
                                 <label for="pass">비밀번호 *</label>
-                                <input type="text" id="pass" name="userPw">
+                                <input type="password" id="pass" name="userPw">
 							</div>
+							<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
 							<div class="group-input">
 							<button type="submit" class="site-btn login-btn">로그인</button>
 							</div>
