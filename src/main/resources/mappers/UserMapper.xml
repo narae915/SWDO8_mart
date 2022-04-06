@@ -12,6 +12,7 @@
 		user_mail,
 		user_pw,
 		user_call,
+		postcode,
 		user_address
 	)values(
 		user_num_seq.nextval,
@@ -19,6 +20,7 @@
 		#{userMail },
 		#{userPw },
 		#{userCall },
+		#{postcode },
 		#{userAddress }
 	)
 </insert>

@@ -28,53 +28,42 @@ public class UserController {
 	private BCryptPasswordEncoder pwdEncoder;
 	
 	//회원가입 페이지 이동
-		@RequestMapping(value = "/signUp", method = RequestMethod.GET)
-		public String signUp() {
-			logger.info("회원가입 페이지(GET)");
-			
-			return "/user/signUp";
-		}
+	@RequestMapping(value = "/signUp", method = RequestMethod.GET)
+	public String signUp() {
+		logger.info("회원가입 페이지(GET)");
 		
-		//회원가입 시도
-		@RequestMapping(value = "/signUp", method = RequestMethod.POST)
-		public String signUp(HttpServletRequest request, Model model, UserVO user) {
-			logger.info("회원가입 페이지(POST)");
-			logger.info("user : {}", user);
+		return "/user/signUp";
+	}
+	
+	//회원가입 시도
+	@RequestMapping(value = "/signUp", method = RequestMethod.POST)
+	public String signUp(HttpServletRequest request, Model model, UserVO user) {
+		logger.info("회원가입 페이지(POST)");
+		logger.info("user : {}", user);
 
-			String userPw = pwdEncoder.encode(user.getUserPw());
-			user.setUserPw(userPw);
-			
-			boolean result = service.signUpUser(user);
-			String returnUrl = null;
+		String userPw = pwdEncoder.encode(user.getUserPw());
+		user.setUserPw(userPw);
+		
+		boolean result = service.signUpUser(user);
+		String returnUrl = null;
 
-			if(result) {
-				logger.info("회원가입 성공");
-				returnUrl = "user/login";
-			} else {
-				logger.info("회원가입 실패");
-				returnUrl = "user/signUp";
-			}
-			return returnUrl;
+		if(result) {
+			logger.info("회원가입 성공");
+			returnUrl = "user/login";
+		} else {
+			logger.info("회원가입 실패");
+			returnUrl = "user/signUp";
 		}
+		return returnUrl;
+	}
 		
-		//로그인 페이지 이동
-		@RequestMapping(value="/login", method = RequestMethod.GET)
-		public String login() {
-			logger.info("로그인 페이지(GET)");
-			
-			return "user/login";
-		}
+	//로그인 페이지 이동
+	@RequestMapping(value="/login", method = RequestMethod.GET)
+	public String login() {
+		logger.info("로그인 페이지(GET)");
 		
-		
-		
-		//로그아웃
-		@RequestMapping(value = "/logout", method = RequestMethod.GET)
-		public String logout(HttpSession session) {
-			
-			//로그인 시도했을 때 session에 저장했던 회원정보 삭제
-			session.removeAttribute("loginMail");
-			return "home";
-		}
+		return "user/login";
+	}
 		
 		// 22-04-05 노채린
 		// 회원정보 수정 페이지

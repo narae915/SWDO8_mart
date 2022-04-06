@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -25,13 +26,16 @@
                     </div>
                 </div>
                 <div class="ht-right">
-                	<c:if test="${sessionScope.loginMail == null}" >
+                	<sec:authorize access="isAnonymous()">
                     <a href="/user/login" class="login-panel"><i class="fa fa-user"></i>로그인</a>
-					</c:if>
-					<c:if test="${sessionScope.loginMail != null}" >
+					</sec:authorize>
+					<sec:authorize access="isAuthenticated()">
 					<!-- 로그아웃(form안의 내용을 가지고감) -->
-                    <a href="/user/logout" class="login-panel"><i class="fa fa-user"></i>로그아웃</a>
-					</c:if>
+  					<a href="#" class="login-panel" onclick="document.getElementById('logout').submit();"><i class="fa fa-user"></i>로그아웃</a>
+                    <form id="logout" action="/user/logout" method="POST">
+   						<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+					</form>
+					</sec:authorize>
                     <div class="lan-selector">
                         <select class="language_drop" name="countries" id="countries" style="width:300px;">
                             <option value='yt' data-image="/resources/img/flag-1.jpg" data-imagecss="flag yt"
