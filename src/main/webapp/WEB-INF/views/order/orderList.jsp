@@ -12,7 +12,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Fashi | Template</title>
+    <title>SpringDay * 내 주문 목록</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -28,31 +28,6 @@
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/orderList.css" type="text/css">
-
-<script type="text/javascript">
- function show(str){
-	 
- }
-</script>
-
-<style>
-	.modal {
-		position: fixed;
-		width: 100%;
-		height: 100%;
-		background: rgba(0,0,0,0.8);
-	}
-	.modal_content {
-		width: 30%;
-		height: 30%;
-		position: absolute;
-		top: 30%;
-		left: 35%;
-		text-align: center;
-		background: #fff;
-		border-radius: 15px;
-	}
-</style>
 </head>
 
 <body>
@@ -63,50 +38,15 @@
 
     <!-- Header -->
 	<%@ include file="/WEB-INF/views/header.jsp" %>
-	
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title" id="title"></h4>
-        </div>
-        <div class="modal-body">
-          <p id="content"></p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>  
 
-	<!-- 
-	<div class="modal" id="result-modal">
-		<div class="modal_content" title="클릭하면 창이 닫힙니다.">
-			<br><br><br><b>주문이 취소되었습니다.</b><br><br>
-			<button class="primary-btn" style="border-radius:5px" onclick="location.href = '/order/orderList'">닫기</button>
-		</div>
-	</div> -->
-<!-- 	
-	<div class="modal" id="confirm-modal">
-		<div class="modal_content">
-			<br><br><br><b>정말 취소하시겠습니까?</b><br><br>
-			<button class="primary-btn" id="yes-button" style="border-radius:5px">예</button>
-			<button class="primary-btn" id="no-button"  style="border-radius:5px">아니오</button>
-		</div>
-	</div>
-	 -->
-	
     <!-- Breadcrumb Section Begin -->
     <div class="breacrumb-section">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
-                        <a href="#"><i class="fa fa-home"></i> Home</a>
-                        <span>주문 확인</span>
+                        <a href="/"><i class="fa fa-home"></i> Home</a>
+                        <span>내 주문 목록</span>
                     </div>
                 </div>
             </div>
@@ -138,8 +78,8 @@
 	                    </form>
 	                    <!-- 주문 취소 및 주문 조회 -->
 	                    <form action="ordercancel" method="post" id="cancelForm">
-	                    	<button type="button" class="primary-btn" id="cancel-button" onclick="return valueChk();">주문 취소</button>
-	                    		
+	                    	<input type="button" class="primary-btn" id="cancelButton" style="border-radius:5px; border: none"value="주문 취소">
+
 	                    	<!-- 주문 조회 테이블 시작 -->
 	                    	<div id = "orderTable">
 		                        <table class="table-basic">
@@ -163,10 +103,10 @@
 		                        	<tbody>
 			                        	<c:forEach var="Order" items="${orderList }">
 			                        		<td rowspan="2"><input type="checkbox" id="orderNum" name="orderNum" value="${Order.orderNum }" style="width:30px; height:30px; cursor:pointer" /></td> <!-- 주문취소셀렉트 -->
-			                        		<c:if test="${Order.price  == 0}"> <!-- 상품정보 없을 시 금액 -->
+			                        		<c:if test="${Order.price == 0}"> <!-- 상품정보 없을 시 금액 -->
 			                        			<td>- ₩</td> 
 			                        		</c:if>
-			                        		<c:if test="${Order.price  != 0}"> <!-- 상품정보 있을 시 금액 -->
+			                        		<c:if test="${Order.price != 0}"> <!-- 상품정보 있을 시 금액 -->
 			                        			<td><fmt:formatNumber value="${Order.price * Order.amount }" pattern='#,### ₩'/></td>
 			                        		</c:if>
 			                        		
@@ -334,6 +274,8 @@
     <script src="/resources/js/owl.carousel.min.js"></script>
     <script src="/resources/js/main.js"></script>
     <script src="/resources/js/orderList.js"></script>
+ 
+    
 </body>
-
+    
 </html>

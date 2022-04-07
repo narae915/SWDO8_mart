@@ -12,7 +12,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Fashi | Template</title>
+    <title>SpringDay * 장바구니</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -30,7 +30,30 @@
     <link rel="stylesheet" href="/resources/css/cart.css" type="text/css">
 	<script src="https://kit.fontawesome.com/af95d2c333.js" crossorigin="anonymous"></script>
 	
-	
+	<style>
+		h5 {
+			font-weight: bold;
+			padding-left: 20px;
+			margin-top: 3px;
+			font-weight: 2000;
+		}
+		
+		.container-h5 {
+			background: linear-gradient(-45deg, #f3f5f0 50%, #EBE8C7 50%);
+			border-style: solid;
+			border-width: 5px;
+			border-color: #E7AB3C;
+			border-radius: 15px;
+		}
+		#image-not {
+			 width: 50px;
+			 height: 50px;
+			 display:block;
+			 margin:auto;
+			 margin-top: 10%;
+			 margin-bottom:3%;
+		}
+	</style>
 </head>
 
 <body>
@@ -77,13 +100,13 @@
 						</div>
 	                    <br>
 	                    <!-- 장바구니 취소 및 조회 -->
-
                     	<!-- 테이블 시작 -->
+                    	<c:if test="${not empty cartList }">
 						<form name="cartform" id="cartform" method="post" class="cartform" action="cart" onsubmit="return false;">
 			    
 			            <input type="hidden" name="cmd" value="cart">
 			            <div class="basketdiv" id="basket">
-			            
+			            <!-- 데이터 있을 때 -->
 			                <div class="row head">
 			                    <div class="subdiv">
 			                        <div class="check">선택</div>
@@ -174,20 +197,31 @@
 							</div>
 							<!-- 페이징 끝 -->
 			    
-			   	 	<div class=result-box style="border:5px solid #EBE8C7; border-radius: 10px;background-color: #9C9576;width: 30%; margin-left: 72%; display:inline-block">
-			   	 	<br>
-			            <div class="bigtext right-align sumcount" id="sum_p_num" style="color:#EBE8C7">총 0개</div>
-			            <div class="bigtext right-align box summoney" id="sum_p_price" style="color:#EBE8C7">합계금액: 0원</div>
-			            <br>
-			    	</div>
-			            <div id="gocart" class="">
-			                <div class="clear"></div>
-			                <div class="buttongroup center-align cmd">
-			                    <a href="/order/orderForm"><b>선택한 상품 주문</b></a>
-			                </div>
-			            </div>
-			        </form>
+					   	 	<div class=result-box style="border:5px solid #EBE8C7; border-radius: 10px;background-color: #9C9576;width: 30%; margin-left: 72%; display:inline-block">
+					   	 	<br>
+					            <div class="bigtext right-align sumcount" id="sum_p_num" style="color:#EBE8C7">총 0개</div>
+					            <div class="bigtext right-align box summoney" id="sum_p_price" style="color:#EBE8C7">합계금액: 0원</div>
+					            <input type="hidden" id="totalPrice" />
+					            <br>
+					    	</div>
+					            <div id="gocart" class="">
+					                <div class="clear"></div>
+					                <div class="buttongroup center-align cmd">
+					                    <a href="/order/orderForm" id="purchase"><b>선택한 상품 주문</b></a>
+					                </div>
+					            </div>
+					        </form>
+				        </c:if>
                         <!--  테이블 끝 -->
+                        <!-- 데이터 없을 때 -->
+                        <c:if test="${empty cartList }">
+	                        <div class="container-h5">
+								<a href="https://www.flaticon.com/kr/free-icons/" title="금지 아이콘">
+									<img src="/resources/img/not.png" alt="금지 아이콘  제작자: Freepik - Flaticon" id="image-not">
+								</a>
+								<h2 style="text-align: center;font-weight: 900; margin-bottom:25%">장바구니에 담긴 상품이 없습니다</h2>
+							</div>
+                        </c:if>
                     </div>
                 </div>
             </div>

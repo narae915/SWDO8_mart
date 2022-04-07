@@ -9,7 +9,9 @@
 		var allData = {"cancelNumArray": cancelNum};
 		
 		if(cancelNum == "") { // 체크박스가 체크되어있지 않은 경우 경고창을 띄우며 삭제를 진행하지 않음.
-			alert("선택된 항목이 없습니다.");
+			exitAlert();
+			$("#footer-modal-content").prepend("선택된 항목이 없습니다.");
+			showModalAlert()
 			
 			return false;
 		} else {
@@ -18,9 +20,12 @@
 				data: allData,
 				success: function(res) {
 					if(res == "success") {
-						alert("삭제되었습니다.");
-						
-						location.href = "/admin/itemManagement";
+						exitAlert();
+						$("#footer-modal-content").prepend("삭제되었습니다.")
+						showModalAlert();
+						setTimeout(function() {
+	  						location.reload();
+	  					}, 3000);
 					}
 				} 
 			});
