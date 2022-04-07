@@ -46,7 +46,7 @@ public class ItemController {
 	}
 	
 	//정렬하기, 카테고리 별로 보기
-	@RequestMapping(value = "/sorting", method = RequestMethod.POST)
+	@RequestMapping(value = "/sorting", method = RequestMethod.GET)
 	public String sortingItem(String sendNum, String sorting, Model model) {
 		logger.info("Sorting 메소드 실행(POST)");
 		logger.info("값 확인 -> sorting : {} , sendNum : {}",sorting, sendNum);
@@ -61,7 +61,7 @@ public class ItemController {
 	}
 	
 	//정렬하기, 카테고리 별로 보기( 더보기 눌렀을 때 ajax)
-	@RequestMapping(value = "/loading", method = RequestMethod.POST)
+	@RequestMapping(value = "/loading", method = RequestMethod.GET)
 	public String loading(String startCount, String viewCount, String sorting, String searchNum, Model model) {
 		logger.info("loading 메소드 실행(GET)");
 		logger.info("startCount:{}", startCount);

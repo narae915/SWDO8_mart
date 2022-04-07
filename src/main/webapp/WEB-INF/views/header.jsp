@@ -2,10 +2,9 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+
 <!DOCTYPE html>
 <html lang="zxx">
-
 <head>
     <title>SpringDay | Header</title>
 </head>
@@ -33,7 +32,7 @@
 					<!-- 로그아웃(form안의 내용을 가지고감) -->
   					<a href="#" class="login-panel" onclick="document.getElementById('logout').submit();"><i class="fa fa-user"></i>로그아웃</a>
                     <form id="logout" action="/user/logout" method="POST">
-   						<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+   						<input name="${_csrf.parameterName}" id="token" type="hidden" value="${_csrf.token}"/>
 					</form>
 					</sec:authorize>
                     <div class="lan-selector">
@@ -70,11 +69,13 @@
                     <div class="col-lg-3 text-right col-md-3">
                         <ul class="nav-right">
                         	<li class="heart-icon">
-                                <span>""님 환영합니다.
-                                </span>
+ 	                      	<sec:authorize access="isAuthenticated()">
+                                <span>${sessionScope.welcomeMessage }</span>
+                            </sec:authorize>
                             <li class="cart-icon">
                                 <a href="#" onmouseover="selectCartList();">
-                                    <i class="icon_bag_alt"></i>
+                                <input type="hidden" id="loginMail" value="${sessionScope.userMail }">
+                                    <i class="icon_bag_alt" onmouseover="selectCartList();"></i>
                                     <span>+</span>
                                 </a>
                                 <div class="cart-hover">
@@ -140,15 +141,22 @@
             </div>
         </div>
     </header>
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     <!-- Header End -->
     <script src="/resources/js/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
     
     function selectCartList(){
     	var str = "";
-   		$.ajax({
-   			url: "/order/selectCartList",
+    	var userMail = $("#loginMail").val();
+    	console.log(userMail);
+    	
+    	$.ajax({
+   			url: "/order/selectCartList?${_csrf.parameterName}=${_csrf.token}",
    			type: "POST",
+   			data: {
+   				userMail: $("#loginMail").val()
+   			},
    			success: function(res){
    				$("#cartList").remove();
    				$(".select-items").html(res);
@@ -159,21 +167,6 @@
    			}
    		});
     }
-    
-    	$(".icon_bag_alt").mouseover(function(){
-   		var str = "";
-   		$.ajax({
-   			url: "/order/selectCartList",
-   			type: "POST",
-   			success: function(res){
-   				$("#cartList").remove();
-   				$(".select-items").html(res);
-       		},
-   			error: function(e){
-   				console.log("실패");
-   			}
-   		});
-   	}); 
     </script>
 </body>
 </html>

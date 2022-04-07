@@ -26,6 +26,20 @@ public class UserDAO {
 		return result;
 	}
 
+	//회원 정보 조회
+	public UserVO getUser(String userMail) {
+		UserVO result = null;
+		UserMapper mapper = null;
+		
+		try {
+			mapper = session.getMapper(UserMapper.class);
+			result = mapper.getUser(userMail);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 	/*
 	// 회원 탈퇴
 	public int userDelete(String userMail) {

@@ -9,6 +9,8 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta xmlns:th="http://www.thymeleaf.org" name="_csrf" th:content="${_csrf.token}">
+	<meta xmlns:th="http://www.thymeleaf.org" name="_csrf_header" th:content="${_csrf.headerName}">
     <title>SpringDay | 메인</title>
 
     <!-- Google Font -->

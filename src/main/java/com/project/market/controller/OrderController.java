@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.project.market.dao.UserDAO;
 import com.project.market.service.OrderService;
 import com.project.market.util.PageNavigator;
 import com.project.market.vo.CartVO;
 import com.project.market.vo.ItemVO;
 import com.project.market.vo.OrderVO;
+import com.project.market.vo.UserVO;
 
 @Controller
 @RequestMapping(value = "/order")
@@ -29,28 +31,34 @@ public class OrderController {
 	@Autowired
 	private OrderService service;
 	
+	@Autowired
+	private UserDAO uDao;
+	
 	//장바구니에 상품넣기
 	@ResponseBody
 	@RequestMapping(value = "/insertCart", method = RequestMethod.GET)
-	public String insertCart(int itemNum, int cartAmount, Model model) {
+	public String insertCart(int itemNum, int cartAmount, String userMail, Model model) {
 		logger.info("itemNum : {}", itemNum);
 		logger.info("cartAmount : {}", cartAmount);
+		logger.info("userMail : {}", userMail);
 		String res = null;
 		
 		// 1. 장바구니에 같은 상품이 있는지 확인
-		CartVO cart = service.checkCart(itemNum);
+		UserVO user = uDao.getUser(userMail);
+		int userNum = user.getUserNum();
+		CartVO cart = service.checkCart(itemNum,userNum);
 		
 		// 같은 상품이 없다면
 		if(cart == null) {
 			// 장바구니에 상품 정보를 입력
-			boolean result1 = service.insertCart(itemNum,cartAmount);
+			boolean result1 = service.insertCart(itemNum,cartAmount,userNum);
 			if(result1) {
 				res = "yes";
 			} else {
 				res = "no";
 			}
 		} else { // 같은 상품이 있다면 cart의 amount를 업데이트
-			boolean result2 = service.updateCartAmount(itemNum,cartAmount);
+			boolean result2 = service.updateCartAmount(itemNum,cartAmount,userNum);
 			
 			if(result2) {
 				res = "yes";
@@ -59,7 +67,7 @@ public class OrderController {
 			}
 		}
 		
-		ArrayList<ItemVO> cartList = service.selectCartList();
+		ArrayList<ItemVO> cartList = service.selectCartList(userMail);
 		logger.info("cartList :{}", cartList);
 		
 		model.addAttribute("cartList", cartList);
@@ -69,11 +77,28 @@ public class OrderController {
 	
 	//마우스 오버시 cartList조회
 	@RequestMapping(value="/selectCartList", method = RequestMethod.POST)
-	public String selectCartList(Model model) {
-		ArrayList<ItemVO> cartList = service.selectCartList();
-		logger.info("cartList :{}", cartList);
+	public String selectCartList(Model model, String userMail) {
+		logger.info("userMail : {}", userMail);
+		ArrayList<ItemVO> cartList = service.selectCartList(userMail);
+		String emptyCart = null;
 		
-		model.addAttribute("cartList", cartList);
+		if(userMail == "" || userMail == " " || userMail == null) {
+			cartList = null;
+			emptyCart = "로그인 후 이용 가능합니다.";
+			model.addAttribute("cartList", cartList);
+			model.addAttribute("emptyCart" , emptyCart);
+		} else {
+			if(cartList.size() >= 1) {
+				logger.info("cartList :{}", cartList);
+				model.addAttribute("cartList", cartList);
+
+			} else if(cartList.size() == 0) {
+				cartList = null;
+				emptyCart = "장바구니에 등록된 상품이 없습니다.";
+				model.addAttribute("cartList", cartList);
+				model.addAttribute("emptyCart", emptyCart);
+			}
+		}
 		
 		return "/order/cartListAjax";
 	}

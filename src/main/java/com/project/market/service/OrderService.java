@@ -79,28 +79,33 @@ public class OrderService {
 	}
 	
 	//장바구니에 상품넣기
-	public boolean insertCart(int itemNum, int cartAmount) {
+	public boolean insertCart(int itemNum, int cartAmount, int userNum) {
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("itemNum", itemNum);
 		map.put("cartAmount", cartAmount);
+		map.put("userNum", userNum);
 		return dao.insertCart(map) > 0;
 	}
 
 	//장바구니 상품 조회
-	public ArrayList<ItemVO> selectCartList() {
-		return dao.selectCartList();
+	public ArrayList<ItemVO> selectCartList(String userMail) {
+		return dao.selectCartList(userMail);
 	}
 
 	//장바구니에 같은 상품이 있는지 확인
-	public CartVO checkCart(int itemNum) {
-		return dao.checkCart(itemNum);
+	public CartVO checkCart(int itemNum,int userNum) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("itemNum", itemNum);
+		map.put("userNum", userNum);
+		return dao.checkCart(map);
 	}
 
 	//장바구니에 같은 상품이 있다면 수량을 증가
-	public boolean updateCartAmount(int itemNum, int cartAmount) {
+	public boolean updateCartAmount(int itemNum, int cartAmount,int userNum) {
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("itemNum", itemNum);
 		map.put("cartAmount", cartAmount);
+		map.put("userNum", userNum);
 		return dao.updateCartAmount(map) > 0;
 	}
 

@@ -11,6 +11,8 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta xmlns:th="http://www.thymeleaf.org" name="_csrf" th:content="${_csrf.token}">
+	<meta xmlns:th="http://www.thymeleaf.org" name="_csrf_header" th:content="${_csrf.headerName}">
     <title>SpringDay | 식품 마트</title>
 
     <!-- Google Font -->
@@ -195,6 +197,7 @@
 		</div>
 	</div>
 
+	<input type="hidden" id="loginMail" value="${sessionScope.userMail }">
     <!-- Footer -->
     <%@ include file="/WEB-INF/views/footer.jsp" %>
     
@@ -211,12 +214,12 @@
     <script src="/resources/js/main.js"></script>
     <script type="text/javascript">
 	
-	 // ajax 통신을 위한 csrf 설정
-/*     var token = $("meta[name='_csrf']").attr("content");
+/* 	 // ajax 통신을 위한 csrf 설정
+     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
     $(document).ajaxSend(function(e, xhr, options) {
         xhr.setRequestHeader(header, token);
-    }); */
+    });  */
 
     
     //카테고리 번호 찾기(정렬 select에서 categoryNum을 알 수 없기 때문)
@@ -244,7 +247,7 @@
     	//ajax에 jstl태그를 사용할 수 없으므로 ajax용 jsp를 만들어서 태그를 끌어오는 방식
     	$.ajax({
     		url: "/item/sorting",
-    		type: "POST", 
+    		type: "GET", 
     		data: {
 				sorting: $("#sorting").val(),    			
     			sendNum:categoryNum
@@ -281,7 +284,7 @@
 		
 		$.ajax({
 			url: "/item/loading",
-			type: "POST", 
+			type: "GET", 
 			data: {
 				startCount : startCount,
 				viewCount : viewCount,
@@ -301,32 +304,39 @@
 	//장바구니에 넣기
 	function insertCart(itemNum) {
 		console.log(itemNum);
+		var userMail = $("#loginMail").val();
+		console.log(userMail);
 		itemNum = parseInt(itemNum);
 		var cartAmount = 1;
 
-		//장바구니에 넣을 것인지 확인하는 모달창
-		ilShowModal();
-		
-		//넣는다고 했을 경우
-		$("#il-modal-button").click(function(){
-			$.ajax({
-				url: "/order/insertCart",
-				type: "GET", 
-				data: {
-					itemNum : itemNum,
-					cartAmount : cartAmount
-				},
-				success: function(res) { //cart테이블에 입력
-					if(res = "yes") {
-						//장바구니로 이동할 것인지 확인
-						showModal();
-						$("#ri-modal-button").click(function(){
-							location.href="/order/cart";
-						});
+		if(userMail == null || userMail == "" || userMail == " "){
+			alert("로그인이 필요합니다.");
+		} else {
+			//장바구니에 넣을 것인지 확인하는 모달창
+			ilShowModal();
+			
+			//넣는다고 했을 경우
+			$("#il-modal-button").click(function(){
+				$.ajax({
+					url: "/order/insertCart",
+					type: "GET", 
+					data: {
+						itemNum : itemNum,
+						cartAmount : cartAmount,
+						userMail : userMail
+					},
+					success: function(res) { //cart테이블에 입력
+						if(res = "yes") {
+							//장바구니로 이동할 것인지 확인
+							showModal();
+							$("#ri-modal-button").click(function(){
+								location.href="/order/cart";
+							});
+						}
 					}
-				}
+				});
 			});
-		});
+		}
 	}
 	
 	function ilShowModal() {

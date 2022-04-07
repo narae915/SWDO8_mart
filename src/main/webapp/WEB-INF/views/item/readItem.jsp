@@ -156,7 +156,7 @@
                         <div class="tab-item">
                             <ul class="nav" role="tablist">
                                 <li>
-                                    <a class="active" data-toggle="tab" href="#tab-1" role="tab">💡상품 정보(상세 설명)💡</a>
+                                    <a class="active" data-toggle="tab" href="#tab-1" role="tab">💡상품 정보(상세 설명)</a>
                                 </li>
                                 <li>
                                     <a data-toggle="tab" href="#tab-2" role="tab">👐간단한 손질법👐</a>

@@ -118,13 +118,13 @@ public class OrderDAO {
 	}
 
 	//장바구니 상품 조회
-	public ArrayList<ItemVO> selectCartList() {
+	public ArrayList<ItemVO> selectCartList(String userMail) {
 		ArrayList<ItemVO> result = null;
 		OrderMapper mapper = null;
 		
 		try {
 			mapper = session.getMapper(OrderMapper.class);
-			result = mapper.selectCartList();
+			result = mapper.selectCartList(userMail);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -132,13 +132,13 @@ public class OrderDAO {
 	}
 
 	//장바구니에 같은 상품이 있는지 확인
-	public CartVO checkCart(int itemNum) {
+	public CartVO checkCart(HashMap<String, Object> map) {
 		CartVO result = null;
 		OrderMapper mapper = null;
 		
 		try {
 			mapper = session.getMapper(OrderMapper.class);
-			result = mapper.checkCart(itemNum);
+			result = mapper.checkCart(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

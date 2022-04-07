@@ -11,6 +11,12 @@
 <body>
 	<table>
 		<tbody id="cartHover">
+			<c:if test="${cartList == null }">
+				<tr>
+					<td>${requestScope.emptyCart }</td>
+				</tr>
+			</c:if>
+			<c:if test="${cartList != null}">
 			<c:forEach items="${cartList }" var="cart" varStatus="status">
 				<tr>
 					<td class="si-pic"><img src="/resources/img/select-product-1.jpg" alt=""></td>
@@ -25,6 +31,7 @@
 					</td>
 				</tr>
 			</c:forEach>
+			</c:if>
 		</tbody>
 	</table>
 </body>

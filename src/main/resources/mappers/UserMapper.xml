@@ -25,6 +25,20 @@
 	)
 </insert>
 
+<!-- 회원 정보 조회 -->
+<select id="getUser" parameterType="String" resultType="User">
+	select
+		user_num as userNum,
+		user_name as userName,
+		user_mail as userMail,
+		user_call as userCall,
+		authority as role
+	from
+		user_table
+	where
+		user_mail = #{userMail }
+</select>
+	
 <!-- 회원 탈퇴 -->
 <!-- <delete id = "userDelete" parameterType="String">
 	delete from user_table
