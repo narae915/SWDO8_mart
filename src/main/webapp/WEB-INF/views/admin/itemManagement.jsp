@@ -12,7 +12,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Fashi | Template</title>
+    <title>상품 조회</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -191,8 +191,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
-                        <a href="#"><i class="fa fa-home"></i> Home</a>
-                        <a href="#">Employee</a>
+                        <a href="/"><i class="fa fa-home"></i> Home</a>
+                        <a href="/admin/adminMain">Admin</a>
                         <span>상품 조회</span>
                     </div>
                 </div>
@@ -210,6 +210,7 @@
 	                    
 	                    <!-- 22/03/27~22/03/28 노채린 -->
 	                    <!-- 상품 검색 -->
+	                    <c:if test="${not empty itemList }">
 	                    <form action="itemManagement" method="get" onsubmit="return searchChk();">
 							<select name="category" style="position:relative; top:2.9em; left:0.2em; height:45px;">
 								<option value="">카테고리 선택</option>
@@ -228,7 +229,7 @@
 	                    <!-- 상품 추가 -->
 		                <input type="button" class="primary-btn" id="insert-button" value="상품 추가" onclick="" style="border-radius:5px; border:none">
 		                
-	                    <c:if test="${not empty itemList }">
+	                    
 		                    
 		                    <form action="itemDelete" method="get">
 		                    <input type="button" id="upButton" class="primary-btn" value="상품 수정" style="height:40px; border-radius:5px; border:none" onclick = "return itemUpdate();">

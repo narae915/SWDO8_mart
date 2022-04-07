@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -204,4 +205,14 @@ public class OrderController {
 			return null;
 		}
 	}
+	
+	// 22-04-06 노채린
+	// 결제 정보 입력 페이지 이동
+	@RequestMapping(value = "/orderForm", method = RequestMethod.GET)
+	public String orderForm() {
+		logger.info("orderForm 메소드 실행(GET).");
+		
+		return "/order/orderForm";
+	}
+	
 }
