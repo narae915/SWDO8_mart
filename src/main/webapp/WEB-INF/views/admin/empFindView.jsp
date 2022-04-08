@@ -1,6 +1,8 @@
+<%@page import="org.springframework.web.bind.annotation.RequestAttribute"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import = "java.util.Enumeration" %>
 
 <!DOCTYPE html>
 <html lang="zxx">
@@ -11,7 +13,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>직원 ID 등록</title>
+    <title>ID/PW 찾기 결과</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -26,7 +28,6 @@
     <link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
-    <link rel="stylesheet" href="/resources/css/adminCss/empFindView.css" type="text/css">
     
 </head>
 
@@ -46,8 +47,8 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="adminMain"><i class="fa fa-home"></i> Home</a>
-                        <a href="empManagement">Employee</a>
-                        <span>직원 등록</span>
+                        <a href="empFindId">ID 찾기</a>
+                        <span>ID 찾기 결과</span>
                     </div>
                 </div>
             </div>
@@ -61,20 +62,16 @@
             <div class="row">
                 <div class="col-lg-6 offset-lg-3">
                     <div class="register-form">
-                       <h2>ID/PW 찾기 결과</h2>
-						<c:if test="">
-                       		 <span style="font-weight: bold; color: red;">잘못된 접근입니다.</span>
-                       	</c:if>
-                       	<c:if test="${not empty findId }">
-                       		<ins>ID 찾기</ins><br>
-                       		<hr>
-                       		<span style="font-weight: bold;">${findId }</span>
-                       	</c:if>
-                       	<c:if test="">
-                       		<ins>PW 찾기</ins><br>
-                       		<hr>
-                       		<span style="font-weight: bold;"></span>
-                       	</c:if>
+                       <h2>ID 찾기 결과</h2>
+						<c:choose>
+							<c:when test="${not empty sessionScope.findId }">
+								<h5>ID 찾기</h5><br><hr>
+		     					<span style="font-weight: bold;">${findId }</span>
+							</c:when>
+							<c:otherwise>
+								<h4 style="text-align: center; font-weight: bold; color: red;">잘못된 접근입니다.</h4>
+							</c:otherwise>
+						</c:choose>
                        	<br><hr>
                        	<a href="adminLogin">로그인</a><br>
                        	<a href="empFindPw">비밀번호 찾기</a>
@@ -105,7 +102,6 @@
     <script src="/resources/js/jquery.slicknav.js"></script>
     <script src="/resources/js/owl.carousel.min.js"></script>
     <script src="/resources/js/main.js"></script>
-    <script src="/resources/js/adminJs/empFindView.js"></script>
 </body>
 
 </html>

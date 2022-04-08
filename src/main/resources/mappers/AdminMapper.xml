@@ -138,7 +138,20 @@
 		    et.emp_name as empName,
 		    et.position as position,
 		    et.emp_call as empCall,
-		    et.emp_mail as empMail
+		    <choose>
+		    	<when test="loginPosition == '사장'">
+		    		et.emp_mail as empMail
+		    	</when>
+		    	<otherwise>
+					rpad(
+						substr(substr(et.emp_mail, 1, instr(et.emp_mail, '@') - 1), 1, 2), 
+						lengthb(substr(et.emp_mail, 1, instr(et.emp_mail, '@') - 1)), '*')
+					|| '@' ||
+					rpad(
+						substr(substr(et.emp_mail, instr(et.emp_mail, '@') + 1), 1, 1), 
+						lengthb(substr(et.emp_mail, instr(et.emp_mail, '@') + 1)), '*') as empMail
+		    	</otherwise>
+		    </choose>
 		from
 		   emp_table et,
 		   (select
@@ -146,6 +159,19 @@
 		        emp_num as en
 		    from
 		        emp_table
+		    <where>
+		    	<if test = "searchWord != '' || searchWord != null">
+			    	<if test="searchType == 'searchEmpName'">
+						emp_name like '%' || #{searchWord } || '%'
+					</if>
+					<if test="searchType == 'searchEmpNum'">
+						emp_num like '%' || #{searchWord } || '%'
+					</if>
+					<if test="searchType == 'searchPosition'">
+						position like '%' || #{searchWord } || '%'
+					</if>
+				</if>
+			</where>	
 		    order by
 		        emp_num desc) rt
 		<where>
@@ -166,30 +192,6 @@
 				and
 				et.position like '%' || #{searchWord } || '%'
 			</if>
-		</where>
-		order by emp_num desc
-	</select>
-	
-	<!-- 직원 검색 -->
-	<select id="searchEmp" parameterType="HashMap" resultType="Emp">
-		select
-			emp_num as empNum,
-		    emp_name as empName,
-		    position,
-		    emp_call as empCall,
-		    emp_mail as empMail
-		from
-		   emp_table
-		<where>
-			<if test="searchType == 'searchEmpName'">
-				emp_name like '%' || #{searchWord } || '%'
-			</if>
-			<if test="searchType == 'searchEmpNum'">
-				emp_num like '%' || #{searchWord } || '%'
-			</if>
-			<if test="searchType == 'searchPosition'">
-				position like '%' || #{searchWord } || '%'
-			</if>			
 		</where>
 		order by emp_num desc
 	</select>
@@ -259,5 +261,27 @@
 			and
 			emp_mail = #{empMail }
 	</select>
+	
+	<!-- PW 찾기 전 해당하는 직원 찾기 -->
+	<select id="findEmp" parameterType="Emp" resultType="int">
+		select
+			count(*)
+		from
+			emp_table
+		where
+			emp_num = #{empNum }
+			and
+			emp_mail = #{empMail }
+	</select>
+	
+	<!-- PW 리셋 -->
+	<update id="updatePw" parameterType="Emp">
+		update 
+			emp_table
+		set
+			emp_pw = #{empPw }
+		where
+			emp_mail = #{empMail }
+	</update>
 	
 </mapper>

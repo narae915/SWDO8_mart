@@ -46,7 +46,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="adminMain"><i class="fa fa-home"></i> Home</a>
-                        <a href="empManagement">Employee</a>
+                        <a href="empManagement">직원</a>
                         <span>직원 등록</span>
                     </div>
                 </div>
