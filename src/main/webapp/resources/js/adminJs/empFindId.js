@@ -3,6 +3,7 @@
 /* 유효성 검사 */
 function checkForm()
 {
+	var empName = $("#empName").val();			// 입력한 이름
 	var empMail = $("#empMail").val();			// 입력한 이메일
 	var inputPinNum = $("#pinNumChk").val();	// 입력한 이메일 인증번호
 	
@@ -10,6 +11,14 @@ function checkForm()
 	var emailChk = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // 이메일 정규식
 	
 	var result = false;
+	
+	if ( empName.length == 0 )
+	{
+		modalContent();
+		$("#modalAlert_content").prepend("이름을 입력해주세요.");
+		showModalAlert();
+		return result;
+	}
 	
 	if ( empMail.length == 0 || !(emailChk.test(empMail)) )
 	{
@@ -50,6 +59,7 @@ $("#sendMailBtn").click(function()
 	var pinNumBox = $("#pinNumChk_false");	// 인증번호 입력란 박스
 	var checkBtn = $("#pinNumChk_Btn");		// 인증번호 확인 버튼
 	var emailChk = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // 이메일 정규식
+	
 	
 	if ( empMail.length == 0 || !(emailChk.test(empMail)) )
 	{

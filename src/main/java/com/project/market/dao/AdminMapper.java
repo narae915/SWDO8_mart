@@ -30,8 +30,6 @@ public interface AdminMapper {
 
 	ArrayList<EmpVO> getEmpList(HashMap<String, Object> map); // 직원 리스트 조회
 	
-	ArrayList<EmpVO> searchEmp(HashMap<String, Object> map); // 직원 검색
-	
 	EmpVO readEmp(int empNum); // 직원 번호로 해당 직원 정보 조회
 	
 	int empUpdate(EmpVO updateEmp); // 직원 정보 수정
@@ -42,6 +40,10 @@ public interface AdminMapper {
 
 	ArrayList<ItemVO> itemUpdateList(List<Integer> intUpdateNum);
 
-	int selectEmpId(EmpVO findEmp); // ID 찾기
+	int selectEmpId(EmpVO emp); // ID 찾기
+
+	int findEmp(EmpVO emp); // PW 찾기 전 해당하는 직원 찾기
+
+	int updatePw(EmpVO newPw); // PW 리셋
 
 }

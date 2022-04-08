@@ -95,25 +95,16 @@ public class AdminService {
 	}
 
 	/* 직원 리스트 조회 */
-	public ArrayList<EmpVO> getEmpList(int startRecord, int countPerPage, String searchType, String searchWord) 
+	public ArrayList<EmpVO> getEmpList(int startRecord, int countPerPage, String searchType, String searchWord, String loginPosition) 
 	{
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("startRecord", startRecord);
 		map.put("countPerPage", countPerPage);
 		map.put("searchType", searchType);
 		map.put("searchWord", searchWord);
+		map.put("loginPosition", loginPosition);
 		
 		return dao.getEmpList(map);
-	}
-	
-	/* 직원 검색 */
-	public ArrayList<EmpVO> searchEmp(String searchType, String searchWord) 
-	{
-		HashMap<String, Object> map = new HashMap<>();
-		map.put("searchType", searchType);
-		map.put("searchWord", searchWord);
-				
-		return dao.searchEmp(map);
 	}
 	
 	/* 총 직원 수 조회  (페이징) */
@@ -156,11 +147,31 @@ public class AdminService {
 	/* ID 찾기 */
 	public int selectEmpId(String empName, String empMail) 
 	{
-		EmpVO findEmp = new EmpVO();
-		findEmp.setEmpName(empName);
-		findEmp.setEmpMail(empMail);
+		EmpVO emp = new EmpVO();
+		emp.setEmpName(empName);
+		emp.setEmpMail(empMail);
 		
-		return dao.selectEmpId(findEmp);
+		return dao.selectEmpId(emp);
+	}
+	
+	/* PW 리셋 전 해당하는 직원 찾기 */
+	public int findEmp(int empNum, String empMail) 
+	{
+		EmpVO emp = new EmpVO();
+		emp.setEmpNum(empNum);
+		emp.setEmpMail(empMail);
+		
+		return dao.findEmp(emp);
+	}
+
+	/* PW 리셋 */
+	public boolean updatePw(String empMail, String randomPw) 
+	{
+		EmpVO newPw = new EmpVO();
+		newPw.setEmpMail(empMail);
+		newPw.setEmpPw(randomPw);
+		
+		return dao.updatePw(newPw) > 0;
 	}
 
 }

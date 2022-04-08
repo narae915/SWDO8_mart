@@ -48,7 +48,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text product-more">
                         <a href="adminMain"><i class="fa fa-home"></i> Home</a>
-                        <a href="empManagement">Employee</a>
+                        <a href="empManagement">직원</a>
                         <span>직원 조회</span>
                     </div>
                 </div>
@@ -119,6 +119,8 @@
 							<!-- 현재 페이지가 첫 페이지가 아니라면, 이전 그룹/페이지로 이동 -->
 							<c:if test="${navi.currentPage > 1 }">
 								<!-- 이전 그룹으로 이동 -->
+								<c:if test="">
+								</c:if>
 								<a href="/admin/empManagement?currentPage=${(navi.currentGroup - 1) * 5 + 1 }" style="color: #e7ab3c; text-decoration: none; font-size: 1.5em; text-align: center;">
 									< 이전&nbsp;
 								</a>
@@ -153,7 +155,7 @@
 						<!-- Paging End -->
 						<hr>
 						<!-- Emp Search Begin -->
-						<form action="searchEmp" method="get" onsubmit="return searchEmp();">
+						<form action="empManagement" method="get" onsubmit="return searchEmp();">
 							<select id="searchType" name="searchType" style="width: 15%; height: 45px; position:relative; left: 20em; bottom:-1em; border: none; font-size: 16px; border: #e7ab3c solid 3px; border-radius: 5px; color: #000; padding-right: 20px;">
 								<option value="searchEmpName">이름</option>
 								<option value="searchEmpNum">사원 번호</option>

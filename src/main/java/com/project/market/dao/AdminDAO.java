@@ -180,25 +180,6 @@ public class AdminDAO {
 		return result;
 	}
 	
-	/* 직원 검색 */
-	public ArrayList<EmpVO> searchEmp(HashMap<String, Object> map) 
-	{
-		ArrayList<EmpVO> result = null;
-		AdminMapper mapper = null;
-		
-		try
-		{
-			mapper = session.getMapper(AdminMapper.class);
-			result = mapper.searchEmp(map);
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		} 
-		
-		return result;
-	}
-	
 	/* 직원 번호로 해당 직원 정보 조회 */
 	public EmpVO readEmp(int empNum) 
 	{
@@ -257,7 +238,7 @@ public class AdminDAO {
 	}
 	
 	/* ID 찾기 */
-	public int selectEmpId(EmpVO findEmp) 
+	public int selectEmpId(EmpVO emp) 
 	{
 		int result = 0;
 		AdminMapper mapper = null;
@@ -265,9 +246,47 @@ public class AdminDAO {
 		try 
 		{
 			mapper = session.getMapper(AdminMapper.class);
-			result = mapper.selectEmpId(findEmp);
+			result = mapper.selectEmpId(emp);
 		} 
 		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	/* PW 찾기 전 해당하는 직원 찾기 */
+	public int findEmp(EmpVO emp) 
+	{
+		int result = 0;
+		AdminMapper mapper = null;
+		
+		try 
+		{
+			mapper = session.getMapper(AdminMapper.class);
+			result = mapper.findEmp(emp);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	/* PW 리셋 */
+	public int updatePw(EmpVO newPw) 
+	{
+		int result = 0;
+		AdminMapper mapper = null;
+		
+		try
+		{
+			mapper = session.getMapper(AdminMapper.class);
+			result = mapper.updatePw(newPw);
+		}
+		catch(Exception e)
 		{
 			e.printStackTrace();
 		}

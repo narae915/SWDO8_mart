@@ -1,6 +1,8 @@
+<%@page import="org.springframework.web.bind.annotation.RequestAttribute"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import = "java.util.Enumeration" %>
 
 <!DOCTYPE html>
 <html lang="zxx">
@@ -11,7 +13,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>ID 찾기</title>
+    <title>ID/PW 찾기 결과</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -26,7 +28,6 @@
     <link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
-    <link rel="stylesheet" href="/resources/css/adminCss/empFindId.css" type="text/css">
     
 </head>
 
@@ -46,7 +47,8 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="adminMain"><i class="fa fa-home"></i> Home</a>
-                        <span>ID 찾기</span>
+                        <a href="empFindPw">PW 찾기</a>
+                        <span>PW 찾기 결과</span>
                     </div>
                 </div>
             </div>
@@ -54,37 +56,28 @@
     </div>
     <!-- Breadcrumb Form Section Begin -->
 	
-	<!-- Find ID Section Begin -->
+	<!-- FindView Section Begin -->
     <div class="register-login-section spad">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 offset-lg-3">
                     <div class="register-form">
-                        <h2>ID 찾기</h2>
-                        <form action="empFindId" method="post" onsubmit="return checkForm();">
-                        	
-                        	<div class="group-input">
-                                <input type="text" id="empName" name="empName" placeholder="이름을 입력해주세요.">
-                            </div>
-                        	<div class="group-input">
-                                <input type="text" id="empMail" name="empMail" placeholder="메일을 입력해주세요.">
-                            </div>
-                            <div class="group-input" id="pinNumChk_false">
-                               <input type="text" id="pinNumChk" name="pinNumChk" placeholder="인증번호" disabled="disabled">
-                               <input type="button" id="pinNumChk_Btn" value="확인" disabled="disabled" style="position: absolute; left: 24.5em; bottom: 4.8em;">
-							   <span id="pinNumChk_warn" style="position: absolute; left: 2.23em; bottom: 3.15em;"></span>
-                            </div>
-                            <div class="group-input">
-								<input type="button" id="sendMailBtn" value="인증번호 전송" style="position: absolute; left: 24.5em; bottom: 9.5em;">
-                            </div>
-                            <button type="submit" class="site-btn register-btn">다음</button>
-                        </form>
+                       <h2>비밀번호 찾기 결과</h2>
+						<c:if test="${not empty sessionScope.successResetPw }">
+	                      	<span style="font-weight: bold;">${successResetPw }</span>
+						</c:if>
+						<c:if test="${empty sessionScope.successResetPw }">
+							<h4 style="text-align: center; font-weight: bold; color: red;">잘못된 접근입니다.</h4>
+						</c:if>
+                       	<br><hr>
+                       	<a href="adminLogin">로그인</a><br>
+                       	<a href="empFindPw">비밀번호 찾기</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Find ID Form Section End -->
+    <!-- FindView Section End -->
 	
    	<!-- Footer -->
     <%@ include file="/WEB-INF/views/admin/adminFooter.jsp" %>
@@ -106,7 +99,6 @@
     <script src="/resources/js/jquery.slicknav.js"></script>
     <script src="/resources/js/owl.carousel.min.js"></script>
     <script src="/resources/js/main.js"></script>
-    <script src="/resources/js/adminJs/empFindId.js"></script>
 </body>
 
 </html>

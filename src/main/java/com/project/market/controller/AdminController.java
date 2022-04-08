@@ -2,6 +2,7 @@ package com.project.market.controller;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.UUID;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -161,9 +162,12 @@ public class AdminController {
 	
 	/* 로그인 페이지로 이동 */
 	@RequestMapping(value = "/adminLogin", method = RequestMethod.GET)
-	public String adminLogin()
+	public String adminLogin(HttpSession session)
 	{
 		logger.info("adminLogin 메소드 실행(GET).");
+		
+		session.removeAttribute("successResetPw");
+		session.removeAttribute("findId");
 		
 		return "admin/adminLogin";
 	}
@@ -238,7 +242,7 @@ public class AdminController {
 	
 	/* 직원 리스트 조회 */
 	@RequestMapping(value = "/empManagement", method = RequestMethod.GET)
-	public String empList(@RequestParam(defaultValue = "1") int currentPage, Model model, String searchType, String searchWord) 
+	public String empList(@RequestParam(defaultValue = "1") int currentPage, Model model, String searchType, String searchWord, HttpSession session) 
 	{
 		logger.info("empList 메소드 실행(GET).");
 		logger.info("현재 페이지(currentPage): {}", currentPage);
@@ -256,6 +260,8 @@ public class AdminController {
 			searchWord = "";
 		}
 		
+		String loginPosition = (String)session.getAttribute("loginPosition");
+		
 		// 총 직원 수를 가져옴
 		int totalRecordsCount = service.getEmpTotalRecordsCount(searchType, searchWord);
 		logger.info("직원 수: {}", totalRecordsCount);
@@ -265,7 +271,7 @@ public class AdminController {
 		model.addAttribute("navi", navi);
 		
 		// 게시글 시작 번호, 불러올 게시글 수를 전달해서 현재 페이지에 해당하는 5개의 게시글만 가져오도록 설정
-		ArrayList<EmpVO> empList = service.getEmpList(navi.getStartRecord(), COUNT_PER_PAGE, searchType, searchWord);
+		ArrayList<EmpVO> empList = service.getEmpList(navi.getStartRecord(), COUNT_PER_PAGE, searchType, searchWord, loginPosition);
 		logger.info("empList: {}", empList);
 		
 		if ( empList != null )
@@ -276,32 +282,6 @@ public class AdminController {
 		else
 		{
 			logger.info("직원 조회 실패.");
-		}
-		
-		return "admin/empManagement";
-	}
-	
-	/* 직원 검색 */
-	@RequestMapping(value = "/searchEmp", method = RequestMethod.GET)
-	public String searchEmp(String searchType, String searchWord, Model model) 
-	{
-		logger.info("searchEmp 메소드 실행(GET).");
-		
-		// 입력된 검색종류와 검색어 출력
-		logger.info("searchType: {}", searchType);
-		logger.info("searchWord: {}", searchWord);
-		
-		ArrayList<EmpVO> empList = service.searchEmp(searchType, searchWord);
-		logger.info("empList: {}", empList);
-		
-		if ( empList != null )
-		{
-			logger.info("직원 검색 성공.");
-			model.addAttribute("empList", empList);
-		}
-		else
-		{
-			logger.info("직원 검색 실패.");
 		}
 		
 		return "admin/empManagement";
@@ -388,7 +368,7 @@ public class AdminController {
 	/* 메일 보내기 */
 	@ResponseBody
 	@RequestMapping(value = "/mailCheck", method = RequestMethod.GET)
-    public String mailCheck(String empMail)
+	public String mailCheck(String empMail)
 	{
 		 logger.info("mailCheck 메소드 실행(GET).");
 	     logger.info("empMail: {}", empMail);
@@ -396,53 +376,55 @@ public class AdminController {
 	     /* 인증번호 생성 */
 	     Random random = new Random();
 	     int pinNum = random.nextInt(888888) + 111111;
-	     logger.info("pinNum: {}", pinNum);
 	     
 	     /* 이메일 보내기 */
-        String setFrom = "kings3517@naver.com";
-        String toMail = empMail;
-        String title = "회원가입 인증 이메일 입니다.";
-        String content = 
-                "봄날 식자재 직원 등록 인증 메일 확인입니다." +
+	     String setFrom = "kings3517@naver.com";
+	     String toMail = empMail;
+	     String title = "봄날 식자재에서 요청하신 인증번호를 알려드립니다.";
+	     String content = 
+                "<b>아래의 인증번호를 인증번호 입력창에 입력해 주세요.</b>" +
                 "<br><br>" + 
-                "인증 번호는 " + pinNum + "입니다." + 
+                "<b>인증번호 : </b>" + "<b style='color: #e7ab3c;'>" + pinNum + "</b>" +
+                "<br><br>" + 
+                "봄날 식자재를 이용해 주셔서 감사합니다." + 
                 "<br>" + 
-                "해당 인증번호를 인증번호 확인란에 기입해주시기 바랍니다.";
+                "더욱 편리한 서비스를 제공하기 위해 항상 최선을 다하겠습니다.";
         
-        try 
-        {
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, "utf-8");
-            helper.setFrom(setFrom);
-            helper.setTo(toMail);
-            helper.setSubject(title);
-            helper.setText(content,true);
-            mailSender.send(message);
-            
-        }
-        catch(Exception e) 
-        {
-            e.printStackTrace();
-        }
+	     try 
+	     {
+	    	 MimeMessage message = mailSender.createMimeMessage();
+	    	 MimeMessageHelper helper = new MimeMessageHelper(message, "utf-8");
+	    	 helper.setFrom(setFrom);
+	    	 helper.setTo(toMail);
+	    	 helper.setSubject(title);
+	    	 helper.setText(content,true);
+	    	 mailSender.send(message);
+	     }
+	     catch(Exception e) 
+	     {
+	    	 e.printStackTrace();
+	     }
         
-        String checkNum = Integer.toString(pinNum);
+	     String checkNum = Integer.toString(pinNum);
         
-        return checkNum;
-    }
-
+	     return checkNum;
+	}
 	
 	/* ID 찾기 페이지 이동 */
 	@RequestMapping (value = "/empFindId", method = RequestMethod.GET)
-	public String empFindId() 
+	public String empFindId(HttpSession session) 
 	{
 		logger.info("empFindId 메소드 실행(GET).");
+		
+		session.removeAttribute("successResetPw");
+		session.removeAttribute("findId");
 		
 		return "admin/empFindId";
 	}
 	
 	/* ID 찾기 */
 	@RequestMapping (value = "/empFindId", method = RequestMethod.POST)
-	public String empFindId(String empName, String empMail, Model model) 
+	public String empFindId(String empName, String empMail, HttpSession session) 
 	{
 		logger.info("empFindId 메소드 실행(POST).");
 		
@@ -457,25 +439,148 @@ public class AdminController {
 		if ( findEmpId != 0 )
 		{
 			logger.info("ID 찾기 성공.");
-			model.addAttribute("findId", findEmpId);
+			session.setAttribute("findId", findEmpId);
 			returnUrl = "redirect:empFindView";
 		}
 		else
 		{
 			logger.info("ID 찾기 실패.");
-			returnUrl = "empFindId";
+			returnUrl = "redirect:empFindId";
 		}
 		
 		return returnUrl;
 	}
 	
-	/* ID/PW 찾기결과 페이지 이동 */
+	/* PW 찾기 페이지 이동 */
+	@RequestMapping (value = "/empFindPw", method = RequestMethod.GET)
+	public String empFindPw(HttpSession session) 
+	{
+		logger.info("empFindPw 메소드 실행(GET).");
+		
+		session.removeAttribute("successResetPw");
+		session.removeAttribute("findId");
+		
+		return "admin/empFindPw";
+	}
+	
+	/* PW 찾기 */
+	@RequestMapping (value = "/empFindPw", method = RequestMethod.POST)
+	public String empFindPw(int empNum, String empMail, Model model) 
+	{
+		logger.info("empFindPw 메소드 실행(POST).");
+		
+		// ID찾기를 시도하려고 하는 이름, PW를 출력
+		logger.info("empNum: {}", empNum);
+		logger.info("empMail: {}", empMail);
+		
+		// 일치하는 직원 찾기
+		int findEmp = service.findEmp(empNum, empMail);
+		
+		String errorMessage = "입력하신 정보와 일치하는 ID를 찾을 수 없습니다.";
+		
+		String returnUrl = null;
+		
+		if ( findEmp != 0 )
+		{
+			logger.info("findPW 페이지 ID 찾기 성공.");
+			returnUrl = "redirect:empFindPwView";
+		}
+		else
+		{
+			logger.info("findPW 페이지 ID 찾기 실패.");
+			model.addAttribute("errorMessageId", errorMessage);
+			returnUrl = "admin/empFindPw";
+		}
+		
+		return returnUrl;
+	}
+	
+	/* 임시 비밀번호 생성 및 메일 전송 */
+	@ResponseBody
+	@RequestMapping(value = "/sendMail", method = RequestMethod.GET)
+	public String sendMail(String empMail, HttpSession session)
+	{
+		logger.info("sendMail 메소드 실행(GET).");
+		logger.info("empMail: {}", empMail);
+		
+		/* 임시 비밀번호 생성 */
+		Random random = new Random();
+		String uuid = UUID.randomUUID().toString(); // String 값으로 형변환
+		uuid = UUID.randomUUID().toString().replaceAll("-", ""); // -를 제거
+		uuid = uuid.substring(0, 7); // 7자리수로 만듬
+		
+		char spChar[] = new char[] {'!','@','#','$','%','^','&','*'}; // 특수문자를 포함하기 위한 배열
+		int randomLength = random.nextInt(spChar.length) + 1; // 특수문자 배열의 길이 이하의 랜덤한 수를 생성
+		
+		String randomPw = null;
+		
+		for ( int i = 0; i < randomLength; i++ )
+		{
+			char randomChar = spChar[i];
+			randomPw = uuid.concat(String.valueOf(randomChar)); // 생성한 uuid와 특수문자를 이어줌
+		}
+		
+		String successResetPw = "임시 비밀번호가 이메일로 발송되었습니다.<br><br>" + "<b style='color: #e7ab3c;'>로그인 후 반드시 비밀번호를 변경해주세요.</b>";
+		
+		boolean result = service.updatePw(empMail, randomPw);
+		
+		/* 이메일 보내기 */
+		String setFrom = "kings3517@naver.com";
+		String toMail = empMail;
+		String title = "봄날 식자재에서 요청하신 임시 비밀번호를 알려드립니다.";
+		String content = 
+				"<b>로그인 후 반드시 비밀번호를 변경해주세요.</b>" +
+				"<br><br>" + 
+				"<b>임시 비밀번호 : </b>" + "<b style='color: #e7ab3c;'>" + randomPw + "</b>" +
+				"<br><br>" + 
+				"봄날 식자재를 이용해 주셔서 감사합니다." + 
+				"<br>" + 
+				"더욱 편리한 서비스를 제공하기 위해 항상 최선을 다하겠습니다.";
+		
+		try 
+		{
+			MimeMessage message = mailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(message, "utf-8");
+			helper.setFrom(setFrom);
+			helper.setTo(toMail);
+			helper.setSubject(title);
+			helper.setText(content,true);
+			mailSender.send(message);
+		}
+		catch(Exception e) 
+		{
+			e.printStackTrace();
+		}
+		
+		if ( result )
+		{
+			logger.info("직원 PW정보 수정 성공.");
+			session.setAttribute("successResetPw", successResetPw);
+		}
+		else
+		{
+			logger.info("직원 PW정보 수정 실패.");
+		}
+		
+		return randomPw;
+	}
+	
+	/* ID 찾기결과 페이지 이동 */
 	@RequestMapping (value = "/empFindView", method = RequestMethod.GET)
 	public String empFindView() 
 	{
 		logger.info("empFindView 메소드 실행(GET).");
 		
 		return "admin/empFindView";
+	}
+	
+	/* PW 찾기결과 페이지 이동 */
+	@RequestMapping (value = "/empFindPwView", method = RequestMethod.GET)
+	public String empFindPwView() 
+	{
+		logger.info("empFindPwView 메소드 실행(GET).");
+		
+		return "admin/empFindPwView";
 	}
 	
 }
