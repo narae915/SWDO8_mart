@@ -1,8 +1,6 @@
-<%@page import="org.springframework.web.bind.annotation.RequestAttribute"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import = "java.util.Enumeration" %>
 
 <!DOCTYPE html>
 <html lang="zxx">
@@ -13,7 +11,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>SpringDay | 직원 ID/PW 찾기 결과</title>
+    <title>SpringDay | PW 찾기</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -28,7 +26,7 @@
     <link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
-	<link rel="stylesheet" href="/resources/css/userCss/findView.css" type="text/css">
+    <link rel="stylesheet" href="/resources/css/userCss/findPw.css" type="text/css">
 </head>
 
 <body>
@@ -38,7 +36,7 @@
     </div>
 
 	<!-- Header -->
-    <%@ include file="/WEB-INF/views/admin/adminHeader.jsp" %>
+   <%@ include file="/WEB-INF/views/header.jsp" %>
 
     <!-- Breadcrumb Section Begin -->
     <div class="breacrumb-section">
@@ -46,9 +44,10 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
-                        <a href="adminMain"><i class="fa fa-home"></i> Home</a>
-                        <a href="empFindId">ID 찾기</a>
-                        <span>ID 찾기 결과</span>
+                        <a href="../"><i class="fa fa-home"></i> Home</a>
+                        <a href="findPw">비밀번호 찾기</a>
+                        <a style="color: #e7ab3c;">01. ID 확인</a>
+                        <span>02. 비밀번호 재설정</span>
                     </div>
                 </div>
             </div>
@@ -56,43 +55,39 @@
     </div>
     <!-- Breadcrumb Form Section Begin -->
 	
-	<!-- FindView Section Begin -->
+	<!-- Find PW Section Begin -->
     <div class="register-login-section spad">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 offset-lg-3">
                     <div class="register-form">
-                       <h2>ID 찾기 결과</h2>
-						<c:choose>
-							<c:when test="${not empty sessionScope.findId }">
-		     					<span style="font-weight: bold;">${findId }</span>
-							</c:when>
-							<c:otherwise>
-								<h4 style="text-align: center; font-weight: bold; color: red;">잘못된 접근입니다.</h4>
-							</c:otherwise>
-						</c:choose>
-                       	<br><hr>
-                       	<div style="float: right;">
-	                       	<a href="adminLogin" class="loginLink">로그인</a>
-	                       	<a style="color: #b2b2b2;">&ensp;&ensp;|&ensp;&ensp;</a>
-	                       	<a href="empFindPw" class="findPwLink">비밀번호 찾기</a>
-                       	</div>
+                        <h2>비밀번호 찾기</h2>
+                        <form action="/user/findPw" method="post" onsubmit="return checkForm();">
+                        	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        	<div class="group-input">
+                                <input type="text" id="userMail" name="userMail" placeholder="ID를 입력해주세요.">
+                            </div>
+                            <div class="group-input" id="pinNumChk_false">
+                               <input type="text" id="pinNumChk" name="pinNumChk" placeholder="인증번호" disabled="disabled">
+                               <input type="button" id="pinNumChk_Btn" value="확인" disabled="disabled" style="position: absolute; left: 24.5em; bottom: 4.82em;">
+							   <span id="pinNumChk_warn" style="position: absolute; left: 2.23em; bottom: 3.1em;"></span>
+                            </div>
+                            <div class="group-input">
+								<input type="button" id="sendMailBtn" value="인증번호 전송" style="background-color: #434445; position: absolute; width: 30%; height:50px; border-radius:5px; left: 24.5em; bottom: 9.5em; color: white;">
+                            </div>
+                           	<span id="errorMessage" style="position: absolute; left: 2.23em; bottom: 7.95em; color: red;"></span>
+                            <button type="submit" id="sendMailBtn" class="site-btn register-btn">다음</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- FindView Section End -->
+    <!-- Find PW Form Section End -->
 	
    	<!-- Footer -->
-    <%@ include file="/WEB-INF/views/admin/adminFooter.jsp" %>
+    <%@ include file="/WEB-INF/views/footer.jsp" %>
     
-    <!-- modal -->
-	<div class="modalAlert">
-		<div class="modalAlert_content" id="modalAlert_content">
-		</div>
-	</div>
-
     <!-- Js Plugins -->
     <script src="/resources/js/jquery-3.6.0.min.js"></script>
     <script src="/resources/js/bootstrap.min.js"></script>
@@ -104,6 +99,7 @@
     <script src="/resources/js/jquery.slicknav.js"></script>
     <script src="/resources/js/owl.carousel.min.js"></script>
     <script src="/resources/js/main.js"></script>
+    <script src="/resources/js/userJs/findPw.js"></script>
 </body>
 
 </html>

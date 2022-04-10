@@ -31,4 +31,33 @@ public class UserService {
 		return dao.userDelete(userMail) > 0;
 	}
 	*/
+	
+	/* ID 찾기 */
+	public String selectId(String userName, String userCall) 
+	{
+		UserVO user = new UserVO();
+		user.setUserName(userName);
+		user.setUserCall(userCall);
+		
+		return dao.selectId(user);
+	}
+	
+	/* PW 찾기 전 아이디 확인 */
+	public String findUser(String userMail) 
+	{
+		UserVO user = new UserVO();
+		user.setUserMail(userMail);
+		
+		return dao.findUser(user);
+	}
+
+	/* PW 초기화  */
+	public boolean updatePw(String userMail, String encodeUserPw) 
+	{
+		UserVO newPw = new UserVO();
+		newPw.setUserMail(userMail);
+		newPw.setUserPw(encodeUserPw);
+		
+		return dao.updatePw(newPw) > 0;
+	}
 }

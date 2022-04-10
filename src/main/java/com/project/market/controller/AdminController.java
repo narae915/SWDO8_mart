@@ -115,9 +115,12 @@ public class AdminController {
 	
 	/* 관리자용 메인페이지로 이동 */
 	@RequestMapping(value = "/adminMain", method = RequestMethod.GET)
-	public String adminMain()
+	public String adminMain(HttpSession session)
 	{
 		logger.info("adminMain 메소드 실행(GET).");
+		
+		session.removeAttribute("successResetPw");
+		session.removeAttribute("findId");
 		
 		return "admin/adminMain";
 	}
@@ -269,6 +272,8 @@ public class AdminController {
 		// 페이징 처리를 위한 내비게이터 객체 생성
 		PageNavigator navi = new PageNavigator(COUNT_PER_PAGE, PAGE_PER_GROUP, currentPage, totalRecordsCount);
 		model.addAttribute("navi", navi);
+		model.addAttribute("searchType", searchType);
+		model.addAttribute("searchWord", searchWord);
 		
 		// 게시글 시작 번호, 불러올 게시글 수를 전달해서 현재 페이지에 해당하는 5개의 게시글만 가져오도록 설정
 		ArrayList<EmpVO> empList = service.getEmpList(navi.getStartRecord(), COUNT_PER_PAGE, searchType, searchWord, loginPosition);
@@ -424,7 +429,7 @@ public class AdminController {
 	
 	/* ID 찾기 */
 	@RequestMapping (value = "/empFindId", method = RequestMethod.POST)
-	public String empFindId(String empName, String empMail, HttpSession session) 
+	public String empFindId(String empName, String empMail, Model model, HttpSession session) 
 	{
 		logger.info("empFindId 메소드 실행(POST).");
 		
@@ -434,18 +439,20 @@ public class AdminController {
 		
 		int findEmpId = service.selectEmpId(empName, empMail);
 		
+		String errorMessage = "입력하신 정보와 일치하는 ID를 찾을 수 없습니다.";
 		String returnUrl = null;
 		
 		if ( findEmpId != 0 )
 		{
 			logger.info("ID 찾기 성공.");
 			session.setAttribute("findId", findEmpId);
-			returnUrl = "redirect:empFindView";
+			returnUrl = "admin/empFindView";
 		}
 		else
 		{
 			logger.info("ID 찾기 실패.");
-			returnUrl = "redirect:empFindId";
+			model.addAttribute("errorMessageId", errorMessage);
+			returnUrl = "admin/empFindId";
 		}
 		
 		return returnUrl;
@@ -475,7 +482,6 @@ public class AdminController {
 		
 		// 일치하는 직원 찾기
 		int findEmp = service.findEmp(empNum, empMail);
-		
 		String errorMessage = "입력하신 정보와 일치하는 ID를 찾을 수 없습니다.";
 		
 		String returnUrl = null;
@@ -498,7 +504,7 @@ public class AdminController {
 	/* 임시 비밀번호 생성 및 메일 전송 */
 	@ResponseBody
 	@RequestMapping(value = "/sendMail", method = RequestMethod.GET)
-	public String sendMail(String empMail, HttpSession session)
+	public String sendMail(String empMail, HttpSession session, Model model)
 	{
 		logger.info("sendMail 메소드 실행(GET).");
 		logger.info("empMail: {}", empMail);

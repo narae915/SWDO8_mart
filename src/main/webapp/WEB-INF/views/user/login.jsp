@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
+	<link rel="stylesheet" href="/resources/css/userCss/login.css" type="text/css">
 </head>
 
 <body>
@@ -66,6 +67,19 @@
                                 <label for="pass">비밀번호 *</label>
                                 <input type="password" id="pass" name="userPw">
 							</div>
+							<div class="group-input gi-check">
+                                <div class="gi-more">
+                                    <!-- <label for="saveIdChk">
+                                        ID 기억하기
+                                        <input type="checkbox" id="saveIdChk">
+                                        <span class="checkmark"></span>
+                                    </label> -->
+                                    <ul class="find">
+                                    	<li><a href="findPw" target='_blank' class="forget-pass">/&ensp;&ensp;비밀번호 찾기</a></li>
+                                    	<li><a href="findId" target='_blank' class="forget-pass">ID 찾기&ensp;&ensp;</a></li>
+                                    </ul>
+                                </div>
+                            </div>
 							<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
 							<div class="group-input">
 							<button type="submit" class="site-btn login-btn">로그인</button>

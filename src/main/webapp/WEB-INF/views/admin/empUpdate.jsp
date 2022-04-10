@@ -1,10 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html lang="zxx">
-
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Fashi Template">
@@ -27,7 +25,6 @@
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/adminCss/empUpdate.css" type="text/css">
-    
 </head>
 
 <body>
@@ -63,7 +60,7 @@
                     <div class="register-form">
                         <h2>직원 정보 수정</h2>
                         <form action="empUpdate" method="post" onsubmit="return checkForm();">
-                        	
+                        	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         	<input type="hidden" name="empNum" value="${emp.empNum }">
                         	<c:choose>
                         		<c:when test="${sessionScope.loginPosition eq '사장' || sessionScope.loginPosition eq '부장'}">
@@ -129,12 +126,6 @@
     <!-- Footer -->
     <%@ include file="/WEB-INF/views/admin/adminFooter.jsp" %>
     
-    <!-- modal -->
-	<div class="modalAlert">
-		<div class="modalAlert_content" id="modalAlert_content">
-		</div>
-	</div>
-
     <!-- Js Plugins -->
     <script src="/resources/js/jquery-3.6.0.min.js"></script>
     <script src="/resources/js/bootstrap.min.js"></script>
@@ -158,5 +149,4 @@
     };
     </script>
 </body>
-
 </html>

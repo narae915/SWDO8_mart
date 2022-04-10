@@ -1,10 +1,9 @@
- var pinNum = ""; // 메일 인증번호
+var pinNum = ""; // 메일 인증번호
 
 /* 유효성 검사 */
 function checkForm()
 {
-	var empName = $("#empName").val();			// 입력한 이름
-	var empMail = $("#empMail").val();			// 입력한 이메일
+	var userMail = $("#userMail").val();		// 입력한 ID
 	var inputPinNum = $("#pinNumChk").val();	// 입력한 이메일 인증번호
 	
 	// 정규식
@@ -12,15 +11,7 @@ function checkForm()
 	
 	var result = false;
 	
-	if ( empName.length == 0 )
-	{
-		exitAlert();
-		$("#footer-modal-content").prepend("이름을 입력해주세요.");
-		showModalAlert();
-		return result;
-	}
-	
-	if ( empMail.length == 0 || !(emailChk.test(empMail)) )
+	if ( userMail.length == 0 || !(emailChk.test(userMail)) )
 	{
 		exitAlert();
 		$("#footer-modal-content").prepend("이메일을 올바르게 입력해주세요.");
@@ -70,15 +61,14 @@ function checkForm()
 /* 인증번호 이메일 전송 */
 $("#sendMailBtn").click(function()
 {
-	var empMail = $("#empMail").val();		// 입력한 이메일
-	var mailBox = $("#empMail");			// 이메일 입력란
-	var pinNumChk = $("#pinNumChk");		// 인증번호 입력란
-	var pinNumBox = $("#pinNumChk_false");	// 인증번호 입력란 박스
-	var checkBtn = $("#pinNumChk_Btn");		// 인증번호 확인 버튼
+	var userMail = $("#userMail").val();		// 입력한 이메일
+	var mailBox = $("#userMail");				// 이메일 입력란
+	var pinNumChk = $("#pinNumChk");			// 인증번호 입력란
+	var pinNumBox = $("#pinNumChk_false");		// 인증번호 입력란 박스
+	var checkBtn = $("#pinNumChk_Btn");			// 인증번호 확인 버튼
 	var emailChk = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // 이메일 정규식
 	
-	
-	if ( empMail.length == 0 || !(emailChk.test(empMail)) )
+	if ( userMail.length == 0 || !(emailChk.test(userMail)) )
 	{
 		exitAlert();
 		$("#footer-modal-content").prepend("이메일을 올바르게 입력해주세요.");
@@ -90,16 +80,27 @@ $("#sendMailBtn").click(function()
 		$.ajax
 		({
 			type: "get",
-			url: "mailCheck?empMail=" + empMail,
+			url: "sendMail?userMail=" + userMail,
 			success: function(result)
 			{
-				mailBox.attr("readonly", true) // 메일 발송 성공시 메일 수정 불가
-				$("#sendMailBtn").val("인증번호 재전송"); // 전송 성공 시 전송버튼 value값 변경
-				pinNumChk.attr("disabled", false); // 인증 번호 발송시 disabled 해제
-				checkBtn.attr("disabled", false);
-				pinNumBox.attr("id", "pinNumChk_true");  // 인증 번호 발송시 id를 변경함으로서 css적용
-				checkBtn.attr("id", "pinNumChk_Btn_true");
-				pinNum = result;
+				var pw = result;
+				
+				if ( result.length != 6 )
+				{
+					$("#errorMessage").prepend("입력하신 정보와 일치하는 ID를 찾을 수 없습니다.");
+				}
+				else
+				{
+					mailBox.attr("readonly", true) // 메일 발송 성공시 메일 수정 불가
+					$("#sendMailBtn").val("인증번호 재전송"); // 전송 성공 시 전송버튼 value값 변경
+					pinNumChk.attr("disabled", false); // 인증 번호 발송시 disabled 해제
+					checkBtn.attr("disabled", false);
+					pinNumBox.attr("id", "pinNumChk_true");  // 인증 번호 발송시 id를 변경함으로서 css적용
+					checkBtn.attr("id", "pinNumChk_Btn_true");
+					pinNum = result;
+				}
+				
+				
 			}
 		});
 	}

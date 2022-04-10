@@ -13,7 +13,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>SpringDay | 직원 ID/PW 찾기 결과</title>
+    <title>SpringDay | ID/PW 찾기 결과</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -38,7 +38,7 @@
     </div>
 
 	<!-- Header -->
-    <%@ include file="/WEB-INF/views/admin/adminHeader.jsp" %>
+    <%@ include file="/WEB-INF/views/header.jsp" %>
 
     <!-- Breadcrumb Section Begin -->
     <div class="breacrumb-section">
@@ -46,8 +46,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
-                        <a href="adminMain"><i class="fa fa-home"></i> Home</a>
-                        <a href="empFindId">ID 찾기</a>
+                        <a href="../"><i class="fa fa-home"></i> Home</a>
+                        <a href="findId">ID 찾기</a>
                         <span>ID 찾기 결과</span>
                     </div>
                 </div>
@@ -73,9 +73,9 @@
 						</c:choose>
                        	<br><hr>
                        	<div style="float: right;">
-	                       	<a href="adminLogin" class="loginLink">로그인</a>
+	                       	<a href="login" class="loginLink">로그인</a>
 	                       	<a style="color: #b2b2b2;">&ensp;&ensp;|&ensp;&ensp;</a>
-	                       	<a href="empFindPw" class="findPwLink">비밀번호 찾기</a>
+	                       	<a href="findPw" class="findPwLink">비밀번호 찾기</a>
                        	</div>
                     </div>
                 </div>
@@ -85,13 +85,7 @@
     <!-- FindView Section End -->
 	
    	<!-- Footer -->
-    <%@ include file="/WEB-INF/views/admin/adminFooter.jsp" %>
-    
-    <!-- modal -->
-	<div class="modalAlert">
-		<div class="modalAlert_content" id="modalAlert_content">
-		</div>
-	</div>
+    <%@ include file="/WEB-INF/views/footer.jsp" %>
 
     <!-- Js Plugins -->
     <script src="/resources/js/jquery-3.6.0.min.js"></script>

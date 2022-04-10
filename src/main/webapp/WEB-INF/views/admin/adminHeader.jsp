@@ -33,7 +33,7 @@
                 <div class="col-lg-3 text-right col-md-3">
                         <ul class="nav-right">
                         	<c:if test="${not empty sessionScope.loginName }">
-                        		<li class="active"><a> ${loginName } ${loginPosition }님 환영합니다.</a></li>
+                        		<li class="active"><span style="font-weight: bold;"> ${loginName } ${loginPosition }님 환영합니다.</span></li>
                         	</c:if>
                         </ul>
                     </div>
