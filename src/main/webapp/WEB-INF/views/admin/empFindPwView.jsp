@@ -3,17 +3,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import = "java.util.Enumeration" %>
-
 <!DOCTYPE html>
 <html lang="zxx">
-
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Fashi Template">
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>ID/PW 찾기 결과</title>
+    <title>SpringDay | 직원 ID/PW 찾기 결과</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -28,7 +26,7 @@
     <link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
-    
+    <link rel="stylesheet" href="/resources/css/userCss/findView.css" type="text/css">
 </head>
 
 <body>
@@ -70,8 +68,9 @@
 							<h4 style="text-align: center; font-weight: bold; color: red;">잘못된 접근입니다.</h4>
 						</c:if>
                        	<br><hr>
-                       	<a href="adminLogin">로그인</a><br>
-                       	<a href="empFindPw">비밀번호 찾기</a>
+                       	<div style="float: right;">
+	                       	<a href="adminLogin" class="loginLink">로그인</a>
+                       	</div>
                     </div>
                 </div>
             </div>
@@ -82,12 +81,6 @@
    	<!-- Footer -->
     <%@ include file="/WEB-INF/views/admin/adminFooter.jsp" %>
     
-    <!-- modal -->
-	<div class="modalAlert">
-		<div class="modalAlert_content" id="modalAlert_content">
-		</div>
-	</div>
-
     <!-- Js Plugins -->
     <script src="/resources/js/jquery-3.6.0.min.js"></script>
     <script src="/resources/js/bootstrap.min.js"></script>
@@ -100,5 +93,4 @@
     <script src="/resources/js/owl.carousel.min.js"></script>
     <script src="/resources/js/main.js"></script>
 </body>
-
 </html>

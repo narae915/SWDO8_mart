@@ -56,5 +56,61 @@ public class UserDAO {
 		return result;
 	}
 */
+	
+	/* ID 찾기 */
+	public String selectId(UserVO user) 
+	{
+		String result = null;
+		UserMapper mapper = null;
+		
+		try 
+		{
+			mapper = session.getMapper(UserMapper.class);
+			result = mapper.selectId(user);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 
+	/* PW 찾기 전 아이디 확인 */
+	public String findUser(UserVO user) 
+	{
+		String result = null;
+		UserMapper mapper = null;
+		
+		try 
+		{
+			mapper = session.getMapper(UserMapper.class);
+			result = mapper.findUser(user);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	/* PW 초기화  */
+	public int updatePw(UserVO newPw)
+	{
+		int result = 0;
+		UserMapper mapper = null;
+		
+		try
+		{
+			mapper = session.getMapper(UserMapper.class);
+			result = mapper.updatePw(newPw);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 }

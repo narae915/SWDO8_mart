@@ -44,4 +44,42 @@
 	delete from user_table
 	where user_mail = #{userMail }
 </delete> -->
+
+<!-- ID 찾기 -->
+<select id="selectId" parameterType="User" resultType="String">
+	select
+		rpad(
+			substr(substr(user_mail, 1, instr(user_mail, '@') - 1), 1, 2), 
+			lengthb(substr(user_mail, 1, instr(user_mail, '@') - 1)), '*')
+		|| '@' ||
+		rpad(
+			substr(substr(user_mail, instr(user_mail, '@') + 1), 1, 2), 
+			lengthb(substr(user_mail, instr(user_mail, '@') + 1)), '*') as userMail
+	from
+		user_table
+	where
+		user_name = #{userName }
+		and
+		user_call = #{userCall }
+</select>
+
+<!-- PW 찾기 전 아이디 확인  -->
+<select id="findUser" parameterType="User" resultType="String">
+	select
+		user_mail as userMail
+	from
+		user_table
+	where
+		user_mail = #{userMail }
+</select>
+
+<!-- PW 초기화 -->
+<update id="updatePw" parameterType="User">
+	update 
+		user_table
+	set
+		user_pw = #{userPw }
+	where
+		user_mail = #{userMail }
+</update>
 </mapper>

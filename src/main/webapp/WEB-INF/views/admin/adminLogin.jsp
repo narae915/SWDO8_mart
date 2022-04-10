@@ -1,17 +1,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html lang="zxx">
-
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Fashi Template">
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>직원 로그인</title>
+    <title>SpringDay | 직원 로그인</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -62,6 +60,7 @@
                     <div class="login-form">
                         <h2>로그인</h2>
                         <form action="adminLogin" method="post" onsubmit="return checkForm();">
+                           	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             <div class="group-input">
                                 <input type="text" id="empNum" name="empNum" placeholder="ID를 입력해주세요.">
                             </div>
@@ -100,12 +99,6 @@
     
     <!-- Footer -->
     <%@ include file="/WEB-INF/views/admin/adminFooter.jsp" %>
-    
-    <!-- modal -->
-	<div class="modalAlert">
-		<div class="modalAlert_content" id="modalAlert_content">
-		</div>
-	</div>
 
     <!-- Js Plugins -->
     <script src="/resources/js/jquery-3.6.0.min.js"></script>
@@ -120,5 +113,4 @@
     <script src="/resources/js/main.js"></script>
     <script src="/resources/js/adminJs/adminLogin.js"></script>
 </body>
-
 </html>

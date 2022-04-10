@@ -16,6 +16,21 @@ button
 	outline:none;
 }
 
+#searchType
+{
+	font-size: 16px;
+	color: #000;
+}
+
+#searchWord
+{
+	width: 25%;
+	height: 45px;
+	font-size: 16px;
+	border-radius: 5px; 
+	color: #000;
+}
+
 button:hover 
 {
 	background:#000;
