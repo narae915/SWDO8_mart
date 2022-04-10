@@ -3477,7 +3477,6 @@ ol {
 }
 
 .blog-details-inner .blog-post .next-blog .nb-text {
-	display: table;
 	padding-right: 20px;
 	text-align: right;
 }
@@ -3557,7 +3556,7 @@ ol {
 	border-radius: 5px;
 	padding-left: 20px;
 	padding-top: 10px;
-	margin-bottom: 45px;
+	margin-bottom: 3px;
 }
 
 /*---------------------

@@ -52,6 +52,9 @@ select
 		<if test="sorting == 'new'">
 			order by item_num desc
 		</if>
+		<if test="sorting == null">
+			order by item_num desc
+		</if>
 </select>
 
 <!-- 상품 1개의 정보 불러오기 -->

@@ -13,34 +13,38 @@
 	<!--로그인 성공시 커스텀한 핸들러 -->
 	<bean id="customLoginSuccessHandler" class="com.project.market.security.CustomLoginSuccessHandler"/>
 	
-	<!-- 이 URL은 인터셉터 하지 않겠다 -->
+	<!-- 이 URL은 Spring Security 쓰지 않겠다 -->
 	<security:http pattern="/favicon.ico" security="none" />
 	<security:http pattern="/resources/**" security="none" />
+	<security:http pattern="/fonts/**" security="none" />
 
 	<security:http auto-config="true" use-expressions="true">
-	<!-- 인터셉터, access는 권한자 -->
-	<!-- <security:intercept-url pattern="/order/**" access="hasRole('ROLE_USER')" /> -->
-	<security:intercept-url pattern="/**" access="permitAll()"/>
-    
-    <!-- 로그인 
-    	login-processing-url = login.jsp form의 action 값 
-    	login-page = -->
-    <security:form-login
-        username-parameter="userMail"
-        password-parameter="userPw"
-        login-processing-url="/user/auth"
-        login-page="/user/login"
-         authentication-success-handler-ref="customLoginSuccessHandler"/>
-
-	<!-- 로그아웃 -->
-    <security:logout 
-    	logout-url="/user/logout" 
-    	invalidate-session="true" 
-    	logout-success-url="/"
-    	delete-cookies="JSESSIONID" />
+		<!-- 인터셉터, access는 권한자 -->
+		<!-- <security:intercept-url pattern="/order/**" access="hasRole('ROLE_USER')" /> -->
+		<security:intercept-url pattern="/**" access="permitAll()"/>
+	    
+	    <!-- 로그인 
+	    	login-processing-url = login.jsp form의 action 값 
+	    	login-page = 내가 만든 login.jsp 경로 -->
+	    <security:form-login
+	        username-parameter="userMail"
+	        password-parameter="userPw"
+	        login-processing-url="/user/auth"
+	        login-page="/user/login"
+	         authentication-success-handler-ref="customLoginSuccessHandler"/>
+	
+		<!-- 로그아웃 -->
+	    <security:logout 
+	    	logout-url="/user/logout" 
+	    	invalidate-session="true" 
+	    	logout-success-url="/"
+	    	delete-cookies="JSESSIONID" />
 		
-		<!-- CSRF -->
-	<security:csrf disabled="false"/>
+		<!-- http-basic  -->
+		<security:http-basic />
+		
+		<!-- CSRF 설정을 true로 변경 -->
+		<security:csrf disabled="true"/>
 	</security:http>
 
 	<!-- DB에 있는 값을 비교하고, 권한을 줌 -->
