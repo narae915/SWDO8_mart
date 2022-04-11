@@ -149,6 +149,7 @@
                                     </div>
                                     <a class="primary-btn pd-cart" onclick="insertCart(${item.itemNum });">장바구니에 담기</a>
                                 </div>
+                                <span id="amount-zero" style="color:red;"></span>
                             </div>
                         </div>
                     </div>
@@ -332,6 +333,7 @@
 		</div>
 	</div>
 
+	<input type="hidden" id="loginMail" value="${sessionScope.userMail }">
     <!-- Footer -->
     <%@ include file="/WEB-INF/views/footer.jsp" %>
 
@@ -351,24 +353,33 @@
 			console.log(itemNum);
 			itemNum = parseInt(itemNum);
 			cartAmount = $("input[name=cartAmount]").val();
+			var userMail = $("#loginMail").val();
+			console.log(userMail);
 			console.log(cartAmount);
 			
-			$.ajax({
-				url: "/order/insertCart",
-				type: "GET", 
-				data: {
-					itemNum : itemNum,
-					cartAmount : cartAmount
-				},
-				success: function(res) { //cart테이블에 입력
-					if(res = "yes"){
-						showModal();
-						$("#ri-modal-button").click(function(){
-							location.href="/order/cart";
-						});
+			if(cartAmount == 0) {
+				var zeromsg = "수량을 1개 이상 선택해주세요";
+				$("#amount-zero").text(zeromsg);
+
+			} else {
+				$.ajax({
+					url: "/order/insertCart",
+					type: "POST", 
+					data: {
+						itemNum : itemNum,
+						cartAmount : cartAmount,
+						userMail : userMail
+					},
+					success: function(res) { //cart테이블에 입력
+						if(res = "yes"){
+							showModal();
+							$("#ri-modal-button").click(function(){
+								location.href="/order/cart";
+							});
+						}
 					}
-				}
-			});
+				});
+			}
     	}
     	
     	function showModal() {

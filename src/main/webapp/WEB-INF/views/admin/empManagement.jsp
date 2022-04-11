@@ -3,17 +3,15 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html lang="zxx">
-
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Fashi Template">
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>직원 조회</title>
+    <title>SpringDay | 직원 조회</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -29,7 +27,6 @@
 	<link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
 	<link rel="stylesheet" href="/resources/css/style.css" type="text/css">
 	<link rel="stylesheet" href="/resources/css/adminCss/empManagement.css" type="text/css">
-	
 </head>
 
 <body>
@@ -48,7 +45,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text product-more">
                         <a href="adminMain"><i class="fa fa-home"></i> Home</a>
-                        <a href="empManagement">Employee</a>
+                        <a href="empManagement">직원</a>
                         <span>직원 조회</span>
                     </div>
                 </div>
@@ -117,49 +114,88 @@
                         <!-- Paging Begin -->
 						<div style="text-align: center; margin-top: 20px;">
 							<!-- 현재 페이지가 첫 페이지가 아니라면, 이전 그룹/페이지로 이동 -->
-							<c:if test="${navi.currentPage > 1 }">
-								<!-- 이전 그룹으로 이동 -->
-								<a href="/admin/empManagement?currentPage=${(navi.currentGroup - 1) * 5 + 1 }" style="color: #e7ab3c; text-decoration: none; font-size: 1.5em; text-align: center;">
-									< 이전&nbsp;
-								</a>
-							</c:if>
-							
-							<!-- 반복문을 통해 현재 그룹 내 모든 페이지를 하나씩 출력 -->
-							<c:forEach begin="${navi.startPageGroup }" end="${navi.endPageGroup }" var="pageNum">
-								<!-- 출력하고자 하는 페이지 번호가 현재 접속한 페이지와 같은 경우 강조 표시 -->
-								<c:if test="${pageNum == navi.currentPage }">
-									<a href="/admin/empManagement?currentPage=${pageNum }" style="color: #e7ab3c; text-decoration: none; font-size: 1.5em; text-align: center;">
-										<span style="color: #e7ab3c; border: 1px solid;">
-											&nbsp;${pageNum }
-										</span>
-									</a>&nbsp;
-								</c:if>
-								<!-- 강조하지 않는 표시 -->
-								<c:if test="${pageNum != navi.currentPage }">
-									<a href="/admin/empManagement?currentPage=${pageNum }" style="color: #252525; text-decoration: none; font-size: 1.5em; text-align: center;">
-										${pageNum }&nbsp;
-									</a>
-								</c:if>
-							</c:forEach>
-							
-							<!-- 현재 페이지가 마지막 페이지가 아니라면, 다음 페이지/그룹으로 이동 -->
-							<c:if test="${navi.currentPage < navi.totalPageCount }">
-								<!-- 다음 그룹으로 이동 -->
-								<a href="/admin/empManagement?currentPage=${(navi.currentGroup + 1) * 5 + 1 }" style="color: #e7ab3c; text-decoration: none; font-size: 1.5em; text-align: center;">
-									다음 >
-								</a>
-							</c:if>
+							<span>
+							<c:choose>
+								<c:when test="${searchWord eq '' }">
+									<c:if test="${navi.currentPage > 1 }">
+										<!-- 이전 그룹으로 이동 -->
+										<c:if test="">
+										</c:if>
+										<a href="/admin/empManagement?currentPage=${(navi.currentGroup - 1) * 5 + 1 }" style="color: #e7ab3c; text-decoration: none; font-size: 1.5em; text-align: center;">
+											< 이전&nbsp;
+										</a>
+									</c:if>
+									
+									<!-- 반복문을 통해 현재 그룹 내 모든 페이지를 하나씩 출력 -->
+									<c:forEach begin="${navi.startPageGroup }" end="${navi.endPageGroup }" var="pageNum">
+										<!-- 출력하고자 하는 페이지 번호가 현재 접속한 페이지와 같은 경우 강조 표시 -->
+										<c:if test="${pageNum == navi.currentPage }">
+											<a href="/admin/empManagement?currentPage=${pageNum }" style="color: #e7ab3c; text-decoration: none; font-size: 1.5em; text-align: center;">
+												<span style="color: #e7ab3c; border: 1px solid;">
+													&nbsp;${pageNum }
+												</span>
+											</a>&nbsp;
+										</c:if>
+										<!-- 강조하지 않는 표시 -->
+										<c:if test="${pageNum != navi.currentPage }">
+											<a href="/admin/empManagement?currentPage=${pageNum }" style="color: #252525; text-decoration: none; font-size: 1.5em; text-align: center;">
+												${pageNum }&nbsp;
+											</a>
+										</c:if>
+									</c:forEach>
+									
+									<!-- 현재 페이지가 마지막 페이지가 아니라면, 다음 페이지/그룹으로 이동 -->
+									<c:if test="${navi.currentPage < navi.totalPageCount }">
+										<!-- 다음 그룹으로 이동 -->
+										<a href="/admin/empManagement?currentPage=${(navi.currentGroup + 1) * 5 + 1 }" style="color: #e7ab3c; text-decoration: none; font-size: 1.5em; text-align: center;">
+											다음 >
+										</a>
+									</c:if>
+								</c:when>
+								<c:otherwise>
+									<c:if test="${navi.currentPage > 1 }">
+										<a href="/admin/empManagement?searchType=${searchType }&searchWord=${searchWord }&currentPage=${(navi.currentGroup - 1) * 5 + 1 }" style="color: #E7AB3C; text-decoration: none; text-align: center; font-size: 1.5em;">
+											< 이전&nbsp;
+										</a>
+									</c:if>
+									<c:forEach begin="${navi.startPageGroup }" end="${navi.endPageGroup }"
+										var="pageNum">
+										<c:if test="${pageNum == navi.currentPage }">
+											<a href="/admin/empManagement?searchType=${searchType }&searchWord=${searchWord }&currentPage=${pageNum }" style="text-decoration:none; text-align: center; font-size: 1.5em;">
+												<span style="color: #E7AB3C; border: 1px solid;">
+													&nbsp;${pageNum }
+												</span>
+											</a>
+											&nbsp;
+										</c:if>
+										<c:if test="${pageNum != navi.currentPage }">
+											<a href="/admin/empManagement?searchType=${searchType }&searchWord=${searchWord }&currentPage=${pageNum }" style="color: black; text-decoration:none; text-align: center; font-size: 1.5em;">
+												<span>
+													${pageNum }&nbsp;
+												</span>
+											</a>
+										</c:if>
+									</c:forEach>
+									
+									<c:if test="${navi.currentPage < navi.totalPageCount }">
+										<a href="/admin/empManagement?searchType=${searchType }&searchWord=${searchWord }&currentPage=${(navi.currentGroup + 1) * 5 + 1 }" style="color: #E7AB3C; text-decoration:none;text-align: center; font-size: 1.5em;">
+											다음 >
+										</a>
+									</c:if>
+								</c:otherwise>
+							</c:choose>
+							</span>
 						</div>
 						<!-- Paging End -->
 						<hr>
 						<!-- Emp Search Begin -->
-						<form action="searchEmp" method="get" onsubmit="return searchEmp();">
-							<select id="searchType" name="searchType" style="width: 15%; height: 45px; position:relative; left: 20em; bottom:-1em; border: none; font-size: 16px; border: #e7ab3c solid 3px; border-radius: 5px; color: #000; padding-right: 20px;">
+						<form action="empManagement" method="get" onsubmit="return searchEmp();">
+							<select id="" name="searchType" style="width: 15%; height: 45px; position:relative; left: 20em; bottom:-1em; border: none; border-radius: 5px; border: #e7ab3c solid 3px; padding-right: 20px;">
 								<option value="searchEmpName">이름</option>
 								<option value="searchEmpNum">사원 번호</option>
 								<option value="searchPosition">직급</option>
 							</select>
-							<input type="text" id="searchWord" name="searchWord" placeholder="검색어를 입력해주세요." style="width: 25%; height: 45px; position:relative; left: 20em; bottom:-1em; border: none; font-size: 16px; border: #e7ab3c solid 3px; border-radius: 5px; color: #000; padding-right: 20px;">
+							<input type="text" id="searchWord" name="searchWord" placeholder="검색어를 입력해주세요." style="position:relative; left: 20em; bottom:-1em; border: none; border: #e7ab3c solid 3px; padding-right: 20px;">
 							<button type="submit" class="primary-btn" style="width:5px; height:45px; border-radius:5px; left: 20em; bottom:-1.12em"><i class="ti-search"></i></button>
 						</form>
 						<!-- Emp Search End -->

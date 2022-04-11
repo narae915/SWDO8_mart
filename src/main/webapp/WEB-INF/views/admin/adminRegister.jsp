@@ -1,17 +1,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html lang="zxx">
-
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Fashi Template">
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>직원 ID 등록</title>
+    <title>SpringDay | 직원 ID 등록</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -27,7 +25,6 @@
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/adminCss/adminRegister.css" type="text/css">
-	
 </head>
 
 <body>
@@ -46,7 +43,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="adminMain"><i class="fa fa-home"></i> Home</a>
-                        <a href="empManagement">Employee</a>
+                        <a href="empManagement">직원</a>
                         <span>직원 등록</span>
                     </div>
                 </div>
@@ -63,6 +60,7 @@
                     <div class="register-form">
                         <h2>직원 등록</h2>
                         <form action="adminRegister" method="post" onsubmit="return checkForm();">
+                        	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             <div class="group-input">
                                 <input type="text" id="empName" name="empName" placeholder="이름">
                             </div>
@@ -88,7 +86,7 @@
 							   <span id="pinNumChk_warn" style="position: absolute; left: 2.23em; bottom: 7.95em;"></span>
                             </div>
                             <div class="group-input">
-								<input type="button" id="sendMailBtn" value="인증번호 전송" style="background-color: #434445; position: absolute; width: 30%; height:50px; border-radius:5px; left: 24.5em; bottom: 14.2em; color: white;">
+								<input type="button" id="sendMailBtn" value="인증번호 전송" style="position: absolute; left: 24.5em; bottom: 14.2em;">
                             </div>
                             <div class="group-input">
 								<select id="position" name="position" style="width: 100%; height: 50px;">
@@ -112,12 +110,6 @@
 	
     <!-- Footer -->
     <%@ include file="/WEB-INF/views/admin/adminFooter.jsp" %>
-   
-   <!-- modal -->
-	<div class="modalAlert">
-		<div class="modalAlert_content" id="modalAlert_content">
-		</div>
-	</div>
 
     <!-- Js Plugins -->
     <script src="/resources/js/jquery-3.6.0.min.js"></script>
@@ -132,5 +124,4 @@
     <script src="/resources/js/main.js"></script>
     <script src="/resources/js/adminJs/adminRegister.js"></script>
 </body>
-
 </html>

@@ -150,7 +150,9 @@
 										<img src="/resources/img/products/product-${status.count }.jpg" alt="">
 										<!-- 세일상품 <div class="sale pp-sale">Sale</div> -->
 										<ul>
-											<li class="w-icon active" onclick="insertCart(${item.itemNum });"><a href="#"><i class="icon_bag_alt"></i></a></li>
+											<li class="w-icon active" onclick="insertCart(${item.itemNum });" style="cursor:pointer;">
+												<a><i class="icon_bag_alt"></i></a>
+											</li>
 											<li class="quick-view"><a href="/item/readItem?itemNum=${item.itemNum }">+ 상세 보기</a></li>
 										</ul>
 									</div>
@@ -319,7 +321,7 @@
 			$("#il-modal-button").click(function(){
 				$.ajax({
 					url: "/order/insertCart",
-					type: "GET", 
+					type: "POST", 
 					data: {
 						itemNum : itemNum,
 						cartAmount : cartAmount,

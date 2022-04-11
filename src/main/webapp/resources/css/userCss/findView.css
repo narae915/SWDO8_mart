@@ -1,0 +1,27 @@
+.loginLink:link
+{
+	color: #b2b2b2;
+}
+.loginLink:visited 
+{
+	color: #b2b2b2;
+}
+.loginLink:hover
+{
+	color: #e7ab3c;
+	font-weight: bold;
+}
+
+.findPwLink:link
+{
+	color: #b2b2b2;
+}
+.findPwLink:visited
+{
+	color: #b2b2b2;
+}
+.findPwLink:hover
+{
+	color: #e7ab3c;
+	font-weight: bold;
+}

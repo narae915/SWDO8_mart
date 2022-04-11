@@ -5,17 +5,21 @@
 <mapper namespace="com.project.market.dao.RecipeMapper">
 
 <!-- 레시피 게시판 조회 -->
-<select id="getRecipeList" resultType="Recipe">
-	select 
-		recipe_num as recipeNum,
-		user_num as userNum,
-	    title as title,
-	    score as score,
-	    to_char(indate, 'YYYY-MM-DD') as indate
+<select id="getRecipeList" resultType="Recipe" parameterType="int">
+	select
+		rownum,
+		r.recipe_num as recipeNum,
+		r.user_num as userNum,
+	    r.title as title,
+	    r.score as score,
+	    r.read_count as readCount,
+	    to_char(r.indate, 'YYYY-MM-DD') as indate
 	from
-	    recipe_table
+	    recipe_table r
+	where
+		rownum between 1 and #{countPerPage }
 	order by
-		recipe_num desc
+		r.recipe_num desc
 </select>
 
 <!-- 레시피 검색 -->
@@ -33,4 +37,33 @@
 	order by
 		recipe_num desc
 </select>
+
+<!-- 상세 게시글 조회 (이전글 번호 LAG, 다음글 번호 조회 LEAD)-->
+<select id="getRecipe" parameterType="int" resultType="Recipe">
+	select 
+		re.* 
+	from(
+		select
+			recipe_num as recipeNum,
+			user_num as userNum,
+			title as title,
+			content as content,
+			read_count as readCount,
+			score as score,
+			indate as indate,
+			LAG(recipe_num,1,-1) OVER(ORDER BY recipe_num ASC) as prev,
+			LEAD(recipe_num,1,-1) OVER(ORDER BY recipe_num ASC) as next
+		from recipe_table) re
+	where re.recipeNum = #{recipeNum }
+</select>
+
+<!-- 조회수 올리기 -->
+<update id="updateReadCount" parameterType="HashMap">
+	update
+		recipe_table
+	set
+		read_count = read_count + 1
+	where
+		recipe_num = #{recipeNum }
+</update>
 </mapper>

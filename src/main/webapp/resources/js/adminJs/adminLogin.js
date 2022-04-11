@@ -1,21 +1,21 @@
 /* 유효성 검사 */
 function checkForm()
 {
-	var empNum = document.getElementById("empNum").value; 
-	var empPw = document.getElementById("empPw").value;
+	var empNum = $("#empNum").val();	// 입력한 ID
+	var empPw = $("#empPw").val();		// 입력한 PW
 
 	if ( empNum.length == 0 || empNum.length > 4 || isNaN(empNum) )
 	{
-		modalContent();
-		$("#modalAlert_content").prepend("ID를 올바르게 입력해주세요.");
+		exitAlert();
+		$("#footer-modal-content").prepend("ID를 올바르게 입력해주세요.");
 		showModalAlert();
 		return false;
 	}
 	
 	if ( empPw.length == 0 )
 	{
-		modalContent();
-		$("#modalAlert_content").prepend("비밀번호를 입력해주세요.");
+		exitAlert();
+		$("#footer-modal-content").prepend("비밀번호를 입력해주세요.");
 		showModalAlert();
 		return false;
 	}
@@ -92,22 +92,4 @@ function getCookie(cookie_name)
           return unescape(y); // unescape로 디코딩 후 값 리턴
 		}
 	}
-}
-
-/* 모달창 표시 */
-function showModalAlert() 
-{
-	$(".modalAlert").fadeIn();
-	
-	$(".modalClose").click(function()
-	{
-		$(".modalAlert").fadeOut();	
-	});
-}
-
-/* 모달창 안 버튼 표시 */
-function modalContent()
-{
-	$("#modalAlert_content").html(""); // 태그 초기화
-	$("#modalAlert_content").append('<input type="button" class="modalClose" value="닫기">');
 }

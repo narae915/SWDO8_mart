@@ -1,39 +1,3 @@
-#pinNumChk_false
-{
-    background-color: #ebebe4;
-}
- 
-#pinNumChk_true
-{
-    background-color: white;
-}
-
-#pinNumChk_Btn
-{
-	background-color: #ebebe4; 
-	width: 30%; 
-	height: 50px; 
-	color: #ebebe4;
-}
-
-#pinNumChk_Btn_true
-{
-	background-color: #434445;
-	width: 30%; 
-	height: 50px; 
-	border-radius: 5px;
-	color: white;
-}
-
-#sendMailBtn
-{
-	background-color: #434445;
-	width: 30%; 
-	height:50px; 
-	border-radius:5px;
-	color: white;
-}
-
 .correct
 {
     color : green;

@@ -47,8 +47,9 @@
                 <div class="col-lg-12">
                     <div class="blog-details-inner">
                         <div class="blog-detail-title">
-                            <h2>The Personality Trait That Makes People Happier</h2>
-                            <p>travel <span>- May 19, 2019</span></p>
+                            <h2>${recipe.title }</h2>
+							<p><span>✒${recipe.indate }  👁 ${recipe.readCount }</span>
+							</p>
                         </div>
                         <div class="blog-large-pic">
                             <img src="/resources/img/blog/blog-detail.jpg" alt="">
@@ -65,7 +66,7 @@
                         <div class="blog-quote">
                             <p>“ Technology is nothing. What's important is that you have a faith in people, that
                                 they're basically good and smart, and if you give them tools, they'll do wonderful
-                                things with them.” <span>- Steven Jobs</span></p>
+                                things with them.” <span>- Steven Jobs ${recipe.content }</span></p>
                         </div>
                         <div class="blog-more">
                             <div class="row">
@@ -86,80 +87,82 @@
                             consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
                             aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
                             ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.</p>
-                        <div class="tag-share">
-                            <div class="details-tag">
-                                <ul>
-                                    <li><i class="fa fa-tags"></i></li>
-                                    <li>Travel</li>
-                                    <li>Beauty</li>
-                                    <li>Fashion</li>
-                                </ul>
-                            </div>
-                            <div class="blog-share">
-                                <span>Share:</span>
-                                <div class="social-links">
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                    <a href="#"><i class="fa fa-google-plus"></i></a>
-                                    <a href="#"><i class="fa fa-instagram"></i></a>
-                                    <a href="#"><i class="fa fa-youtube-play"></i></a>
-                                </div>
-                            </div>
-                        </div>
+                            
+						이 게시글의 평점
+                        <span class="star-container" id="star-con${status.count }">
+										<span id="star1">★</span>
+										<span id="star2">★</span>
+										<span id="star3">★</span>
+										<span id="star4">★</span>
+										<span id="star5">★</span>
+							</span>
+						<div style="float:right; display: inline-block;">
+						<a style="color:black;" href="/recipe/recipeList">레시피 목록으로</a>
+						</div>
+                        <hr>
                         <div class="blog-post">
                             <div class="row">
-                                <div class="col-lg-5 col-md-6">
-                                    <a href="#" class="prev-blog">
-                                        <div class="pb-pic">
-                                            <i class="ti-arrow-left"></i>
-                                            <img src="/resources/img/blog/prev-blog.png" alt="">
-                                        </div>
+                            <c:if test="${empty prev }">
+                            	<div class="col-lg-5 col-md-6">
+                                    <a style="cursor:default;" class="prev-blog">
                                         <div class="pb-text">
-                                            <span>Previous Post:</span>
-                                            <h5>The Personality Trait That Makes People Happier</h5>
+                                            <h5>${emptyMessage }</h5>
                                         </div>
                                     </a>
                                 </div>
-                                <div class="col-lg-5 offset-lg-2 col-md-6">
-                                    <a href="#" class="next-blog">
+                            </c:if>
+                            <c:if test="${!empty prev }">
+                            	<div class="col-lg-5 col-md-6">
+                                    <a href="/recipe/readRecipe?recipeNum=${prev.recipeNum }" class="prev-blog">
+                                        <div class="pb-pic">
+                                            <i class="ti-arrow-left"></i>
+                                        </div>
+                                        <div class="pb-text">
+                                            <span>이전 게시글</span>
+                                            <h5>${prev.title }</h5>
+                                        </div>
+                                    </a>
+                                </div>
+                            </c:if>
+							<c:if test="${empty next }">
+                            	<div class="col-lg-5 offset-lg-2 col-md-6">
+                                    <a style="cursor:default;" class="next-blog">
+		                                <div class="nb-text">
+		                                    <h5>${emptyMessage }</h5>
+		                                </div>
+	                                </a>
+                                </div>
+                            </c:if>
+                            <c:if test="${!empty next }">
+                            	<div class="col-lg-5 offset-lg-2 col-md-6">
+                                    <a href="/recipe/readRecipe?recipeNum=${next.recipeNum }" class="next-blog">
                                         <div class="nb-pic">
-                                            <img src="/resources/img/blog/next-blog.png" alt="">
                                             <i class="ti-arrow-right"></i>
                                         </div>
                                         <div class="nb-text">
-                                            <span>Next Post:</span>
-                                            <h5>The Personality Trait That Makes People Happier</h5>
+                                            <span>다음 게시글</span>
+                                            <h5>${next.title }</h5>
                                         </div>
                                     </a>
                                 </div>
+                            </c:if>
                             </div>
                         </div>
-                        <div class="posted-by">
-                            <div class="pb-pic">
-                                <img src="/resources/img/blog/post-by.png" alt="">
-                            </div>
-                            <div class="pb-text">
-                                <a href="#">
-                                    <h5>Shane Lynch</h5>
-                                </a>
-                                <p>Aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                                    velit esse cillum bore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                                    amodo</p>
-                            </div>
+                        <div>
+                        	댓글 올릴 곳 
                         </div>
                         <div class="leave-comment">
-                            <h4>Leave A Comment</h4>
+                            <h4>댓글</h4>
                             <form action="#" class="comment-form">
                                 <div class="row">
                                     <div class="col-lg-6">
-                                        <input type="text" placeholder="Name">
+                                    	<span style="font-weight:bold;">${userMail }</span> 님
                                     </div>
                                     <div class="col-lg-6">
-                                        <input type="text" placeholder="Email">
                                     </div>
                                     <div class="col-lg-12">
-                                        <textarea placeholder="Messages"></textarea>
-                                        <button type="submit" class="site-btn">Send message</button>
+                                        <textarea placeholder="댓글을 입력하세요"></textarea>
+                                        <button type="submit" class="site-btn">작성</button>
                                     </div>
                                 </div>
                             </form>

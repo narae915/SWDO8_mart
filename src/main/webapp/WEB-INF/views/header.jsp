@@ -141,7 +141,6 @@
             </div>
         </div>
     </header>
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     <!-- Header End -->
     <script src="/resources/js/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
@@ -152,7 +151,7 @@
     	console.log(userMail);
     	
     	$.ajax({
-   			url: "/order/selectCartList?${_csrf.parameterName}=${_csrf.token}",
+   			url: "/order/selectCartList",
    			type: "POST",
    			data: {
    				userMail: $("#loginMail").val()

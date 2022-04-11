@@ -36,12 +36,12 @@ public class OrderController {
 	@Autowired
 	private UserDAO uDao;
 	
-	//장바구니에 상품넣기
+	//장바구니에 상품넣기 - 박나래
 	@ResponseBody
-	@RequestMapping(value = "/insertCart", method = RequestMethod.GET)
+	@RequestMapping(value = "/insertCart", method = RequestMethod.POST)
 	public String insertCart(int itemNum, int cartAmount, String userMail, Model model) {
-		logger.info("itemNum : {}", itemNum);
-		logger.info("cartAmount : {}", cartAmount);
+		logger.info("장바구니에 상품넣기(POST)");
+		logger.info("itemNum : {}, cartAmount : {}", itemNum, cartAmount);
 		logger.info("userMail : {}", userMail);
 		String res = null;
 		
@@ -53,6 +53,7 @@ public class OrderController {
 		// 같은 상품이 없다면
 		if(cart == null) {
 			// 장바구니에 상품 정보를 입력
+			logger.info("같은 상품 없음");
 			boolean result1 = service.insertCart(itemNum,cartAmount,userNum);
 			if(result1) {
 				res = "yes";
@@ -60,6 +61,7 @@ public class OrderController {
 				res = "no";
 			}
 		} else { // 같은 상품이 있다면 cart의 amount를 업데이트
+			logger.info("같은 상품 있음");
 			boolean result2 = service.updateCartAmount(itemNum,cartAmount,userNum);
 			
 			if(result2) {
@@ -80,6 +82,7 @@ public class OrderController {
 	//마우스 오버시 cartList조회
 	@RequestMapping(value="/selectCartList", method = RequestMethod.POST)
 	public String selectCartList(Model model, String userMail) {
+		logger.info("마우스 오버시 cartList 조회(POST)");
 		logger.info("userMail : {}", userMail);
 		ArrayList<ItemVO> cartList = service.selectCartList(userMail);
 		String emptyCart = null;

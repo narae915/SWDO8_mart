@@ -12,4 +12,13 @@ public interface UserMapper {
 
 	// 회원 탈퇴
 	// int userDelete(String userMail);
+	
+	// ID 찾기
+	String selectId(UserVO user);
+
+	// PW 찾기 전 아이디 확인
+	String findUser(UserVO user);
+
+	// PW 초기화
+	int updatePw(UserVO newPw);
 }

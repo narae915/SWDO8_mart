@@ -3,10 +3,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import = "java.util.Enumeration" %>
-
 <!DOCTYPE html>
 <html lang="zxx">
-
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Fashi Template">
@@ -28,7 +26,7 @@
     <link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
-	<link rel="stylesheet" href="/resources/css/userCss/findView.css" type="text/css">
+    <link rel="stylesheet" href="/resources/css/userCss/findView.css" type="text/css">
 </head>
 
 <body>
@@ -47,8 +45,8 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="adminMain"><i class="fa fa-home"></i> Home</a>
-                        <a href="empFindId">ID 찾기</a>
-                        <span>ID 찾기 결과</span>
+                        <a href="empFindPw">PW 찾기</a>
+                        <span>PW 찾기 결과</span>
                     </div>
                 </div>
             </div>
@@ -62,20 +60,16 @@
             <div class="row">
                 <div class="col-lg-6 offset-lg-3">
                     <div class="register-form">
-                       <h2>ID 찾기 결과</h2>
-						<c:choose>
-							<c:when test="${not empty sessionScope.findId }">
-		     					<span style="font-weight: bold;">${findId }</span>
-							</c:when>
-							<c:otherwise>
-								<h4 style="text-align: center; font-weight: bold; color: red;">잘못된 접근입니다.</h4>
-							</c:otherwise>
-						</c:choose>
+                       <h2>비밀번호 찾기 결과</h2>
+						<c:if test="${not empty sessionScope.successResetPw }">
+	                      	<span style="font-weight: bold;">${successResetPw }</span>
+						</c:if>
+						<c:if test="${empty sessionScope.successResetPw }">
+							<h4 style="text-align: center; font-weight: bold; color: red;">잘못된 접근입니다.</h4>
+						</c:if>
                        	<br><hr>
                        	<div style="float: right;">
 	                       	<a href="adminLogin" class="loginLink">로그인</a>
-	                       	<a style="color: #b2b2b2;">&ensp;&ensp;|&ensp;&ensp;</a>
-	                       	<a href="empFindPw" class="findPwLink">비밀번호 찾기</a>
                        	</div>
                     </div>
                 </div>
@@ -87,12 +81,6 @@
    	<!-- Footer -->
     <%@ include file="/WEB-INF/views/admin/adminFooter.jsp" %>
     
-    <!-- modal -->
-	<div class="modalAlert">
-		<div class="modalAlert_content" id="modalAlert_content">
-		</div>
-	</div>
-
     <!-- Js Plugins -->
     <script src="/resources/js/jquery-3.6.0.min.js"></script>
     <script src="/resources/js/bootstrap.min.js"></script>
@@ -105,5 +93,4 @@
     <script src="/resources/js/owl.carousel.min.js"></script>
     <script src="/resources/js/main.js"></script>
 </body>
-
 </html>
