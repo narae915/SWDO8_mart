@@ -95,77 +95,76 @@
 		                    <h5>* 장바구니에 담긴 상품의 내역을 확인하실 수 있습니다.</h5>
 		                    <h5>* 상품명을 클릭 시, 해당 상품의 상세 페이지로 이동합니다.</h5>
 		                    <h5>* 장바구니에서 삭제하고 싶으시다면, 해당  상품을 체크 후 취소 버튼을 눌러주세요.</h5><br>
-		                    
-
 						</div>
 	                    <br>
 	                    <!-- 장바구니 취소 및 조회 -->
                     	<!-- 테이블 시작 -->
                     	<c:if test="${not empty cartList }">
-						<form name="cartform" id="cartform" method="post" class="cartform" action="cart" onsubmit="return false;">
-			    
-			            <input type="hidden" name="cmd" value="cart">
-			            <div class="basketdiv" id="basket">
-			            <!-- 데이터 있을 때 -->
-			                <div class="row head">
-			                    <div class="subdiv">
-			                        <div class="check">선택</div>
-			                        <div class="img">이미지</div>
-			                        <div class="pname">상품명</div>
-			                    </div>
-			                    <div class="subdiv">
-			                        <div class="basketprice">가격</div>
-			                        <div class="num">수량</div>
-			                        <div class="sum">합계</div>
-			                    </div>
-			                    <div class="subdiv">
-			                        <div class="basketcmd">삭제</div>
-			                    </div>
-			                    <div class="split"></div>
-			                </div>
-			        		<c:forEach var="Cart" items="${cartList }">
-				                <div class="row data">
+							<form name="cartform" id="cartform" method="post" class="cartform" action="cart">
+				    
+				            <input type="hidden" name="cmd" value="cart">
+				            <div class="basketdiv" id="basket">
+				            <!-- 데이터 있을 때 -->
+				                <div class="row head">
 				                    <div class="subdiv">
-				                        <div class="check"><input type="checkbox" name="buy" value="${Cart.cartNum }" onclick="javascript:basket.checkItem();">&nbsp;</div>
-				                        <div class="img" sytle = "padding: 0px"><img src="/resources/img/cart-page/product-1.jpg" alt="임시사진"></div>
-				                        <div class="pname"><!-- 상품명 -->
-				                            <span>${Cart.itemName }</span>
-				                        </div>
-				                    </div>
-	
-				                    <div class="subdiv">
-				                    <!-- 가격 -->
-				                        <div class="basketprice"><input type="hidden" name="p_price" id="p_price2" class="p_price" value="${Cart.price }">
-				                        	<fmt:formatNumber value="${Cart.price }" pattern='#,###원' />
-				                        </div>
-				                        <div class="num"><!-- ${Cart.price }.원 -->
-				                        <!-- 수량 -->
-				                            <div class="updown">
-												<span style="cursor:pointer" onclick="javascript:basket.changePNum('${Cart.cartNum}');"><i class="fas fa-arrow-alt-circle-up up fa-2xs"></i></span>
-				                                <input type="text" name="p_num${Cart.cartNum }" id="p_num${Cart.cartNum }" size="2" maxlength="3" class="p_num" value="${Cart.cartAmount }" style=""onkeyup="javascript:basket.changePNum('${Cart.cartNum}');">
-				                                <span style="cursor:pointer" onclick="javascript:basket.changePNum('${Cart.cartNum}');"><i class="fas fa-arrow-alt-circle-down down fa-2xs"></i></span>
-				                            </div>
-				                        </div>
-				                        <div class="sum">
-				                        	<fmt:formatNumber value="${Cart.cartAmount*Cart.price }" pattern='#,###원' />
-				                        </div>
+				                        <div class="check">선택</div>
+				                        <div class="img">이미지</div>
+				                        <div class="pname">상품명</div>
 				                    </div>
 				                    <div class="subdiv">
-			                        	<div class="basketcmd">
-			                        		<input type="hidden" id="hiddenNum" value="${Cart.cartNum }">
-			                        		<button style="color:#EBE8C7;width:35px;height:35px;background-color:#69644F;border:2px solid #fff;" class="abutton"onclick="return cartCancel();"><i class="fa-solid fa-xmark fa-lg"></i></button>
-			                        	</div>
+				                        <div class="basketprice">가격</div>
+				                        <div class="num">수량</div>
+				                        <div class="sum">합계</div>
 				                    </div>
+				                    <div class="subdiv">
+				                        <div class="basketcmd">삭제</div>
+				                    </div>
+				                    <div class="split"></div>
 				                </div>
-			                </c:forEach> 
-			            </div>
-			             <!-- 페이징 시작 -->
-	                        <div style="text-align: center; margin-top: 20px;">
+				        		<c:forEach var="Cart" items="${cartList }">
+					                <div class="row data">
+					                    <div class="subdiv">
+					                        <div class="check"><input type="checkbox" name="buy" value="${Cart.cartNum }" onclick="javascript:basket.checkItem();">&nbsp;</div>
+					                        <div class="img" sytle = "padding: 0px"><img src="/resources/img/cart-page/product-1.jpg" alt="임시사진"></div>
+					                        <div class="pname"><!-- 상품명 -->
+					                            <span>${Cart.itemName }</span>
+					                        </div>
+					                    </div>
+		
+					                    <div class="subdiv">
+					                    <!-- 가격 -->
+					                        <div class="basketprice"><input type="hidden" name="p_price" id="p_price2" class="p_price" value="${Cart.price }">
+					                        	<fmt:formatNumber value="${Cart.price }" pattern='#,###원' />
+					                        </div>
+					                        <div class="num"><!-- ${Cart.price }.원 -->
+					                        <!-- 수량 -->
+					                            <div class="updown">
+													<span style="cursor:pointer" onclick="javascript:basket.changePNum('${Cart.cartNum}');"><i class="fas fa-arrow-alt-circle-up up fa-2xs"></i></span>
+					                                <input type="text" name="p_num${Cart.cartNum }" id="p_num${Cart.cartNum }" size="2" maxlength="3" class="p_num" value="${Cart.cartAmount }" style=""onkeyup="javascript:basket.changePNum('${Cart.cartNum}');">
+					                                <span style="cursor:pointer" onclick="javascript:basket.changePNum('${Cart.cartNum}');"><i class="fas fa-arrow-alt-circle-down down fa-2xs"></i></span>
+					                            </div>
+					                        </div>
+					                        <div class="sum">
+					                        	<fmt:formatNumber value="${Cart.cartAmount*Cart.price }" pattern='#,###원' />
+					                        </div>
+					                    </div>
+					                    <div class="subdiv">
+				                        	<div class="basketcmd">
+				                        		<input type="hidden" id="hiddenNum" value="${Cart.cartNum }">
+				                        		<button style="color:#EBE8C7;width:35px;height:35px;background-color:#69644F;border:2px solid #fff;" class="abutton"onclick="return cartCancel();"><i class="fa-solid fa-xmark fa-lg"></i></button>
+				                        	</div>
+					                    </div>
+					                </div>
+				                </c:forEach> 
+				            </div>
+				            </form>
+				            <!-- 페이징 시작 -->
+		                       <div style="text-align: center; margin-top: 20px;">
 								<span>
 									<c:if test="${navi.currentPage > 1 }">
 										<a href="/order/cart?currentPage=${(navi.currentGroup - 1) * 5 + 1 }" style="color: #E7AB3C; text-decoration: none; text-align: center; font-size: 1.5em;">
 											< 이전&nbsp;
-	
+		
 										</a>
 									</c:if>
 									<c:forEach begin="${navi.startPageGroup }" end="${navi.endPageGroup }"
@@ -186,31 +185,38 @@
 											</a>
 										</c:if>
 									</c:forEach>
-	
+		
 									<c:if test="${navi.currentPage < navi.totalPageCount }">
 										<a href="/order/cart?currentPage=${(navi.currentGroup + 1) * 5 + 1 }" style="color: #E7AB3C; text-decoration:none;text-align: center; font-size: 1.5em;">
 											다음 >
 										</a>
 									</c:if>
-	
+		
 								</span>
 							</div>
 							<!-- 페이징 끝 -->
-			    
-					   	 	<div class=result-box style="border:5px solid #EBE8C7; border-radius: 10px;background-color: #9C9576;width: 30%; margin-left: 72%; display:inline-block">
-					   	 	<br>
-					            <div class="bigtext right-align sumcount" id="sum_p_num" style="color:#EBE8C7">총 0개</div>
-					            <div class="bigtext right-align box summoney" id="sum_p_price" style="color:#EBE8C7">합계금액: 0원</div>
-					            <input type="hidden" id="totalPrice" />
-					            <br>
-					    	</div>
+						   	 	<div class=result-box style="border:5px solid #EBE8C7; border-radius: 10px;background-color: #9C9576;width: 30%; margin-left: 72%; display:inline-block">
+						   	 	<br>
+						            <div class="bigtext right-align sumcount" id="sum_p_num" style="color:#EBE8C7">총 0개</div>
+						            <div class="bigtext right-align box summoney" id="sum_p_price" style="color:#EBE8C7">합계금액: 0원</div>
+						        	
+						            <br>
+						    	</div>
 					            <div id="gocart" class="">
 					                <div class="clear"></div>
 					                <div class="buttongroup center-align cmd">
-					                    <a href="/order/orderForm" id="purchase"><b>선택한 상품 주문</b></a>
+					                <!-- forward 시도 -->
+									<form action="orderForm" method="GET">
+									<input type="submit" id="purchase" value="선택한 상품 주문" />
+						           		<!-- 결제 페이지로 보내는 값 -->
+						           		<div id="forwardDiv">
+							           		<input type="hidden" name="totalPrice" id="totalPrice" />
+					                	</div>
+					                	
+				                	</form>
 					                </div>
 					            </div>
-					        </form>
+				            
 				        </c:if>
                         <!--  테이블 끝 -->
                         <!-- 데이터 없을 때 -->

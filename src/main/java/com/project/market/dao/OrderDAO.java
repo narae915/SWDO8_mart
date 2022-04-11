@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.project.market.vo.CartVO;
 import com.project.market.vo.ItemVO;
 import com.project.market.vo.OrderVO;
+import com.project.market.vo.UserVO;
 
 @Repository
 public class OrderDAO {
@@ -19,13 +20,13 @@ public class OrderDAO {
 	private SqlSession session;
 
 	// 주문 리스트 페이징
-	public int getTotalRecordsCount(String searchWord) {
+	public int getTotalRecordsCount(HashMap<String, Object> map) {
 		int result = 0;
 		OrderMapper mapper = null;
 
 		try {
 			mapper = session.getMapper(OrderMapper.class);
-			result = mapper.getTotalRecordsCount(searchWord);
+			result = mapper.getTotalRecordsCount(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -33,17 +34,7 @@ public class OrderDAO {
 		return result;
 	}
 	
-	// 1-1.주문 리스트 불러오기 메소드
-	/*
-	public ArrayList<OrderVO> getOrderList(HashMap<String, Object> map) {
-		OrderMapper mapper = session.getMapper(OrderMapper.class);
-		ArrayList<OrderVO> orderList = mapper.getOrderList(map);
-		
-		return orderList;
-	}
-	*/
-	
-	// 1-2.주문 리스트 불러오기 임시 메소드
+	// 주문 리스트 불러오기 메소드
 	public ArrayList<OrderVO> getOrderList(HashMap<String, Object> map) {
 		OrderMapper mapper = session.getMapper(OrderMapper.class);
 		ArrayList<OrderVO> orderList = mapper.getOrderList(map);
@@ -67,13 +58,13 @@ public class OrderDAO {
 
 
 	// 장바구니 페이징
-	public int getCartTotalRecordsCount() {
+	public int getCartTotalRecordsCount(String userMail) {
 		int result = 0;
 		OrderMapper mapper = null;
 
 		try {
 			mapper = session.getMapper(OrderMapper.class);
-			result = mapper.getCartTotalRecordsCount();
+			result = mapper.getCartTotalRecordsCount(userMail);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -156,6 +147,20 @@ public class OrderDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return result;
+	}
+
+	public ArrayList<UserVO> getUserList(String userMail) {
+		ArrayList<UserVO> result = null;
+		OrderMapper mapper = null;
+		
+		try {
+			mapper = session.getMapper(OrderMapper.class);
+			result = mapper.getUserList(userMail);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return result;
 	}
 

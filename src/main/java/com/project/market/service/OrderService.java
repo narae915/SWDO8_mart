@@ -12,6 +12,7 @@ import com.project.market.dao.OrderDAO;
 import com.project.market.vo.CartVO;
 import com.project.market.vo.ItemVO;
 import com.project.market.vo.OrderVO;
+import com.project.market.vo.UserVO;
 
 
 @Service
@@ -21,27 +22,18 @@ public class OrderService {
 	private OrderDAO dao;
 
 	// 주문 리스트 페이징
-	public int getTotalRecordsCount(String searchWord) {
-		
-		return dao.getTotalRecordsCount(searchWord);
-	}
-	
-	// 주문 리스트 불러오기 메소드
-	/*
-	public ArrayList<OrderVO> getOrderList(String userMail, int startRecord, int countPerPage, String searchWord) {
+	public int getTotalRecordsCount(String searchWord, String userMail) {
 		HashMap<String, Object> map = new HashMap<>();
-		map.put("startRecord", startRecord);
-		map.put("countPerPage", countPerPage);
 		map.put("searchWord", searchWord);
 		map.put("userMail", userMail);
 		
-		return dao.getOrderList(map);
+		return dao.getTotalRecordsCount(map);
 	}
-	*/
 	
 	// 주문 리스트 불러오기 임시 메소드
-	public ArrayList<OrderVO> getOrderList(int startRecord, int countPerPage, String searchWord) {
+	public ArrayList<OrderVO> getOrderList(String userMail, int startRecord, int countPerPage, String searchWord) {
 		HashMap<String, Object> map = new HashMap<>();
+		map.put("userMail", userMail);
 		map.put("startRecord", startRecord);
 		map.put("countPerPage", countPerPage);
 		map.put("searchWord", searchWord);
@@ -58,16 +50,18 @@ public class OrderService {
 	}
 
 	// 장바구니 리스트 페이징 메소드
-	public int getCartTotalRecordsCount() {
+	public int getCartTotalRecordsCount(String userMail) {
 
-		return dao.getCartTotalRecordsCount();
+		return dao.getCartTotalRecordsCount(userMail);
 	}
 
 	// 장바구니 리스트 불러오기 메소드
-	public ArrayList<CartVO> getCartList(int startRecord, int countPerPage) {
+	public ArrayList<CartVO> getCartList(String userMail, int startRecord, int countPerPage) {
 		HashMap<String, Object> map = new HashMap<>();
+		map.put("userMail", userMail);
 		map.put("startRecord", startRecord);
 		map.put("countPerPage", countPerPage);
+		
 
 		return dao.getCartList(map);
 	}
@@ -107,6 +101,11 @@ public class OrderService {
 		map.put("cartAmount", cartAmount);
 		map.put("userNum", userNum);
 		return dao.updateCartAmount(map) > 0;
+	}
+
+	public ArrayList<UserVO> getUserList(String userMail) {
+
+		return dao.getUserList(userMail);
 	}
 
 }

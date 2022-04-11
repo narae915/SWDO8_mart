@@ -26,6 +26,7 @@ let basket = {
         document.querySelector('#sum_p_num').textContent = '총 ' + this.totalCount.formatNumber() + '개';
         document.querySelector('#sum_p_price').textContent = '합계금액: ' + this.totalPrice.formatNumber() + '원';
 
+		// 합계 히든에 넣음
         $("#totalPrice").attr('value',this.totalPrice);
     },
     //개별 수량 변경
@@ -91,7 +92,7 @@ function cartCancel() {
 	});
 }
 
-// 체크 확인, 넘기기
+// 체크된 박스의 번호, 수량 넘기기
 $('#purchase').click(function () {
 
 	var purchaseNum = [];
@@ -100,28 +101,40 @@ $('#purchase').click(function () {
 		purchaseNum.push($(this).val());
 	});
 	
-	var allData = {"purchaseNumArray": purchaseNum};
-	
+	// 체크 확인
 	if(purchaseNum == "") {
 		exitAlert();
 		$("#footer-modal-content").prepend("선택된 항목이 없습니다.");
 		showModalAlert()
 		
 		return false;
-	} else {
-	// ajax를 쓸 필요가 있을까?
-	/*
-		$.ajax({
-			url: "/order/orderForm",
-			type: "post",
-			data: {
-				 totalPrice: $("#totalPrice").val()
-			},
-			success: function(res) {
-				alert("성공");
-			}
-		})
-		
-		*/
 	}
+	
+	// 번호 관련
+	purchaseNum.forEach(function(chkNum,index){
+		 $("#forwardDiv").append('<input type = "hidden" name = "cartItemNum' + index + '" id= "cartItemNum" value=' +chkNum+ '>')
+	});
+
+
+	var purchaseAmount = [];
+	
+	$("input[name=buy]:checked").each(function(index) {
+	
+		// 체크된 체크박스의 값(=cartNum)
+		var chkNumVal = $(this).val()
+		// 각각의 수량
+		var chkAmount = document.querySelector('input[name=p_num'+chkNumVal+']')
+		var chkAmountVal = parseInt(chkAmount.value)
+		
+		purchaseAmount.push(chkAmountVal);
+		
+		$("#forwardDiv").append('<input type = "hidden" name = "cartItemAmount' + index + '" id= "cartItemAmount">')
+	});
+	
+	// 수량 관련
+	purchaseAmount.forEach(function(chkAmountVal,index){
+		$('input[name=cartItemAmount'+index+']').attr('value',chkAmountVal);
+	});
+	
+	
 });

@@ -159,7 +159,6 @@
         letter-spacing: -1px;
         padding: 3px 5px;
         margin: 2px 3px;
-        width: 20px;
         word-break: keep-all;
         border-radius: 5px;
         text-decoration: none;
@@ -190,7 +189,7 @@
 	.buttongroup a{
 	  text-decoration: none;
 	}
-	.cmd a, .cmd span {
+	.cmd input, .cmd span {
 	    padding: 12px 30px;
 	    box-sizing: border-box;
 	    margin-top: 10px;

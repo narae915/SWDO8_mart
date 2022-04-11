@@ -5,7 +5,7 @@
 <mapper namespace="com.project.market.dao.OrderMapper">
 	
 	<!-- 주문 리스트 페이징 -->
-	<select id = "getTotalRecordsCount" parameterType="String" resultType = "int">
+	<select id = "getTotalRecordsCount" parameterType="HashMap" resultType = "int">
  		select
  			count(*)
  		from
@@ -13,7 +13,7 @@
  		where		   
 				user_num = (select distinct user_num
 							from user_table
-							where user_mail= 'abc@gmail.com')
+							where user_mail= #{userMail })
  			<if test = "searchWord != ''">
  			and
  				ot.item_num in (select item_Num
@@ -47,7 +47,7 @@
 			where		   
 				user_num = (select distinct user_num
 							from user_table
-							where user_mail= 'abc@gmail.com')
+							where user_mail= #{userMail })
 			<if test = "searchWord != ''">
 			and
 				item_num in (select item_num
@@ -79,7 +79,7 @@
 	</delete>
 	
 	<!-- 장바구니 페이징 -->
-	<select id = "getCartTotalRecordsCount" resultType = "int">
+	<select id = "getCartTotalRecordsCount" resultType = "int" parameterType = "String">
  		select
  			count(*)
  		from
@@ -87,7 +87,7 @@
  		where		   
 			user_num = (select distinct user_num
 						from user_table
-						where user_mail= 'abc@gmail.com')
+						where user_mail = #{userMail })
  	</select>
 	
 	<!-- 장바구니 불러오기 -->
@@ -104,19 +104,15 @@
                 where item_num = ct.item_num) as price
 		from   
 		    cart_table ct,
-		    (select
-		    	rownum as rn,
-		    	cart_num as ln
-		    from
-		    	cart_table
-			where		   
-				user_num = (select distinct user_num
-							from user_table
-							where user_mail= 'abc@gmail.com')
-		    order by
-		    	cart_num) rt
+		    (select rownum as rn, cart_num as ln
+		    from cart_table
+			where user_num = (select distinct user_num
+								from user_table
+								where user_mail = #{userMail })
+		    order by cart_num) rt
 		where
 			ct.cart_num = rt.ln
+		
 		and
 			rt.rn between #{startRecord } + 1 and #{startRecord } + #{countPerPage }
 		order by cart_num
@@ -189,5 +185,16 @@
 			c.item_num = i.item_num
 			and
 			c.user_mail = #{userMail }
+	</select>
+	
+	<!-- 결제 정보 입력 페이지 회원정보 불러오기 -->
+	<select id="getUserList" resultType="User" parameterType="String">
+		select
+			user_name as userName,
+			user_call as userCall,
+			user_address as userAddress
+		from user_table
+		where 
+			user_mail = #{userMail }
 	</select>
 </mapper>

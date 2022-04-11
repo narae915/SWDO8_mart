@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -107,9 +108,12 @@ public class OrderController {
 	// 2022-03-24~2022-03-25 노채린
 	// 주문 리스트 불러오기 및 페이지 열기 시작
 	@RequestMapping(value = "/orderList", method = RequestMethod.GET)
-	public String orderList(@RequestParam(defaultValue = "1") int currentPage, HttpSession session, Model model, String searchWord) {
+	public String orderList(@RequestParam(defaultValue = "1") int currentPage, 
+								Model model, String searchWord, Authentication authentication) {
 		logger.info("orderList 메소드 실행(GET).");
 
+		String userMail = authentication.getName();
+		
 		if(searchWord == null) {
 			searchWord = "";
 		}
@@ -117,18 +121,14 @@ public class OrderController {
 		model.addAttribute("searchWord", searchWord);
 		
 		// 주문 리스트 페이징
-		int totalRecordsCount = service.getTotalRecordsCount(searchWord);
+		int totalRecordsCount = service.getTotalRecordsCount(searchWord, userMail);
 		
 		PageNavigator navi = new PageNavigator(COUNT_PER_PAGE, PAGE_PER_GROUP, currentPage, totalRecordsCount);
 		model.addAttribute("navi", navi);
 		
+		// 주문 리스트 불러오기 메소드
+		ArrayList<OrderVO> orderList = service.getOrderList(userMail, navi.getStartRecord(), COUNT_PER_PAGE, searchWord);
 		
-		// 1-1.주문 리스트 불러오기 메소드
-		// String userMail = (String)session.getAttribute("loginMail");
-		// ArrayList<OrderVO> orderList = service.getOrderList(userMail, navi.getStartRecord(), COUNT_PER_PAGE, searchWord);
-		
-		// 1-2.주문 리스트 불러오기 임시 메소드(로그인 정보 받아올 수 있을 때 비활성화)
-		ArrayList<OrderVO> orderList = service.getOrderList(navi.getStartRecord(), COUNT_PER_PAGE, searchWord);
 		logger.info("orderList:{}",orderList);
 		model.addAttribute("orderList", orderList);
 		
@@ -137,7 +137,7 @@ public class OrderController {
 	}
 	
 	// 2022-03-25~2022-03-26 노채린
-	// 2.주문 취소 시작
+	// 주문 취소 시작
 	@ResponseBody
 	@RequestMapping(value = "/orderCancel", method = RequestMethod.POST)
 	public String orderCancel(@RequestParam(value="cancelNumArray[]") List<String> cancelNum) {
@@ -163,21 +163,20 @@ public class OrderController {
 	// 2022-04-01 노채린
 	// 장바구니 페이지 열기
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
-	public String cart(@RequestParam(defaultValue = "1") int currentPage, HttpSession session, Model model) {
+	public String cart(@RequestParam(defaultValue = "1") int currentPage, Model model, Authentication authentication) {
 		logger.info("cart 메소드 실행(GET).");
-		
+
+		String userMail = authentication.getName();
+		logger.info("userMail:{}",userMail);
 		// 페이징
-		int totalRecordsCount = service.getCartTotalRecordsCount();
+		int totalRecordsCount = service.getCartTotalRecordsCount(userMail);
 		PageNavigator navi = new PageNavigator(COUNT_PER_PAGE, PAGE_PER_GROUP, currentPage, totalRecordsCount);
 		model.addAttribute("navi", navi);
 
-		// 1-1.장바구니 리스트 불러오기 메소드
-		// String userMail = (String)session.getAttribute("loginMail");
-		// ArrayList<OrderVO> cart = service.getcart(userMail, navi.getStartRecord(), COUNT_PER_PAGE, searchWord);
+		// 장바구니 리스트 불러오기 메소드
+		ArrayList<CartVO> cartList = service.getCartList(userMail, navi.getStartRecord(), COUNT_PER_PAGE);
 		
-//		 1-2.장바구니 리스트 불러오기 임시 메소드(로그인 정보 받아올 수 있을 때 비활성화)
-		 ArrayList<CartVO> cartList = service.getCartList(navi.getStartRecord(), COUNT_PER_PAGE);
-		
+		logger.info("cartList:{}",cartList);
 		 model.addAttribute("cartList", cartList);
 		
 		
@@ -207,12 +206,27 @@ public class OrderController {
 	}
 	
 	// 22-04-06 노채린
-	// 결제 정보 입력 페이지 이동
+	// 결제 정보 입력 페이지
 	@RequestMapping(value = "/orderForm", method = RequestMethod.GET)
-	public String orderForm() {
+	public String orderForm(Authentication authentication, Model model) {
 		logger.info("orderForm 메소드 실행(GET).");
 		
+		String userMail = authentication.getName();
+		// 가져올 것: 회원 정보, 상품정보
+		ArrayList<UserVO> userList = service.getUserList(userMail);
+		model.addAttribute("userList", userList);
+		
+		
 		return "/order/orderForm";
+	}
+	
+	// 결제 정보 입력 페이지
+	@RequestMapping(value = "/orderFormForward", method = RequestMethod.GET)
+	public String orderFormForward() { // 세션에서 유저 정보 가져와서 넣기
+		logger.info("orderFormForward 메소드 실행(GET).");
+		
+		
+		return "/order/orderFormForward";
 	}
 	
 }
