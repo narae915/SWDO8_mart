@@ -100,11 +100,11 @@
 	                    <!-- 장바구니 취소 및 조회 -->
                     	<!-- 테이블 시작 -->
                     	<c:if test="${not empty cartList }">
-							<form name="cartform" id="cartform" method="post" class="cartform" action="cart">
+							<form name="cartform" id="cartform" method="get" class="cartform" action="orderForm">
 				    
 				            <input type="hidden" name="cmd" value="cart">
 				            <div class="basketdiv" id="basket">
-				            <!-- 데이터 있을 때 -->
+				           	 	<!-- 데이터 있을 때 -->
 				                <div class="row head">
 				                    <div class="subdiv">
 				                        <div class="check">선택</div>
@@ -122,7 +122,7 @@
 				                    <div class="split"></div>
 				                </div>
 				        		<c:forEach var="Cart" items="${cartList }">
-					                <div class="row data">
+					                <div class="row data" >
 					                    <div class="subdiv">
 					                        <div class="check"><input type="checkbox" name="buy" value="${Cart.cartNum }" onclick="javascript:basket.checkItem();">&nbsp;</div>
 					                        <div class="img" sytle = "padding: 0px"><img src="/resources/img/cart-page/product-1.jpg" alt="임시사진"></div>
@@ -140,7 +140,7 @@
 					                        <!-- 수량 -->
 					                            <div class="updown">
 													<span style="cursor:pointer" onclick="javascript:basket.changePNum('${Cart.cartNum}');"><i class="fas fa-arrow-alt-circle-up up fa-2xs"></i></span>
-					                                <input type="text" name="p_num${Cart.cartNum }" id="p_num${Cart.cartNum }" size="2" maxlength="3" class="p_num" value="${Cart.cartAmount }" style=""onkeyup="javascript:basket.changePNum('${Cart.cartNum}');">
+					                                <input type="text" name="p_num" id="p_num${Cart.cartNum }" size="2" maxlength="3" class="p_num" value="${Cart.cartAmount }" style=""onkeyup="javascript:basket.changePNum('${Cart.cartNum}');">
 					                                <span style="cursor:pointer" onclick="javascript:basket.changePNum('${Cart.cartNum}');"><i class="fas fa-arrow-alt-circle-down down fa-2xs"></i></span>
 					                            </div>
 					                        </div>
@@ -155,68 +155,61 @@
 				                        	</div>
 					                    </div>
 					                </div>
-				                </c:forEach> 
+				                </c:forEach>
+								<!-- 페이징 시작 -->
+								<div style="text-align: center;">
+									<span>
+										<c:if test="${navi.currentPage > 1 }">
+											<a href="/order/cart?currentPage=${(navi.currentGroup - 1) * 5 + 1 }" style="color: #E7AB3C; text-decoration: none; text-align: center; font-size: 1.5em; display: inline-block; padding-top: 1.5em;">
+												< 이전&nbsp;
+			
+											</a>
+										</c:if>
+										<c:forEach begin="${navi.startPageGroup }" end="${navi.endPageGroup }"
+											var="pageNum">
+											<c:if test="${pageNum == navi.currentPage }">
+												<a href="/order/cart?currentPage=${pageNum }" style="text-decoration:none; text-align: center; font-size: 1.5em; display: inline-block; padding-top: 1.5em;">
+													<span style="color: #E7AB3C; border: 1px solid;">
+														&nbsp;${pageNum }
+													</span>
+												</a>
+												&nbsp;
+											</c:if>
+											<c:if test="${pageNum != navi.currentPage }">
+												<a href="/order/cart?currentPage=${pageNum }" style="color: black; text-decoration:none; text-align: center; font-size: 1.5em; display: inline-block; padding-top: 1.5em;">
+													<span>
+														${pageNum }&nbsp;
+													</span>
+												</a>
+											</c:if>
+										</c:forEach>
+			
+										<c:if test="${navi.currentPage < navi.totalPageCount }">
+											<a href="/order/cart?currentPage=${(navi.currentGroup + 1) * 5 + 1 }" style="color: #E7AB3C; text-decoration:none;text-align: center; font-size: 1.5em; display: inline-block; padding-top: 1.5em;">
+												다음 >
+											</a>
+										</c:if>
+									</span>
+								</div>
+								<!-- 페이징 끝 --> 
+				            </div>
+				            <div id="gocart" class="">
+			                	<div class="buttongroup center-align cmd">
+					                <!-- forward 시도 -->
+									<input type="submit" id="purchase" value="선택한 상품 주문" />
+					           		<!-- 결제 페이지로 보내는 값 -->
+					           		<div id="forwardDiv">
+						           		<input type="hidden" name="totalPrice" id="totalPrice" />
+				                	</div>
+			                	</div>
 				            </div>
 				            </form>
-				            <!-- 페이징 시작 -->
-		                       <div style="text-align: center; margin-top: 20px;">
-								<span>
-									<c:if test="${navi.currentPage > 1 }">
-										<a href="/order/cart?currentPage=${(navi.currentGroup - 1) * 5 + 1 }" style="color: #E7AB3C; text-decoration: none; text-align: center; font-size: 1.5em;">
-											< 이전&nbsp;
-		
-										</a>
-									</c:if>
-									<c:forEach begin="${navi.startPageGroup }" end="${navi.endPageGroup }"
-										var="pageNum">
-										<c:if test="${pageNum == navi.currentPage }">
-											<a href="/order/cart?currentPage=${pageNum }" style="text-decoration:none; text-align: center; font-size: 1.5em;">
-												<span style="color: #E7AB3C; border: 1px solid;">
-													&nbsp;${pageNum }
-												</span>
-											</a>
-											&nbsp;
-										</c:if>
-										<c:if test="${pageNum != navi.currentPage }">
-											<a href="/order/cart?currentPage=${pageNum }" style="color: black; text-decoration:none; text-align: center; font-size: 1.5em;">
-												<span>
-													${pageNum }&nbsp;
-												</span>
-											</a>
-										</c:if>
-									</c:forEach>
-		
-									<c:if test="${navi.currentPage < navi.totalPageCount }">
-										<a href="/order/cart?currentPage=${(navi.currentGroup + 1) * 5 + 1 }" style="color: #E7AB3C; text-decoration:none;text-align: center; font-size: 1.5em;">
-											다음 >
-										</a>
-									</c:if>
-		
-								</span>
-							</div>
-							<!-- 페이징 끝 -->
-						   	 	<div class=result-box style="border:5px solid #EBE8C7; border-radius: 10px;background-color: #9C9576;width: 30%; margin-left: 72%; display:inline-block">
-						   	 	<br>
-						            <div class="bigtext right-align sumcount" id="sum_p_num" style="color:#EBE8C7">총 0개</div>
-						            <div class="bigtext right-align box summoney" id="sum_p_price" style="color:#EBE8C7">합계금액: 0원</div>
-						        	
-						            <br>
-						    	</div>
-					            <div id="gocart" class="">
-					                <div class="clear"></div>
-					                <div class="buttongroup center-align cmd">
-					                <!-- forward 시도 -->
-									<form action="orderForm" method="GET">
-									<input type="submit" id="purchase" value="선택한 상품 주문" />
-						           		<!-- 결제 페이지로 보내는 값 -->
-						           		<div id="forwardDiv">
-							           		<input type="hidden" name="totalPrice" id="totalPrice" />
-					                	</div>
-					                	
-				                	</form>
-					                </div>
-					            </div>
-				            
+					   	 	<div class=result-box style="border:5px solid #EBE8C7; border-radius: 10px;background-color: #9C9576;width: 30%; margin-left: 72%; display:inline-block">
+					   	 	<br>
+					            <div class="bigtext right-align sumcount" id="sum_p_num" style="color:#EBE8C7">총 0개</div>
+					            <div class="bigtext right-align box summoney" id="sum_p_price" style="color:#EBE8C7">합계금액: 0원</div>
+					            <br>
+					    	</div>
 				        </c:if>
                         <!--  테이블 끝 -->
                         <!-- 데이터 없을 때 -->
@@ -233,7 +226,6 @@
             </div>
         </div>
 	</div>
-	
     <!-- Faq Section End -->
     
     <!-- Partner Logo Section Begin -->

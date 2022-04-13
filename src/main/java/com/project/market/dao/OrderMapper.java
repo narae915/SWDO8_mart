@@ -44,4 +44,7 @@ public interface OrderMapper {
 	// 결제 정보 입력 페이지 회원정보 불러오기 - 노채린
 	ArrayList<UserVO> getUserList(String userMail);
 
+	// 결제 정보 입력 페이지 상품정보 불러오기 - 노채린
+	ArrayList<ItemVO> getItemList(HashMap<String, Object> map);
+
 }

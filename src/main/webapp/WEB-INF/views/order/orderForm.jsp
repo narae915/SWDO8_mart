@@ -24,11 +24,11 @@
 <!-- 띄워지는 페이지는 orderFormForward.jsp 이지만, 주소값은 orderForm.jsp. -->
 <table border="1">
       <tr>
-      <%-- 	<jsp:forward page="orderFormForward.jsp">
+      <jsp:forward page="orderFormForward.jsp">
  			<jsp:param value="" name="" />
-		</jsp:forward> --%>
+		</jsp:forward>
 		
-		<%
+		<%-- <%
 			/* 총계 */
 			String totalPrice = request.getParameter("totalPrice");
 			
@@ -59,7 +59,7 @@
 			
 			dispatcher.forward(request, response);
 			
-		%>			
+		%>			 --%>
 	</tr>
 </table>
    

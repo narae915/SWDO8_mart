@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.market.dao.OrderDAO;
 import com.project.market.vo.CartVO;
+import com.project.market.vo.ForwardVO;
 import com.project.market.vo.ItemVO;
 import com.project.market.vo.OrderVO;
 import com.project.market.vo.UserVO;
@@ -106,6 +107,15 @@ public class OrderService {
 	public ArrayList<UserVO> getUserList(String userMail) {
 
 		return dao.getUserList(userMail);
+	}
+
+	public ArrayList<ItemVO> getItemList(String buy) {
+		HashMap<String, Object> map = new HashMap<>();
+		String[] buyArr = buy.split(",");
+
+		map.put("buyArr", buyArr);
+		
+		return dao.getItemList(map);
 	}
 
 }

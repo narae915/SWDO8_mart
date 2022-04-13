@@ -19,6 +19,7 @@ import com.project.market.dao.UserDAO;
 import com.project.market.service.OrderService;
 import com.project.market.util.PageNavigator;
 import com.project.market.vo.CartVO;
+import com.project.market.vo.ForwardVO;
 import com.project.market.vo.ItemVO;
 import com.project.market.vo.OrderVO;
 import com.project.market.vo.UserVO;
@@ -171,6 +172,7 @@ public class OrderController {
 
 		String userMail = authentication.getName();
 		logger.info("userMail:{}",userMail);
+		
 		// 페이징
 		int totalRecordsCount = service.getCartTotalRecordsCount(userMail);
 		PageNavigator navi = new PageNavigator(COUNT_PER_PAGE, PAGE_PER_GROUP, currentPage, totalRecordsCount);
@@ -181,9 +183,16 @@ public class OrderController {
 		
 		logger.info("cartList:{}",cartList);
 		 model.addAttribute("cartList", cartList);
-		
+		 
 		
 		return "/order/cart";
+	}
+	
+	@RequestMapping(value = "/cart", method = RequestMethod.POST)
+	public String cart() {
+		logger.info("cart 메소드 실행(POST).");
+		
+		return "/order/orderForm";
 	}
 	
 	// 22-04-04 노채린
@@ -211,18 +220,51 @@ public class OrderController {
 	// 22-04-06 노채린
 	// 결제 정보 입력 페이지
 	@RequestMapping(value = "/orderForm", method = RequestMethod.GET)
-	public String orderForm(Authentication authentication, Model model) {
+	public String orderForm(Authentication authentication, Model model, String totalPrice, String buy, String p_num) {
 		logger.info("orderForm 메소드 실행(GET).");
 		
 		String userMail = authentication.getName();
+		model.addAttribute("userMail", userMail);
+		// 총계
+		logger.info("totalPrice:{}", totalPrice);
+		model.addAttribute("totalPrice", totalPrice);
+		
+		// 체크박스 cartNum
+		logger.info("buy:{}", buy);
+		
+		// 수량
+		if(p_num.contains("-1") == true) {
+			p_num = p_num.replace("-1,", "");
+			p_num = p_num.replace(",-1", "");
+		}
+		String[] pNumArr = p_num.split(",");
+
+		for(int i = 0; i < pNumArr.length; i++) {
+			// logger.info(pNumArr[i]);
+			model.addAttribute("pNumArr", pNumArr);
+		}
+		
 		// 가져올 것: 회원 정보, 상품정보
 		ArrayList<UserVO> userList = service.getUserList(userMail);
 		model.addAttribute("userList", userList);
+		logger.info("userList:{}", userList);
 		
+		ArrayList<ItemVO> itemList = service.getItemList(buy);
+		logger.info("itemList:{}",itemList);
+		model.addAttribute("itemList", itemList);
 		
 		return "/order/orderForm";
 	}
-	
+	/*
+	@RequestMapping(value = "/orderForm", method = RequestMethod.POST)
+	public String orderForm(@RequestParam(value="purchaseAmountArray[]") List<String> purchaseAmount) {
+		logger.info("orderForm 메소드 실행(POST).");
+		
+		logger.info("purchaseAmount:{}", purchaseAmount);
+		
+		return null;
+	}
+	*/
 	// 결제 정보 입력 페이지
 	@RequestMapping(value = "/orderFormForward", method = RequestMethod.GET)
 	public String orderFormForward() { // 세션에서 유저 정보 가져와서 넣기

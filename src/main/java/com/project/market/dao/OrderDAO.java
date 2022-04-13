@@ -163,5 +163,18 @@ public class OrderDAO {
 		
 		return result;
 	}
+	public ArrayList<ItemVO> getItemList(HashMap<String, Object> map) {
+		ArrayList<ItemVO> result = null;
+		OrderMapper mapper = null;
+		
+		try {
+			mapper = session.getMapper(OrderMapper.class);
+			result = mapper.getItemList(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 
 }

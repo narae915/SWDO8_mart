@@ -32,9 +32,12 @@ let basket = {
     //개별 수량 변경
     changePNum: function (pos) {
     	// p_num숫자를 name으로 하는 것을 가져와 item에 넣음.
-        var item = document.querySelector('input[name=p_num'+pos+']');
+        // var item = document.querySelector('input[name=p_num'+pos+']');
+        var item = document.querySelector('#p_num'+pos);
+        
         // 이 item의 값을 숫자 변환하여 p_num이라 칭함.
         var p_num = parseInt(item.getAttribute('value'));
+        
         // 이벤트(클릭)이 발생한 대상을 얻어와, up 클래스인지 확인한다. true일 경우, p_num에 1을 추가한다.
         // 이를 newval 변수에 입력한다.
         var newval = event.target.classList.contains('up') ? p_num+1 : event.target.classList.contains('down') ? p_num-1 : event.target.value;
@@ -48,8 +51,10 @@ let basket = {
 		
 		// item의 부모.부모.형제.첫번째(=가격)의 값을 가져와 price 변수에 저장
         var price = item.parentElement.parentElement.previousElementSibling.firstElementChild.getAttribute('value');
+        
         // item의 부모.부모.다음 형제의 내용을 조절된 수량과 가격을 곱한 값으로 한다. 즉, 변동된 가격
         item.parentElement.parentElement.nextElementSibling.textContent = (newval * price).formatNumber()+"원";
+        
         //AJAX 업데이트 전송
 
         //전송 처리 결과가 성공이면    
@@ -92,10 +97,11 @@ function cartCancel() {
 	});
 }
 
-// 체크된 박스의 번호, 수량 넘기기
+// 체크된 값이 없는지 확인.
 $('#purchase').click(function () {
 
 	var purchaseNum = [];
+	var purchaseAmount = [];
 	
 	$("input[name=buy]:checked").each(function() {
 		purchaseNum.push($(this).val());
@@ -110,31 +116,13 @@ $('#purchase').click(function () {
 		return false;
 	}
 	
-	// 번호 관련
-	purchaseNum.forEach(function(chkNum,index){
-		 $("#forwardDiv").append('<input type = "hidden" name = "cartItemNum' + index + '" id= "cartItemNum" value=' +chkNum+ '>')
+	document.querySelectorAll(".p_num").forEach(function (item) {
+        if(item.parentElement.parentElement.parentElement.previousElementSibling.firstElementChild.firstElementChild.checked != true){
+        	// item.attr('value',-1);
+        	item.setAttribute('value', -1);
+        	// purchaseAmount.push(item.value);
+        }
+        
 	});
-
-
-	var purchaseAmount = [];
-	
-	$("input[name=buy]:checked").each(function(index) {
-	
-		// 체크된 체크박스의 값(=cartNum)
-		var chkNumVal = $(this).val()
-		// 각각의 수량
-		var chkAmount = document.querySelector('input[name=p_num'+chkNumVal+']')
-		var chkAmountVal = parseInt(chkAmount.value)
-		
-		purchaseAmount.push(chkAmountVal);
-		
-		$("#forwardDiv").append('<input type = "hidden" name = "cartItemAmount' + index + '" id= "cartItemAmount">')
-	});
-	
-	// 수량 관련
-	purchaseAmount.forEach(function(chkAmountVal,index){
-		$('input[name=cartItemAmount'+index+']').attr('value',chkAmountVal);
-	});
-	
 	
 });
