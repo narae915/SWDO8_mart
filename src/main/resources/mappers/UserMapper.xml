@@ -82,4 +82,31 @@
 	where
 		user_mail = #{userMail }
 </update>
+
+<!-- 아이디로 수정할 정보 읽어오기 -->
+<select id="readUser" parameterType="String" resultType="User">
+	select
+		user_name as userName,
+		user_mail as userMail,
+		user_call as userCall,
+		postcode as postcode,
+		substr(user_address, 1, instr(user_address, '_') - 1) as userAddress,
+        substr(user_address, instr(user_address, '_') + 1) as role
+	from
+		user_table
+	where 
+		user_mail = #{userMail }
+</select>
+
+<!-- 회원 정보 수정 -->
+<update id="userUpdate" parameterType="User">
+	update 
+		user_table
+	set
+		user_call = #{userCall },
+		postcode = #{postcode },
+		user_address = #{userAddress }
+	where
+		user_mail = #{userMail }
+</update>
 </mapper>

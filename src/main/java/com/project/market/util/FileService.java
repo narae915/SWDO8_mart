@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.springframework.web.multipart.MultipartFile;
 
+
 /**
  * 파일 관련 기능을 수행하는 클래스
  */
@@ -35,6 +36,40 @@ public class FileService {
 		// 임의의 식별자를 생성하여 저장할 파일명을 작성.
 		UUID uuid = UUID.randomUUID();
 		String savedFilename = uuid.toString() + originalFilename;
+		
+		// 업로드한 파일을 저장할 때 사용하기 위한 File 객체 생성.
+		File serverFile = new File(uploadPath + "/" + savedFilename);
+		
+		// 파일 저장 시도.
+		try {
+			mfile.transferTo(serverFile);
+		} catch (Exception e) {
+			e.printStackTrace();
+			savedFilename = null; //저장에 실패하면 null을 출력
+		}
+		
+		// 저장된 파일명을 리턴.
+		return savedFilename;
+	}
+	
+	public static String empSaveFile(MultipartFile mfile, String uploadPath, String empName, String empCall) {
+		// 업로드한 파일이 없거나 비어있으면 저장하지 않고 null을 리턴.
+		if (mfile == null || mfile.isEmpty() || mfile.getSize() == 0) {
+			//파일을 올리지 않거나, 파일의 내용이 없거나, 파일의 크기가 0이거나.
+			return null;
+		}
+		
+		// 파일을 저장할 경로가 존재하지 않으면 폴더를 생성.
+		File path = new File(uploadPath); 
+		if (!path.isDirectory()) {
+			path.mkdirs();
+		}
+		
+		// 업로드한 파일명을 가져옴.
+		String originalFilename = mfile.getOriginalFilename();
+		
+		// 임의의 식별자를 생성하여 저장할 파일명을 작성.
+		String savedFilename = empName + empCall + originalFilename;
 		
 		// 업로드한 파일을 저장할 때 사용하기 위한 File 객체 생성.
 		File serverFile = new File(uploadPath + "/" + savedFilename);

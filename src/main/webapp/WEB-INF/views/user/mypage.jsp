@@ -12,7 +12,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Fashi | Template</title>
+    <title>SpringDay | 마이 페이지</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -28,8 +28,6 @@
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
 	<script src="https://kit.fontawesome.com/af95d2c333.js" crossorigin="anonymous"></script>
-	
-	
 </head>
 
 <body>
@@ -66,6 +64,7 @@
 	                    <!-- 22/04/05  노채린 -->
 	                    <h1 id="content-title">회원정보</h1>
 	                    <input type="button" value="회원 탈퇴" onclick="/user/userDelete">
+	                    <input type="button" value="회원 정보 수정" onclick="userUpdate('${sessionScope.userMail }');">
 			    	</div>
 			            <div id="gocart" class="">
 			                <div class="clear"></div>
@@ -127,6 +126,12 @@
     <script src="/resources/js/jquery.slicknav.js"></script>
     <script src="/resources/js/owl.carousel.min.js"></script>
     <script src="/resources/js/main.js"></script>
+    <script type="text/javascript">
+    function userUpdate(userMail) 
+    {
+    	location.href = "/user/userUpdate?userMail="+userMail;
+    }
+    </script>
 </body>
 
 </html>

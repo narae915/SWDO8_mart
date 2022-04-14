@@ -113,4 +113,42 @@ public class UserDAO {
 		
 		return result;
 	}
+
+	/* 아이디로 수정할 정보 읽어오기 */
+	public UserVO readUser(String userMail) 
+	{
+		UserVO user = null;
+		UserMapper mapper = null;
+		
+		try
+		{
+			mapper = session.getMapper(UserMapper.class);
+			user = mapper.readUser(userMail);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return user;
+	}
+	
+	/* 회원 정보 수정 */
+	public int userUpdate(UserVO updateUser) 
+	{
+		int result = 0;
+		UserMapper mapper = null;
+		
+		try
+		{
+			mapper = session.getMapper(UserMapper.class);
+			result = mapper.userUpdate(updateUser);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 }

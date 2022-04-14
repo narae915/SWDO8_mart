@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project.market.vo.EmpVO;
+import com.project.market.vo.FileListVO;
 import com.project.market.vo.ItemVO;
 
 @Repository
@@ -86,7 +87,7 @@ public class AdminDAO {
 	}
 
 	/* 직원 ID 등록 */
-	public int adminRegister(EmpVO newEmp) 
+	public int adminRegister(EmpVO newEmp, FileListVO newFile) 
 	{
 		int result = 0;
 		AdminMapper mapper = null;
@@ -95,6 +96,7 @@ public class AdminDAO {
 		{
 			mapper = session.getMapper(AdminMapper.class);
 			result = mapper.adminRegister(newEmp);
+			mapper.empSetFile(newFile.getOriginalFilename(), newFile.getSavedFilename());
 		}
 		catch(Exception e)
 		{
@@ -200,7 +202,7 @@ public class AdminDAO {
 	}
 	
 	/* 직원 정보 수정 */
-	public int empUpdate(EmpVO updateEmp) 
+	public int empUpdate(EmpVO updateEmp, FileListVO updateImg) 
 	{
 		int result = 0;
 		AdminMapper mapper = null;
@@ -209,6 +211,9 @@ public class AdminDAO {
 		{
 			mapper = session.getMapper(AdminMapper.class);
 			result = mapper.empUpdate(updateEmp);
+			mapper.empSetFile(updateImg.getOriginalFilename(), updateImg.getSavedFilename());
+			// mapper.empUpdateFile(updateImg.getEmpImg() ,updateImg.getOriginalFilename(), updateImg.getSavedFilename());
+			
 		}
 		catch(Exception e)
 		{
@@ -228,6 +233,24 @@ public class AdminDAO {
 		{
 			mapper = session.getMapper(AdminMapper.class);
 			result = mapper.empDelete(empNum);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public int empDeleteFile(String empImg) 
+	{
+		int result = 0;
+		AdminMapper mapper = null;
+		
+		try 
+		{
+			mapper = session.getMapper(AdminMapper.class);
+			result = mapper.empDeleteFile(empImg);
 		} 
 		catch (Exception e) 
 		{

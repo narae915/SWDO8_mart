@@ -114,7 +114,27 @@
 			#{empCall },
 			#{empMail },
 			#{position }
-		)	
+		)
+	</insert>
+	
+ 	<!-- 직원 ID 등록 시 사진 등록 -->
+	<insert id="empSetFile" parameterType="File">
+		insert into file_list 
+		(
+			<if test = "savedFilename != null">
+				file_num, 
+				original_filename,
+				saved_filename
+			</if>
+		)
+    	values
+    	(
+    		<if test = "savedFilename != null">
+		        file_num_seq.nextval,
+		        #{originalFilename },
+		        #{savedFilename }
+	        </if>
+		)
 	</insert>
 	
 	<!-- 로그인 -->
@@ -149,9 +169,12 @@
 		    et.emp_name as empName,
 		    et.position as position,
 		    et.emp_call as empCall,
+		    (select distinct fl.saved_filename
+ 				from file_list fl
+ 				where instr(fl.saved_filename, (et.emp_name||et.emp_call)) > 0) as savedFilename,
 		    <choose>
 		    	<when test="loginPosition == '사장'">
-		    		et.emp_mail as empMail
+		    	 	et.emp_mail as empMail
 		    	</when>
 		    	<otherwise>
 					rpad(
@@ -229,15 +252,28 @@
 	<!-- 직원 번호로 해당 직원 정보 조회 -->
 	<select id="readEmp" parameterType="int" resultType="Emp">
 		select
-			emp_num as empNum,
-			emp_name as empName,
-			emp_call as empCall,
-			emp_mail as empMail,
-			position as position
+			et.emp_num as empNum,
+			et.emp_name as empName,
+			et.emp_call as empCall,
+			et.emp_mail as empMail,
+			et.position as position,
+			(select distinct fl.saved_filename
+ 				from file_list fl
+ 				where instr(fl.saved_filename, (et.emp_name||et.emp_call)) > 0) as savedFilename
 		from
-			emp_table
+			emp_table et
 		where 
 			emp_num = #{empNum }
+	</select>
+	
+	<!-- 파일번호 가져오기 -->
+	<select id="getFileNum" parameterType="File" resultType="String">
+		select
+			file_num as fileNum
+		from
+			file_list
+		where
+			saved_filename = #{savedFilename }
 	</select>
 	
 	<!-- 직원 정보 수정 -->
@@ -253,6 +289,24 @@
 		where
 			emp_num = #{empNum }
 	</update>
+	
+	<!-- 직원 사진 정보 삭제 -->
+	<delete id="empDeleteFile" parameterType="String">
+		delete from file_list
+		where
+			saved_filename = #{empImg }
+	</delete>
+	
+	<!-- 직원 사진 정보 수정 -->
+	<!-- <update id="empUpdateFile" parameterType="File">
+		update 
+			file_list
+		set
+			original_filename = #{originalFilename },
+			saved_filename = #{savedFilename }
+		where
+			saved_filename = #{empImg }
+	</update> -->
 	
 	<!-- 직원 정보 삭제 -->
 	<delete id="empDelete" parameterType="int">

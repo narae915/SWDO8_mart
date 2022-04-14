@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.internet.MimeMessage;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
 import com.project.market.service.AdminService;
+import com.project.market.util.FileService;
 import com.project.market.util.PageNavigator;
 import com.project.market.vo.EmpVO;
 import com.project.market.vo.ItemVO;
@@ -32,6 +34,7 @@ public class AdminController {
 	
 	private static final int COUNT_PER_PAGE = 5; // 한 페이지 당 보여줄 최대 게시글 수
 	private static final int PAGE_PER_GROUP = 5; // 한 그룹 당 보여줄 최대 페이지 수
+	private static final String UPLOAD_PATH = "C:\\Upload Files\\springday\\";
 
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	
@@ -125,7 +128,7 @@ public class AdminController {
 		return "admin/adminMain";
 	}
 	
-	/* 관리자 ID 등록페이지로 이동 */
+	/* 직원 ID 등록페이지로 이동 */
 	@RequestMapping(value = "/adminRegister", method = RequestMethod.GET)
 	public String adminRegister()
 	{
@@ -136,7 +139,7 @@ public class AdminController {
 	
 	/* 직원 ID 등록 */
 	@RequestMapping(value = "/adminRegister", method = RequestMethod.POST)
-	public String adminRegister(String empName, String empPw, String empCall, String empMail, String position)
+	public String adminRegister(String empName, String empPw, String empCall, String empMail, String position, @RequestParam("uploadFile") MultipartFile mfile)
 	{
 		logger.info("adminRegister 메소드 실행 (POST).");
 		
@@ -145,18 +148,36 @@ public class AdminController {
 		logger.info("empCall: {}", empCall);
 		logger.info("empMail: {}", empMail);
 		logger.info("position: {}", position);
+		logger.info("mfile: {}", mfile);
 		
-		boolean result = service.adminRegister(empName, empPw, empCall, empMail, position);
+		String originalFilename = null;
+		if ( mfile != null )
+		{
+			originalFilename = mfile.getOriginalFilename();
+			logger.info("originalFilename: {}", originalFilename);
+		}
+		
+		String savedFilename = FileService.empSaveFile(mfile, UPLOAD_PATH, empName, empCall);
+		if ( savedFilename != null )
+		{
+			logger.info("저장 파일명: {}", savedFilename);
+		}
+		else
+		{
+			logger.info("직원 사진 저장 실패.");
+		}
+		
+		boolean result = service.adminRegister(empName, empPw, empCall, empMail, position, originalFilename, savedFilename);
 		String returnUrl = "admin/adminRegister";
 		
 		if ( result )
 		{
-			logger.info("관리자 ID 등록 성공.");
+			logger.info("직원 ID 등록 성공.");
 			returnUrl = "redirect:empManagement";
 		}
 		else
 		{
-			logger.info("관리자 ID 등록 실패.");
+			logger.info("직원 ID 등록 실패.");
 			returnUrl = "admin/adminRegister";
 		}
 		
@@ -294,7 +315,7 @@ public class AdminController {
 	
 	/* 직원 정보 수정 페이지 이동 */
 	@RequestMapping (value = "/empUpdate", method = RequestMethod.GET)
-	public String empUpdate(int empNum, Model model, HttpSession session) 
+	public String empUpdate(int empNum, Model model) 
 	{
 		logger.info("empUpdate 메소드 실행(GET).");
 		logger.info("empNum: {}", empNum);
@@ -302,7 +323,6 @@ public class AdminController {
 		EmpVO emp = service.readEmp(empNum);
 		
 		model.addAttribute("emp", emp);
-		
 
 		if ( emp != null )
 		{
@@ -317,7 +337,7 @@ public class AdminController {
 	
 	/* 직원 정보 수정 */
 	@RequestMapping (value = "/empUpdate", method = RequestMethod.POST)
-	public String empUpdate(int empNum, String empName, String empPw, String empCall, String empMail, String position, HttpSession session) 
+	public String empUpdate(int empNum, String empName, String empPw, String empCall, String empMail, String position, HttpSession session, @RequestParam("uploadFile") MultipartFile mfile) 
 	{
 		logger.info("empUpdate 메소드 실행(POST).");
 		
@@ -328,7 +348,24 @@ public class AdminController {
 		logger.info("empMail: {}", empMail);
 		logger.info("position: {}", position);
 		
-		boolean result = service.empUpdate(empNum, empName, empPw, empCall, empMail, position);
+		String originalFilename = null;
+		if ( mfile != null )
+		{
+			originalFilename = mfile.getOriginalFilename();
+			logger.info("originalFilename: {}", originalFilename);
+		}
+		
+		String savedFilename = FileService.empSaveFile(mfile, UPLOAD_PATH, empName, empCall);
+		if ( savedFilename != null )
+		{
+			logger.info("저장 파일명: {}", savedFilename);
+		}
+		else
+		{
+			logger.info("직원 사진 저장 실패.");
+		}
+		
+		boolean result = service.empUpdate(empNum, empName, empPw, empCall, empMail, position, originalFilename, savedFilename);
 		
 		String returnUrl = null;
 		
@@ -346,6 +383,47 @@ public class AdminController {
 		}
 		
 		return returnUrl;
+	}
+	
+	/* 직원 사진 정보 삭제 */
+	@ResponseBody
+	@RequestMapping(value = "/empImgDelete", method = RequestMethod.GET)
+	public String empImgDelete(String empImg) 
+	{
+		logger.info("empDelete 메소드 실행(GET).");
+		
+		logger.info("empImg: {}", empImg);
+		
+		String fullpath = UPLOAD_PATH + "\\" + empImg;
+		
+		boolean deleteFile = FileService.deleteFile(fullpath);
+		
+		String resultString = null;
+		
+		if ( deleteFile )
+		{
+			logger.info("직원 사진 삭제 성공.");
+			
+			boolean result = service.empDeleteFile(empImg);
+			
+			if ( result ) 
+			{
+				logger.info("직원 사진 정보 삭제 성공.");
+				resultString = "성공";
+			} 
+			else 
+			{
+				logger.info("직원 사진 정보 삭제 실패.");
+				resultString = "실패";
+			}
+		}
+		else
+		{
+			logger.info("직원 사진 삭제 실패.");
+			resultString = "삭제 실패";
+		}
+		
+		return resultString;
 	}
 	
 	/* 직원 정보 삭제 */
