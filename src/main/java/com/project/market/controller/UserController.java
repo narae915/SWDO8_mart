@@ -265,7 +265,6 @@ public class UserController {
 	{
 		logger.info("resetPw 메소드 실행(GET).");
 		
-		
 		return "user/resetPw";
 	}
 	
@@ -297,4 +296,54 @@ public class UserController {
 		return returnUrl;
 	}
 	
+	/* 회원 정보 수정 페이지 이동 */
+	@RequestMapping (value = "/userUpdate", method = RequestMethod.GET)
+	public String userUpdate(String userMail, Model model) 
+	{
+		logger.info("userUpdate 메소드 실행(GET).");
+		logger.info("userMail: {}", userMail);
+		
+		UserVO user = service.readUser(userMail);
+		model.addAttribute("user", user);
+		
+		if ( user != null )
+		{
+			return "user/userUpdate";
+		}
+		else
+		{
+			return "redirect:mypage";
+		}
+	}
+	
+	/* 회원 정보 수정 */
+	@RequestMapping (value = "/userUpdate", method = RequestMethod.POST)
+	public String userUpdate(String userName, String userMail, String userCall, int postcode, String userAddress, Model model) 
+	{
+		logger.info("userUpdate 메소드 실행(POST).");
+		logger.info("userName: {}", userName);
+		logger.info("userMail: {}", userMail);
+		logger.info("userCall: {}", userCall);
+		logger.info("postcode: {}", postcode);
+		logger.info("userAddress: {}", userAddress);
+		
+		boolean result = service.userUpdate(userName, userMail, userCall, postcode, userAddress);
+		
+		String returnUrl = null;
+		
+		if ( result )
+		{
+			logger.info("회원 정보 수정 성공.");
+			
+			returnUrl = "user/mypage";
+		}
+		else
+		{
+			logger.info("회원 정보 수정 실패.");
+			
+			returnUrl = "redirect:userUpdate?userMail="+userMail;
+		}
+		
+		return returnUrl;
+	}
 }

@@ -10,4 +10,5 @@ public class FileListVO {
 	private int itemNum;				// 상품 번호
 	private String originalFilename;	// 원본 사진
 	private String savedFilename;		// 복사본 사진
+	private String empImg;				// 사원 사진
 }

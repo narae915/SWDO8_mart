@@ -59,7 +59,7 @@
                 <div class="col-lg-6 offset-lg-3">
                     <div class="register-form">
                         <h2>직원 등록</h2>
-                        <form action="adminRegister" method="post" onsubmit="return checkForm();">
+                        <form action="adminRegister" method="post" onsubmit="return checkForm();" enctype="multipart/form-data">
                         	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             <div class="group-input">
                                 <input type="text" id="empName" name="empName" placeholder="이름">
@@ -72,7 +72,7 @@
                             </div>
                             <div class="group-input">
                                 <input type="password" id="empPwCheck" name="empPwCheck" placeholder="비밀번호 확인">
-                                <span id="pw_warn" style="position: absolute; left: 2.23em; bottom: 22em;"></span>
+                                <span id="pw_warn" style="position: absolute; left: 2.23em; bottom: 28.2em;"></span>
                             </div>
                             <div class="group-input">
                                <input type="text" id="empCall" name="empCall" placeholder="연락처">
@@ -82,11 +82,11 @@
                             </div>
                             <div class="group-input" id="pinNumChk_false">
                                <input type="text" id="pinNumChk" name="pinNumChk" placeholder="인증번호" disabled="disabled">
-                               <input type="button" id="pinNumChk_Btn" value="확인" disabled="disabled" style="position: absolute; left: 24.5em; bottom: 9.5em;">
-							   <span id="pinNumChk_warn" style="position: absolute; left: 2.23em; bottom: 7.95em;"></span>
+                               <input type="button" id="pinNumChk_Btn" value="확인" disabled="disabled" style="position: absolute; left: 24.5em; bottom: 15.7em;">
+							   <span id="pinNumChk_warn" style="position: absolute; left: 2.23em; bottom: 14.15em;"></span>
                             </div>
                             <div class="group-input">
-								<input type="button" id="sendMailBtn" value="인증번호 전송" style="position: absolute; left: 24.5em; bottom: 14.2em;">
+								<input type="button" id="sendMailBtn" value="인증번호 전송" style="position: absolute; left: 24.5em; bottom: 20.4em;">
                             </div>
                             <div class="group-input">
 								<select id="position" name="position" style="width: 100%; height: 50px;">
@@ -98,6 +98,10 @@
 									<option value="차장">차장</option>
 									<option value="부장">부장</option>
 								</select>
+                            </div>
+                             <div class="group-input">
+                             	사진
+                                <input type="file" name="uploadFile">
                             </div>
                             <button type="submit" class="site-btn register-btn">등록</button>
                         </form>

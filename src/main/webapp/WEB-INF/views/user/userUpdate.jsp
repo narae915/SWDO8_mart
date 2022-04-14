@@ -10,7 +10,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>SpringDay | 회원가입</title>
+    <title>SpringDay | 회원 정보 수정</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -43,7 +43,8 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="/"><i class="fa fa-home"></i> Home</a>
-                        <span>회원가입</span>
+                        <a href="/user/mypage"> 마이 페이지</a>
+                        <span>회원 정보 수정</span>
                     </div>
                 </div>
             </div>
@@ -57,49 +58,50 @@
             <div class="row">
                 <div class="col-lg-6 offset-lg-3">
                     <div class="register-form">
-                        <h2>회원가입</h2>
-                        <form action="/user/signUp" method="post" onsubmit="return formChk();">
+                        <h2>회원 정보 수정</h2>
+                        <form action="/user/userUpdate" method="post" onsubmit="return checkForm();">
                         <sec:csrfInput/>
                         <input type="hidden" name="userAddress">
                         <input type="hidden" name="postcode" value="0">
                             <div class="group-input">
                                 <label for="username">이름 *</label>
-                                <input type="text" id="username" name="userName">
+                                <input type="text" id="username" name="userName" value="${user.userName }" readonly="readonly">
                             </div>
                             <div class="group-input">
                                 <label for="username">메일 주소 *</label>
-                                <input type="text" name="userMail">
+                                <input type="text" id="userMail" name="userMail" value="${user.userMail }" readonly="readonly">
                             </div>
                             <div class="group-input">
                                 <label for="pass">비밀번호 *</label>
-                                <input type="password" id="pass" name="userPw">
-                            </div>
-                            <div class="group-input">
-                                <label for="con-pass">비밀번호 확인 *</label>
-                                <input type="password" id="con-pass">
+                                <input type="button" id="pass" name="userPwBtn" value="재설정" onclick="resetPw();">
                             </div>
                             <div class="group-input">
                                 <label>연락처 *</label>
-                                <input type="text" name="userCall" placeholder="(-)는 제외">
+                                <input type="text" id="userCall" name="userCall" placeholder="(-)는 제외" value="${user.userCall }">
                             </div>
-                            <div class="group-input">
-                                <label>우편번호</label>
-                                <input type="text" id="postcode" readonly onclick="daumPostcode();">
-							</div>
+                            <c:if test="${user.postcode == '0' }">
+                            	<div class="group-input">
+                                	<label>우편번호</label>
+                                	<input type="text" id="postcode" readonly onclick="daumPostcode();">
+								</div>
+                            </c:if>
+                            <c:if test="${user.postcode != '0' }">
+                            	<div class="group-input">
+                                	<label>우편번호</label>
+                                	<input type="text" id="postcode" value="${user.postcode }" readonly onclick="daumPostcode();">
+								</div>
+                            </c:if>
                             <div class="group-input">
                                 <label>주소</label>
-                                <input type="text" id="address" readonly onclick="daumPostcode();">
+                                <input type="text" id="address" value="${user.userAddress }" readonly onclick="daumPostcode();">
 							</div>
                             <div class="group-input">
                                 <label>상세주소</label>
-                                <input type="text" id="detailAddress">
+                                <input type="text" id="detailAddress" value="${user.role }">
                                 <span id="extraAddress"></span>
 							</div>
-                            <button type="submit" class="site-btn register-btn">회원 가입</button>
+                            <button type="submit" class="site-btn register-btn">수정</button>
                         </form>
-                        <div class="switch-login">
-                            <a href="/user/login" class="or-login">로그인</a>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -121,10 +123,11 @@
     <script src="/resources/js/jquery.slicknav.js"></script>
     <script src="/resources/js/owl.carousel.min.js"></script>
     <script src="/resources/js/main.js"></script>
+    <script src="/resources/js/userJs/userUpdate.js"></script>
 	<!-- 우편 번호로 주소찾기(다음 API) -->
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script type="text/javascript">
-  //우편 번호로 주소찾기(다음 API)
+	//우편 번호로 주소찾기(다음 API)
 	function daumPostcode() {
 		new daum.Postcode({
 			oncomplete: function(data) {
@@ -172,7 +175,7 @@
 		}).open();
 	}
 
-	function formChk() {
+	function checkForm() {
 		//주소 hidden태그에 채우기
 		var userAddress= $("#address").val() + "_" + $("#detailAddress").val() + " " + $("#extraAddress").text();
 		$("input[name=userAddress]").attr("value", userAddress);
@@ -183,6 +186,11 @@
 			$("input[name=postcode]").attr("value", postcode);
 		}
 		return true;
+	}
+	
+	function resetPw() 
+	{
+		location.href = "/user/resetPw";
 	}
     </script>
 </body>

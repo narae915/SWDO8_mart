@@ -63,6 +63,14 @@ button:hover:before, button:hover:after
 	transition:800ms ease all;
 }
 
+.empImg img 
+{
+  width: 104px;
+  height: 125px;
+  object-fit: cover;
+  object-position:top;
+}
+
 /* modal */
 .modalAlert
 {

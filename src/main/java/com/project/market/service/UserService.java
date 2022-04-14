@@ -60,4 +60,23 @@ public class UserService {
 		
 		return dao.updatePw(newPw) > 0;
 	}
+
+	/* 아이디로 수정할 정보 읽어오기 */
+	public UserVO readUser(String userMail) 
+	{
+		return dao.readUser(userMail);
+	}
+
+	/* 회원 정보 수정 */
+	public boolean userUpdate(String userName, String userMail, String userCall, int postcode, String userAddress) 
+	{
+		UserVO updateUser = new UserVO();
+		updateUser.setUserName(userName);
+		updateUser.setUserMail(userMail);
+		updateUser.setUserCall(userCall);
+		updateUser.setPostcode(postcode);
+		updateUser.setUserAddress(userAddress);
+		
+		return dao.userUpdate(updateUser) > 0;
+	}
 }

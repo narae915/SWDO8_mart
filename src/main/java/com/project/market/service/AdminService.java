@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.project.market.dao.AdminDAO;
 import com.project.market.vo.EmpVO;
+import com.project.market.vo.FileListVO;
 import com.project.market.vo.ItemVO;
 
 @Service
@@ -62,8 +63,17 @@ public class AdminService {
 	}
 
 	/* 직원 ID 등록 */
-	public boolean adminRegister(String empName, String empPw, String empCall, String empMail, String position) 
+	public boolean adminRegister(String empName, String empPw, String empCall, String empMail, String position, String originalFilename, String savedFilename) 
 	{
+//		HashMap<String, Object> newEmp = new HashMap<>();
+//		newEmp.put("empName", empName);
+//		newEmp.put("empPw", empPw);
+//		newEmp.put("empCall", empCall);
+//		newEmp.put("empName", empName);
+//		newEmp.put("empMail", empMail);
+//		newEmp.put("originalFilename", originalFilename);
+//		newEmp.put("savedFilename", savedFilename);
+		
 		EmpVO newEmp = new EmpVO();
 		newEmp.setEmpName(empName);
 		newEmp.setEmpPw(empPw);
@@ -71,7 +81,11 @@ public class AdminService {
 		newEmp.setEmpMail(empMail);
 		newEmp.setPosition(position);
 		
-		return dao.adminRegister(newEmp) > 0;
+		FileListVO newFile = new FileListVO();
+		newFile.setOriginalFilename(originalFilename);
+		newFile.setSavedFilename(savedFilename);
+		
+		return dao.adminRegister(newEmp, newFile) > 0;
 	}
 	
 	/* 로그인 */
@@ -124,7 +138,7 @@ public class AdminService {
 	}
 	
 	/* 직원 정보 수정 */
-	public boolean empUpdate(int empNum, String empName, String empPw, String empCall, String empMail, String position) 
+	public boolean empUpdate(int empNum, String empName, String empPw, String empCall, String empMail, String position, String originalFilename, String savedFilename) 
 	{
 		EmpVO updateEmp = new EmpVO();
 		updateEmp.setEmpNum(empNum);
@@ -134,14 +148,22 @@ public class AdminService {
 		updateEmp.setEmpMail(empMail);
 		updateEmp.setPosition(position);
 		
-		return dao.empUpdate(updateEmp) > 0;
+		FileListVO updateImg = new FileListVO();
+		updateImg.setOriginalFilename(originalFilename);
+		updateImg.setSavedFilename(savedFilename);
+		
+		return dao.empUpdate(updateEmp, updateImg) > 0;
 	}
 	
 	/* 직원 정보 삭제 */
 	public boolean empDelete(int empNum) 
 	{
 		return dao.empDelete(empNum) > 0;
-
+	}
+	
+	public boolean empDeleteFile(String empImg) 
+	{
+		return dao.empDeleteFile(empImg) > 0;
 	}
 	
 	/* ID 찾기 */

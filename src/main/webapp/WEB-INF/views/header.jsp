@@ -131,7 +131,7 @@
                         <li><a href="/user/mypage">마이 페이지 | My Page</a>
                             <ul class="dropdown">
                                 <li><a href="/order/orderList">내 주문 목록</a></li>
-                                <li><a href="/user/user">회원 정보 수정</a></li>
+                                <li><a href="/user/userUpdate">회원 정보 수정</a></li>
                                 <li><a href="/user/signUp">회원가입</a></li>
                             </ul>
                         </li>

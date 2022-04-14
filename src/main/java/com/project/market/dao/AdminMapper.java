@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.project.market.vo.EmpVO;
+import com.project.market.vo.FileListVO;
 import com.project.market.vo.ItemVO;
 
 public interface AdminMapper {
@@ -22,7 +25,9 @@ public interface AdminMapper {
 
 	int itemInsert(HashMap<String, Object> map); // 3.상품 추가 메소드
 
-	int adminRegister(EmpVO newEmp); // 직원 ID 등록
+	int adminRegister(EmpVO map); // 직원 ID 등록
+	
+	void empSetFile(@Param("originalFilename") String originalFilename, @Param("savedFilename") String savedFilename); // 직원 ID 등록 시 사진 등록
 
 	String selectEmpNm(EmpVO emp); // 로그인
 	
@@ -34,8 +39,12 @@ public interface AdminMapper {
 	
 	int empUpdate(EmpVO updateEmp); // 직원 정보 수정
 	
+	int empDeleteFile(String empImg); // 직원 사진 정보 삭제
+	
+//	void empUpdateFile(@Param("empImg") String empImg, @Param("originalFilename") String originalFilename, @Param("savedFilename") String savedFilename); // 직원 사진 정보 수정
+	
 	int empDelete(int empNum); // 직원 정보 삭제
-
+	
 	ItemVO readitem(int upItemNum);
 
 	ArrayList<ItemVO> itemUpdateList(List<Integer> intUpdateNum);

@@ -21,4 +21,10 @@ public interface UserMapper {
 
 	// PW 초기화
 	int updatePw(UserVO newPw);
+	
+	// 아이디로 수정할 정보 읽어오기
+	UserVO readUser(String userMail);
+
+	// 회원 정보 수정
+	int userUpdate(UserVO updateUser);
 }

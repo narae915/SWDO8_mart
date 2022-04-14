@@ -44,7 +44,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
-                        <a href="../"><i class="fa fa-home"></i> Home</a>
+                        <a href="/"><i class="fa fa-home"></i> Home</a>
                         <a href="findPw">비밀번호 찾기</a>
                         <a style="color: #e7ab3c;">01. ID 확인</a>
                         <span>02. 비밀번호 재설정</span>

@@ -82,7 +82,14 @@
 									<c:otherwise>
 										<c:forEach items="${empList }" var="emp">
 											<tr>
-												<td class="cart-pic first-row"><img src="/resources/img/cart-page/product-1.jpg" alt=""></td>
+												<c:choose>
+													<c:when test="${not empty emp.savedFilename }">
+														<td class="empImg"><img src="/uploadImg/${emp.savedFilename }" alt="사원사진"></td>
+													</c:when>
+													<c:otherwise>
+														<td class="empImg"><img src="/resources/img/empDefault.png" alt="사원사진"></td>
+													</c:otherwise>
+												</c:choose>
 												<td><h5>${emp.empNum }</h5></td>
 												<td>${emp.empName }</td>
 												<td>${emp.position }</td>
@@ -94,7 +101,7 @@
 														<input type="button" value="수정" onclick="empUpdate(${emp.empNum });">
 														<input type="button" value="삭제" onclick="empDelete(${emp.empNum});">
 													</c:when>
-													<c:when test="${ sessionScope.loginId == emp.empNum }">
+													<c:when test="${sessionScope.loginId == emp.empNum }">
 														<input type="button" value="수정" onclick="empUpdate(${emp.empNum });">
 														<input type="button" value="삭제" disabled>
 													</c:when>

@@ -9,7 +9,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>직원 정보 수정</title>
+    <title>SpringDay | 직원 정보 수정</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -59,7 +59,7 @@
                 <div class="col-lg-6 offset-lg-3">
                     <div class="register-form">
                         <h2>직원 정보 수정</h2>
-                        <form action="empUpdate" method="post" onsubmit="return checkForm();">
+                        <form action="empUpdate" method="post" onsubmit="return checkForm();" enctype="multipart/form-data">
                         	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         	<input type="hidden" name="empNum" value="${emp.empNum }">
                         	<c:choose>
@@ -82,7 +82,7 @@
                             </div>
                             <div class="group-input">
                                 <input type="password" id="empPwCheck" name="empPwCheck" placeholder="비밀번호 확인">
-                                <span id="pw_warn" style="position: absolute; left: 2.23em; bottom: 22em;"></span>
+                                <span id="pw_warn" style="position: absolute; left: 2.23em; bottom: 28.2em;"></span>
                             </div>
                             <div class="group-input">
                                <input type="text" id="empCall" name="empCall" value="${emp.empCall }" placeholder="연락처">
@@ -92,14 +92,14 @@
                             </div>
                             <div class="group-input" id="pinNumChk_false">
                                <input type="text" id="pinNumChk" name="pinNumChk" placeholder="인증번호" disabled="disabled">
-                               <input type="button" id="pinNumChk_Btn" value="확인" disabled="disabled" style="position: absolute; left: 24.5em; bottom: 9.5em;">
-							   <span id="pinNumChk_warn" style="position: absolute; left: 2.23em; bottom: 7.95em;"></span>
+                               <input type="button" id="pinNumChk_Btn" value="확인" disabled="disabled" style="position: absolute; right: 0.9em; bottom: 15.7em;">
+							   <span id="pinNumChk_warn" style="position: absolute; left: 2.23em; bottom: 14.1em;"></span>
                             </div>
                             <div class="group-input">
-								<input type="button" id="updateMailBtn" value="e-mail 수정" style="background-color: #434445; position: absolute; width: 30%; height:50px; border-radius:5px; left: 24.5em; bottom: 14.2em; color: white;">
+								<input type="button" id="updateMailBtn" value="e-mail 수정" style="background-color: #434445; position: absolute; width: 30%; height:50px; border-radius:5px; right: 0.9em; bottom: 20.4em; color: white;">
                             </div>
                             <div class="group-input">
-								<input type="button" id="sendMailBtn" value="인증번호 전송" style="display: none; background-color: #434445; position: absolute; width: 30%; height:50px; border-radius:5px; left: 24.5em; bottom: 14.2em; color: white;">
+								<input type="button" id="sendMailBtn" value="인증번호 전송" style="display: none; background-color: #434445; position: absolute; width: 30%; height:50px; border-radius:5px; right: 0.9em; bottom: 20.4em; color: white;">
                             </div>
                             <c:if test="${sessionScope.loginPosition eq '사장' || sessionScope.loginPosition eq '부장'}">
                             <div class="group-input">
@@ -111,9 +111,27 @@
 									<option value="과장">과장</option>
 									<option value="차장">차장</option>
 									<option value="부장">부장</option>
+									<option value="사장">사장</option>
 								</select>
                             </div>
                             </c:if>
+                            <div class="group-input">
+                            <c:choose>
+								<c:when test="${not empty emp.savedFilename }">
+									<div style="position: absolute; right: 0.9em; bottom: 3.05em;"><img src="/resources/img/empBackgroundImg.png" alt="사원사진"></div>
+									<div id="empImg" class="empImg" style="position: absolute; right: 0.9em; bottom: 3.05em;"><img src="/uploadImg/${emp.savedFilename }" alt="사원사진"></div>
+									<input type="button" id="deleteImgBtn" value="사진 수정" style="width: 250px; height: 50px; position: absolute; left: 0.9em; bottom: 4.75em;" onclick="deleteImg('${emp.savedFilename }');">
+									<div class="group-input">
+									사진
+	                                <input type="file" name="uploadFile">
+                            </div>
+								</c:when>
+								<c:otherwise>
+									사진
+	                                <input type="file" name="uploadFile">
+								</c:otherwise>
+							</c:choose>
+                            </div>
                             <button type="submit" onclick="updateEmp();'" class="site-btn register-btn">수정</button>
                         </form>
                     </div>
@@ -147,6 +165,26 @@
     	// 가져온 값을 셀렉트창에 표시
     	$("#position").val(empPosition).prop("selected", true);
     };
+    
+    function deleteImg(imgName) 
+	{
+    	$("#deleteImgBtn").css("display", "none"); 	// 사진 수정 버튼 숨김
+    	$("#empImg").css("display", "none"); 		// 표시되있는 사진 숨김
+    	
+		$.ajax
+		({
+			url: "/admin/empImgDelete",
+			type: "get",
+			data:
+			{
+				empImg: imgName
+			},
+			success: function(result)
+			{
+				
+			}
+		});
+	}
     </script>
 </body>
 </html>

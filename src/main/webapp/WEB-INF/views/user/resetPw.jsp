@@ -44,7 +44,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
-                        <a href="../"><i class="fa fa-home"></i> Home</a>
+                        <a href="/"><i class="fa fa-home"></i> Home</a>
                         <a href="findPw">비밀번호 찾기</a>
                         <a style="color: #b2b2b2;">01. ID 확인</a>
                         <span style="color: #e7ab3c;">02. 비밀번호 재설정</span>
@@ -65,9 +65,16 @@
 						<form action="/user/resetPw" method="post" onsubmit="return checkForm();">
                         	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         	
-                        	<div class="group-input">
-                                <input type="text" id="userMail" name="userMail" value="${findUserMail }" readonly="readonly">
-                            </div>
+                        	<c:if test="${not empty findUserMail }">
+                        		<div class="group-input">
+                                	<input type="text" id="userMail" name="userMail" value="${findUserMail }" readonly="readonly">
+                           		</div>
+                        	</c:if>
+                        	<c:if test="${not empty sessionScope.userMail }">
+                        		<div class="group-input">
+                                	<input type="text" id="userMail" name="userMail" value="${sessionScope.userMail }" readonly="readonly">
+                           		</div>
+                        	</c:if>
                             <div class="group-input">
                                 <input type="password" id="userPw" name="userPw" placeholder="비밀번호">
                             </div>
