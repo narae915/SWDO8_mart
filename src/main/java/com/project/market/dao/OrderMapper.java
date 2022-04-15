@@ -47,4 +47,7 @@ public interface OrderMapper {
 	// 결제 정보 입력 페이지 상품정보 불러오기 - 노채린
 	ArrayList<ItemVO> getItemList(HashMap<String, Object> map);
 
+	// 결제 정보를 테이블에 입력 - 노채린
+	int insertOrder(HashMap<String, Object> map);
+
 }

@@ -202,6 +202,7 @@
 	<select id="getItemList" resultType="Item" parameterType="HashMap">
 		select
 			item_name as itemName,
+			item_num as itemNum,
 			price as price
 		from item_table
 		where
@@ -212,4 +213,32 @@
 				where cart_num = #{buyNum })	
 			</foreach>				
 	</select>
+	
+	<!-- 결제 정보를 테이블에 입력 -->
+	<insert id="insertOrder" parameterType="HashMap">
+		insert into order_table(
+			order_num,
+			cart_num,
+			user_num,
+			item_num,
+			amount,
+			order_address,
+			order_mail,
+			order_call
+		) values (
+			order_num_seq.nextval,
+			#{oneCartNum },
+			(select user_num
+				from user_table
+				where user_mail = #{userMail }),
+			(select item_num
+				from cart_table
+				where cart_num = #{oneCartNum }),
+			#{oneAmount },
+			#{orderAddress },
+			#{orderMail },
+			#{orderCall }
+		)
+	</insert>
+	
 </mapper>

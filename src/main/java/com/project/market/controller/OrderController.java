@@ -1,15 +1,17 @@
 package com.project.market.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-import javax.servlet.http.HttpSession;
+import java.util.stream.Stream;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +21,6 @@ import com.project.market.dao.UserDAO;
 import com.project.market.service.OrderService;
 import com.project.market.util.PageNavigator;
 import com.project.market.vo.CartVO;
-import com.project.market.vo.ForwardVO;
 import com.project.market.vo.ItemVO;
 import com.project.market.vo.OrderVO;
 import com.project.market.vo.UserVO;
@@ -225,18 +226,20 @@ public class OrderController {
 		
 		String userMail = authentication.getName();
 		model.addAttribute("userMail", userMail);
+		
 		// 총계
 		logger.info("totalPrice:{}", totalPrice);
 		model.addAttribute("totalPrice", totalPrice);
 		
 		// 체크박스 cartNum
-		logger.info("buy:{}", buy);
+		model.addAttribute("cartNum", buy);
 		
 		// 수량
 		if(p_num.contains("-1") == true) {
-			p_num = p_num.replace("-1,", "");
-			p_num = p_num.replace(",-1", "");
+			p_num = p_num.replace("-1", "");
 		}
+		model.addAttribute("amount", p_num);
+
 		String[] pNumArr = p_num.split(",");
 
 		for(int i = 0; i < pNumArr.length; i++) {
@@ -255,19 +258,33 @@ public class OrderController {
 		
 		return "/order/orderForm";
 	}
-	/*
+	
+	// 결제 정보 전송
+	@ResponseBody
 	@RequestMapping(value = "/orderForm", method = RequestMethod.POST)
-	public String orderForm(@RequestParam(value="purchaseAmountArray[]") List<String> purchaseAmount) {
+	public String orderForm(Model model, String cartNum, Authentication authentication, String amount, String orderMail, 
+							String orderCall, String address, String detailAddress) {
 		logger.info("orderForm 메소드 실행(POST).");
-		
-		logger.info("purchaseAmount:{}", purchaseAmount);
-		
-		return null;
+
+		String userMail = authentication.getName();
+		model.addAttribute("userMail", userMail);
+
+		boolean result = service.insertOrder(amount, cartNum, orderMail, orderCall,
+													address, detailAddress, userMail);
+		if(result) {
+			logger.info("결제 테이블 입력 성공");
+			return "success";
+			
+			
+		} else {
+			logger.info("결제 테이블 입력 실패");
+			return null;
+		}
 	}
-	*/
+
 	// 결제 정보 입력 페이지
 	@RequestMapping(value = "/orderFormForward", method = RequestMethod.GET)
-	public String orderFormForward() { // 세션에서 유저 정보 가져와서 넣기
+	public String orderFormForward() {
 		logger.info("orderFormForward 메소드 실행(GET).");
 		
 		

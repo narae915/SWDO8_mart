@@ -27,6 +27,8 @@
     <link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
+   
+    
 </head>
 
 <body>
@@ -45,8 +47,8 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="/"><i class="fa fa-home"></i> Home</a>
-                        <a href="/"> 장바구니</a>
-                        <span>결제</span>
+                        <a href="/order/cart"> 장바구니</a>
+                        <span>결제하기</span>
                     </div>
                 </div>
             </div>
@@ -55,74 +57,76 @@
     <!-- Breadcrumb Form Section Begin -->
 
     <!-- Register Section Begin -->
+    <form action="/order/orderForm" id="orderForm" method="post" onsubmit="return false">
     <div class="register-login-section spad">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
                     <div class="register-form">
                         <h2>결제 정보</h2>
-                        <form action="/order/orderForm" method="" onsubmit="">
                         <sec:csrfInput/>
                         <c:forEach items="${userList }" var="user">
                         <input type="hidden" name="userAddress">
                         <input type="hidden" name="postcode" value="0">
-                            <div class="group-input">
-                                <label for="username">이름</label>
-                                <input type="text" id="username" name="userName" value="${user.userName }">
-                            </div>
-                            <div class="group-input">
-                                <label for="username">E-mail</label>
-                                <input type="text" name="userMail" value="${userMail }">
-                            </div>
-                            <div class="group-input">
-                                <label>전화번호 </label>
-                                <input type="text" name="userCall" placeholder="(-)는 제외" value="${user.userCall }">
-                            </div>
-                            </c:forEach>
-                            
-                            <div class="group-input">
-                                <label>우편번호</label>
-                                <input type="text" id="postcode" readonly onclick="daumPostcode();">
-							</div>
-                            <div class="group-input">
-                                <label>주소</label>
-                                <input type="text" id="address" readonly onclick="daumPostcode();">
-							</div>
-                            <div class="group-input">
-                                <label>상세주소</label>
-                                <input type="text" id="detailAddress">
-                                <span id="extraAddress"></span>
-							</div>
-                            <button type="submit" class="site-btn register-btn" style="display: inline-block;left: 48em;bottom: 28em; position: relative; width:82%; ">결제하기</button>
-                        </form>
+						<div class="group-input">
+						    <label for="username">이름</label>
+						    <input type="text" id="username" name="userName" value="${user.userName }" readonly style="background-color:#E6E6E6">
+						</div>
+						<div class="group-input">
+						    <label for="username">E-mail</label>
+						    <input type="text" name="userMail" id="userMail" value="${userMail }">
+						</div>
+						<div class="group-input">
+						    <label>전화번호 </label>
+						    <input type="text" name="userCall" id="userCall" placeholder="(-)는 제외" value="${user.userCall }">
+						</div>
+						</c:forEach>
+						<div class="group-input">
+						    <label>우편번호</label>
+						    <input type="text" id="postcode" readonly onclick="daumPostcode();">
+						</div>
+		                     <div class="group-input">
+		                         <label>주소</label>
+		                         <input type="text" id="address" readonly onclick="daumPostcode();">
+						</div>
+						<div class="group-input">
+							<label>상세주소</label>
+							<input type="text" id="detailAddress">
+							<span id="extraAddress"></span>
+						</div>
                     </div>
                 </div>
                 <div class="col-lg-5 offset-lg-1">
-                	<div class="orderForm-form">
+                	<div class="register-form">
                 		<h2>주문 정보</h2>	
-						<div class="group-input">
-							<label>상품명&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;수량&emsp;&emsp;&emsp;가격</label>
-						</div>
-						<c:forEach items="${itemList }" var="item">
 						<c:forEach items="${pNumArr }" var="pNum" begin="0" end="4">
+						<c:if test="${pNum ne 0 }">
+						<c:forEach items="${itemList }" var="item">
 							<div class="group-input">
 								<label>
-									${item.itemName }&emsp;&emsp;&emsp;&emsp;&emsp;
-									⨉${pNum }&emsp;&emsp;&emsp;
+									${item.itemName }&emsp;&emsp;&emsp;
+									⨉${pNum }&emsp;&emsp;&emsp;&emsp;
 									<fmt:formatNumber value="${item.price }" pattern='#,###원' />
 								</label>
 							</div>
 						</c:forEach>
+						</c:if>
 						</c:forEach>
+						
+						<input type="hidden" id="amount" value="${amount }">
+						<input type="hidden" id="cartNum" value="${cartNum }">
 						<hr>
-						<div class="group-input" style="font-size: xx-large;">
-							<label>합계&emsp;&emsp;<fmt:formatNumber value="${totalPrice }" pattern='#,###원' /></label>
+						<div style="font-size: xx-large;">
+							<label>합계&emsp;&emsp;&emsp;<fmt:formatNumber value="${totalPrice }" pattern='#,###원' /></label>
 						</div>
+						<input type="button" value="결제하기" class="site-btn register-btn" id="buyButton" style ="border-radius: 5px; font-size:20px;">
 					</div>
                 </div>
             </div>
+            
         </div>
     </div>
+    </form>
     <!-- Register Form Section End -->
     
     <!-- Footer -->
@@ -139,8 +143,106 @@
     <script src="/resources/js/jquery.slicknav.js"></script>
     <script src="/resources/js/owl.carousel.min.js"></script>
     <script src="/resources/js/main.js"></script>
+    
+    <!-- 결제 api -->
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+     
+    <script>
+    $('#buyButton').click(function () {
+    	// 유효성 검사: 전화번호
+		var call = $("#userCall").val();
+		var callChk = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+	
+		var email = $("#userMail").val(); 
+		var emailChk =/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+		
+		var address = $("#address").val();
+		
+		if(!callChk.test(call)){
+			exitAlert();
+		    $("#footer-modal-content").prepend("전화번호를 확인해 주십시오.");
+		    showModalAlert();
+		    return false;
+		}
+		// 유효성 검사: 이메일
+		if(!emailChk.test(email)) {
+			exitAlert();
+		    $("#footer-modal-content").prepend("이메일을 확인해 주십시오.");
+		    showModalAlert();
+		    return false;
+		}
+		if(address == "") {
+			exitAlert();
+		    $("#footer-modal-content").prepend("주소를 입력해 주십시오.");
+		    showModalAlert();
+		    return false;
+		}
+    	// 결제 api 창 
+    	// 테스트 수단: 카카오페이
+		var IMP = window.IMP;
+		IMP.init("imp52598827"); // "iamport" 대신 발급받은 "가맹점 식별코드"를 사용합니다
+		 
+		IMP.request_pay({
+			pg : 'inicis', // version 1.1.0부터 지원.
+			pay_method : 'card',
+			merchant_uid : 'merchant_' + new Date().getTime(),
+			name : '봄날 식자재마트',
+			amount : '${totalPrice}', //판매 가격
+			
+			/*
+			buyer_email : $("#userMail").val(),
+			buyer_name : '${user.userName}',
+			buyer_tel : '${user.userCall}',
+			buyer_addr : '서울특별시 강남구 삼성동',
+			buyer_postcode : '123-456'
+			*/
+			
+		}, function(rsp) {
+			if ( rsp.success ) {
+				var msg = '결제가 완료되었습니다.';
+
+				msg += '고유ID : ' + rsp.imp_uid;
+				msg += '상점 거래ID : ' + rsp.merchant_uid;
+				msg += '결제 금액 : ' + rsp.paid_amount;
+				msg += '카드 승인번호 : ' + rsp.apply_num;
+
+				// $("#orderForm").removeAttr('onsubmit');
+			} else {
+				var msg = '결제에 실패하였습니다.';
+				msg += '에러내용 : ' + rsp.error_msg;
+				
+			}
+			alert(msg);
+		}); 
+		
+		// 데이터 전송 ajax
+		$.ajax({
+			url: "/order/orderForm",
+			type: "post",
+			data: {
+				cartNum: $("#cartNum").val(),
+				amount: $("#amount").val(),
+				orderMail: $("#userMail").val(),
+				orderCall: $("#userCall").val(),
+				address: $("#address").val(),
+				detailAddress: $("#detailAddress").val()
+			}, 
+			success: function(res, url) {
+				if(res == 'success') {
+					//location.replace("/order/orderList"); 넘어가긴 하지만 뒤로가기 제한x
+					location.href= "/order/orderList";
+					//location.replace= "/order/orderList"; 뒤로가기가 막히긴 함 orderForm에서 먹혀서 문제지
+				}
+			}
+		});
+    });
+	    
+	
+	</script>
+	
 	<!-- 우편 번호로 주소찾기(다음 API) -->
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	
     <script type="text/javascript">
   //우편 번호로 주소찾기(다음 API)
 	function daumPostcode() {

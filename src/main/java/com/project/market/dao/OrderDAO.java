@@ -177,4 +177,17 @@ public class OrderDAO {
 		return result;
 	}
 
+	public int insertOrder(HashMap<String, Object> map) {
+		int result = 0;
+		OrderMapper mapper = null;
+		
+		try {
+			mapper = session.getMapper(OrderMapper.class);
+			result = mapper.insertOrder(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 }
