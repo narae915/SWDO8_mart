@@ -54,15 +54,14 @@ $('#cancelButton').click(function() {
 //검색어 유효성 검사
 function searchChk() {
 	var searchWord = $.trim($("input[name=searchWord]").val());
-		var kor_check = /([^가-힣ㄱ-ㅎㅏ-ㅣ\x20a-zA-Z0-9])/i;
-		if (kor_check.test(searchWord)){
-			exitAlert();
-			$("#footer-modal-content").prepend("한글, 영어, 숫자만 입력 가능합니다.");
-			showModalAlert()
-			
-			return false
-		} else {
-			return true;
-		}
-	
+	var kor_check = /([^가-힣ㄱ-ㅎㅏ-ㅣ\x20a-zA-Z0-9])/i;
+	if (kor_check.test(searchWord)){
+		exitAlert();
+		$("#footer-modal-content").prepend("한글, 영어, 숫자만 입력 가능합니다.");
+		showModalAlert()
+		
+		return false
+	} else {
+		return true;
+	}
 }

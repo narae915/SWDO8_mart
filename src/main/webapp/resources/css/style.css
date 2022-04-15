@@ -3758,8 +3758,7 @@ ol {
 }
 
 .register-form h2,
-.login-form h2,
-.orderForm-form h2 {
+.login-form h2 {
 	color: #252525;
 	font-weight: 700;
 	text-align: center;
@@ -3767,14 +3766,14 @@ ol {
 }
 
 .register-form form .group-input,
-.login-form form .group-input,
-.orderForm-form form .group-input label {
+.register-form .group-input,
+.login-form form .group-input {
 	margin-bottom: 25px;
 }
 
 .register-form form .group-input label,
-.login-form form .group-input label,
-.orderForm-form form .group-input label {
+.register-form .group-input label,
+.login-form form .group-input label {
 	display: block;
 	font-size: 18px;
 	color: #252525;
@@ -3782,8 +3781,8 @@ ol {
 }
 
 .register-form form .group-input input,
-.login-form form .group-input input,
-.orderForm-form form .group-input label {
+.register-form .group-input input,
+.login-form form .group-input input {
 	border: 1px solid #ebebeb;
 	height: 50px;
 	width: 100%;
@@ -3792,6 +3791,7 @@ ol {
 }
 
 .register-form form .register-btn,
+.register-form .register-btn,
 .register-form form .login-btn,
 .login-form form .register-btn,
 .login-form form .login-btn {

@@ -1,6 +1,7 @@
 package com.project.market.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.project.market.dao.OrderDAO;
 import com.project.market.vo.CartVO;
-import com.project.market.vo.ForwardVO;
 import com.project.market.vo.ItemVO;
 import com.project.market.vo.OrderVO;
 import com.project.market.vo.UserVO;
@@ -116,6 +116,45 @@ public class OrderService {
 		map.put("buyArr", buyArr);
 		
 		return dao.getItemList(map);
+	}
+
+	public boolean insertOrder(String amount, String cartNum, String orderMail, 
+			String orderCall, String address, String detailAddress, String userMail) {
+
+		String oneCartNum = "";
+		String oneAmount = "";
+		HashMap<String, Object> map = new HashMap<>();
+		HashMap<String, Object> doubleMap = new HashMap<>();
+		
+		String orderAddress = address +" " + detailAddress;
+		
+		// 수량
+		String[] amountArr = amount.split(",");
+		
+		// 장바구니 번호
+		String[] cartNumArr = cartNum.split(",");
+		
+		boolean flag = false; 
+		
+		for (int i = 0; i<cartNumArr.length; i++) {
+
+			oneCartNum = cartNumArr[i];
+			oneAmount = amountArr[i];
+			
+			map.put("oneCartNum", oneCartNum);
+			map.put("oneAmount", oneAmount);
+			map.put("doubleMap", doubleMap);
+			map.put("orderMail", orderMail);
+			map.put("orderCall", orderCall);
+			map.put("orderAddress", orderAddress);
+			map.put("userMail", userMail);
+		
+			flag = dao.insertOrder(map) > 0;
+
+		}
+		return flag;
+		
+	
 	}
 
 }
