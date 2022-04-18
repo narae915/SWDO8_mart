@@ -124,7 +124,13 @@
 	<!-- 우편 번호로 주소찾기(다음 API) -->
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script type="text/javascript">
-  //우편 번호로 주소찾기(다음 API)
+	//jsp페이지 출력과 동시에 실행 
+	$(function(){
+		//현재 페이지를 선택했음을 알림 4/17 박나래
+		$("li#menu-mypage").css("background", "#e7ab3c");
+	});
+
+	//우편 번호로 주소찾기(다음 API)
 	function daumPostcode() {
 		new daum.Postcode({
 			oncomplete: function(data) {

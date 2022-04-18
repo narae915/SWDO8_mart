@@ -215,14 +215,11 @@
     <script src="/resources/js/owl.carousel.min.js"></script>
     <script src="/resources/js/main.js"></script>
     <script type="text/javascript">
-	
-/* 	 // ajax 통신을 위한 csrf 설정
-     var token = $("meta[name='_csrf']").attr("content");
-    var header = $("meta[name='_csrf_header']").attr("content");
-    $(document).ajaxSend(function(e, xhr, options) {
-        xhr.setRequestHeader(header, token);
-    });  */
-
+	//jsp페이지 출력과 동시에 실행 
+	$(function(){
+		//현재 페이지를 선택했음을 알림 4/17 박나래
+		$("li#menu-foodMart").attr("class", "active");
+	});
     
     //카테고리 번호 찾기(정렬 select에서 categoryNum을 알 수 없기 때문)
     function searchCategoryNum(categoryNum) {

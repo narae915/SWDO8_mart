@@ -4,6 +4,19 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.market.dao.RecipeMapper">
 
+<!-- 레시피 게시판 갯수 -->
+<select id="countRecipeList" resultType="int" parameterType="String">
+	select 
+		count(*) 
+	from 
+		recipe_table
+	<where>
+		<if test="searchword != null">
+			title like '%'||#{searchword }||'%'
+		</if>
+	</where>
+</select>
+
 <!-- 레시피 게시판 조회 -->
 <select id="getRecipeList" resultType="Recipe" parameterType="int">
 	select
@@ -23,19 +36,22 @@
 </select>
 
 <!-- 레시피 검색 -->
-<select id="searchRecipe" parameterType="String" resultType="Recipe">
+<select id="searchRecipe" parameterType="HashMap" resultType="Recipe">
 	select
-		recipe_num as recipeNum,
-		user_num as userNum,
-		title as title,
-		score as score,
-		to_char(indate, 'YYYY-MM-DD') as indate
+		rownum,
+		r.recipe_num as recipeNum,
+		r.user_num as userNum,
+		r.title as title,
+		r.score as score,
+		to_char(r.indate, 'YYYY-MM-DD') as indate
 	from
-		recipe_table
+		recipe_table r
 	where
+		rownum between 1 and ${countPerPage }
+		and
 		title like '%'||#{searchword }||'%'
 	order by
-		recipe_num desc
+		r.recipe_num desc
 </select>
 
 <!-- 상세 게시글 조회 (이전글 번호 LAG, 다음글 번호 조회 LEAD)-->
@@ -53,8 +69,10 @@
 			indate as indate,
 			LAG(recipe_num,1,-1) OVER(ORDER BY recipe_num ASC) as prev,
 			LEAD(recipe_num,1,-1) OVER(ORDER BY recipe_num ASC) as next
-		from recipe_table) re
-	where re.recipeNum = #{recipeNum }
+		from 
+			recipe_table) re
+	where 
+		re.recipeNum = #{recipeNum }
 </select>
 
 <!-- 조회수 올리기 -->
@@ -64,6 +82,140 @@
 	set
 		read_count = read_count + 1
 	where
+		recipe_num = #{recipeNum }
+</update>
+
+<!-- 레시피 게시글 삭제 -->
+<delete id="deleteRecipe" parameterType="int">
+	delete 
+	from
+		recipe_table
+	where
+		recipe_num = #{recipeNum }
+</delete>
+
+<!-- 댓글 등록 -->
+<insert id="insertReply" parameterType="Reply">
+	insert into reply_table(
+		reply_num,
+		recipe_num,
+		user_num,
+		reply_content
+	) values (
+		reply_num_seq.nextval,
+		#{recipeNum },
+		#{userNum },
+		#{replyContent }
+	)
+</insert>
+
+<!-- 댓글 조회 -->
+<!-- userMail 부분 : substr으로 문자열을 처음부터 @앞까지로 자르고, replace로 치환한다. -->
+<select id="readReply" parameterType="int" resultType="Reply">
+	select
+		r.reply_num as replyNum,
+		u.user_num as userNum,
+		replace(substr(u.user_mail,1,instr(u.user_mail,'@')-1), substr(substr(u.user_mail,1,instr(u.user_mail,'@')-1),2,2),'**') as userMail,
+		r.reply_content as replyContent,
+		to_char(r.reply_date, 'YYYY-MM-DD HH24:MI') as replyDate
+	from
+		reply_table r , user_table u
+	where
+		r.user_num = u.user_num
+		and
+		r.recipe_num = #{recipeNum }
+	order by
+        reply_num asc
+</select>
+
+<!-- 댓글 최신 1개만 조회(ajax용) -->
+<select id="newReply" parameterType="int" resultType="Reply">
+	select 
+		rownum, 
+		re.reply_num as replyNum,
+		u.user_num as userNum,
+		re.recipe_num as recipeNum,
+		replace(substr(u.user_mail,1,instr(u.user_mail,'@')-1), substr(substr(u.user_mail,1,instr(u.user_mail,'@')-1),2,2),'**') as userMail,
+		re.reply_content as replyContent,
+		re.reply_date as replyDate
+	from (
+		select 
+			reply_num, recipe_num, user_num, reply_content, reply_date 
+		from 
+			reply_table 
+		order by reply_num desc) re , user_table u 
+	where 
+		rownum = 1
+		and
+        u.user_num = re.user_num
+        and
+        recipe_num = #{recipeNum }
+	order by 
+		rownum asc
+</select>
+
+<!-- 댓글 삭제 -->
+<delete id="deleteReply" parameterType="int">
+	delete from reply_table
+	where reply_num = #{replyNum }
+</delete>
+
+<!-- 댓글 수정 -->
+<update id="updateReply" parameterType="Reply">
+	update 
+		reply_table
+	set
+		reply_content = #{replyContent }
+	where
+		reply_num = #{replyNum }
+</update>
+
+<!-- 점수 주기 -->
+<insert id="addScore" parameterType="Score">
+	insert into avg_table (
+		avg_num,
+		user_num,
+		recipe_num,
+		rating,
+		score_flag
+	) values (
+		avg_num_seq.nextval,
+		#{userNum },
+		#{recipeNum },
+		#{rating },
+		1
+	)
+</insert>
+
+<!-- 평가 여부 확인 -->
+<select id="getScoreFlag" parameterType="HashMap" resultType="Integer">
+	select
+		score_flag as scoreFlag
+	from
+		avg_table
+	where
+		recipe_num = #{recipeNum }
+		and
+		user_num = #{userNum }
+</select>
+
+<!-- 평가 평균 구하기 -->
+<select id="avgScore" parameterType="int" resultType="double">
+	select
+		round(avg(rating),2) as avgScore
+	from
+		avg_table
+	where
+		recipe_num = #{recipeNum }
+</select>
+
+<!-- 평가 레시피(게시판) 테이블에 반영 -->
+<update id="updateAvgScore" parameterType="Map">
+	update
+		recipe_table
+	set
+		score = #{score }
+	where 
 		recipe_num = #{recipeNum }
 </update>
 </mapper>

@@ -10,4 +10,6 @@ public class ReplyVO {
 	private int userNum;			// 회원 번호
 	private String replyContent;	// 댓글 내용
 	private String replyDate;		// 댓글 작성 날짜
+	
+	private String userMail; // 댓글 조회시 회원이름
 }

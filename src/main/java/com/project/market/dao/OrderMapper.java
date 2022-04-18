@@ -33,7 +33,7 @@ public interface OrderMapper {
 	int insertCart(HashMap<String, Object> map);
 
 	//장바구니 조회 - 박나래
-	ArrayList<ItemVO> selectCartList(String userMail);
+	ArrayList<ItemVO> selectCartList(int userNum);
 
 	//장바구니에 같은 상품이 있는지 확인 - 박나래
 	CartVO checkCart(HashMap<String, Object> map);

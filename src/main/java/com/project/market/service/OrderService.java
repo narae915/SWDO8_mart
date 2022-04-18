@@ -83,8 +83,8 @@ public class OrderService {
 	}
 
 	//장바구니 상품 조회
-	public ArrayList<ItemVO> selectCartList(String userMail) {
-		return dao.selectCartList(userMail);
+	public ArrayList<ItemVO> selectCartList(int userNum) {
+		return dao.selectCartList(userNum);
 	}
 
 	//장바구니에 같은 상품이 있는지 확인

@@ -10,49 +10,136 @@
 <body>
 	<c:forEach items="${recipeList }" var="recipe" varStatus="status">
 		<div class="col-lg-6 col-sm-6">
-		<input type="hidden" id="recipe${status.count }" value="${recipe.score }">
+		<input type="hidden" class="scores" id="avg-score${status.count }" value="${recipe.score }">
 			<div class="blog-item">
 				<div class="bi-pic" style="cursor:pointer;" onclick="location.href='/recipe/readRecipe?recipeNum=${recipe.recipeNum }'">
 					<img src="/resources/img/blog/blog-${status.count }.jpg" alt="">
 				</div>
 				<div class="bi-text">
 					<a href="/recipe/readRecipe?recipeNum=${recipe.recipeNum }">
-						<h4>${recipe.title }</h4>
-						<p><span>${recipe.indate } - </span></p>
-						<span class="star-container" id="star-con${status.count }">
-							<span id="star1">★</span>
-							<span id="star2">★</span>
-							<span id="star3">★</span>
-							<span id="star4">★</span>
-							<span id="star5">★</span>
-						</span></a>
+					<h4>${recipe.title }</h4>
+					<p><span>${recipe.indate } - </span></p></a>
+					<div class="star-ratings">
+						<div class="star-ratings-fill space-x-2 text-lg" id="star-fill${status.count }" style="width:calc(${recipe.score } * 20)%">
+							<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+						</div>
+						<div class="star-ratings-base space-x-2 text-lg">
+							<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</c:forEach>
-	<div class="col-lg-12">
-		<div class="loading-more">
-			<i class="icon_loading"></i>
-			<a href="#">검색 결과 더 보기</a>
+	<c:if test="${searchword == null}">
+		<div class="col-lg-12">
+			<div class="loading-more">
+				<i class="icon_loading"></i>
+				<a href="javascript:loadingMore(6);" style="cursor: pointer;">
+				상품 더 보기
+				</a>
+				<input type="hidden" id="viewCount" value="0">
+				<input type="hidden" id="startCount" value="0">
+			</div>
 		</div>
-	</div>	
+	</c:if>
+	<c:if test="${searchword != null}">
+		<div class="col-lg-12">
+			<div class="loading-more">
+				<i class="icon_loading"></i>
+				<a href="javascript:searchLoadingMore(6);" style="cursor: pointer;">
+				검색 결과 더 보기
+				</a>
+				<input type="hidden" id="viewCount" value="0">
+				<input type="hidden" id="startCount" value="0">
+				<input type="hidden" id="word" value="${searchword }">
+			</div>
+		</div>
+	</c:if>
 
 	<script src="/resources/js/jquery-3.6.0.min.js"></script>
 	<script type="text/javascript">
-	//리뷰 별 채우기
-	$(function() {
-		var score = $('input:hidden').length; //hidden태그의 value
-    	console.log(score);
+	//jsp페이지 출력과 동시에 실행
+	$(function(){
+		var score = 0;
+		var countPost = $(".scores").length;
+		console.log(countPost);
 		
-		for(var i=1; i<=score; i++) {
-			$("#star-con"+i+" span").removeAttr("class");
-			var test = $("#recipe" + i).val();
-			for(var j=1; j<=test; j++) {
-				console.log(test);
-				$("#star-con"+i+" #star"+j).attr("class", "on");
-			}
+		for(var i = 0; i <= countPost; i++) {
+			score = $("#avg-score"+i).val();
+			score = score*20;
+			//1를 더하여 주는 이유는 half star일 시 미세하게 절반이 안되어보여서 보여지는 값을 조정하기 위해 추가한 offset 값이다.
+			$("#star-fill"+i).css("width", score + 1 +"%");
 		}
+		$("li#menu-community").attr("class", "active");
 	});
+	
+	//더보기 실행하기(페이징) - 일반 ver
+	function loadingMore(cnt){
+		var temp = $("#getRecipeList>div>div.blog-item").length;
+		console.log(temp);
+
+		var startCount = $("input#startCount").val(temp);
+		startCount = startCount.val();
+		console.log('시작하는 숫자' +startCount);
+		
+		var viewCount = $("input#viewCount").val(cnt);
+		viewCount = viewCount.val();
+		console.log('보여주고 싶은 갯수 ' +viewCount);
+		
+		$.ajax({
+			url: "/recipe/loading",
+			type: "GET", 
+			data: {
+				startCount : startCount,
+				viewCount : viewCount
+			},
+    		success: function(res){
+    			console.log("성공");
+       			$(".row > .col-lg-4 col-sm-6").remove();
+   				$("#getRecipeList").html(res);
+    		},
+			error: function(e){
+				alert("표시할 게시물이 없습니다.");
+				console.log("실패");
+			}
+		});
+	}
+	
+	//더보기 실행하기(페이징) -- 검색 결과ver
+	function searchLoadingMore(cnt) {
+		var temp = $("#getRecipeList>div>div.blog-item").length;
+		console.log(temp);
+
+		var startCount = $("input#startCount").val(temp);
+		startCount = startCount.val();
+		console.log('시작하는 숫자' +startCount);
+		
+		var viewCount = $("input#viewCount").val(cnt);
+		viewCount = viewCount.val();
+		console.log('보여주고 싶은 갯수 ' +viewCount);
+		
+		var searchword = $("#word").val();
+		
+		$.ajax({
+			url: "/recipe/searchLoading",
+			type: "GET", 
+			data: {
+				startCount : startCount,
+				viewCount : viewCount,
+				searchword : searchword
+			},
+    		success: function(res){
+    			console.log("성공");
+       			$(".row > .col-lg-4 col-sm-6").remove();
+   				$("#getRecipeList").html(res);
+    		},
+			error: function(e){
+				alert("표시할 게시물이 없습니다.");
+				console.log("실패");
+			}
+		});
+	}
 	</script>
 </body>
 </html>

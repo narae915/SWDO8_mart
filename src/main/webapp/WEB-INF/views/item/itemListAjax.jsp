@@ -35,6 +35,12 @@
 	
 	<script src="/resources/js/jquery-3.6.0.min.js"></script>
 	<script type="text/javascript">
+	//jsp페이지 출력과 동시에 실행 
+	$(function(){
+		//현재 페이지를 선택했음을 알림 4/17 박나래
+		$("li#menu-foodMart").attr("class", "active");
+	});
+	
 	//장바구니에 넣기
 	function insertCart(itemNum) {
 		console.log(itemNum);

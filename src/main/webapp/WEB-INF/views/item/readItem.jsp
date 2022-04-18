@@ -349,46 +349,54 @@
     <script src="/resources/js/owl.carousel.min.js"></script>
     <script src="/resources/js/main.js"></script>
     <script type="text/javascript">
-    	function insertCart(itemNum) {
-			console.log(itemNum);
-			itemNum = parseInt(itemNum);
-			cartAmount = $("input[name=cartAmount]").val();
-			var userMail = $("#loginMail").val();
-			console.log(userMail);
-			console.log(cartAmount);
-			
-			if(cartAmount == 0) {
-				var zeromsg = "수량을 1개 이상 선택해주세요";
-				$("#amount-zero").text(zeromsg);
+    
+  //jsp페이지 출력과 동시에 실행 
+	$(function(){
+		//현재 페이지를 선택했음을 알림 4/17 박나래
+		$("li#menu-foodMart").attr("class", "active");
+	});
 
-			} else {
-				$.ajax({
-					url: "/order/insertCart",
-					type: "POST", 
-					data: {
-						itemNum : itemNum,
-						cartAmount : cartAmount,
-						userMail : userMail
-					},
-					success: function(res) { //cart테이블에 입력
-						if(res = "yes"){
-							showModal();
-							$("#ri-modal-button").click(function(){
-								location.href="/order/cart";
-							});
-						}
+	//장바구니에 상품 넣기
+	function insertCart(itemNum) {
+		console.log(itemNum);
+		itemNum = parseInt(itemNum);
+		cartAmount = $("input[name=cartAmount]").val();
+		var userMail = $("#loginMail").val();
+		console.log(userMail);
+		console.log(cartAmount);
+		
+		if(cartAmount == 0) {
+			var zeromsg = "수량을 1개 이상 선택해주세요";
+			$("#amount-zero").text(zeromsg);
+		} else {
+			$.ajax({
+				url: "/order/insertCart",
+				type: "POST", 
+				data: {
+					itemNum : itemNum,
+					cartAmount : cartAmount,
+					userMail : userMail
+				},
+				success: function(res) { //cart테이블에 입력
+					if(res = "yes"){
+						showModal();
+						$("#ri-modal-button").click(function(){
+							location.href="/order/cart";
+						});
 					}
-				});
-			}
-    	}
-    	
-    	function showModal() {
-    		$("#ri-modal").fadeIn();
+				}
+			});
+		}
+   	}
+   	
+	//모달창 띄워주기
+   	function showModal() {
+   		$("#ri-modal").fadeIn();
 
-    		$("#ri-modal_content").click(function(){
-    			$("#ri-modal").fadeOut();
-    		});
-    	}
+   		$("#ri-modal_content").click(function(){
+   			$("#ri-modal").fadeOut();
+   		});
+   	}
     </script>
 </body>
 

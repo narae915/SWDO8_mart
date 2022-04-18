@@ -164,27 +164,32 @@
 			user_num = #{userNum }
 	</update>
 	
-	<!-- 장바구니 조회 서브쿼리로 userMail을 불러옴, cart와 item테이블 조인으로 로그인한 사람의 장바구니 내역을 조회 -->
-	<select id="selectCartList" resultType="Item" parameterType="String">
+	<!-- 로그인한 사람의 장바구니 내역을 조회 최근 3개의 글만 볼 수 있음 -->
+	<select id="selectCartList" resultType="Item" parameterType="int">
 		select
-			c.cart_num as cartNum,
-			i.item_num as itemNum,
-			i.item_name as itemName,
-			i.price as price,
-			c.cart_amount as cartAmount
+			rownum, 
+			cart.cartNum as cartNum,
+			cart.itemNum as itemNum,
+			cart.itemName as itemName,
+			cart.price as price,
+			cart.cartAmount as cartAmount
 		from
-			(select cart.cart_num as cart_num,
-					cart.item_num as item_num,
-					u.user_mail as user_mail,
-					cart.cart_amount as cart_amount
-				from 
-					cart_table cart, user_table u
-				where 
-					cart.user_num = u.user_num) c, item_table i
+			(select
+				c.cart_num as cartNum,
+				i.item_num as itemNum,
+				i.item_name as itemName,
+				i.price as price,
+				c.cart_amount as cartAmount
+			from
+				cart_table c, item_table i
+			where
+				c.item_num = i.item_num
+				and
+				c.user_num = #{userNum } ) cart
 		where
-			c.item_num = i.item_num
-			and
-			c.user_mail = #{userMail }
+			rownum between 1 and 3
+		order by
+			rownum asc
 	</select>
 	
 	<!-- 결제 정보 입력 페이지 회원정보 불러오기 -->

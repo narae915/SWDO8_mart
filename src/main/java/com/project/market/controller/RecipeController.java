@@ -14,8 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.project.market.dao.UserDAO;
 import com.project.market.service.RecipeService;
 import com.project.market.vo.RecipeVO;
+import com.project.market.vo.ReplyVO;
+import com.project.market.vo.ScoreVO;
+import com.project.market.vo.UserVO;
 
 @Controller
 @RequestMapping(value = "/recipe")
@@ -26,13 +30,14 @@ public class RecipeController {
 	private int countPerPage = 6;
 	@Autowired
 	private RecipeService service;
+	@Autowired
+	private UserDAO uDao;
 	
 	//레시피 게시판 이동
 	@RequestMapping(value = "/recipeList", method = RequestMethod.GET)
 	public String recipeList(Model model) {
 		logger.info("recipeList 게시판(GET)");
 		
-		model.addAttribute("countPerPage", countPerPage);
 		ArrayList<RecipeVO> recipeList = service.getRecipeList(countPerPage);
 		
 		if(recipeList != null) {
@@ -49,18 +54,49 @@ public class RecipeController {
 		logger.info("searchword : {}", searchword);
 
 		//검색결과 list에 저장
-		ArrayList<RecipeVO> sRecipeList = service.searchRecipe(searchword);
+		ArrayList<RecipeVO> sRecipeList = service.searchRecipe(searchword, countPerPage);
 		logger.info("검색 결과 : {}", sRecipeList);
 
 		model.addAttribute("recipeList", sRecipeList);
 		model.addAttribute("searchword", searchword);
+		
 		return "recipe/recipeList";
 	}
 	
-	//더보기 페이징
+	//더보기 페이징 - 검색 ver
+	@RequestMapping(value = "/searchLoading", method = RequestMethod.GET)
+	public String searchLoading(String startCount, String viewCount, String searchword, Model model) {
+		logger.info("loading 더보기 페이징 검색ver 실행(GET)");
+		logger.info("startCount:{}", startCount);
+		logger.info("viewCount:{}", viewCount);
+		logger.info("searchword : {}", searchword);
+	
+		int startNum = Integer.parseInt(startCount);
+		int viewNum = Integer.parseInt(viewCount);
+		
+		int countPerPage = startNum + viewNum;
+		//게시판 테이블의 등록된 게시글 수 확인
+		int countColumn = service.countRecipeList(searchword);
+		//총 게시글 수가 조회되어 있는 게시글 수보다 같거나,적을 경우 null을 보내므로서 ajax실패를 만듬
+		if(countColumn <= startNum) {
+			return null;
+		//총 게시글 수가 조회되어 있는 게시글 수보다 많을 경우
+		} else {
+			//검색결과 list에 저장
+			ArrayList<RecipeVO> sRecipeList = service.searchRecipe(searchword, countPerPage);
+			logger.info("검색 결과 : {}", sRecipeList);
+
+			model.addAttribute("recipeList", sRecipeList);
+			model.addAttribute("searchword", searchword);
+			
+		}
+		return "recipe/recipeListAjax";
+	}
+	
+	//더보기 페이징 - 일반 ver
 	@RequestMapping(value = "/loading", method = RequestMethod.GET)
 	public String loading(String startCount, String viewCount, Model model) {
-		logger.info("loading 메소드 실행(GET)");
+		logger.info("loading 더보기 페이징 일반ver 실행(GET)");
 		logger.info("startCount:{}", startCount);
 		logger.info("viewCount:{}", viewCount);
 	
@@ -68,12 +104,19 @@ public class RecipeController {
 		int viewNum = Integer.parseInt(viewCount);
 		
 		int countPerPage = startNum + viewNum;
-
-		ArrayList<RecipeVO> recipeList = service.getRecipeList(countPerPage);
-		logger.info("recipeList:{}", recipeList);
+		String searchword = null;
 		
-		model.addAttribute("recipeList", recipeList);
-
+		//게시판 테이블의 등록된 게시글 수 확인
+		int countColumn = service.countRecipeList(searchword);
+		//총 게시글 수가 조회되어 있는 게시글 수보다 같거나,적을 경우 null을 보내므로서 ajax실패를 만듬
+		if(countColumn <= startNum) {
+			return null;
+		//총 게시글 수가 조회되어 있는 게시글 수보다 많을 경우
+		} else {
+			ArrayList<RecipeVO> recipeList = service.getRecipeList(countPerPage);
+			logger.info("recipeList:{}", recipeList);
+			model.addAttribute("recipeList", recipeList);
+		}
 		return "recipe/recipeListAjax";
 	}
 	
@@ -83,12 +126,32 @@ public class RecipeController {
 		logger.info("readRecipe 게시글(GET)");
 		logger.info("recipeNum : {}", recipeNum);
 		
+		String userMail = (String)session.getAttribute("userMail");
+		UserVO loginUser = uDao.getUser(userMail);
+
+		userMail = userMail.substring(0, userMail.lastIndexOf("@"));
+		model.addAttribute("userMail", userMail);
+		model.addAttribute("loginNum", loginUser.getUserNum());
+		
+		//평가 했는지 안했는지 확인, 평균 점수 조회
+		int scoreFlag = service.getScoreFlag(recipeNum, loginUser.getUserNum());
+		logger.info("scoreFlag : {}",scoreFlag);
+		model.addAttribute("scoreFlag", scoreFlag);
 		// 게시글 번호가 있으면 실행
 		if(recipeNum != 0) {
+			//게시글을 조회할때 dao에서 조회수도 1회 올라가게 하였음
 			RecipeVO recipe = service.getRecipe(recipeNum);
 			model.addAttribute("recipe", recipe);
 
 			logger.info("recipe : {} ", recipe);
+
+			
+			//댓글 조회 댓글
+			ArrayList<ReplyVO> replyList = service.readReply(recipeNum);
+			
+			logger.info("replyList : {}", replyList);
+			model.addAttribute("replyList", replyList);
+			
 			
 			//이전글 번호, 다음글 번호를 변수에 저장
 			int prev = recipe.getPrev();
@@ -117,10 +180,123 @@ public class RecipeController {
 			}
 		}
 		
-		String userMail = (String)session.getAttribute("userMail");
-		userMail = userMail.substring(0, userMail.lastIndexOf("@"));
-		model.addAttribute("userMail", userMail);
-		
 		return "recipe/readRecipe";
+	}
+
+	//레시피 게시글 수정
+	@RequestMapping(value="/updateRecipe", method = RequestMethod.GET)
+	public String updateRecipe(int recipeNum) {
+		logger.info("recipe 게시글 수정 페이지 이동(GET)");
+		logger.info("게시글 번호 : {}", recipeNum);
+		return "recipe/update";
+	}
+	
+	//레시판 게시글 삭제
+	@RequestMapping(value="/deleteRecipe", method = RequestMethod.GET)
+	public String deleteRecipe(int recipeNum) {
+		logger.info("recipe 게시글 삭제(GET)");
+		logger.info("삭제할 게시글 번호 : {}", recipeNum);
+		
+		boolean result = service.deleteRecipe(recipeNum);
+		if(result) {
+			logger.info("게시글 삭제 성공");
+		} else {
+			logger.info("게시글 삭제 실패");
+		}
+		return "redirect:/recipe/recipeList";
+	}
+	
+	//댓글 등록
+	@ResponseBody
+	@RequestMapping(value = "/insertReply", method = RequestMethod.POST)
+	public String insertReply(ReplyVO reply, HttpSession session, Model model) {
+		logger.info("inserReply 댓글 등록 (POST)");
+		logger.info("reply : {}", reply);
+		
+		//로그인 한 아이디의 정보를 조회 후 reply에 번호만 넘겨줌
+		String userMail = (String)session.getAttribute("userMail");
+		UserVO loginUser = uDao.getUser(userMail);
+		reply.setUserNum(loginUser.getUserNum());
+
+		boolean result = service.insertReply(reply);
+		if(result) {
+			logger.info("댓글 등록 완료");
+		} else {
+			logger.info("댓글 등록 실패");
+		}
+		return null;
+	}
+	
+	//댓글 조회(ajax용 댓글 작성후 1개씩 늘어나게 하기)
+	@ResponseBody
+	@RequestMapping(value = "/newReply", method = RequestMethod.GET)
+	public ReplyVO newReply(int recipeNum, Model model) {
+		logger.info("readReply 댓글 조회 (GET)");
+		logger.info("recipeNum : {}", recipeNum);
+		//추가하고 싶은 댓글 하나만을 조회
+		ReplyVO reply = service.newReply(recipeNum);
+		
+		logger.info("reply : {}", reply);
+		
+		return reply;
+	}
+	
+	//댓글 수정 후 조회
+	@ResponseBody
+	@RequestMapping(value = "/updateReply", method = RequestMethod.POST)
+	public ArrayList<ReplyVO> updateReply(int replyNum, String updateContent, int recipeNum) {
+		logger.info("updateReply 댓글 수정(POST)");
+		logger.info("replyNum : {}", replyNum);
+		logger.info("updateContent : {}", updateContent);
+
+		//받아온 정보를 ReplyVO에 저장
+		ReplyVO updateReply = new ReplyVO();
+		updateReply.setReplyNum(replyNum);
+		updateReply.setReplyContent(updateContent);
+		
+		int result = service.updateReply(updateReply);
+		if(result > 0) {
+			//수정에 성공하면 댓글 조회
+			ArrayList<ReplyVO> replyList = service.readReply(recipeNum);
+			return replyList;
+		}
+		return null;
+	}
+	
+	//댓글 삭제 후 조회 
+	@ResponseBody
+	@RequestMapping(value = "/deleteReply", method = RequestMethod.POST)
+	public ArrayList<ReplyVO> deleteReply(int replyNum, int recipeNum) {
+		logger.info("deleteReply 댓글 삭제(POST)");
+		logger.info("replyNum : {}", replyNum);
+		
+		int result = service.deleteReply(replyNum);
+		
+		if(result > 0) {
+			//삭제에 성공하면 댓글 조회
+			ArrayList<ReplyVO> replyList = service.readReply(recipeNum);
+			return replyList;
+		}
+		return null;
+	}
+	
+	//점수 주기 RequestMapping뒤에 return값이 한글이라 UTF-8 설정
+	@ResponseBody
+	@RequestMapping(value = "/addScore" , method = RequestMethod.POST)
+	public double addScore(ScoreVO ratingScore) {
+		logger.info("addScore 점수 주기(POST)");
+		logger.info("ScoreVO: {}", ratingScore);
+		double score = 0;
+		
+		// 평가한 점수를 DB에 저장하기
+		boolean result = service.addScore(ratingScore);
+		
+		if(result) {
+			//게시판 점수의 평균 값을 내서 DB에 저장
+			score = service.avgScore(ratingScore.getRecipeNum());
+			logger.info("score: {}", score);
+		}
+		
+		return score;
 	}
 }

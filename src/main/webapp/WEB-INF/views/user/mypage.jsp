@@ -77,41 +77,6 @@
         </div>
 	
     <!-- Faq Section End -->
-    
-    <!-- Partner Logo Section Begin -->
-    <div class="partner-logo">
-        <div class="container">
-            <div class="logo-carousel owl-carousel">
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="/resources/img/logo-carousel/logo-1.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="/resources/img/logo-carousel/logo-2.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="/resources/img/logo-carousel/logo-3.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="/resources/img/logo-carousel/logo-4.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="/resources/img/logo-carousel/logo-5.png" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Partner Logo Section End -->
-
     <!-- Footer Section Begin -->
     <%@ include file="/WEB-INF/views/footer.jsp" %>
     
@@ -127,11 +92,16 @@
     <script src="/resources/js/owl.carousel.min.js"></script>
     <script src="/resources/js/main.js"></script>
     <script type="text/javascript">
+	//jsp페이지 출력과 동시에 실행 
+	$(function(){
+		//현재 페이지를 선택했음을 알림 4/17 박나래
+		$("li#menu-mypage").css("background", "#e7ab3c");
+	});
+
     function userUpdate(userMail) 
     {
     	location.href = "/user/userUpdate?userMail="+userMail;
     }
     </script>
 </body>
-
 </html>

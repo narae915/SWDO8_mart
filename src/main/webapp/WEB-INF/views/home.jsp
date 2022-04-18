@@ -472,6 +472,12 @@
     <script src="/resources/js/jquery.slicknav.js"></script>
     <script src="/resources/js/owl.carousel.min.js"></script>
     <script src="/resources/js/main.js"></script>
+    <script type="text/javascript">
+	//jsp페이지 출력과 동시에 실행
+	$(function(){
+		$("li#menu-home").attr("class", "active");
+	});
+    </script>
 </body>
 
 </html>
