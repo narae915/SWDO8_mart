@@ -10,9 +10,10 @@ public class RecipeVO {
 	private String title;	// 게시글 제목
 	private String content;	// 게시글 내용
 	private int readCount;	// 게시글 조회수
-	private int score;		// 게시글 평가
+	private double score;	// 게시글 평가
 	private String indate;	// 게시글 작성 날짜
 
+	// 박나래
 	private int rownum; //번호 매기기
 	private int prev; // 이전글 번호를 조회
 	private int next; // 다음글 번호를 조회

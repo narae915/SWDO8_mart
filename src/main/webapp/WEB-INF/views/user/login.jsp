@@ -96,6 +96,12 @@
 	<script src="/resources/js/owl.carousel.min.js"></script>
 	<script src="/resources/js/main.js"></script>
 	<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js" charset="utf-8"></script>
+	<script type="text/javascript">
+	//jsp페이지 출력과 동시에 실행
+	$(function(){
+		$("li#menu-mypage").css("background", "#e7ab3c");
+	});
+	</script>
 </body>
 
 </html>

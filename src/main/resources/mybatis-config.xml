@@ -12,6 +12,7 @@
 		<typeAlias type="com.project.market.vo.RecipeVO" alias="Recipe"/> 
 		<typeAlias type="com.project.market.vo.ReplyVO" alias="Reply"/>
 		<typeAlias type="com.project.market.vo.UserVO" alias="User"/> 
+		<typeAlias type="com.project.market.vo.ScoreVO" alias="Score"/> 
 	</typeAliases>
  	 <mappers>
 	 	<mapper resource="mappers/AdminMapper.xml" />

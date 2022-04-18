@@ -3536,18 +3536,18 @@ ol {
 }
 
 .blog-details-inner .leave-comment .comment-form input {
-	width: 100%;
+	width: 7%;
 	font-size: 16px;
-	color: #636363;
-	height: 50px;
+	height: 111px;
 	border: 1px solid #ebebeb;
 	border-radius: 5px;
 	padding-left: 20px;
-	margin-bottom: 30px;
+	margin-bottom: 23px;
 }
 
+
 .blog-details-inner .leave-comment .comment-form textarea {
-	width: 100%;
+	width: 91%;
 	resize: none;
 	font-size: 16px;
 	color: #636363;
@@ -3556,7 +3556,7 @@ ol {
 	border-radius: 5px;
 	padding-left: 20px;
 	padding-top: 10px;
-	margin-bottom: 3px;
+	margin-bottom: -50px;
 }
 
 /*---------------------

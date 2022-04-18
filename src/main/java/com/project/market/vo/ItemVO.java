@@ -17,4 +17,7 @@ public class ItemVO {
 	//22-03-30 박나래
 	private int cartNum; // 장바구니 번호
 	private int cartAmount; // 장바구니 수량
+	
+	//22-04-11 박나래
+	private int rownum; // 번호 매기기
 }

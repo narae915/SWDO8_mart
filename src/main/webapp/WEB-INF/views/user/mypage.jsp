@@ -127,6 +127,13 @@
     <script src="/resources/js/jquery.slicknav.js"></script>
     <script src="/resources/js/owl.carousel.min.js"></script>
     <script src="/resources/js/main.js"></script>
+    <script type="text/javascript">
+	//jsp페이지 출력과 동시에 실행 
+	$(function(){
+		//현재 페이지를 선택했음을 알림 4/17 박나래
+		$("li#menu-mypage").css("background", "#e7ab3c");
+	});
+	</script>
 </body>
 
 </html>

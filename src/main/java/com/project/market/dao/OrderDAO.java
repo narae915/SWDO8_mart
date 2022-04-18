@@ -118,13 +118,13 @@ public class OrderDAO {
 	}
 
 	//장바구니 상품 조회
-	public ArrayList<ItemVO> selectCartList(String userMail) {
+	public ArrayList<ItemVO> selectCartList(int userNum) {
 		ArrayList<ItemVO> result = null;
 		OrderMapper mapper = null;
 		
 		try {
 			mapper = session.getMapper(OrderMapper.class);
-			result = mapper.selectCartList(userMail);
+			result = mapper.selectCartList(userNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

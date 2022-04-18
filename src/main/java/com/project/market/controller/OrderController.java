@@ -41,7 +41,6 @@ public class OrderController {
 	public String insertCart(int itemNum, int cartAmount, String userMail, Model model) {
 		logger.info("장바구니에 상품넣기(POST)");
 		logger.info("itemNum : {}, cartAmount : {}", itemNum, cartAmount);
-		logger.info("userMail : {}", userMail);
 		String res = null;
 		
 		// 1. 장바구니에 같은 상품이 있는지 확인
@@ -70,41 +69,68 @@ public class OrderController {
 			}
 		}
 		
-		ArrayList<ItemVO> cartList = service.selectCartList(userMail);
+		//값이 잘 들어갔는지 확인용
+		ArrayList<ItemVO> cartList = service.selectCartList(userNum);
 		logger.info("cartList :{}", cartList);
-		
-		model.addAttribute("cartList", cartList);
 		
 		return res;
 	}
 	
 	//마우스 오버시 cartList조회
 	@RequestMapping(value="/selectCartList", method = RequestMethod.POST)
-	public String selectCartList(Model model, String userMail) {
+	public String selectCartList(Model model, HttpSession session) {
 		logger.info("마우스 오버시 cartList 조회(POST)");
-		logger.info("userMail : {}", userMail);
-		ArrayList<ItemVO> cartList = service.selectCartList(userMail);
 		String emptyCart = null;
-		
-		if(userMail == "" || userMail == " " || userMail == null) {
-			cartList = null;
-			emptyCart = "로그인 후 이용 가능합니다.";
-			model.addAttribute("cartList", cartList);
-			model.addAttribute("emptyCart" , emptyCart);
-		} else {
+		String userMail = (String)session.getAttribute("userMail");
+
+		logger.info("userMail : {}", userMail);
+		//로그인 되어 있다면
+		if(userMail != null) {
+		//회원정보를 조회하고, cartList를 조회
+		UserVO user = uDao.getUser(userMail);
+		ArrayList<ItemVO> cartList = service.selectCartList(user.getUserNum());
+			// 장바구니에 조회된 목록이 있다면
 			if(cartList.size() >= 1) {
 				logger.info("cartList :{}", cartList);
 				model.addAttribute("cartList", cartList);
-
+			// 장바구니에 조회된 목록이 없다면
 			} else if(cartList.size() == 0) {
 				cartList = null;
 				emptyCart = "장바구니에 등록된 상품이 없습니다.";
-				model.addAttribute("cartList", cartList);
 				model.addAttribute("emptyCart", emptyCart);
 			}
+		// 로그인 되어 있지 않다면
+		} else if(userMail == null || userMail == "" || userMail == " ") {
+				emptyCart = "로그인 후 이용 가능합니다.";
+				model.addAttribute("emptyCart" , emptyCart);
 		}
 		
 		return "/order/cartListAjax";
+	}
+	
+	//마우스 오버의 장바구니 내역 삭제(실제로 cart_table 내역이 삭제됨)
+	@RequestMapping(value = "/deleteCart", method = RequestMethod.POST)
+	public String deleteCart(int cartNum, HttpSession session, Model model) {
+		logger.info("deleteCart 메소드 실행(POST)");
+		logger.info("cartNum:{}", cartNum);
+		
+		 // 장바구니 삭제 메소드
+		boolean result = service.cartCancel(cartNum);
+		
+		if(result) {
+			logger.info("장바구니 삭제 성공");
+			
+			String userMail = (String)session.getAttribute("userMail");
+			UserVO user = uDao.getUser(userMail);
+			ArrayList<ItemVO> cartList = service.selectCartList(user.getUserNum());
+			model.addAttribute("cartList", cartList);
+			
+			return "/order/cartListAjax";
+
+		} else {
+			logger.info("장바구니 삭제 실패");
+			return null;
+		}
 	}
 	
 	// 2022-03-24~2022-03-25 노채린
@@ -189,7 +215,6 @@ public class OrderController {
 	
 	// 22-04-04 노채린
 	// 장바구니 삭제
-	@ResponseBody
 	@RequestMapping(value = "/cartCancel", method = RequestMethod.POST)
 	public String cartCancel(int cartNum) {
 		logger.info("cartCancel 메소드 실행(POST)");

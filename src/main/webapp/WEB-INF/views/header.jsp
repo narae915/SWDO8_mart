@@ -74,7 +74,6 @@
                             </sec:authorize>
                             <li class="cart-icon">
                                 <a href="#" onmouseover="selectCartList();">
-                                <input type="hidden" id="loginMail" value="${sessionScope.userMail }">
                                     <i class="icon_bag_alt" onmouseover="selectCartList();"></i>
                                     <span>+</span>
                                 </a>
@@ -125,10 +124,10 @@
                 </div>
                 <nav class="nav-menu mobile-menu">
                     <ul>
-                        <li class="active"><a href="/">메인 | Home</a></li>
-                        <li><a href="/item/itemList">식품 마트 | Food Mart</a></li>
-                        <li><a href="/recipe/recipeList">커뮤니티 | Community</a>
-                        <li><a href="/user/mypage">마이 페이지 | My Page</a>
+                        <li id="menu-home"><a href="/">메인 | Home</a></li>
+                        <li id="menu-foodMart"><a href="/item/itemList">식품 마트 | Food Mart</a></li>
+                        <li id="menu-community"><a href="/recipe/recipeList">커뮤니티 | Community</a>
+                        <li id="menu-mypage"><a href="/user/mypage">마이 페이지 | My Page</a>
                             <ul class="dropdown">
                                 <li><a href="/order/orderList">내 주문 목록</a></li>
                                 <li><a href="/user/user">회원 정보 수정</a></li>
@@ -145,10 +144,9 @@
     <script src="/resources/js/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
     
+    //상품 조회
     function selectCartList(){
     	var str = "";
-    	var userMail = $("#loginMail").val();
-    	console.log(userMail);
     	
     	$.ajax({
    			url: "/order/selectCartList",
@@ -165,6 +163,26 @@
    				console.log("실패");
    			}
    		});
+    }
+    
+    //상품 삭제
+    function deleteCart(cartNum) {
+    	$.ajax({
+    		url:"/order/deleteCart",
+    		type:"POST",
+    		data: {
+    			cartNum: cartNum 
+    		},
+    		success: function(res) {
+    			$("#cartList").remove();
+   				$(".select-items").html(res);
+    		},
+    		error: function(e){
+   				console.log(e);
+   				console.log("실패");
+   			}
+    		
+    	});
     }
     </script>
 </body>

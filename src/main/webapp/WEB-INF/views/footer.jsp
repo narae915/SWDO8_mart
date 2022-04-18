@@ -143,7 +143,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> 1조 
         			if(res == "yes") {
         				result = true;
         			} else {
-        				/* showStaffModal(); */
         				$("#footer-modal-content").html("");
         	    		$("#footer-modal-content").prepend("관계자만 접속할 수 있습니다.");
         	    		$("#footer-modal-content").append('<input type="button" class="modal-button" id="footer-modal-button" value="창 닫기">');
