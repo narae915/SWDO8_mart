@@ -71,7 +71,7 @@
                        		</c:if>
                             </ul>
                         </li>
-                        <li><a href="#">메신저 | Messenger</a></li>
+                        <li><a href="empChatting">메신저 | Messenger</a></li>
                         <c:if test="${empty sessionScope.loginName }">
                         	<li class="active"><a href="adminLogin"><i class="fa fa-user"></i> Login</a></li>
                         </c:if>

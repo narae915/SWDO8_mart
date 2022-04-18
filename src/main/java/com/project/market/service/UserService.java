@@ -79,4 +79,13 @@ public class UserService {
 		
 		return dao.userUpdate(updateUser) > 0;
 	}
+	
+	/* 유저 본인 확인 */
+	public String selectUser(String userId) 
+	{
+		UserVO user = new UserVO();
+		user.setUserMail(userId);
+		
+		return dao.selectUser(user);
+	}
 }

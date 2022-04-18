@@ -109,4 +109,14 @@
 	where
 		user_mail = #{userMail }
 </update>
+
+<!-- 유저 본인 확인 -->
+<select id="selectUser" parameterType="User" resultType="String">
+	select
+		user_pw as userPw
+	from
+		user_table
+	where
+		user_mail = #{userMail }
+</select>
 </mapper>

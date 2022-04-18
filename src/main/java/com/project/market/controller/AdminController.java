@@ -409,18 +409,18 @@ public class AdminController {
 			if ( result ) 
 			{
 				logger.info("직원 사진 정보 삭제 성공.");
-				resultString = "성공";
+				resultString = "success";
 			} 
 			else 
 			{
 				logger.info("직원 사진 정보 삭제 실패.");
-				resultString = "실패";
+				resultString = null;
 			}
 		}
 		else
 		{
 			logger.info("직원 사진 삭제 실패.");
-			resultString = "삭제 실패";
+			resultString = null;
 		}
 		
 		return resultString;
@@ -667,4 +667,12 @@ public class AdminController {
 		return "admin/empFindPwView";
 	}
 	
+	/* 메신저 페이지 이동 */
+	@RequestMapping (value = "/empChatting", method = RequestMethod.GET)
+	public String empChatting() 
+	{
+		logger.info("empChatting 메소드 실행(GET).");
+		
+		return "admin/empChatting";
+	}
 }

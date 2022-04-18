@@ -3,6 +3,8 @@ function checkForm()
 {
 	var userName = $("#userName").val();			// 입력한 이름
 	var userCall = $("#userCall").val();			// 입력한 연락처
+	
+	// 정규식
 	var checkSpc = /[~!@#$%^&*()_+|<>?:{}]/;		// 특수문자 정규식
 	var checkNum = /[0-9]/;							// 숫자 정규식
 	

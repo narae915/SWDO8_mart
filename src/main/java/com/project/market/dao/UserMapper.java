@@ -27,4 +27,7 @@ public interface UserMapper {
 
 	// 회원 정보 수정
 	int userUpdate(UserVO updateUser);
+	
+	// 유저 본인 확인
+	String selectUser(UserVO user);
 }

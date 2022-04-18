@@ -151,4 +151,23 @@ public class UserDAO {
 		
 		return result;
 	}
+	
+	/* 유저 본인 확인 */
+	public String selectUser(UserVO user) 
+	{
+		String result = null;
+		UserMapper mapper = null;
+		
+		try 
+		{
+			mapper = session.getMapper(UserMapper.class);
+			result = mapper.selectUser(user);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 }

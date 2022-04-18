@@ -128,13 +128,19 @@
                         <li class="active"><a href="/">메인 | Home</a></li>
                         <li><a href="/item/itemList">식품 마트 | Food Mart</a></li>
                         <li><a href="/recipe/recipeList">커뮤니티 | Community</a>
-                        <li><a href="/user/mypage">마이 페이지 | My Page</a>
-                            <ul class="dropdown">
-                                <li><a href="/order/orderList">내 주문 목록</a></li>
-                                <li><a href="/user/userUpdate">회원 정보 수정</a></li>
-                                <li><a href="/user/signUp">회원가입</a></li>
-                            </ul>
-                        </li>
+                        <c:choose>
+                        <c:when test="${not empty sessionScope.userMail }">
+							<li><a href="/user/mypage">마이 페이지 | My Page</a>
+								<ul class="dropdown">
+									<li><a href="/order/orderList">내 주문 목록</a></li>
+									<li><a href="#" onclick="userConfirm('${sessionScope.userMail }');">회원 정보 수정</a></li>
+								</ul>
+                        	</li>
+                        </c:when>
+                        <c:otherwise>
+                        	<li><a href="/user/signUp">회원가입 | Sign Up</a></li>
+                        </c:otherwise>
+                        </c:choose>
                     </ul>
                 </nav>
                 <div id="mobile-menu-wrap"></div>
@@ -165,6 +171,46 @@
    				console.log("실패");
    			}
    		});
+    }
+    
+    function userConfirm(userId) 
+    {
+    	confirmModal();
+    	$("#footer-modal-content").prepend("&ensp;&ensp;본인 확인이 필요합니다.");
+    	$("#footer-modal-content").prepend("비밀번호:&ensp;<input type='password' id='userPw' name='userPw'>");
+    	$("#footer-modal-content").prepend("ID:&ensp;" + userId);
+    	
+    	showModalAlert();
+    	
+    	$('#yes-button').click(function() 
+   			{
+   				$.ajax
+   				({
+   					url: "/user/userConfirm",
+   					type: "get",
+   					data:
+   					{
+   						userId: userId,
+   						userPw: $("#userPw").val()
+   					},
+   					success: function(result)
+   					{
+   						if ( result == "success" )
+   						{
+   							exitAlert();
+   							$("#footer-modal-content").prepend("확인되셨습니다.");
+   							showModalAlert();
+   							location.href = "/user/userUpdate?userMail="+userId;
+   						}
+   					}
+   				});
+   			});
+   				
+   			$('#no-button').click(function() 
+   			{
+   				$("#footer-modal").fadeOut();
+   				return false;
+   			});
     }
     </script>
 </body>

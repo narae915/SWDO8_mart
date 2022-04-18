@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.market.service.UserService;
+import com.project.market.util.FileService;
 import com.project.market.vo.UserVO;
 
 @Controller
@@ -294,6 +295,45 @@ public class UserController {
 		}
 		
 		return returnUrl;
+	}
+	
+	/* 유저 본인 확인 */
+	@ResponseBody
+	@RequestMapping(value = "/userConfirm", method = RequestMethod.GET)
+	public String userConfirm(String userId, String userPw) 
+	{
+		logger.info("userConfirm 메소드 실행(GET).");
+		logger.info("userId: {}", userId);
+		logger.info("userPw: {}", userPw);
+		
+		String selectUser = service.selectUser(userId);
+		
+		String resultString = null;
+		
+		if ( pwdEncoder.matches(userPw, selectUser) )
+		{
+			logger.info("ID 찾기 성공.");
+			resultString = "success";
+		}
+		else
+		{
+			logger.info("ID 찾기 실패.");
+			resultString = null;
+		}
+		
+		
+//		if ( selectUser != null )
+//		{
+//			logger.info("ID 찾기 성공.");
+//			resultString = "success";
+//		}
+//		else
+//		{
+//			logger.info("ID 찾기 실패.");
+//			resultString = null;
+//		}
+		
+		return resultString;
 	}
 	
 	/* 회원 정보 수정 페이지 이동 */

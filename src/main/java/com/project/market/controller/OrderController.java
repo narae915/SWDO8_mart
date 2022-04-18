@@ -19,7 +19,6 @@ import com.project.market.dao.UserDAO;
 import com.project.market.service.OrderService;
 import com.project.market.util.PageNavigator;
 import com.project.market.vo.CartVO;
-import com.project.market.vo.ForwardVO;
 import com.project.market.vo.ItemVO;
 import com.project.market.vo.OrderVO;
 import com.project.market.vo.UserVO;
