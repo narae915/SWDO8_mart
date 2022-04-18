@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
-	<!-- 
+    
 	<script type="text/javascript">
 		function itemUpdate(){
 			var updateNum = [];
@@ -37,31 +37,31 @@
 			});
 			
 			var allData = {"updateNumArray": updateNum};
-	
+	/* 
 			if(updateNum.length >= 2){
 				alert("한 개만 선택해주세요.");
 				
 				return false;
 			}
-			
+			 */
 			if(updateNum == "") { // 체크박스가 체크되어있지 않은 경우 경고창을 띄우며 수정을 진행하지 않음.
 				alert("선택된 항목이 없습니다.");
 				
 				return false;
-			} else {
+			} /*else {
 				 $.ajax({
 					url: "/admin/itemUpdate",
+					type: "post",
 					data: allData,
-					success: function(res) {
-							alert("fff");
+					success: function(res, url) {
+						alert("성공");
+						location.href="/admin/itemRegister";
 					}
 				});
-					
-				return true;
-			}
+			}*/
 		}
-	</script> -->
-		
+	</script>
+	
 	<style type="text/css">
 	table, th, tr, td {
 		text-align: center;
@@ -211,59 +211,60 @@
 	                    <!-- 22/03/27~22/03/28 노채린 -->
 	                    <!-- 상품 검색 -->
 	                    <c:if test="${not empty itemList }">
-	                    <form action="itemManagement" method="get" onsubmit="return searchChk();">
-							<select name="category" style="position:relative; top:2.9em; left:0.2em; height:45px;">
-								<option value="">카테고리 선택</option>
-								<option value="10">육류</option>
-								<option value="20">어패류</option>
-								<option value="30">과일</option>
-								<option value="40">채소</option>
-								<option value="50">조미료</option>
-								<option value="60">음료</option>
-								<option value="70">그 외</option>
-							</select>
-	                    	<input type="text" name="searchWord" id="searchWord" placeholder="상품의 이름을 정확히 입력해주세요.">
+		                    <form action="itemManagement" method="get" onsubmit="return searchChk();">
+								<select name="category" style="position:relative; top:2.9em; left:0.2em; height:45px;">
+									<option value="">카테고리 선택</option>
+									<option value="10">육류</option>
+									<option value="20">어패류</option>
+									<option value="30">과일</option>
+									<option value="40">채소</option>
+									<option value="50">조미료</option>
+									<option value="60">음료</option>
+									<option value="70">그 외</option>
+								</select>
+		                    	<input type="text" name="searchWord" id="searchWord" placeholder="상품의 이름을 정확히 입력해주세요.">
 		                    	<button type="submit" class="primary-btn" id="search-button"><i class="ti-search"></i></button>
-	                    </form>
-	                    
-	                    <!-- 상품 추가 -->
-		                <input type="button" class="primary-btn" id="insert-button" value="상품 추가" onclick="" style="border-radius:5px; border:none">
-		                
-	                    
+		                    </form>
 		                    
-		                    <form action="itemDelete" method="get">
-		                    <input type="button" id="upButton" class="primary-btn" value="상품 수정" style="height:40px; border-radius:5px; border:none" onclick = "return itemUpdate();">
-		                    <input type="button" name="itemNum" class="primary-btn" style="height:40px; border-radius:5px; border:none" value="상품 삭제" onclick ="return deValueChk();">
-		                   	<!-- 상품 관리 테이블 시작 -->
-		                       <table>
-		                       	<thead>
-		                       		<tr>
-		                       			<th>선택</th>
-		                       			<th style="padding-top:15px; padding-bottom:15px">IMAGE</th>
-		                       			<th>상품 번호</th>
-		                       			<th>이름</th>
-		                       			<th>가격</th>
-		                       			<th>재고</th>
-		                       			<th>카테고리</th>
-		                       		</tr>
-								</thead>
-		                       	<tbody>
-		                       		<c:forEach var="Item" items="${itemList }">
-		                       		<tr>
-		                       			<td><input type="checkbox" id="itemChk" name="itemChk" value="${Item.itemNum }" style="width:30px; height:30px;" /></td>
-		                       			<td style="width:20%; height: 200px;"><img src="/resources/img/cart-page/product-1.jpg" alt="임시사진"></td>
-		                       			<td style="width:10%;">${Item.itemNum }</td>
-		                       			<td id="itemName" style="width:10%;">${Item.itemName }</td>
-		                       			<td id="price" style="width:15%;">${Item.price}</td>
-		                       			
-		                       			<td id="itemAmount" style="width:15%;">${Item.itemAmount }</td>
-		                       			
-		                       			<td id="itemCategory">${Item.categoryName }</td>
-		                       		</tr>
-		                       		</c:forEach>
-		                       </tbody>
-		                       </table>
-		                       <!--상품 관리 테이블 끝  -->
+		                    <!-- 상품 추가 -->
+			                <input type="button" class="primary-btn" id="insert-button" value="상품 추가" onclick="location.href='/admin/itemRegisterForward'" style="border-radius:5px; border:none">
+			                
+		                    <form action="itemUpdate" method="get">
+		                    	<input type="submit" id="upButton" class="primary-btn" value="상품 수정" style="height: 40px; border-radius:5px; border:none" onclick = "return itemUpdate();">
+			                    <input type="button" name="itemNum" class="primary-btn" style="height:40px; border-radius:5px; border:none" value="상품 삭제" onclick ="return deValueChk();">
+			                   	<!-- 상품 관리 테이블 시작 -->
+								<table>
+									<thead>
+			                       		<tr>
+			                       			<th>선택</th>
+			                       			<th style="padding-top:15px; padding-bottom:15px">IMAGE</th>
+			                       			<th>상품 번호</th>
+			                       			<th>이름</th>
+			                       			<th>가격</th>
+			                       			<th>재고</th>
+			                       			<th>카테고리</th>
+			                       		</tr>
+									</thead>
+			                       	<tbody>
+			                       		<c:forEach var="Item" items="${itemList }">
+			                       		<tr>
+			                       			<td>
+			                       				<input type="radio" id="itemChk" name="itemChk" value="${Item.itemNum }" style="width:30px; height:30px;" />
+			                       				<%-- <input type="checkbox" id="itemChk" name="itemChk" value="${Item.itemNum }" style="width:30px; height:30px;" /> --%>
+			                       			</td>
+			                       			<td style="width:20%; height: 200px;"><img src="/resources/img/cart-page/product-1.jpg" alt="임시사진"></td>
+			                       			<td style="width:10%;">${Item.itemNum }</td>
+			                       			<td id="itemName" style="width:10%;">${Item.itemName }</td>
+			                       			<td id="price" style="width:15%;">${Item.price}</td>
+			                       			
+			                       			<td id="itemAmount" style="width:15%;">${Item.itemAmount }</td>
+			                       			
+			                       			<td id="itemCategory">${Item.categoryName }</td>
+			                       		</tr>
+			                       		</c:forEach>
+			                       </tbody>
+								</table>
+								<!--상품 관리 테이블 끝  -->
 		                        <!-- 페이징 시작 -->
 		                        <div style="text-align: center; margin-top: 20px;">
 									<span>

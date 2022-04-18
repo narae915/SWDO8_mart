@@ -349,4 +349,34 @@
 			emp_mail = #{empMail }
 	</update>
 	
+	<!-- 상품 수정 페이지 기존 정보 불러오기 -->
+	<select id="getAdminItemList" parameterType="String" resultType="Item">
+		select
+			item_name as itemName,
+			category_num as categoryNum,
+			(select category_name
+			from category_table
+			where category_num = (select category_num
+									from item_table
+									where item_num = #{itemChk })) as categoryName,
+			price as price,
+			item_amount as itemAmount
+		from 
+			item_table
+		where 
+			item_num = #{itemChk }
+	</select>
+	
+	<!-- 상품 수정 -->
+	<update id="itemUpdate" parameterType="HashMap">
+		update
+			item_table
+		set
+			item_name = #{itemName },
+			price = #{price },
+			item_amount = #{itemAmount },
+			category_num = #{category }
+		where
+			item_num = #{itemNum }
+	</update>
 </mapper>

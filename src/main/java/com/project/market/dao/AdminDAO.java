@@ -317,4 +317,33 @@ public class AdminDAO {
 		return result;
 	}
 
+	public ArrayList<ItemVO> getAdminItemList(String itemChk) {
+		ArrayList<ItemVO> result = null;
+		AdminMapper mapper = null;
+		
+		try {
+			mapper = session.getMapper(AdminMapper.class);
+			result = mapper.getAdminItemList(itemChk);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	public int itemUpdate(HashMap<String, Object> map) {
+		int result = 0;
+		AdminMapper mapper = null;
+		
+		try {
+			mapper = session.getMapper(AdminMapper.class);
+			result = mapper.itemUpdate(map);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
 }

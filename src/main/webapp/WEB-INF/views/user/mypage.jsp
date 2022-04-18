@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
 	<script src="https://kit.fontawesome.com/af95d2c333.js" crossorigin="anonymous"></script>
+	
 </head>
 
 <body>
@@ -63,7 +64,10 @@
                     <div class="faq-accordin"> <!-- 폰트 크기, 아이콘 -->
 	                    <!-- 22/04/05  노채린 -->
 	                    <h1 id="content-title">회원정보</h1>
-	                    <input type="button" value="회원 탈퇴" onclick="/user/userDelete">
+	                    
+	                     <%-- onclick="userDelete('${sessionScope.userMail }');" --%>
+	                    <input type="button" value="회원 탈퇴" id="userDeleteBtn">
+	                    <input type="hidden" value="${sessionScope.userMail }" id="loginMail">
 	                    <input type="button" value="회원 정보 수정" onclick="userUpdate('${sessionScope.userMail }');">
 			    	</div>
 			            <div id="gocart" class="">
@@ -131,6 +135,37 @@
     {
     	location.href = "/user/userUpdate?userMail="+userMail;
     }
+    
+
+	$('#userDeleteBtn').click(function() {
+		confirmModal();	
+		$("#footer-modal-content").prepend("정말 탈퇴하시겠습니까?");
+		showModalAlert();
+		
+		$('#yes-button').click(function() {
+			$.ajax({
+				url: "/user/userDelete",
+				type: "get",
+				data: {
+					userMail: $('#loginMail').val()
+				},
+				success: function() {
+					exitAlert();
+  					$("#footer-modal-content").prepend("탈퇴가 완료되었습니다.");
+  					$("#footer-modal").fadeIn()	;
+  		    		$("button[name=modalClose]").click(function() {
+  		    			$("#footer-modal").fadeOut();
+  		    			location.href="/user/logout";	
+  		    		});
+				}
+			});
+		});
+		
+		$('#no-button').click(function() {
+			$("#footer-modal").fadeOut();
+			return false;
+		});
+	})
     </script>
 </body>
 

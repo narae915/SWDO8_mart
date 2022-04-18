@@ -107,9 +107,9 @@
 				           	 	<!-- 데이터 있을 때 -->
 				                <div class="row head">
 				                    <div class="subdiv">
-				                        <div class="check">선택</div>
-				                        <div class="img">이미지</div>
-				                        <div class="pname">상품명</div>
+				                        <div class="check" id="check">선택</div>
+				                        <div class="img" id="img">이미지</div>
+				                        <div class="pname" id="pname">상품명</div>
 				                    </div>
 				                    <div class="subdiv">
 				                        <div class="basketprice">가격</div>
@@ -151,7 +151,7 @@
 					                    <div class="subdiv">
 				                        	<div class="basketcmd">
 				                        		<input type="hidden" id="hiddenNum" value="${Cart.cartNum }">
-				                        		<button style="color:#EBE8C7;width:35px;height:35px;background-color:#69644F;border:2px solid #fff;" class="abutton"onclick="return cartCancel();"><i class="fa-solid fa-xmark fa-lg"></i></button>
+				                        		<button style="color:#fff;width:35px;height:35px;background-color:#000;border:2px solid #fff;" class="abutton"onclick="return cartCancel();"><i class="fa-solid fa-xmark fa-lg"></i></button>
 				                        	</div>
 					                    </div>
 					                </div>
@@ -204,10 +204,10 @@
 			                	</div>
 				            </div>
 				            </form>
-					   	 	<div class=result-box style="border:5px solid #EBE8C7; border-radius: 10px;background-color: #9C9576;width: 30%; margin-left: 72%; display:inline-block">
+					   	 	<div class=result-box style="border:5px solid #EBE8C7; border-radius: 10px;background-color: #000;width: 30%; margin-left: 70%; display:inline-block">
 					   	 	<br>
-					            <div class="bigtext right-align sumcount" id="sum_p_num" style="color:#EBE8C7">총 0개</div>
-					            <div class="bigtext right-align box summoney" id="sum_p_price" style="color:#EBE8C7">합계금액: 0원</div>
+					            <div class="bigtext right-align sumcount" id="sum_p_num" style="color:#fff; padding-right: 5%;">총 0개</div>
+					            <div class="bigtext right-align box summoney" id="sum_p_price" style="color:#fff; padding-right: 5%;">합계금액: 0원</div>
 					            <br>
 					    	</div>
 				        </c:if>
@@ -277,6 +277,7 @@
     <script src="/resources/js/owl.carousel.min.js"></script>
     <script src="/resources/js/main.js"></script>
     <script src="/resources/js/cart.js"></script>
+    
 </body>
 
 </html>

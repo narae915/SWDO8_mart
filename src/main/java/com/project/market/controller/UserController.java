@@ -85,26 +85,23 @@ public class UserController {
 		return "user/mypage";
 	}
 	
-	/*
 	// 22-04-05 노채린
 	// 회원 탈퇴
 	@RequestMapping(value="/userDelete", method = RequestMethod.GET)
-	public String userDelete(HttpSession session) {
+	public String userDelete(String userMail) {
 		logger.info("회원탙퇴 실행(GET)");
-		
-		String userMail = (String) session.getAttribute("loginMail");
 		
 		boolean result = service.userDelete(userMail);
 		
 		if(result) {
 			logger.info("회원 탈퇴 성공");
+			return "success";
 		} else {
 			logger.info("회원 탈퇴 실패");
+			return null;
 		}
 		
-		return "redirect:/";
 	}
-	*/
 	
 	/* ID 찾기 페이지 이동 */
 	@RequestMapping (value = "/findId", method = RequestMethod.GET)

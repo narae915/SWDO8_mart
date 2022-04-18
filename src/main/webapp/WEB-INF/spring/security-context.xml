@@ -31,7 +31,7 @@
 	        password-parameter="userPw"
 	        login-processing-url="/user/auth"
 	        login-page="/user/login"
-	         authentication-success-handler-ref="customLoginSuccessHandler"/>
+	        authentication-success-handler-ref="customLoginSuccessHandler"/>
 	
 		<!-- 로그아웃 -->
 	    <security:logout 
@@ -39,7 +39,7 @@
 	    	invalidate-session="true" 
 	    	logout-success-url="/"
 	    	delete-cookies="JSESSIONID" />
-		
+	    	
 		<!-- http-basic  -->
 		<security:http-basic />
 		

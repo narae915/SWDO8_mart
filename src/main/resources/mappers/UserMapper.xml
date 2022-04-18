@@ -40,10 +40,10 @@
 </select>
 	
 <!-- 회원 탈퇴 -->
-<!-- <delete id = "userDelete" parameterType="String">
+<delete id = "userDelete" parameterType="String">
 	delete from user_table
 	where user_mail = #{userMail }
-</delete> -->
+</delete>
 
 <!-- ID 찾기 -->
 <select id="selectId" parameterType="User" resultType="String">
