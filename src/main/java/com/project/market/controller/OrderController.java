@@ -1,10 +1,9 @@
 package com.project.market.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Stream;
+
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -209,19 +208,20 @@ public class OrderController {
 		ArrayList<CartVO> cartList = service.getCartList(userMail, navi.getStartRecord(), COUNT_PER_PAGE);
 		
 		logger.info("cartList:{}",cartList);
-		 model.addAttribute("cartList", cartList);
+		model.addAttribute("cartList", cartList);
 		 
 		
 		return "/order/cart";
 	}
 	
+/*
 	@RequestMapping(value = "/cart", method = RequestMethod.POST)
 	public String cart() {
 		logger.info("cart 메소드 실행(POST).");
 		
 		return "/order/orderForm";
 	}
-	
+*/
 	// 22-04-04 노채린
 	// 장바구니 삭제
 	@RequestMapping(value = "/cartCancel", method = RequestMethod.POST)
@@ -272,11 +272,12 @@ public class OrderController {
 			model.addAttribute("pNumArr", pNumArr);
 		}
 		
-		// 가져올 것: 회원 정보, 상품정보
+		// 회원정보 가져오기
 		ArrayList<UserVO> userList = service.getUserList(userMail);
 		model.addAttribute("userList", userList);
 		logger.info("userList:{}", userList);
 		
+		// 주문정보 가져오기
 		ArrayList<ItemVO> itemList = service.getItemList(buy);
 		logger.info("itemList:{}",itemList);
 		model.addAttribute("itemList", itemList);
@@ -287,33 +288,42 @@ public class OrderController {
 	// 결제 정보 전송
 	@ResponseBody
 	@RequestMapping(value = "/orderForm", method = RequestMethod.POST)
-	public String orderForm(Model model, String cartNum, Authentication authentication, String amount, String orderMail, 
-							String orderCall, String address, String detailAddress) {
+	public String orderForm(Model model, String cartNum, Authentication authentication, String amount, 
+						String orderMail, String orderCall, String address, String detailAddress) {
 		logger.info("orderForm 메소드 실행(POST).");
 
 		String userMail = authentication.getName();
 		model.addAttribute("userMail", userMail);
 
-		boolean result = service.insertOrder(amount, cartNum, orderMail, orderCall,
-						address, detailAddress, userMail);
-		if(result) {
+		// 주문 테이블 입력 메소드
+		boolean result1 = service.insertOrder(amount, cartNum, orderMail, orderCall,
+													address, detailAddress, userMail);
+
+		String[] cartNumArr = cartNum.split(",");
+		
+		for(int i=0; i<cartNumArr.length; i++) {
+			cartNum = cartNumArr[i];
+			
+			// 장바구니 테이블 삭제 메소드
+			boolean result2 = service.cartCancel(Integer.parseInt(cartNum));
+			
+			if(result2) {
+				logger.info(cartNum+"번 장바구니 테이블 삭제 성공");
+				
+			} else {
+				logger.info(cartNum+"번 장바구니 테이블 삭제 실패");
+			}
+			
+		}
+		
+		if(result1) {
 			logger.info("결제 테이블 입력 성공");
 			return "success";
-			
 			
 		} else {
 			logger.info("결제 테이블 입력 실패");
 			return null;
 		}
-	}
 
-	// 결제 정보 입력 페이지
-	@RequestMapping(value = "/orderFormForward", method = RequestMethod.GET)
-	public String orderFormForward() {
-		logger.info("orderFormForward 메소드 실행(GET).");
-		
-		
-		return "/order/orderFormForward";
 	}
-	
 }

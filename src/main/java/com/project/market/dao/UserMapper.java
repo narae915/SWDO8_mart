@@ -11,7 +11,7 @@ public interface UserMapper {
 	UserVO getUser(String userMail);
 
 	// 회원 탈퇴
-	// int userDelete(String userMail);
+	 int userDelete(String userMail);
 	
 	// ID 찾기
 	String selectId(UserVO user);

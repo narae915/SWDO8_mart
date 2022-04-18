@@ -187,7 +187,7 @@
 			pay_method : 'card',
 			merchant_uid : 'merchant_' + new Date().getTime(),
 			name : '봄날 식자재마트',
-			amount : '${totalPrice}', //판매 가격
+			amount : '${totalPrice}' //판매 가격
 			
 			/*
 			buyer_email : $("#userMail").val(),
@@ -206,7 +206,26 @@
 				msg += '결제 금액 : ' + rsp.paid_amount;
 				msg += '카드 승인번호 : ' + rsp.apply_num;
 
-				// $("#orderForm").removeAttr('onsubmit');
+				// 데이터 전송 ajax
+				$.ajax({
+					url: "/order/orderForm",
+					type: "post",
+					data: {
+						cartNum: $("#cartNum").val(),
+						amount: $("#amount").val(),
+						orderMail: $("#userMail").val(),
+						orderCall: $("#userCall").val(),
+						address: $("#address").val(),
+						detailAddress: $("#detailAddress").val()
+					}, 
+					success: function(res, url) {
+						if(res == 'success') {
+							//location.replace("/order/orderList"); 넘어가긴 하지만 뒤로가기 제한x
+							location.href= "/order/orderList";
+							//location.replace= "/order/orderList"; 뒤로가기가 막히긴 함 orderForm에서 먹혀서 문제지
+						}
+					}
+				});
 			} else {
 				var msg = '결제에 실패하였습니다.';
 				msg += '에러내용 : ' + rsp.error_msg;
@@ -215,26 +234,6 @@
 			alert(msg);
 		}); 
 		
-		// 데이터 전송 ajax
-		$.ajax({
-			url: "/order/orderForm",
-			type: "post",
-			data: {
-				cartNum: $("#cartNum").val(),
-				amount: $("#amount").val(),
-				orderMail: $("#userMail").val(),
-				orderCall: $("#userCall").val(),
-				address: $("#address").val(),
-				detailAddress: $("#detailAddress").val()
-			}, 
-			success: function(res, url) {
-				if(res == 'success') {
-					//location.replace("/order/orderList"); 넘어가긴 하지만 뒤로가기 제한x
-					location.href= "/order/orderList";
-					//location.replace= "/order/orderList"; 뒤로가기가 막히긴 함 orderForm에서 먹혀서 문제지
-				}
-			}
-		});
     });
 	    
 	

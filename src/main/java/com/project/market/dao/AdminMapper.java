@@ -7,7 +7,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.project.market.vo.EmpVO;
-import com.project.market.vo.FileListVO;
 import com.project.market.vo.ItemVO;
 
 public interface AdminMapper {
@@ -54,5 +53,9 @@ public interface AdminMapper {
 	int findEmp(EmpVO emp); // PW 찾기 전 해당하는 직원 찾기
 
 	int updatePw(EmpVO newPw); // PW 리셋
+
+	ArrayList<ItemVO> getAdminItemList(String itemChk); // 상품 수정 페이지 기존 정보 가져오기
+
+	int itemUpdate(HashMap<String, Object> map); // 상품 수정
 
 }

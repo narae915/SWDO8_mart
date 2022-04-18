@@ -40,7 +40,6 @@ public class UserDAO {
 		return result;
 	}
 
-	/*
 	// 회원 탈퇴
 	public int userDelete(String userMail) {
 		int result = 0;
@@ -55,7 +54,6 @@ public class UserDAO {
 		
 		return result;
 	}
-*/
 	
 	/* ID 찾기 */
 	public String selectId(UserVO user) 

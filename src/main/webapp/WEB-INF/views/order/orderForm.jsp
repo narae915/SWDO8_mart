@@ -14,7 +14,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>SpringDay | 결제 정보 넘김</title>
+    <title>SpringDay | forward</title>
 
 </head>
 

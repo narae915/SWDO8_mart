@@ -4,32 +4,33 @@
 	    float: left;
 	    font-size: 0.9375em;
 	    margin-bottom: 20px;
+	    padding: 20px;
 	}
     .basketdiv .row.head {
         box-sizing: border-box;
-        outline: 5px solid #EBE8C7;
-        background-color: #f4f4f4;
-        color: #EBE8C7;
-        font-weight: bolder;
-    	font-size: 20px; 
+        outline: 3px #E3E3E3 solid;
+        background-color: #000;
+        color: #fff;
+    	font-size: 18px; 
+    	padding: 20px;
     	line-height: 2;
     	width: 102.6%;
     }
     .basketdiv .data {
-    	background-color: #9C9576;
+    	background-color: #fff;
         box-sizing: border-box;
-        outline: 5px solid #EBE8C7;
+        outline: 3px #E3E3E3 solid;
         float: left;
         width: 102.6%;
 		font-size: 18px;    
-		color: #EBE8C7;    
+		color: #000;    
     }
     .basketdiv .data .empty{
         text-align: center;
         padding: 12px 0;
     }
     .basketdiv .row.head .subdiv {
-        background-color: #A68523;
+        background-color: #000;
     }
     .basketdiv .row > .subdiv {
         display: block;
@@ -67,7 +68,7 @@
     
     
 	.basketdiv .data .num .updown {
-	    color: #EBE8C7;
+	    color: #000;
 	    font-size: 3em;
 	}
 	.basketdiv .check {
@@ -194,8 +195,8 @@
 	    box-sizing: border-box;
 	    margin-top: 10px;
 	    font-size: 1.2em;
-	    color: #EBE8C7;
-	    background-color: #9C9576;
+	    color: #fff;
+	    background-color: #000;
 	    border: 3px solid #EBE8C7;
 	    text-align: center;
 	    text-weight: 500;

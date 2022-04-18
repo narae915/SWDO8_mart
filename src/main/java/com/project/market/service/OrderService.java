@@ -104,11 +104,13 @@ public class OrderService {
 		return dao.updateCartAmount(map) > 0;
 	}
 
+	// orderForm에 회원정보 가져오기
 	public ArrayList<UserVO> getUserList(String userMail) {
 
 		return dao.getUserList(userMail);
 	}
-
+	
+	// orderForm에 상품정보 가져오기
 	public ArrayList<ItemVO> getItemList(String buy) {
 		HashMap<String, Object> map = new HashMap<>();
 		String[] buyArr = buy.split(",");
@@ -118,13 +120,13 @@ public class OrderService {
 		return dao.getItemList(map);
 	}
 
+	// 주문 테이블에 입력
 	public boolean insertOrder(String amount, String cartNum, String orderMail, 
 			String orderCall, String address, String detailAddress, String userMail) {
 
 		String oneCartNum = "";
 		String oneAmount = "";
 		HashMap<String, Object> map = new HashMap<>();
-		HashMap<String, Object> doubleMap = new HashMap<>();
 		
 		String orderAddress = address +" " + detailAddress;
 		
@@ -143,7 +145,6 @@ public class OrderService {
 			
 			map.put("oneCartNum", oneCartNum);
 			map.put("oneAmount", oneAmount);
-			map.put("doubleMap", doubleMap);
 			map.put("orderMail", orderMail);
 			map.put("orderCall", orderCall);
 			map.put("orderAddress", orderAddress);
@@ -153,7 +154,6 @@ public class OrderService {
 
 		}
 		return flag;
-		
 	
 	}
 

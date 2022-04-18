@@ -196,4 +196,22 @@ public class AdminService {
 		return dao.updatePw(newPw) > 0;
 	}
 
+	// 상품 수정 페이지 기존 상품 정보 불러오기
+	public ArrayList<ItemVO> getAdminItemList(String itemChk) {
+		
+		return dao.getAdminItemList(itemChk);
+	}
+
+	public boolean itemUpdate(String itemNum, String itemName, String price, String itemAmount, int category) {
+		HashMap<String, Object> map = new HashMap<>();
+		
+		map.put("itemNum", itemNum);
+		map.put("itemName", itemName);
+		map.put("price", price);
+		map.put("itemAmount", itemAmount);
+		map.put("category", category);
+		
+		return dao.itemUpdate(map) > 0;
+	}
+
 }

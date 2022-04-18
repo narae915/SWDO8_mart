@@ -33,16 +33,13 @@ $('#cancelButton').click(function() {
 				type: "post",
 				data: allData,
 				success: function(res) {
-					if(res == 'success') {
-						exitAlert();
-	  					$("#footer-modal-content").prepend("취소되셨습니다.");
-	  					showModalAlert();
-	  					setTimeout(function() {
-	  						location.reload();
-	  					}, 3000);
-	  					
-					}
-					
+					exitAlert();
+  					$("#footer-modal-content").prepend("취소되셨습니다.");
+  					$("#footer-modal").fadeIn();
+  		    		$("button[name=modalClose]").click(function() {
+  		    			$("#footer-modal").fadeOut();
+  		    			location.reload();
+  		    		});
 				}
 			});
 			

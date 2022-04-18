@@ -95,7 +95,7 @@ public class AdminController {
 	@ResponseBody
 	@RequestMapping(value = "/itemDelete", method = RequestMethod.GET)
 	public String itemDelete(@RequestParam(value="cancelNumArray[]") List<String> cancelNum) {
-		logger.info("itemDelete 메소드 실행");
+		logger.info("itemDelete 메소드 실행(GET)");
 		logger.info("cancelNum:{}", cancelNum);
 		
 		 // 상품 목록 삭제 메소드
@@ -665,6 +665,65 @@ public class AdminController {
 		logger.info("empFindPwView 메소드 실행(GET).");
 		
 		return "admin/empFindPwView";
+	}
+	
+	// 상품 등록 페이지 이동
+	@RequestMapping(value = "/itemRegister", method = RequestMethod.GET)
+	public String itemRegister(Model model, String itemChk) {
+		logger.info("itemRegister 메소드 실행(GET)");
+
+		return "admin/itemRegister";
+	}
+	
+	// 상품 신규 등록
+	@RequestMapping(value = "/itemRegister", method = RequestMethod.POST)
+	public String itemRegister(int category, String itemName, String price, String itemAmount) {
+		logger.info("itemRegister 메소드 실행(POST)");
+
+		boolean result = service.itemInsert(category, itemName, price, itemAmount);
+		
+		if(result) {
+			logger.info("상품 신규 등록 성공");
+		} else {
+			logger.info("상품 신규 등록 실패");
+		}
+		
+		return "redirect:/admin/itemManagement";
+		
+	}
+	
+	// 상품 수정 페이지 이동
+	@RequestMapping(value = "/itemUpdate", method = RequestMethod.GET)
+	public String itemUpdate(String itemChk, Model model) {
+		logger.info("itemUpdate 메소드 실행(GET)");
+		
+		// 체크박스 itemNum
+		logger.info("itemChk:{}", itemChk);
+		model.addAttribute("itemChk", itemChk);
+		
+		ArrayList<ItemVO> itemList = service.getAdminItemList(itemChk);
+		logger.info("itemList:{}",itemList);
+		model.addAttribute("itemList",itemList);
+		
+		return "admin/itemUpdate";
+	}
+
+	// 상품 수정
+	@RequestMapping(value = "/itemUpdate", method = RequestMethod.POST)
+	public String itemUpdate(String itemNum, String itemName, String price, String itemAmount, int category) {
+		logger.info("itemUpdate 메소드 실행(POST)");
+		
+		// 체크박스 itemNum
+		logger.info("itemNum:{}", itemNum);
+		
+		boolean result = service.itemUpdate(itemNum, itemName, price, itemAmount, category);
+		
+		if(result) {
+			logger.info("수정 성공");
+		} else {
+			logger.info("수정 실패");
+		}
+		return "redirect:/admin/itemManagement";
 	}
 	
 }

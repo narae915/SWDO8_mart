@@ -24,13 +24,11 @@ public class UserService {
 		return dao.getUser(authentication.getName());
 	}
 
-	/*
 	// 회원 탈퇴
 	public boolean userDelete(String userMail) {
 
 		return dao.userDelete(userMail) > 0;
 	}
-	*/
 	
 	/* ID 찾기 */
 	public String selectId(String userName, String userCall) 

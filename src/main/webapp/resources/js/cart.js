@@ -98,7 +98,7 @@ function cartCancel() {
 			showModalAlert();
 			setTimeout(function() {
 				location.reload();
-			}, 3000);				
+			}, 2000);				
 		}
 	});
 }
