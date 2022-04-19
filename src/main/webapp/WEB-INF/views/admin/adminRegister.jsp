@@ -82,11 +82,11 @@
                             </div>
                             <div class="group-input" id="pinNumChk_false">
                                <input type="text" id="pinNumChk" name="pinNumChk" placeholder="인증번호" disabled="disabled">
-                               <input type="button" id="pinNumChk_Btn" value="확인" disabled="disabled" style="position: absolute; left: 24.5em; bottom: 15.7em;">
+                               <input type="button" id="pinNumChk_Btn" value="확인" disabled="disabled" style="position: absolute; right: 0.95em; bottom: 15.7em;">
 							   <span id="pinNumChk_warn" style="position: absolute; left: 2.23em; bottom: 14.15em;"></span>
                             </div>
                             <div class="group-input">
-								<input type="button" id="sendMailBtn" value="인증번호 전송" style="position: absolute; left: 24.5em; bottom: 20.4em;">
+								<input type="button" id="sendMailBtn" value="인증번호 전송" style="position: absolute; right: 0.95em; bottom: 20.4em;">
                             </div>
                             <div class="group-input">
 								<select id="position" name="position" style="width: 100%; height: 50px;">

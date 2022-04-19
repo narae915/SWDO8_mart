@@ -28,7 +28,6 @@
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
 	<script src="https://kit.fontawesome.com/af95d2c333.js" crossorigin="anonymous"></script>
-	
 </head>
 
 <body>
@@ -64,11 +63,10 @@
                     <div class="faq-accordin"> <!-- 폰트 크기, 아이콘 -->
 	                    <!-- 22/04/05  노채린 -->
 	                    <h1 id="content-title">회원정보</h1>
-	                    
 	                     <%-- onclick="userDelete('${sessionScope.userMail }');" --%>
 	                    <input type="button" value="회원 탈퇴" id="userDeleteBtn">
 	                    <input type="hidden" value="${sessionScope.userMail }" id="loginMail">
-	                    <input type="button" value="회원 정보 수정" onclick="userUpdate('${sessionScope.userMail }');">
+	                  	<input type="button" value="회원 정보 수정" onclick="userConfirm('${sessionScope.userMail }');">
 			    	</div>
 			            <div id="gocart" class="">
 			                <div class="clear"></div>
@@ -79,34 +77,68 @@
                 </div>
             </div>
         </div>
-	
     <!-- Faq Section End -->
+    
     <!-- Footer Section Begin -->
     <%@ include file="/WEB-INF/views/footer.jsp" %>
     
-    <!-- Js Plugins -->
-    <script src="/resources/js/jquery-3.6.0.min.js"></script>
-    <script src="/resources/js/bootstrap.min.js"></script>
-    <script src="/resources/js/jquery-ui.min.js"></script>
-    <script src="/resources/js/jquery.countdown.min.js"></script>
-    <script src="/resources/js/jquery.nice-select.min.js"></script>
-    <script src="/resources/js/jquery.zoom.min.js"></script>
-    <script src="/resources/js/jquery.dd.min.js"></script>
-    <script src="/resources/js/jquery.slicknav.js"></script>
-    <script src="/resources/js/owl.carousel.min.js"></script>
-    <script src="/resources/js/main.js"></script>
-    <script type="text/javascript">
+	<!-- Js Plugins -->
+	<script src="/resources/js/jquery-3.6.0.min.js"></script>
+	<script src="/resources/js/bootstrap.min.js"></script>
+	<script src="/resources/js/jquery-ui.min.js"></script>
+	<script src="/resources/js/jquery.countdown.min.js"></script>
+	<script src="/resources/js/jquery.nice-select.min.js"></script>
+	<script src="/resources/js/jquery.zoom.min.js"></script>
+	<script src="/resources/js/jquery.dd.min.js"></script>
+	<script src="/resources/js/jquery.slicknav.js"></script>
+	<script src="/resources/js/owl.carousel.min.js"></script>
+	<script src="/resources/js/main.js"></script>
+	<script type="text/javascript">
 	//jsp페이지 출력과 동시에 실행 
 	$(function(){
 		//현재 페이지를 선택했음을 알림 4/17 박나래
 		$("li#menu-mypage").css("background", "#e7ab3c");
 	});
-
-    function userUpdate(userMail) 
+	
+	function userConfirm(userId) 
     {
-    	location.href = "/user/userUpdate?userMail="+userMail;
+    	confirmModal();
+    	$("#footer-modal-content").prepend("&ensp;&ensp;본인 확인이 필요합니다.");
+    	$("#footer-modal-content").prepend("비밀번호:&ensp;<input type='password' id='userPw' name='userPw'>");
+    	$("#footer-modal-content").prepend("ID:&ensp;" + userId);
+    	
+    	showModalAlert();
+    	
+    	$('#yes-button').click(function() 
+   			{
+   				$.ajax
+   				({
+   					url: "/user/userConfirm",
+   					type: "get",
+   					data:
+   					{
+   						userId: userId,
+   						userPw: $("#userPw").val()
+   					},
+   					success: function(result)
+   					{
+   						if ( result == "success" )
+   						{
+   							exitAlert();
+   							$("#footer-modal-content").prepend("확인되셨습니다.");
+   							showModalAlert();
+   							location.href = "/user/userUpdate?userMail="+userId;
+   						}
+   					}
+   				});
+   			});
+   				
+   			$('#no-button').click(function() 
+   			{
+   				$("#footer-modal").fadeOut();
+   				return false;
+   			});
     }
-    
 
 	$('#userDeleteBtn').click(function() {
 		confirmModal();	
@@ -137,6 +169,6 @@
 			return false;
 		});
 	})
-    </script>
+	</script>
 </body>
 </html>

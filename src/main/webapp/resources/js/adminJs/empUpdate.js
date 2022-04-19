@@ -211,3 +211,43 @@ $("#pinNumChk_Btn").click(function()
 		checkPinNum.attr("class", "incorrect");
 	}   
 });
+
+/* 등록된 사진 삭제 */
+function deleteImg(imgName) 
+{
+	confirmModal();
+	$("#footer-modal-content").prepend("&ensp;등록된 사진이 삭제됩니다.");
+	showModalAlert();
+	
+	$('#yes-button').click(function() 
+	{
+		$("#deleteImgBtn").css("display", "none"); 	// 사진 수정 버튼 숨김
+		$("#empImg").css("display", "none"); 		// 표시되있는 사진 숨김
+	
+		$.ajax
+		({
+			url: "/admin/empImgDelete",
+			type: "get",
+			data:
+			{
+				empImg: imgName
+			},
+			success: function(result)
+			{
+				if ( result == "success" )
+				{
+					exitAlert();
+					$("#footer-modal-content").prepend("삭제되었습니다.");
+					showModalAlert();
+				}
+			}
+		});
+	});
+		
+	$('#no-button').click(function() 
+	{
+		$("#footer-modal").fadeOut();
+		return false;
+	});
+	
+}

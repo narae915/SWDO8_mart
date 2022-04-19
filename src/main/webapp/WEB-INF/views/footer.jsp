@@ -186,7 +186,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> 1조 
     	function confirmModal() {
     		$("#footer-modal-content").html("");
     		$("#footer-modal-content").append('<button class="primary-btn" id="yes-button" style="border-radius:5px; position: relative; top: 45px; right: 50px;">예</button>');
-    		$("#footer-modal-content").append('<button class="primary-btn" id="no-button" style="border-radius:5px; position: relative; left: 50px">아니오</button>');
+    		$("#footer-modal-content").append('<button class="primary-btn" id="no-button" style="border-radius:5px; position: relative; left: 50px;">아니오</button>');
     	}
 
     </script>
