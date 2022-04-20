@@ -27,155 +27,8 @@
     <link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
-    
-	<script type="text/javascript">
-		function itemUpdate(){
-			var updateNum = [];
-			var checked = $("input[name=itemChk]:checked");
-			checked.each(function() {
-				updateNum.push($(this).val());
-			});
-			
-			var allData = {"updateNumArray": updateNum};
-	/* 
-			if(updateNum.length >= 2){
-				alert("한 개만 선택해주세요.");
-				
-				return false;
-			}
-			 */
-			if(updateNum == "") { // 체크박스가 체크되어있지 않은 경우 경고창을 띄우며 수정을 진행하지 않음.
-				alert("선택된 항목이 없습니다.");
-				
-				return false;
-			} /*else {
-				 $.ajax({
-					url: "/admin/itemUpdate",
-					type: "post",
-					data: allData,
-					success: function(res, url) {
-						alert("성공");
-						location.href="/admin/itemRegister";
-					}
-				});
-			}*/
-		}
-	</script>
-	
-	<style type="text/css">
-	table, th, tr, td {
-		text-align: center;
-		border-collapse: collapse;
-		margin: auto;
-	}
-	
-	table {
-		border: 1px #E3E3E3 solid;
-		height: 50%;
-		width: 100%;
-	}
-	
-	th, td {
-		font-weight: normal;
-    }
-    	
-	th {
-		border: #fff 1px solid;
-		background-color: black;
-		color: #fff; 
-	}
+    <link rel="stylesheet" href="/resources/css/adminCss/itemManagement.css" type="text/css">
 
-	.button-cell {
-		border-left: 2px #D1D1D1 solid;
-	}
-	
-	tr:not(:last-child) {
-		border-bottom: 2px #D1D1D1 solid;
-	}
-	
-	#searchWord {
-		width: 25%;
-		height: 45px;
-		border: none;
-		font-size: 16px;
-		border: #E7AB3C solid 3px;
-		border-radius: 5px;
-		color: #000;
-		padding-right: 20px;
-		position:relative;
-		top:47px;
-	}
-	
-    button {
-		border:none;
-		position:relative;
-		transition:800ms ease all;
-		outline:none;
-	}
-	
-	button:hover {
-		background:#000;
-		color:#E7AB3C;
-	}
-	
-	button:before,button:after {
-		content:'';
-		position:absolute;
-		top:0;
-		right:0;
-		height:2px;
-		width:0;
-		background: #E7AB3C;
-		transition:400ms ease all;
-	}
-	
-	button:after {
-		right:inherit;
-		top:inherit;
-		left:0;
-		bottom:0;
-	}
-	
-	button:hover:before, button:hover:after {
-		width:100%;
-		transition:800ms ease all;
-	}
-	#search-button {
-		width:5px;
-		height:45.7px;
-		border-radius:5px;
-		top:3.3em;
-		right:1.8em;
-	}
-	
-	#insert-button {
-		display: inline-block;
-		vertical-align:center;
-		border-radius:5px;
-		left: 21%;
-		margin: 10px;
-		height: 40px;
-		position: relative;
-		top: 50px;
-		padding: 12px 30px;
-	}
-	#image-not {
-		 width: 50px;
-		 height: 50px;
-		 display:block;
-		 margin:auto;
-		 margin-top: 10%;
-		 margin-bottom:3%;
-	}
-	
-	.container-h5 {
-			background: linear-gradient(-45deg, #f3f5f0 50%, #969696 50%);
-			border-style: solid;
-			border-width: 5px;
-			border-color: #E3E3E3;
-			border-radius: 15px;
-		}
-	</style>
 </head>
 <body>
     <!-- Page Preloder -->
@@ -183,7 +36,7 @@
         <div class="loader"></div>
     </div>
     <!-- Header -->
-    <%@ include file="/WEB-INF/views/header.jsp" %>
+    <%@ include file="/WEB-INF/views/admin/adminHeader.jsp" %>
 
     <!-- Breadcrumb Section Begin -->
     <div class="breacrumb-section">
@@ -212,7 +65,7 @@
 	                    <!-- 상품 검색 -->
 	                    <c:if test="${not empty itemList }">
 		                    <form action="itemManagement" method="get" onsubmit="return searchChk();">
-								<select name="category" style="position:relative; top:2.9em; left:0.2em; height:45px;">
+								<select name="category" id="category">
 									<option value="">카테고리 선택</option>
 									<option value="10">육류</option>
 									<option value="20">어패류</option>
@@ -227,39 +80,39 @@
 		                    </form>
 		                    
 		                    <!-- 상품 추가 -->
-			                <input type="button" class="primary-btn" id="insert-button" value="상품 추가" onclick="location.href='/admin/itemRegisterForward'" style="border-radius:5px; border:none">
+			                <input type="button" class="primary-btn" id="insert-button" value="상품 추가" onclick="location.href='/admin/itemRegister'">
 			                
+
 		                    <form action="itemUpdate" method="get">
-		                    	<input type="submit" id="upButton" class="primary-btn" value="상품 수정" style="height: 40px; border-radius:5px; border:none" onclick = "return itemUpdate();">
-			                    <input type="button" name="itemNum" class="primary-btn" style="height:40px; border-radius:5px; border:none" value="상품 삭제" onclick ="return deValueChk();">
+		                    	<input type="submit" id="upButton" class="primary-btn" value="상품 수정" onclick = "return itemUpdate();">
+			                    <input type="button" id="deButton" name="itemNum" class="primary-btn" value="상품 삭제" onclick ="return deValueChk();">
 			                   	<!-- 상품 관리 테이블 시작 -->
 								<table>
 									<thead>
 			                       		<tr>
 			                       			<th>선택</th>
-			                       			<th style="padding-top:15px; padding-bottom:15px">IMAGE</th>
+			                       			<th id="th-image">IMAGE</th>
 			                       			<th>상품 번호</th>
 			                       			<th>이름</th>
 			                       			<th>가격</th>
 			                       			<th>재고</th>
 			                       			<th>카테고리</th>
+			                       			<th>판매글 작성</th>
 			                       		</tr>
 									</thead>
 			                       	<tbody>
 			                       		<c:forEach var="Item" items="${itemList }">
 			                       		<tr>
 			                       			<td>
-			                       				<input type="radio" id="itemChk" name="itemChk" value="${Item.itemNum }" style="width:30px; height:30px;" />
-			                       				<%-- <input type="checkbox" id="itemChk" name="itemChk" value="${Item.itemNum }" style="width:30px; height:30px;" /> --%>
+			                       				<input type="radio" id="itemChk" name="itemChk" value="${Item.itemNum }" />
 			                       			</td>
-			                       			<td style="width:20%; height: 200px;"><img src="/resources/img/cart-page/product-1.jpg" alt="임시사진"></td>
-			                       			<td style="width:10%;">${Item.itemNum }</td>
-			                       			<td id="itemName" style="width:10%;">${Item.itemName }</td>
-			                       			<td id="price" style="width:15%;">${Item.price}</td>
-			                       			
-			                       			<td id="itemAmount" style="width:15%;">${Item.itemAmount }</td>
-			                       			
+			                       			<td id="td-image"><img src="/resources/img/cart-page/product-1.jpg" alt="임시사진"></td>
+			                       			<td id="itemNum">${Item.itemNum }</td>
+			                       			<td id="itemName">${Item.itemName }</td>
+			                       			<td id="price">${Item.price}</td>
+			                       			<td id="itemAmount">${Item.itemAmount }</td>
 			                       			<td id="itemCategory">${Item.categoryName }</td>
+			                       			<td><input type="button" class="primary-btn" id="write-button" value="write" onclick="location.href='/admin/itemSale?itemNum=${Item.itemNum}'"></td>
 			                       		</tr>
 			                       		</c:forEach>
 			                       </tbody>
@@ -344,7 +197,7 @@
 								<a href="https://www.flaticon.com/kr/free-icons/" title="금지 아이콘">
 									<img src="/resources/img/not.png" alt="금지 아이콘  제작자: Freepik - Flaticon" id="image-not">
 								</a>
-								<h2 style="color: #3B4A3F; text-align: center;font-weight: 900; margin-bottom:25%">상품 정보가 없습니다</h2>
+								<h2 id="emptyList">상품 정보가 없습니다</h2>
 							</div>
 						</c:if>
                     </div>
@@ -389,7 +242,7 @@
     <!-- Partner Logo Section End -->
 
     <!-- Footer -->
-    <%@ include file="/WEB-INF/views/footer.jsp" %>
+    <%@ include file="/WEB-INF/views/admin/adminFooter.jsp" %>
 
     <!-- Js Plugins -->
     <script src="/resources/js/jquery-3.6.0.min.js"></script>
@@ -402,7 +255,7 @@
     <script src="/resources/js/jquery.slicknav.js"></script>
     <script src="/resources/js/owl.carousel.min.js"></script>
     <script src="/resources/js/main.js"></script>
-    <script src="/resources/js/itemManager.js"></script>
+    <script src="/resources/js/adminJs/itemManagement.js"></script>
 </body>
 
 </html>

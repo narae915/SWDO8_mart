@@ -1,0 +1,99 @@
+
+	table, th, tr, td {
+		text-align: center;
+		border-collapse: collapse;
+		margin: auto;
+	}
+	
+	table {
+		border: 1px #E3E3E3 solid;
+		height: 50%;
+		width: 75%;
+	}
+	
+	th, td {
+		font-weight: normal;
+    }
+    	
+	th {
+		font-weight: 800;
+		border: #fff 1px solid;
+		background-color: black;
+		color: #fff; 
+	}
+
+	tr:not(:last-child) {
+		border-bottom: 2px #D1D1D1 solid;
+	}
+	
+	.text-type {
+		width:150px;
+	}
+	#th-image {
+		padding-top:15px;
+		padding-bottom:15px;
+	}
+	
+	#td-image {
+		width:20%;
+		height: 200px;
+	}
+	
+	#th-name {
+		height:80px;
+		width:20%;
+	}
+	
+	#th-price {
+		width:18%;
+	}
+	
+	#th-amount {
+		height:80px;
+	}
+	
+	#td-amount {
+		width:40%;
+	}
+	
+	#td-submit {
+		width:50%;
+	}
+	/* 버튼 관련 */
+    input[type="submit"] {
+		border:none;
+		position:relative;
+		transition:800ms ease all;
+		outline:none;
+		height:40px; 
+		border-radius:5px;
+	}
+	
+	input[type="submit"]:hover {
+		background:#000;
+		color:#E7AB3C;
+	}
+	
+	input[type="submit"]:before,input[type="submit"]:after {
+		content:'';
+		position:absolute;
+		top:0;
+		right:0;
+		height:2px;
+		width:0;
+		background: #E7AB3C;
+		transition:400ms ease all;
+	}
+	
+	input[type="submit"]:after {
+		right:inherit;
+		top:inherit;
+		left:0;
+		bottom:0;
+	}
+	
+	input[type="submit"]:hover:before, input[type="submit"]:hover:after {
+		width:100%;
+		transition:800ms ease all;
+	}
+	</style>

@@ -24,6 +24,5 @@
 	<jsp:forward page="itemUpdateForward.jsp">
 		<jsp:param value="" name="" />
 	</jsp:forward>
-   
 </body>
 </html>

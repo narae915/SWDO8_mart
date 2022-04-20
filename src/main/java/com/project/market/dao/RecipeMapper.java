@@ -54,4 +54,15 @@ public interface RecipeMapper {
 	//테이블 내 평균 점수 수정
 	void updateAvgScore(HashMap<String, Object> map);
 
+	// 게시판 테이블에 데이터 입력.
+	int insertRecipe(HashMap<String, Object> map);
+
+	// 작성된 글의 제목과 내용을 불러오기
+	ArrayList<RecipeVO> getWriting(int recipeNum);
+
+	// 게시판 글  수정
+	int updateWriting(HashMap<String, Object> map);
+	//댓글의 개수 확인
+	int countReply(int recipeNum);
+
 }

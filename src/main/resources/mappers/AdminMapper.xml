@@ -352,6 +352,7 @@
 	<!-- 상품 수정 페이지 기존 정보 불러오기 -->
 	<select id="getAdminItemList" parameterType="String" resultType="Item">
 		select
+			item_num as itemNum,
 			item_name as itemName,
 			category_num as categoryNum,
 			(select category_name

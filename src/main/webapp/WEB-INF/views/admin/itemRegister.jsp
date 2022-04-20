@@ -27,75 +27,7 @@
     <link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
-
-	<style type="text/css">
-	table, th, tr, td {
-		text-align: center;
-		border-collapse: collapse;
-		margin: auto;
-	}
-	
-	table {
-		border: 1px #E3E3E3 solid;
-		height: 50%;
-		width: 75%;
-	}
-	
-	th, td {
-		font-weight: normal;
-    }
-    	
-	th {
-		font-weight: 800;
-		border: #fff 1px solid;
-		background-color: black;
-		color: #fff; 
-	}
-
-	tr:not(:last-child) {
-		border-bottom: 2px #D1D1D1 solid;
-	}
-	
-	.text-type {
-		width:150px;
-	}
-	
-		
-    input[type="submit"] {
-		border:none;
-		position:relative;
-		transition:800ms ease all;
-		outline:none;
-	}
-	
-	input[type="submit"]:hover {
-		background:#000;
-		color:#E7AB3C;
-	}
-	
-	input[type="submit"]:before,input[type="submit"]:after {
-		content:'';
-		position:absolute;
-		top:0;
-		right:0;
-		height:2px;
-		width:0;
-		background: #E7AB3C;
-		transition:400ms ease all;
-	}
-	
-	input[type="submit"]:after {
-		right:inherit;
-		top:inherit;
-		left:0;
-		bottom:0;
-	}
-	
-	input[type="submit"]:hover:before, input[type="submit"]:hover:after {
-		width:100%;
-		transition:800ms ease all;
-	}
-	</style>
+    <link rel="stylesheet" href="/resources/css/adminCss/itemRegister.css" type="text/css">
 
 </head>
 <body>
@@ -105,7 +37,7 @@
     </div>
 
     <!-- Header -->
-	<%@ include file="/WEB-INF/views/header.jsp" %>
+	<%@ include file="/WEB-INF/views/admin/adminHeader.jsp" %>
 
     <!-- Breadcrumb Section Begin -->
     <div class="breacrumb-section">
@@ -133,11 +65,11 @@
                     
                     <!-- 22/03/30, 04/16 노채린 -->
                     <!-- 상품 신규 등록 -->
-                    <form action="itemRegisterForward" method="POST">
+                    <form action="itemRegister" method="POST" onsubmit="return false">
                        <table>
                        		<tr>
-                       			<th style="padding-top:15px; padding-bottom:15px">IMAGE</th>
-                       			<td style="width:20%; height: 200px;"><img src="/resources/img/cart-page/product-1.jpg" alt="임시사진"></td>
+                       			<th id="th-image">IMAGE</th>
+                       			<td id="table-td"><img src="/resources/img/cart-page/product-1.jpg" alt="임시사진"></td>
                        			<th>카테고리</th>
                        			<td>
                        				<select name="category" id="category">
@@ -153,23 +85,23 @@
 	                       		</td>
                        		</tr>
                        		<tr>
-                       			<th style="height:80px; width:20%">상품 이름</th>
+                       			<th id="th-name">상품 이름</th>
                        			<td>
-                       				<input type="text" name="itemName" class="text-type" id="itemName">
+                       				<input type="text" name="itemName" class="text-type" id="itemName" required>
                        			</td>
                        			<th style="width:18%">가격</th>
                        			<td>
-                       				<input type="text" name="price" class="text-type" id="price">
+                       				<input type="text" name="price" class="text-type" id="price" required>
                        			</td>
                        		</tr>
                        		<tr>
                        			<th style="height:80px;">재고</th>
                        			<td style="width:40%">
-                       				<input type="text" name="itemAmount" class="text-type" id="itemAmount">
+                       				<input type="text" name="itemAmount" class="text-type" id="itemAmount" required>
                        			</td>
                        			<th></th>
                        			<td style="width:50%">
-                       				<input type="submit" class="primary-btn" value="완료" style="height:40px; border-radius:5px;">
+                       				<input type="submit" id="submit-btn" class="primary-btn" value="완료">
                        			</td>
                        		</tr>
                        </table>
@@ -221,7 +153,7 @@
     <!-- Partner Logo Section End -->
 
     <!-- Footer Section Begin -->
-    <%@ include file="/WEB-INF/views/footer.jsp" %>
+    <%@ include file="/WEB-INF/views/admin/adminFooter.jsp" %>
     
     <!-- Js Plugins -->
     <script src="/resources/js/jquery-3.6.0.min.js"></script>
@@ -234,6 +166,7 @@
     <script src="/resources/js/jquery.slicknav.js"></script>
     <script src="/resources/js/owl.carousel.min.js"></script>
     <script src="/resources/js/main.js"></script>
+    <script src="/resources/js/adminJs/itemRegister.js"></script>
 </body>
 
 </html>

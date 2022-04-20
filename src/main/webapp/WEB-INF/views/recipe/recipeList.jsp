@@ -78,6 +78,43 @@
 			z-index: 0;
 			padding: 0;
 		}
+		
+  	/* 버튼 관련 */
+  	input[type="button"] {
+		border:none;
+		position:relative;
+		transition:800ms ease all;
+		outline:none;
+		border-radius:5px;
+	}
+	
+	input[type="button"]:hover {
+		background:#000;
+		color:#E7AB3C;
+	}
+	
+	input[type="button"]:before,input[type="button"]:after {
+		content:'';
+		position:absolute;
+		top:0;
+		right:0;
+		height:2px;
+		width:0;
+		background: #E7AB3C;
+		transition:400ms ease all;
+	}
+	
+	input[type="button"]:after {
+		right:inherit;
+		top:inherit;
+		left:0;
+		bottom:0;
+	}
+	
+	input[type="button"]:hover:before, input[type="button"]:hover:after {
+		width:100%;
+		transition:800ms ease all;
+	}
     </style>
 </head>
 
@@ -113,7 +150,7 @@
                         <div class="search-form">
                             <h4>레시피 검색</h4>
                             <form id="searchForm" action="/recipe/search" method="GET" onsubmit="return searchFormChk();">
-                                <input type="text" name="searchword" placeholder="검색어 ">
+                                <input type="text" id="search-word" name="searchword" placeholder="검색어 ">
                                 <button><i class="fa fa-search"></i></button>
                             </form>
                         </div>
@@ -145,6 +182,8 @@
                                 <a href="#">Backpack</a>
                             </div>
                         </div>
+                        <br>
+                    	<input type="button" value="작성하기" class="primary-btn" onclick="location.href = '/recipe/write'">
                     </div>
                 </div>
                 <div class="col-lg-9 order-1 order-lg-2">
@@ -245,7 +284,8 @@
     
     //검색어 폼 체크
     function searchFormChk() {
-		var searchword = $("input[name=searchword]").val().trim();
+		var searchword = $("#search-word").val().trim();
+		console.log(searchword);
     	if(searchword == null || searchword.length == 0 || searchword == "") {
     		alert("검색어를 입력해주세요.");
     		return false;
@@ -259,7 +299,7 @@
 		var countPost = $(".scores").length;
 		console.log(countPost);
 		
-		for(var i = 0; i <= countPost; i++) {
+		for(var i = 1; i <= countPost; i++) {
 			score = $("#avg-score"+i).val();
 			score = score*20;
 			//1를 더하여 주는 이유는 half star일 시 미세하게 절반이 안되어보여서 보여지는 값을 조정하기 위해 추가한 offset 값이다.

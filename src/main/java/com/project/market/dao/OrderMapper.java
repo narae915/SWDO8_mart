@@ -26,12 +26,18 @@ public interface OrderMapper {
 	// 장바구니 리스트 불러오기 메소드 - 노채린
 	ArrayList<CartVO> getCartList(HashMap<String, Object> map);
 
+	//장바구니 삭제 전 상품 수량 되돌리기 - 박나래
+	int returnAmount(HashMap<String, Object> map);
+	
 	// 장바구니 삭제  - 노채린
 	int cartCancel(int cartNum);
 	
 	//장바구니에 상품넣기 - 박나래
 	int insertCart(HashMap<String, Object> map);
 
+	//상품을 넣었다면 수량을 줄이기 - 박나래
+	int downItemAmount(HashMap<String, Object> map);
+	
 	//장바구니 조회 - 박나래
 	ArrayList<ItemVO> selectCartList(int userNum);
 

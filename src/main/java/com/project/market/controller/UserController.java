@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -88,6 +87,7 @@ public class UserController {
 	
 	// 22-04-05 노채린
 	// 회원 탈퇴
+	@ResponseBody 
 	@RequestMapping(value="/userDelete", method = RequestMethod.GET)
 	public String userDelete(String userMail) {
 		logger.info("회원탙퇴 실행(GET)");

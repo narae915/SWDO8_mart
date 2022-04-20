@@ -734,4 +734,16 @@ public class AdminController {
 		
 		return "admin/empChatting";
 	}
+	
+	// 상품 판매글 등록 페이지
+	@RequestMapping (value = "/itemSale", method = RequestMethod.GET)
+	public String itemSale(String itemNum, Model model) {
+		logger.info("itemSale 메소드 실행(GET).");
+		
+		ArrayList<ItemVO> itemList = service.getAdminItemList(itemNum);
+		model.addAttribute("itemList", itemList);
+		logger.info("itemListL:{}",itemList);
+
+		return "admin/itemSale";
+	}
 }

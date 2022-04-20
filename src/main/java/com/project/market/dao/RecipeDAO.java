@@ -226,4 +226,63 @@ public class RecipeDAO {
 		return result;
 	}
 
+	// 게시판 글 작성
+	public int insertRecipe(HashMap<String, Object> map) {
+		int result = 0;
+		RecipeMapper mapper = null;
+		
+		try {
+			mapper= session.getMapper(RecipeMapper.class);
+			result = mapper.insertRecipe(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	// 작성된 글의 제목과 내용을 불러오기
+	public ArrayList<RecipeVO> getWriting(int recipeNum) {
+		ArrayList<RecipeVO> result = null;
+		RecipeMapper mapper = null;
+		
+		try {
+			mapper= session.getMapper(RecipeMapper.class);
+			result = mapper.getWriting(recipeNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	// 게시판 글  수정
+	public int updateWriting(HashMap<String, Object> map) {
+		int result = 0;
+		RecipeMapper mapper = null;
+		
+		try {
+			mapper=session.getMapper(RecipeMapper.class);
+			result = mapper.updateWriting(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	//댓글의 갯수 확인
+	public int countReply(int recipeNum) {
+		int result = 0;
+		RecipeMapper mapper = null;
+
+		try {
+			mapper = session.getMapper(RecipeMapper.class);
+			result = mapper.countReply(recipeNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 }//클래스 닫기

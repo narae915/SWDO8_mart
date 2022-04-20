@@ -118,6 +118,16 @@
 		order by cart_num
 	</select>
 	
+	<!-- 장바구니 삭제 전 상품 수량 되돌리기 -->
+	<update id="returnAmount" parameterType="HashMap">
+		update
+			item_table
+		set
+			item_amount = item_amount + #{itemAmount }
+		where
+			item_num = #{itemNum }
+	</update>
+	
 	<!-- 장바구니 삭제 -->
 	<delete id="cartCancel" parameterType="int">
 		delete from cart_table
@@ -139,17 +149,28 @@
 		)
 	</insert>
 	
+	<!-- 장바구니에 상품을 넣었다면 수량을 조절 -->
+	<update id="downItemAmount" parameterType="HashMap">
+		update
+			item_table
+		set
+			item_amount = item_amount - #{cartAmount }
+		where
+			item_num = #{itemNum }
+	</update>
+	
 	<!-- 장바구니에 같은 상품이 있는지 확인 -->
 	<select id="checkCart" parameterType="HashMap" resultType="Cart">
 		select
 			cart_num as cartNum,
-			item_num as itemNum
+			item_num as itemNum,
+			cart_amount as cartAmount
 		from
 			cart_table
 		where
-			item_num = #{itemNum }
-			and
 			user_num = #{userNum }
+			and
+			item_num = #{itemNum }
 	</select>
 	
 	<!-- 장바구니에 같은 상품이 있다면 수량을 증가 -->
@@ -189,7 +210,7 @@
 		where
 			rownum between 1 and 3
 		order by
-			rownum asc
+			rownum desc
 	</select>
 	
 	<!-- 결제 정보 입력 페이지 회원정보 불러오기 -->
