@@ -54,4 +54,7 @@ public interface RecipeMapper {
 	//테이블 내 평균 점수 수정
 	void updateAvgScore(HashMap<String, Object> map);
 
+	//댓글의 개수 확인
+	int countReply(int recipeNum);
+
 }

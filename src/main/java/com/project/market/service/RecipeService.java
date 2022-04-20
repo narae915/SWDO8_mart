@@ -90,4 +90,9 @@ public class RecipeService {
 		return dao.avgScore(recipeNum);
 	}
 
+	//댓글의 갯수 확인
+	public int countReply(int recipeNum) {
+		return dao.countReply(recipeNum);
+	}
+
 }

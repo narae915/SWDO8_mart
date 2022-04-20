@@ -67,6 +67,15 @@ public class OrderService {
 		return dao.getCartList(map);
 	}
 	
+	//장바구니 삭제 전 상품 수량 되돌리기
+	public boolean returnAmount(int tempAmount, int itemNum) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("itemAmount", tempAmount);
+		map.put("itemNum", itemNum);
+		
+		return dao.returnAmount(map) > 0;
+	}
+	
 	// 장바구니 삭제
 	public boolean cartCancel(int cartNum) {
 		

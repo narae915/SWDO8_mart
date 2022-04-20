@@ -80,6 +80,20 @@ public class OrderDAO {
 		return cartList;
 	}
 
+	//장바구니 삭제 전 상품 수량 되돌리기
+	public int returnAmount(HashMap<String, Object> map) {
+		int result = 0;
+		OrderMapper mapper = null;
+		
+		try {
+			mapper = session.getMapper(OrderMapper.class);
+			result = mapper.returnAmount(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	// 장바구니 삭제
 	public int cartCancel(int cartNum) {
 		int result = 0;
@@ -102,6 +116,8 @@ public class OrderDAO {
 		try {
 			mapper = session.getMapper(OrderMapper.class);
 			result = mapper.insertCart(map);
+			//상품을 넣었다면 수량을 줄이기
+			mapper.downItemAmount(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -144,6 +160,8 @@ public class OrderDAO {
 		try {
 			mapper = session.getMapper(OrderMapper.class);
 			result = mapper.updateCartAmount(map);
+			//장바구니 수량을 올렸다면, 상품 수량을 줄이기
+			mapper.downItemAmount(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

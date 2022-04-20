@@ -59,12 +59,14 @@
                         </div>
                     </div>
                     <div class="col-lg-7 col-md-7">
+                    <form action="/allSearch" method="GET">
                         <div class="advanced-search">
                             <div class="input-group">
-                                <input type="text" placeholder="무엇을 원하시나요?">
-                                <button type="button"><i class="ti-search"></i></button>
+                                <input type="text" name="searchword" placeholder="무엇을 원하시나요?">
+                                <button><i class="ti-search"></i></button>
                             </div>
                         </div>
+                    </form>
                     </div>
                     <div class="col-lg-3 text-right col-md-3">
                         <ul class="nav-right">
@@ -166,12 +168,13 @@
     }
     
     //상품 삭제
-    function deleteCart(cartNum) {
+    function deleteCart(cartNum, itemNum) {
     	$.ajax({
     		url:"/order/deleteCart",
     		type:"POST",
     		data: {
-    			cartNum: cartNum 
+    			cartNum: cartNum,
+    			itemNum: itemNum
     		},
     		success: function(res) {
     			$("#cartList").remove();
