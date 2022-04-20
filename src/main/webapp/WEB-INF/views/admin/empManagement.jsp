@@ -99,7 +99,7 @@
 												<c:choose>
 													<c:when test="${sessionScope.loginPosition eq '사장' || sessionScope.loginPosition eq '부장'}">
 														<input type="button" value="수정" onclick="empUpdate(${emp.empNum });">
-														<input type="button" value="삭제" onclick="empDelete(${emp.empNum});">
+														<input type="button" value="삭제" onclick="empDelete(${emp.empNum}, '${emp.savedFilename }');">
 													</c:when>
 													<c:when test="${sessionScope.loginId == emp.empNum }">
 														<input type="button" value="수정" onclick="empUpdate(${emp.empNum });">

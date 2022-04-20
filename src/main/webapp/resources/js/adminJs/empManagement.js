@@ -5,9 +5,9 @@ function empUpdate(empNum)
 }
 
 /* 직원 정보 삭제 */
-function empDelete(empNum) 
+function empDelete(empNum, empImg) 
 {
-	
+	console.log(empImg)
 	$("#modalAlert_content").html("");
 	$("#modalAlert_content").prepend("정말 삭제하시겠습니까?<br><br>");
 	$("#modalAlert_content").append('<input type="button" class="modalAccept" value="확인" style="position: absolute; right: 13.5em; bottom: 3em;"><br>');
@@ -19,7 +19,32 @@ function empDelete(empNum)
 				// 직급을 확인해서 해당 직급이면 삭제 실행
 				if ( positionCheck == "사장" || positionCheck == "부장" )
 				{
-					location.href = "/admin/empDelete?empNum="+empNum;
+					if ( empImg == null ) // 직원 사진이 존재하지 않으면 직원 정보만 삭제
+					{
+						location.href = "/admin/empDelete?empNum="+empNum;
+					}
+					else // 직원 사진이 있다면 직원 정보, 사진, 사진 정보 삭제
+					{
+						$.ajax
+						({
+							url: "/admin/empImgDelete",
+							type: "get",
+							data:
+							{
+								empImg: empImg
+							},
+							success: function(result)
+							{
+								if ( result == "success" )
+								{
+									location.href = "/admin/empDelete?empNum="+empNum;
+									modalContent();
+									$("#modalAlert_content").prepend("삭제되었습니다.");
+									showModalAlert();
+								}
+							}
+						});
+					} 
 				}
 				else // 해당 직급이 아니면 false 리턴
 				{
