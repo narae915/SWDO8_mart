@@ -58,4 +58,46 @@ public class ItemDAO {
 		return result;
 	}
 
+	//상품 개수 확인(검색결과)
+	public int countItemList(String searchword) {
+		int result = 0;
+		ItemMapper mapper = null;
+
+		try {
+			mapper = session.getMapper(ItemMapper.class);
+			result = mapper.countItemList(searchword);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	//검색 결과 확인
+	public ArrayList<ItemVO> getSearchItem(HashMap<String, Object> map) {
+		ArrayList<ItemVO> result = null;
+		ItemMapper mapper = null;
+
+		try {
+			mapper = session.getMapper(ItemMapper.class);
+			result = mapper.getSearchItem(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	//과일, 채소 조회하는 메소드(메인화면에서 사용)
+	public ArrayList<ItemVO> getProduceList() {
+		ArrayList<ItemVO> result = null;
+		ItemMapper mapper = null;
+
+		try {
+			mapper = session.getMapper(ItemMapper.class);
+			result = mapper.getProduceList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 }

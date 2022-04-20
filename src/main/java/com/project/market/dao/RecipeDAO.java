@@ -270,6 +270,19 @@ public class RecipeDAO {
 		
 		return result;
 	}
+	
+	//댓글의 갯수 확인
+	public int countReply(int recipeNum) {
+		int result = 0;
+		RecipeMapper mapper = null;
 
-
+		try {
+			mapper = session.getMapper(RecipeMapper.class);
+			result = mapper.countReply(recipeNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 }//클래스 닫기

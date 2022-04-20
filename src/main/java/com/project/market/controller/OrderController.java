@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +54,7 @@ public class OrderController {
 		
 		// 같은 상품이 없다면
 		if(cart == null) {
-			// 장바구니에 상품 정보를 입력
+			// 2. 장바구니에 상품 정보를 입력
 			logger.info("같은 상품 없음");
 			boolean result1 = service.insertCart(itemNum,cartAmount,userNum);
 			if(result1) {
@@ -60,7 +62,7 @@ public class OrderController {
 			} else {
 				res = "no";
 			}
-		} else { // 같은 상품이 있다면 cart의 amount를 업데이트
+		} else { // 3. 같은 상품이 있다면 cart의 amount를 업데이트
 			logger.info("같은 상품 있음");
 			boolean result2 = service.updateCartAmount(itemNum,cartAmount,userNum);
 			
@@ -112,9 +114,20 @@ public class OrderController {
 	
 	//마우스 오버의 장바구니 내역 삭제(실제로 cart_table 내역이 삭제됨)
 	@RequestMapping(value = "/deleteCart", method = RequestMethod.POST)
-	public String deleteCart(int cartNum, HttpSession session, Model model) {
+	public String deleteCart(int cartNum, int itemNum, HttpSession session, Model model) {
 		logger.info("deleteCart 메소드 실행(POST)");
-		logger.info("cartNum:{}", cartNum);
+		logger.info("ajax에서 넘어온 cartNum, itemNum:{} {}", cartNum, itemNum);
+		
+		String userMail = (String)session.getAttribute("userMail");
+		UserVO user = uDao.getUser(userMail);
+		
+		//장바구니를 삭제하기 전에 수량을 회복시켜야 하므로 수량을 일시적으로 tempAmount 에 저장
+		CartVO temp = service.checkCart(itemNum, user.getUserNum());
+		int tempAmount = temp.getCartAmount();
+		logger.info("tempAmount: {}", tempAmount);
+		
+		//일시적으로 저장한 tempAmount를 ItemAmount에 다시 추가
+		service.returnAmount(tempAmount, itemNum);
 		
 		 // 장바구니 삭제 메소드
 		boolean result = service.cartCancel(cartNum);
@@ -122,8 +135,6 @@ public class OrderController {
 		if(result) {
 			logger.info("장바구니 삭제 성공");
 			
-			String userMail = (String)session.getAttribute("userMail");
-			UserVO user = uDao.getUser(userMail);
 			ArrayList<ItemVO> cartList = service.selectCartList(user.getUserNum());
 			model.addAttribute("cartList", cartList);
 			

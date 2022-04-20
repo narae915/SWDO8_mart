@@ -57,6 +57,36 @@ select
 		</if>
 </select>
 
+<!-- 과일, 채소 조회하는 메소드(메인화면에서 사용) -->
+<select id="getProduceList" resultType="Item">
+select
+		rt.item_num as itemNum,
+		c.category_num as categoryNum,
+		c.category_name as categoryName,
+		rt.item_name as itemName,
+		rt.price as price,
+		rt.item_amount as itemAmount
+	from
+		(select
+            rownum as rn,
+            item_num,
+            category_num,
+            item_name,
+            price,
+            item_amount
+		from
+			item_table
+		where
+			category_num between 30 and 40
+		order by
+			item_num desc) rt, category_table c
+	where
+		rt.category_num = c.category_num
+		and
+			rt.rn between 1 and 5
+	order by item_num desc
+</select>
+
 <!-- 상품 1개의 정보 불러오기 -->
 <select id="getOneItem" resultType="Item">
 	select
@@ -71,5 +101,39 @@ select
         i.category_num = c.category_num
 	and
 		i.item_num = #{itemNum }
+</select>
+
+<!-- 상품 개수 확인(검색결과) -->
+<select id="countItemList" parameterType="String" resultType="int">
+	select
+		count(*) 
+	from 
+		item_table
+	<where>
+		<if test="searchword != null">
+			item_name like '%'||#{searchword }||'%'
+		</if>
+	</where>
+</select>
+
+<!-- 검색 결과 확인 -->
+<select id="getSearchItem" parameterType="HashMap" resultType="Item">
+	select
+		rownum,
+		i.item_num as itemNum,
+		c.category_name as categoryName,
+		i.item_name as itemName,
+		i.price as price,
+		i.item_amount as itemAmount
+	from
+		item_table i, category_table c
+	where
+		i.category_num = c.category_num
+		and
+		rownum between 1 and ${countPerPage }
+		and
+		item_name like '%'||#{searchword }||'%'
+	order by
+		i.item_num desc
 </select>
 </mapper>

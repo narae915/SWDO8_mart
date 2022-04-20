@@ -35,4 +35,23 @@ public class ItemService {
 	public ItemVO getOneItem(int itemNum) {
 		return dao.getOneItem(itemNum);
 	}
+
+	//상품 개수 확인(검색결과)
+	public int countItemList(String searchword) {
+		return dao.countItemList(searchword);
+	}
+
+	//검색 결과 확인
+	public ArrayList<ItemVO> getSearchItem(String searchword, int countItem) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("searchword", searchword);
+		map.put("countPerPage", countItem);
+		
+		return dao.getSearchItem(map);
+	}
+
+	//과일, 채소 조회하는 메소드(메인화면에서 사용)
+	public ArrayList<ItemVO> getProduceList() {
+		return dao.getProduceList();
+	}
 }

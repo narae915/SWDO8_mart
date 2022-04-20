@@ -15,4 +15,13 @@ public interface ItemMapper {
 
 	//상품 1개의 정보 불러오기
 	ItemVO getOneItem(int itemNum);
+
+	//상품 개수 확인(검색결과)
+	int countItemList(String searchword);
+
+	//검색 결과 확인
+	ArrayList<ItemVO> getSearchItem(HashMap<String, Object> map);
+
+	//과일, 채소 조회하는 메소드(메인화면에서 사용)
+	ArrayList<ItemVO> getProduceList();
 }

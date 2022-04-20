@@ -62,5 +62,7 @@ public interface RecipeMapper {
 
 	// 게시판 글  수정
 	int updateWriting(HashMap<String, Object> map);
+	//댓글의 개수 확인
+	int countReply(int recipeNum);
 
 }
