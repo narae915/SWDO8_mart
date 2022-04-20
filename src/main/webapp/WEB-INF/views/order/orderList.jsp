@@ -12,7 +12,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>SpringDay * 내 주문 목록</title>
+    <title>SpringDay | 내 주문 목록</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
-    <link rel="stylesheet" href="/resources/css/orderList.css" type="text/css">
+    <link rel="stylesheet" href="/resources/css/orderCss/orderList.css" type="text/css">
 </head>
 
 <body>
@@ -78,8 +78,7 @@
 	                    </form>
 	                    <!-- 주문 취소 및 주문 조회 -->
 	                    <form action="ordercancel" method="post" id="cancelForm">
-	                    	<input type="button" class="primary-btn" id="cancelButton" style="border-radius:5px; border: none"value="주문 취소">
-
+	                    	<input type="button" class="primary-btn" id="cancelButton" value="주문 취소">
 	                    	<!-- 주문 조회 테이블 시작 -->
 	                    	<div id = "orderTable">
 		                        <table class="table-basic">
@@ -103,7 +102,7 @@
 		                        	<tbody>
 			                        	<c:forEach var="Order" items="${orderList }">
 			                        		<tr class="tr">
-				                        		<td rowspan="2"><input type="checkbox" id="orderNum" name="orderNum" value="${Order.orderNum }" style="width:30px; height:30px; cursor:pointer" /></td> <!-- 주문취소셀렉트 -->
+				                        		<td rowspan="2"><input type="checkbox" id="orderNum" name="orderNum" value="${Order.orderNum }" /></td> <!-- 주문취소셀렉트 -->
 				                        		<c:if test="${Order.price == 0}"> <!-- 상품정보 없을 시 금액 -->
 				                        			<td>- ₩</td> 
 				                        		</c:if>
@@ -118,7 +117,7 @@
 				                        		</c:if>
 				                        		<c:if test="${Order.itemName != null }"> <!-- 상품정보 있을 시 상품명 -->
 				                        		<td rowspan="2">
-				                        			<a href="/item/itemList?itemNum=${itemNum }" style="color: #E8E2C8">
+				                        			<a href="/item/itemList?itemNum=${itemNum }" style="color: #000">
 				                        				${Order.itemName }
 				                        			</a>
 				                        		</td> 
@@ -217,7 +216,7 @@
 					<a href="https://www.flaticon.com/kr/free-icons/" title="금지 아이콘">
 					<img src="/resources/img/not.png" alt="금지 아이콘  제작자: Freepik - Flaticon" id="image-not">
 					</a>
-					<h2 style="color: #E7AB3C; text-align: center;font-weight: 900; margin-bottom:25%">주문 정보가 없습니다</h2>
+					<h2 id="emptyList">주문 정보가 없습니다</h2>
 					</div>
 					</c:if>
                     </div>
@@ -275,7 +274,7 @@
     <script src="/resources/js/jquery.slicknav.js"></script>
     <script src="/resources/js/owl.carousel.min.js"></script>
     <script src="/resources/js/main.js"></script>
-    <script src="/resources/js/orderList.js"></script>
+    <script src="/resources/js/orderJs/orderList.js"></script>
  	
  	
     <script type="text/javascript">

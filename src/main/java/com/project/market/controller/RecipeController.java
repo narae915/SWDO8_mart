@@ -1,19 +1,29 @@
 package com.project.market.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.JsonObject;
 import com.project.market.dao.UserDAO;
 import com.project.market.service.RecipeService;
 import com.project.market.vo.RecipeVO;
@@ -183,12 +193,34 @@ public class RecipeController {
 		return "recipe/readRecipe";
 	}
 
-	//레시피 게시글 수정
+	// 레시피 수정 페이지 불러오기
 	@RequestMapping(value="/updateRecipe", method = RequestMethod.GET)
-	public String updateRecipe(int recipeNum) {
+	public String updateRecipe(int recipeNum, Model model) {
 		logger.info("recipe 게시글 수정 페이지 이동(GET)");
+		
 		logger.info("게시글 번호 : {}", recipeNum);
+		model.addAttribute("recipeNum", recipeNum);
+		
+		// 작성된 글의 제목과 내용을 불러오기
+		ArrayList<RecipeVO> recipe = service.getWriting(recipeNum);
+		model.addAttribute("recipe", recipe);
+		
 		return "recipe/update";
+	}
+
+	// 레시피 게시글 수정
+	@RequestMapping(value="/updateRecipe", method = RequestMethod.POST)
+	public String updateRecipe(int recipeNum, String subject, String editordata) {
+		logger.info("recipe 게시글 수정(POST)");
+		
+		boolean result = service.updateWriting(recipeNum, subject, editordata);
+		
+		if(result) {
+			logger.info("게시글 수정 성공");
+		} else {
+			logger.info("게시글 수정 실패");
+		}
+		return "redirect:/recipe/recipeList";
 	}
 	
 	//레시판 게시글 삭제
@@ -298,5 +330,74 @@ public class RecipeController {
 		}
 		
 		return score;
+	}
+	
+	// 게시글 작성 페이지 이동
+	@RequestMapping(value = "/write", method = RequestMethod.GET)
+	public String write() {
+		logger.info("write 메서드 실행(GET)");
+		
+		return "/recipe/write";
+	}
+
+	// 게시글 작성 
+	@RequestMapping(value = "/write", method = RequestMethod.POST)
+	public String write(Authentication authentication, String subject, String editordata) {
+		logger.info("write 메서드 실행(POST)");
+		
+		String userMail = authentication.getName();
+		/*
+		logger.info("subject:{}",subject);
+		logger.info("editordata:{}",editordata);
+		logger.info("userMail:{}",userMail);
+		*/
+		boolean result = service.insertRecipe(subject, editordata, userMail);
+		if(result) {
+			logger.info("게시글 작성 성공");
+		} else {
+			logger.info("게시글 작성 실패");
+		}
+		
+		return "redirect:/recipe/recipeList";
+	}
+	
+	// 사진을 드래그 앤 드롭 시 파일명을 읽어 사진을 출력함.
+	@RequestMapping(value="/uploadSummernoteImageFile", method= RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request )  {
+		JsonObject jsonObject = new JsonObject();
+		
+        /*
+		 * String fileRoot = "C:\\summernote_image\\"; // 외부경로로 저장을 희망할때.
+		 */
+		
+		// 내부경로로 저장
+		String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
+		String fileRoot = contextRoot+"resources/temp/";
+		// logger.info("fileRoot:{}",fileRoot); // 파일 저장 주소
+		
+		String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
+		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
+		//ㅣ-> 오리지널 파일명과 확장자를 분리
+		
+		// UUID.randomUUID()를 통해 고유 이름으로 바꿔 저장.(중복 파일명 방지)
+		String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
+		
+		File targetFile = new File(fileRoot + savedFileName);	
+		try {
+			InputStream fileStream = multipartFile.getInputStream();
+			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
+			
+			// 업로드 url을 리턴, 이미지 미리보기 실행
+			jsonObject.addProperty("url", "/resources/temp/"+savedFileName); // contextroot + resources + 저장할 내부 폴더명
+			jsonObject.addProperty("responseCode", "success");
+				
+		} catch (IOException e) {
+			FileUtils.deleteQuietly(targetFile);	//저장된 파일 삭제
+			jsonObject.addProperty("responseCode", "error");
+			e.printStackTrace();
+		}
+		String a = jsonObject.toString(); // Json 객체의 전체 파일을 String으로 변환 후 리턴 시작
+		return a;
 	}
 }

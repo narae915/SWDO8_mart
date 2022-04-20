@@ -59,7 +59,7 @@
                         <li><a href="itemManagement">상품 | Item</a>
                         	<ul class="dropdown">
                                 <li><a href="itemManagement">상품 조회</a></li>
-                                <li><a href="#">상품 등록</a></li>
+                                <li><a href="itemRegister">상품 등록</a></li>
                             </ul>
                         </li>
                         <li><a href="userManagement">회원 | User</a></li>

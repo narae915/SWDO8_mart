@@ -171,6 +171,7 @@
 		    showModalAlert();
 		    return false;
 		}
+		// 유효성 검사: 주소
 		if(address == "") {
 			exitAlert();
 		    $("#footer-modal-content").prepend("주소를 입력해 주십시오.");
@@ -187,25 +188,21 @@
 			pay_method : 'card',
 			merchant_uid : 'merchant_' + new Date().getTime(),
 			name : '봄날 식자재마트',
-			amount : '${totalPrice}' //판매 가격
+			amount : '${totalPrice}' ,//판매 가격
 			
-			/*
 			buyer_email : $("#userMail").val(),
 			buyer_name : '${user.userName}',
-			buyer_tel : '${user.userCall}',
-			buyer_addr : '서울특별시 강남구 삼성동',
-			buyer_postcode : '123-456'
-			*/
+			buyer_tel : '${user.userCall}'
 			
 		}, function(rsp) {
 			if ( rsp.success ) {
 				var msg = '결제가 완료되었습니다.';
-
+/* 
 				msg += '고유ID : ' + rsp.imp_uid;
 				msg += '상점 거래ID : ' + rsp.merchant_uid;
 				msg += '결제 금액 : ' + rsp.paid_amount;
 				msg += '카드 승인번호 : ' + rsp.apply_num;
-
+ */
 				// 데이터 전송 ajax
 				$.ajax({
 					url: "/order/orderForm",
@@ -220,9 +217,7 @@
 					}, 
 					success: function(res, url) {
 						if(res == 'success') {
-							//location.replace("/order/orderList"); 넘어가긴 하지만 뒤로가기 제한x
 							location.href= "/order/orderList";
-							//location.replace= "/order/orderList"; 뒤로가기가 막히긴 함 orderForm에서 먹혀서 문제지
 						}
 					}
 				});

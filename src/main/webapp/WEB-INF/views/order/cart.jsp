@@ -27,33 +27,9 @@
     <link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
-    <link rel="stylesheet" href="/resources/css/cart.css" type="text/css">
+    <link rel="stylesheet" href="/resources/css/orderCss/cart.css" type="text/css">
 	<script src="https://kit.fontawesome.com/af95d2c333.js" crossorigin="anonymous"></script>
 	
-	<style>
-		h5 {
-			font-weight: bold;
-			padding-left: 20px;
-			margin-top: 3px;
-			font-weight: 2000;
-		}
-		
-		.container-h5 {
-			background: linear-gradient(-45deg, #f3f5f0 50%, #EBE8C7 50%);
-			border-style: solid;
-			border-width: 5px;
-			border-color: #E7AB3C;
-			border-radius: 15px;
-		}
-		#image-not {
-			 width: 50px;
-			 height: 50px;
-			 display:block;
-			 margin:auto;
-			 margin-top: 10%;
-			 margin-bottom:3%;
-		}
-	</style>
 </head>
 
 <body>
@@ -140,7 +116,7 @@
 					                        <!-- 수량 -->
 					                            <div class="updown">
 													<span style="cursor:pointer" onclick="javascript:basket.changePNum('${Cart.cartNum}');"><i class="fas fa-arrow-alt-circle-up up fa-2xs"></i></span>
-					                                <input type="text" name="p_num" id="p_num${Cart.cartNum }" size="2" maxlength="3" class="p_num" value="${Cart.cartAmount }" style=""onkeyup="javascript:basket.changePNum('${Cart.cartNum}');">
+					                                <input type="text" name="p_num" id="p_num${Cart.cartNum }" size="2" maxlength="3" class="p_num" value="${Cart.cartAmount }" onkeyup="javascript:basket.changePNum('${Cart.cartNum}');">
 					                                <span style="cursor:pointer" onclick="javascript:basket.changePNum('${Cart.cartNum}');"><i class="fas fa-arrow-alt-circle-down down fa-2xs"></i></span>
 					                            </div>
 					                        </div>
@@ -151,7 +127,7 @@
 					                    <div class="subdiv">
 				                        	<div class="basketcmd">
 				                        		<input type="hidden" id="hiddenNum" value="${Cart.cartNum }">
-				                        		<button style="color:#fff;width:35px;height:35px;background-color:#000;border:2px solid #fff;" class="abutton"onclick="return cartCancel();"><i class="fa-solid fa-xmark fa-lg"></i></button>
+				                        		<button id="cancel-btn" class="abutton"onclick="return cartCancel();"><i class="fa-solid fa-xmark fa-lg"></i></button>
 				                        	</div>
 					                    </div>
 					                </div>
@@ -204,10 +180,10 @@
 			                	</div>
 				            </div>
 				            </form>
-					   	 	<div class=result-box style="border:5px solid #EBE8C7; border-radius: 10px;background-color: #000;width: 30%; margin-left: 70%; display:inline-block">
+					   	 	<div class=result-box>
 					   	 	<br>
-					            <div class="bigtext right-align sumcount" id="sum_p_num" style="color:#fff; padding-right: 5%;">총 0개</div>
-					            <div class="bigtext right-align box summoney" id="sum_p_price" style="color:#fff; padding-right: 5%;">합계금액: 0원</div>
+					            <div class="bigtext right-align sumcount" id="sum_p_num">총 0개</div>
+					            <div class="bigtext right-align box summoney" id="sum_p_price">합계금액: 0원</div>
 					            <br>
 					    	</div>
 				        </c:if>
@@ -218,7 +194,7 @@
 								<a href="https://www.flaticon.com/kr/free-icons/" title="금지 아이콘">
 									<img src="/resources/img/not.png" alt="금지 아이콘  제작자: Freepik - Flaticon" id="image-not">
 								</a>
-								<h2 style="text-align: center;font-weight: 900; margin-bottom:25%">장바구니에 담긴 상품이 없습니다</h2>
+								<h2 id="emptyList">장바구니에 담긴 상품이 없습니다</h2>
 							</div>
                         </c:if>
                     </div>
@@ -276,7 +252,7 @@
     <script src="/resources/js/jquery.slicknav.js"></script>
     <script src="/resources/js/owl.carousel.min.js"></script>
     <script src="/resources/js/main.js"></script>
-    <script src="/resources/js/cart.js"></script>
+    <script src="/resources/js/orderJs/cart.js"></script>
     
 </body>
 
