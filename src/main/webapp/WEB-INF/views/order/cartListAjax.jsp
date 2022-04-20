@@ -27,7 +27,7 @@
 						</div>
 					</td>
 					<td class="si-close">
-						<i class="ti-close" onclick="deleteCart(${cart.cartNum });"></i>
+						<i class="ti-close" onclick="deleteCart(${cart.cartNum }, ${cart.itemNum });"></i>
 					</td>
 				</tr>
 			</c:forEach>

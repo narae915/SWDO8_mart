@@ -12,4 +12,5 @@ public class ReplyVO {
 	private String replyDate;		// 댓글 작성 날짜
 	
 	private String userMail; // 댓글 조회시 회원이름
+	private int countReply; // 댓글 개수
 }

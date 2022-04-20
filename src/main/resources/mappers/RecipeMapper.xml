@@ -258,4 +258,14 @@
 	where
 		recipe_num = #{recipeNum }
 </update>
+
+<!-- 댓글의 개수 확인(메인페이지 출력용) -->
+<select id="countReply" parameterType="int" resultType="int">
+	select
+		count(*) as countReply
+	from
+		reply_table
+	where
+		recipe_num = #{recipeNum }
+</select>
 </mapper>

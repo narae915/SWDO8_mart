@@ -329,7 +329,7 @@
 		<div class="modal_content" id="ri-modal_content" title="클릭하면 창이 닫힙니다.">
 			장바구니에 추가되었습니다. 확인하시겠습니까?
 			<input type="button" class="modal-button" id="ri-modal-button" value="장바구니로">
-			<input type="button" class="modal-button1" value="쇼핑 계속하기">
+			<input type="button" class="modal-button1" id="ri-modal-close" value="쇼핑 계속하기">
 		</div>
 	</div>
 
@@ -382,6 +382,9 @@
 						showModal();
 						$("#ri-modal-button").click(function(){
 							location.href="/order/cart";
+						});
+						$("#ri-modal-close").click(function(){
+							location.href="/item/readItem?itemNum="+itemNum;
 						});
 					}
 				}

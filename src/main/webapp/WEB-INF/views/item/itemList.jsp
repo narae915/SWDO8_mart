@@ -68,12 +68,16 @@
 			align-content: center;
 			justify-content: center;
 		}
-		
+		img.sold-out-img {
+			position:absolute;
+			z-index: 1; /* 태그에 순서를 줌 */
+			height:400px;
+		}
     </style>
 </head>
 
 <body>
-    <!-- Page Preloder -->
+    <!-- Page Preloder -->	
     <div id="preloder">
         <div class="loader"></div>
     </div>
@@ -87,7 +91,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="/"><i class="fa fa-home"></i> Home</a>
-                        <span>상품</span>
+                        <span>식품 마트</span>
                     </div>
                 </div>
             </div>
@@ -105,7 +109,7 @@
                         <ul class="filter-catagories">
                         	<!-- HashMap 반복할 때는 안에 들어있는 key값을 대문자로 작성해야 한다. -->
                         	<c:forEach items="${categoryList }" var="category">
-	                        	<li><a style="cursor: pointer;" onclick="option(${category.CATEGORYNUM });">
+	                        	<li><a style="cursor: pointer;" href="/item/itemList?categoryNum=${category.CATEGORYNUM }" <%-- onclick="option(${category.CATEGORYNUM });" --%>>
 	                        		${category.CATEGORYNAME }</a></li>
                         	</c:forEach>
                         </ul>
@@ -128,14 +132,7 @@
 	                                        <option value="high">가격 높은순</option>
 	                                        <option value="low">가격 낮은순</option>
 	                                    </select>
-	                                    <input type="hidden" id="cate-num" value="">
-                                    </c:if>
-                                    <c:if test="${categoryList == null }">
-	                                    <select class="sorting" id="sorting" name="sorting" onchange="option(0);">
-	                                    	<option value="new">최근 등록순</option>
-	                                        <option value="high">가격 높은순</option>
-	                                        <option value="low">가격 낮은순</option>
-	                                    </select>
+	                                    <input type="hidden" id="cate-num" value="${requestScope.categoryNum }">
                                     </c:if>
                                 </div>
                             </div>
@@ -145,6 +142,9 @@
 						<div class="row" id="productList">
 							<c:forEach items="${itemList }" var="item" varStatus="status">
 							<div class="col-lg-4 col-sm-6">
+							<c:if test="${item.itemAmount == 0}">
+							<img class="sold-out-img" src="/resources/img/products/sold-out.png">
+							</c:if>
 								<div class="product-item">
 									<div class="pi-pic">
 										<img src="/resources/img/products/product-${status.count }.jpg" alt="">

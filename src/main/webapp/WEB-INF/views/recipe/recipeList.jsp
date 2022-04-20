@@ -150,7 +150,7 @@
                         <div class="search-form">
                             <h4>레시피 검색</h4>
                             <form id="searchForm" action="/recipe/search" method="GET" onsubmit="return searchFormChk();">
-                                <input type="text" name="searchword" placeholder="검색어 ">
+                                <input type="text" id="search-word" name="searchword" placeholder="검색어 ">
                                 <button><i class="fa fa-search"></i></button>
                             </form>
                         </div>
@@ -284,7 +284,8 @@
     
     //검색어 폼 체크
     function searchFormChk() {
-		var searchword = $("input[name=searchword]").val().trim();
+		var searchword = $("#search-word").val().trim();
+		console.log(searchword);
     	if(searchword == null || searchword.length == 0 || searchword == "") {
     		alert("검색어를 입력해주세요.");
     		return false;
@@ -298,7 +299,7 @@
 		var countPost = $(".scores").length;
 		console.log(countPost);
 		
-		for(var i = 0; i <= countPost; i++) {
+		for(var i = 1; i <= countPost; i++) {
 			score = $("#avg-score"+i).val();
 			score = score*20;
 			//1를 더하여 주는 이유는 half star일 시 미세하게 절반이 안되어보여서 보여지는 값을 조정하기 위해 추가한 offset 값이다.

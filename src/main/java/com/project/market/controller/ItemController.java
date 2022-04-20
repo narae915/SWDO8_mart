@@ -29,6 +29,10 @@ public class ItemController {
 	public String itemList(@RequestParam(defaultValue = "0") int categoryNum, Model model) {
 		logger.info("상품 선택 페이지(GET)");
 
+		//사용자가 카테고리를 선택해서 categoryNum이 0이 아닐 경우 number를 model에 저장
+		if(categoryNum != 0) {
+			model.addAttribute("categoryNum", categoryNum);
+		}
 		//DB에 저장된 카테고리 테이블 출력
 		ArrayList<HashMap<String, Object>> category = service.getCategoryList();
 		logger.info("category: {}",category);
