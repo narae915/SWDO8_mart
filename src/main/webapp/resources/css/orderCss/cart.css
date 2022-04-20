@@ -152,6 +152,13 @@
         margin-right: 0;
     }
 
+	#cancel-btn {
+		color:#fff;
+		width:35px;
+		height:35px;
+		background-color:#000;
+		border:2px solid #fff;
+	}
     .abutton, .abutton:link, .abutton:visited, .abutton:active, input[type=button] {
         background-color: #9C9576;
         border: 1px solid #888888;
@@ -166,6 +173,28 @@
         font-size: 0.9375em;
     }
 
+	#sum_p_num {
+		color:#fff; 
+		padding-right: 5%;
+	}
+	
+	#sum_p_price {
+		color:#fff;
+		padding-right: 5%;
+	}
+	#emptyList {
+		text-align: center;
+		font-weight: 900; 
+		margin-bottom:25%;
+	}
+	.result-box {
+		border:5px solid #EBE8C7;
+		border-radius: 10px;
+		background-color: #000;
+		width: 30%; 
+		margin-left: 70%; 
+		display:inline-block;
+	}
 	.abutton-alt {
 	    background-color: #d3e2c6;
 	}
@@ -216,4 +245,26 @@
 		height: 40px;
 		display: inline-block;
 		vertical-align: 12px;
+	}
+	h5 {
+		font-weight: bold;
+		padding-left: 20px;
+		margin-top: 3px;
+		font-weight: 2000;
+	}
+	
+	.container-h5 {
+		background: linear-gradient(-45deg, #f3f5f0 50%, #EBE8C7 50%);
+		border-style: solid;
+		border-width: 5px;
+		border-color: #E7AB3C;
+		border-radius: 15px;
+	}
+	#image-not {
+		 width: 50px;
+		 height: 50px;
+		 display:block;
+		 margin:auto;
+		 margin-top: 10%;
+		 margin-bottom:3%;
 	}

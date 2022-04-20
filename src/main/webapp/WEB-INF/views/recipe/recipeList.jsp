@@ -78,6 +78,43 @@
 			z-index: 0;
 			padding: 0;
 		}
+		
+  	/* 버튼 관련 */
+  	input[type="button"] {
+		border:none;
+		position:relative;
+		transition:800ms ease all;
+		outline:none;
+		border-radius:5px;
+	}
+	
+	input[type="button"]:hover {
+		background:#000;
+		color:#E7AB3C;
+	}
+	
+	input[type="button"]:before,input[type="button"]:after {
+		content:'';
+		position:absolute;
+		top:0;
+		right:0;
+		height:2px;
+		width:0;
+		background: #E7AB3C;
+		transition:400ms ease all;
+	}
+	
+	input[type="button"]:after {
+		right:inherit;
+		top:inherit;
+		left:0;
+		bottom:0;
+	}
+	
+	input[type="button"]:hover:before, input[type="button"]:hover:after {
+		width:100%;
+		transition:800ms ease all;
+	}
     </style>
 </head>
 
@@ -145,6 +182,8 @@
                                 <a href="#">Backpack</a>
                             </div>
                         </div>
+                        <br>
+                    	<input type="button" value="작성하기" class="primary-btn" onclick="location.href = '/recipe/write'">
                     </div>
                 </div>
                 <div class="col-lg-9 order-1 order-lg-2">
