@@ -202,6 +202,7 @@ public class AdminService {
 		return dao.getAdminItemList(itemChk);
 	}
 
+	// 상품 수정
 	public boolean itemUpdate(String itemNum, String itemName, String price, String itemAmount, int category) {
 		HashMap<String, Object> map = new HashMap<>();
 		

@@ -34,37 +34,17 @@
 		}
 	}
 	
-	
 	// 상품 수정
-	function upValueChk() {
-		
+	function itemUpdate(){
 		var updateNum = [];
 		var checked = $("input[name=itemChk]:checked");
 		checked.each(function() {
 			updateNum.push($(this).val());
 		});
 		
-		var allData = {"updateNumArray": updateNum};
-
-		if(updateNum.length >= 2){
-			alert("한 개만 선택해주세요.");
-			
-			return false;
-		}
-		
 		if(updateNum == "") { // 체크박스가 체크되어있지 않은 경우 경고창을 띄우며 수정을 진행하지 않음.
 			alert("선택된 항목이 없습니다.");
 			
 			return false;
-		} else {
-			$.ajax({
-				url: "/admin/itemUpdate",
-				type: "post",
-				data: allData,
-				success: function(url){
-					location.href="/admin/itemUpdate";
-					
-				}
-			});
-		}
+		} 
 	}
