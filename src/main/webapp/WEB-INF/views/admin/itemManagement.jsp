@@ -28,26 +28,7 @@
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/adminCss/itemManagement.css" type="text/css">
-    
-	<script type="text/javascript">
-		function itemUpdate(){
-			var updateNum = [];
-			var checked = $("input[name=itemChk]:checked");
-			checked.each(function() {
-				updateNum.push($(this).val());
-			});
-			
-			var allData = {"updateNumArray": updateNum};
 
-			if(updateNum == "") { // 체크박스가 체크되어있지 않은 경우 경고창을 띄우며 수정을 진행하지 않음.
-				alert("선택된 항목이 없습니다.");
-				
-				return false;
-			} 
-		}
-	</script>
-	
-	
 </head>
 <body>
     <!-- Page Preloder -->
@@ -101,6 +82,7 @@
 		                    <!-- 상품 추가 -->
 			                <input type="button" class="primary-btn" id="insert-button" value="상품 추가" onclick="location.href='/admin/itemRegister'">
 			                
+
 		                    <form action="itemUpdate" method="get">
 		                    	<input type="submit" id="upButton" class="primary-btn" value="상품 수정" onclick = "return itemUpdate();">
 			                    <input type="button" id="deButton" name="itemNum" class="primary-btn" value="상품 삭제" onclick ="return deValueChk();">
@@ -115,6 +97,7 @@
 			                       			<th>가격</th>
 			                       			<th>재고</th>
 			                       			<th>카테고리</th>
+			                       			<th>판매글 작성</th>
 			                       		</tr>
 									</thead>
 			                       	<tbody>
@@ -127,10 +110,9 @@
 			                       			<td id="itemNum">${Item.itemNum }</td>
 			                       			<td id="itemName">${Item.itemName }</td>
 			                       			<td id="price">${Item.price}</td>
-			                       			
 			                       			<td id="itemAmount">${Item.itemAmount }</td>
-			                       			
 			                       			<td id="itemCategory">${Item.categoryName }</td>
+			                       			<td><input type="button" class="primary-btn" id="write-button" value="write" onclick="location.href='/admin/itemSale?itemNum=${Item.itemNum}'"></td>
 			                       		</tr>
 			                       		</c:forEach>
 			                       </tbody>

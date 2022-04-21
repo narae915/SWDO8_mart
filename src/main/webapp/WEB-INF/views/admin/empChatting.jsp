@@ -87,7 +87,7 @@
 		$('#message').val('')
 	});
 
-	let sock = new SockJS("http://localhost:8889/empChatting/");
+	var sock = new SockJS("http://localhost:8889/empChatting/");
 	sock.onmessage = onMessage;
 	sock.onclose = onClose;
 	// 메시지 전송

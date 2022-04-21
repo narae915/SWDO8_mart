@@ -103,9 +103,9 @@
 	function userConfirm(userId) 
     {
     	confirmModal();
-    	$("#footer-modal-content").prepend("&ensp;&ensp;본인 확인이 필요합니다.");
-    	$("#footer-modal-content").prepend("비밀번호:&ensp;<input type='password' id='userPw' name='userPw'>");
-    	$("#footer-modal-content").prepend("ID:&ensp;" + userId);
+    	$("#footer-modal-content").prepend("&ensp;&ensp;<b style='color: red; position: absolute; left: 7.3em; bottom: 10em;'>본인 확인이 필요합니다.</b>");
+    	$("#footer-modal-content").prepend("<b style='position: absolute; left: 3.5em;'>비밀번호:</b>&ensp;<input type='password' id='userPw' name='userPw' style='position: absolute; right: 3em;'>");
+    	$("#footer-modal-content").prepend("<b style='position: absolute; left: 6.5em; bottom: 8em;'>ID:</b>&ensp;<span style='position: absolute; right: 5.3em; bottom: 8em;'>" + userId + "</span>");
     	
     	showModalAlert();
     	

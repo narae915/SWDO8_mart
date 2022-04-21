@@ -550,7 +550,7 @@ public class AdminController {
 	
 	/* PW 찾기 */
 	@RequestMapping (value = "/empFindPw", method = RequestMethod.POST)
-	public String empFindPw(int empNum, String empMail, Model model) 
+	public String empFindPw(int empNum, String empMail, Model model, HttpSession session) 
 	{
 		logger.info("empFindPw 메소드 실행(POST).");
 		
@@ -562,12 +562,15 @@ public class AdminController {
 		int findEmp = service.findEmp(empNum, empMail);
 		String errorMessage = "입력하신 정보와 일치하는 ID를 찾을 수 없습니다.";
 		
+		String successResetPw = "임시 비밀번호가 이메일로 발송되었습니다.<br><br>" + "<b style='color: #e7ab3c;'>로그인 후 반드시 비밀번호를 변경해주세요.</b>";
+		
 		String returnUrl = null;
 		
 		if ( findEmp != 0 )
 		{
 			logger.info("findPW 페이지 ID 찾기 성공.");
-			returnUrl = "redirect:empFindPwView";
+			session.setAttribute("successResetPw", successResetPw);
+			returnUrl = "admin/empFindPwView";
 		}
 		else
 		{
@@ -582,7 +585,7 @@ public class AdminController {
 	/* 임시 비밀번호 생성 및 메일 전송 */
 	@ResponseBody
 	@RequestMapping(value = "/sendMail", method = RequestMethod.GET)
-	public String sendMail(String empMail, HttpSession session, Model model)
+	public String sendMail(String empMail, Model model)
 	{
 		logger.info("sendMail 메소드 실행(GET).");
 		logger.info("empMail: {}", empMail);
@@ -603,8 +606,6 @@ public class AdminController {
 			char randomChar = spChar[i];
 			randomPw = uuid.concat(String.valueOf(randomChar)); // 생성한 uuid와 특수문자를 이어줌
 		}
-		
-		String successResetPw = "임시 비밀번호가 이메일로 발송되었습니다.<br><br>" + "<b style='color: #e7ab3c;'>로그인 후 반드시 비밀번호를 변경해주세요.</b>";
 		
 		boolean result = service.updatePw(empMail, randomPw);
 		
@@ -639,7 +640,6 @@ public class AdminController {
 		if ( result )
 		{
 			logger.info("직원 PW정보 수정 성공.");
-			session.setAttribute("successResetPw", successResetPw);
 		}
 		else
 		{
@@ -733,5 +733,17 @@ public class AdminController {
 		logger.info("empChatting 메소드 실행(GET).");
 		
 		return "admin/empChatting";
+	}
+	
+	// 상품 판매글 등록 페이지
+	@RequestMapping (value = "/itemSale", method = RequestMethod.GET)
+	public String itemSale(String itemNum, Model model) {
+		logger.info("itemSale 메소드 실행(GET).");
+		
+		ArrayList<ItemVO> itemList = service.getAdminItemList(itemNum);
+		model.addAttribute("itemList", itemList);
+		logger.info("itemListL:{}",itemList);
+
+		return "admin/itemSale";
 	}
 }

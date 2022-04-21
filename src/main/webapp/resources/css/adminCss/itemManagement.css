@@ -65,13 +65,19 @@ tr:not(:last-child) {
 #price, #itemAmount {
 	width:15%;
 }
+
+#write-button {
+	position: relative;
+	height: 40px;
+	border-radius: 5px;
+}
+
 button,input[type="button"],input[type="submit"] {
 	border:none;
 	position:relative;
 	transition:800ms ease all;
 	outline:none;
 }
-
 button:hover, input[type="button"]:hover,input[type="submit"]:hover {
 	background:#000;
 	color:#E7AB3C;
