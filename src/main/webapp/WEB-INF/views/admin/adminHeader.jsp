@@ -12,33 +12,16 @@
     <header class="header-section">
         <div class="container">
             <div class="inner-header">
-                <div class="row">
-                    <div class="col-lg-2 col-md-2">
-                        <div class="logo">
-                            <a href="adminMain">
-                                <img src="/resources/img/logo.png" alt="">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-7 col-md-7">
-                        <div class="advanced-search">
-                            <button type="button" class="category-btn">All Categories</button>
-                            <div class="input-group">
-                                <input type="text" placeholder="What do you need?">
-                                <button type="button"><i class="ti-search"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                
-                <div class="col-lg-3 text-right col-md-3">
-                        <ul class="nav-right">
-                        	<c:if test="${not empty sessionScope.loginName }">
-                        		<li class="active"><span style="font-weight: bold;"> ${loginName } ${loginPosition }님 환영합니다.</span></li>
-                        	</c:if>
-                        </ul>
-                    </div>
-                
-                </div>
+	            <div class="logo" style="text-align:center;">
+	                <a href="adminMain">
+	                    <img src="/resources/img/emp_spring-day.png" alt="">
+	                </a>
+	            </div>
+		        <div class="login-message" style="text-align:right;">
+	              	<c:if test="${not empty sessionScope.loginName }">
+	              		<span style="font-weight: bold;"> ${loginName } ${loginPosition }님 환영합니다.</span>
+	              	</c:if>
+	            </div>
             </div>
         </div>
         <div class="nav-item">

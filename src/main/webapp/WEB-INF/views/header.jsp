@@ -192,6 +192,7 @@
    			}
     		
     	});
+    }
     
     /* 유저 본인 확인 */
     function userConfirm(userId) 
