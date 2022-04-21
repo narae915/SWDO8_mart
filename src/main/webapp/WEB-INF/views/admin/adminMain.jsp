@@ -36,47 +36,6 @@
 	<!-- Header -->
     <%@ include file="/WEB-INF/views/admin/adminHeader.jsp" %>
     
-    <!-- Instagram Section Begin -->
-    <div class="instagram-photo">
-        <div class="insta-item set-bg" data-setbg="/resources/img/insta-1.jpg">
-            <div class="inside-text">
-                <i class="ti-instagram"></i>
-                <h5><a href="#">colorlib_Collection</a></h5>
-            </div>
-        </div>
-        <div class="insta-item set-bg" data-setbg="/resources/img/insta-2.jpg">
-            <div class="inside-text">
-                <i class="ti-instagram"></i>
-                <h5><a href="#">colorlib_Collection</a></h5>
-            </div>
-        </div>
-        <div class="insta-item set-bg" data-setbg="/resources/img/insta-3.jpg">
-            <div class="inside-text">
-                <i class="ti-instagram"></i>
-                <h5><a href="#">colorlib_Collection</a></h5>
-            </div>
-        </div>
-        <div class="insta-item set-bg" data-setbg="/resources/img/insta-4.jpg">
-            <div class="inside-text">
-                <i class="ti-instagram"></i>
-                <h5><a href="#">colorlib_Collection</a></h5>
-            </div>
-        </div>
-        <div class="insta-item set-bg" data-setbg="/resources/img/insta-5.jpg">
-            <div class="inside-text">
-                <i class="ti-instagram"></i>
-                <h5><a href="#">colorlib_Collection</a></h5>
-            </div>
-        </div>
-        <div class="insta-item set-bg" data-setbg="/resources/img/insta-6.jpg">
-            <div class="inside-text">
-                <i class="ti-instagram"></i>
-                <h5><a href="#">colorlib_Collection</a></h5>
-            </div>
-        </div>
-    </div>
-    <!-- Instagram Section End -->
-
  <!-- Register Section Begin -->
     <div class="register-login-section spad">
         <div class="container">
@@ -84,13 +43,44 @@
                 <div class="col-lg-6 offset-lg-3">
                     <div>
                         <h2>로그인완료</h2>
+                        <span>상단 바에서 접속하고자 하는 메뉴를 선택해주세요</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Register Form Section End -->
-
+    <hr>
+    
+    <div class="product-tab">
+	    <div class="tab-item-content">
+	        <div class="tab-content">
+	            <div class="tab-pane fade-in active" id="tab-1" role="tabpanel">
+	                <div class="product-content">
+	                    <div class="row" style="justify-content: center;">
+	                        <div class="col-lg-7">
+	                            <h4>이달의 우수사원</h4>
+	                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+	                                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+	                                ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+	                                aliquip ex ea commodo consequat. Duis aute irure dolor in </p>
+	                            <h5>Features</h5>
+	                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+	                                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+	                                ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+	                                aliquip ex ea commodo consequat. Duis aute irure dolor in </p>
+	                        </div>
+	                        <div>
+	                            <img src="/resources/img/product-single/tab-desc.jpg" alt="">
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+    <!-- Product Shop Section End -->
+    
     <!-- Footer -->
     <%@ include file="/WEB-INF/views/admin/adminFooter.jsp" %>
 

@@ -64,10 +64,25 @@
                 </div>
                 <div class="col-lg-2 offset-lg-1">
                     <div class="footer-widget">
-                        <h5>Management</h5>
+                        <h5>Item</h5>
                         <ul>
                             <li><a href="/admin/itemManagement">상품 조회</a></li>
                             <li><a href="#">상품 등록</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="footer-widget">
+                        <h5>User</h5>
+                        <ul>
+                            <li><a href="/admin/userManagement">회원 조회</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="footer-widget">
+                        <h5>Employee</h5>
+                        <ul>
                             <li><a href="/admin/empManagement">직원 조회</a></li>
                             <c:if test="${sessionScope.loginPosition eq '사장' || sessionScope.loginPosition eq '부장'}">
                             	<li><a href="/admin/adminRegister">직원 등록</a></li>
