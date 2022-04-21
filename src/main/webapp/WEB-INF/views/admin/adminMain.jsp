@@ -24,6 +24,24 @@
     <link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
+    <style type="text/css">
+    	img#good-emp-member {
+    		margin-top: -100px;
+    		margin-bottom: 20px;
+    		margin-left: -80px;
+    	}
+    	h3, h4 {
+    		text-align: center;
+    		font-weight: 700;
+    	}
+    	h3 {
+    		color: #f1cc5d;
+    	}
+    	p {
+    		text-align: center;
+    		font-size: 20px;
+    	}
+    </style>
     
 </head>
 
@@ -59,19 +77,14 @@
 	                <div class="product-content">
 	                    <div class="row" style="justify-content: center;">
 	                        <div class="col-lg-7">
-	                            <h4>이달의 우수사원</h4>
-	                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-	                                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-	                                ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-	                                aliquip ex ea commodo consequat. Duis aute irure dolor in </p>
-	                            <h5>Features</h5>
-	                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-	                                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-	                                ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-	                                aliquip ex ea commodo consequat. Duis aute irure dolor in </p>
+	                            <h3>이달의 우수사원</h3><br>
+	                            <h4>성명 : 노채린</h4>
+	                            <h4>소속 : 노채린</h4><br>
+	                            <p>봄날24식자재마트 2022년 4월 우수사원으로 선정되었습니다.<br>
+	                            	매사에 근면/성실하며 타의 모범이 되어 우수사원으로 선정함</p>
 	                        </div>
 	                        <div>
-	                            <img src="/resources/img/product-single/tab-desc.jpg" alt="">
+	                            <img id="good-emp-member" src="/resources/img/product-single/tab-desc.jpg" alt="">
 	                        </div>
 	                    </div>
 	                </div>

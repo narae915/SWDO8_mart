@@ -1,5 +1,7 @@
 package com.project.market.service;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -85,5 +87,10 @@ public class UserService {
 		user.setUserMail(userId);
 		
 		return dao.selectUser(user);
+	}
+
+	//회원 조회(관리자페이지)
+	public ArrayList<UserVO> getUserList() {
+		return dao.getUserList();
 	}
 }

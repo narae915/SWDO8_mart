@@ -23,10 +23,12 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
 import com.project.market.service.AdminService;
+import com.project.market.service.UserService;
 import com.project.market.util.FileService;
 import com.project.market.util.PageNavigator;
 import com.project.market.vo.EmpVO;
 import com.project.market.vo.ItemVO;
+import com.project.market.vo.UserVO;
 
 @Controller
 @RequestMapping(value = "/admin")
@@ -43,6 +45,9 @@ public class AdminController {
 	
 	@Autowired
 	private AdminService service;
+	
+	@Autowired
+	private UserService uService;
 	
 	// 직원인지 확인
 	@ResponseBody
@@ -742,8 +747,20 @@ public class AdminController {
 		
 		ArrayList<ItemVO> itemList = service.getAdminItemList(itemNum);
 		model.addAttribute("itemList", itemList);
-		logger.info("itemListL:{}",itemList);
+		logger.info("itemList:{}",itemList);
 
 		return "admin/itemSale";
+	}
+	
+	//회원 관리 페이지 이동
+	@RequestMapping (value = "/userManagement", method = RequestMethod.GET)
+	public String userManagement(Model model) {
+		logger.info("userManagement 메소드 실행(GET).");
+		
+		ArrayList<UserVO> userList = uService.getUserList();
+		logger.info("userList : {}", userList);
+		model.addAttribute("userList", userList);
+		
+		return "admin/userManagement";
 	}
 }

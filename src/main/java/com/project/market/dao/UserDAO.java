@@ -1,5 +1,7 @@
 package com.project.market.dao;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -160,6 +162,24 @@ public class UserDAO {
 		{
 			mapper = session.getMapper(UserMapper.class);
 			result = mapper.selectUser(user);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	//회원 조회(관리자 페이지)
+	public ArrayList<UserVO> getUserList() {
+		ArrayList<UserVO> result = null;
+		UserMapper mapper = null;
+		
+		try 
+		{
+			mapper = session.getMapper(UserMapper.class);
+			result = mapper.getUserList();
 		} 
 		catch (Exception e) 
 		{
