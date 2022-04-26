@@ -1,6 +1,7 @@
 package com.project.market.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -171,21 +172,4 @@ public class UserDAO {
 		return result;
 	}
 
-	//회원 조회(관리자 페이지)
-	public ArrayList<UserVO> getUserList() {
-		ArrayList<UserVO> result = null;
-		UserMapper mapper = null;
-		
-		try 
-		{
-			mapper = session.getMapper(UserMapper.class);
-			result = mapper.getUserList();
-		} 
-		catch (Exception e) 
-		{
-			e.printStackTrace();
-		}
-		
-		return result;
-	}
 }

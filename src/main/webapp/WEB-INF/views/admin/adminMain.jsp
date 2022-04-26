@@ -54,21 +54,7 @@
 	<!-- Header -->
     <%@ include file="/WEB-INF/views/admin/adminHeader.jsp" %>
     
- <!-- Register Section Begin -->
-    <div class="register-login-section spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 offset-lg-3">
-                    <div>
-                        <h2>로그인완료</h2>
-                        <span>상단 바에서 접속하고자 하는 메뉴를 선택해주세요</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Register Form Section End -->
-    <hr>
+    <br>
     
     <div class="product-tab">
 	    <div class="tab-item-content">

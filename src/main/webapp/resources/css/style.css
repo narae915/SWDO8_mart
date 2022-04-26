@@ -3378,25 +3378,28 @@ ol {
 
 .blog-details-inner .blog-quote {
 	margin-bottom: 65px;
+	border-right: solid 1px #d6d6d6;
+	border-left: solid 1px #d6d6d6;
+	
 }
 
-.blog-details-inner .blog-quote p {
+/* .blog-details-inner .blog-quote p {
 	position: relative;
 	color: #252525;
 	font-size: 20px;
 	font-weight: 700;
 	line-height: 30px;
 	padding-left: 32px;
-}
+} */
 
-.blog-details-inner .blog-quote p span {
+/* .blog-details-inner .blog-quote p span {
 	color: #161715;
 	font-size: 14px;
 	text-transform: uppercase;
 	letter-spacing: 2px;
-}
+} */
 
-.blog-details-inner .blog-quote p:before {
+/* .blog-details-inner .blog-quote p:before {
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -3404,7 +3407,7 @@ ol {
 	width: 3px;
 	background: #e7ab3c;
 	content: "";
-}
+} */
 
 .blog-details-inner .blog-more {
 	margin-bottom: 32px;

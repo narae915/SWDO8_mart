@@ -1,6 +1,7 @@
 package com.project.market.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.project.market.vo.UserVO;
 
@@ -33,6 +34,4 @@ public interface UserMapper {
 	// 유저 본인 확인
 	String selectUser(UserVO user);
 
-	//회원 정보 (관리자 페이지)
-	ArrayList<UserVO> getUserList();
 }

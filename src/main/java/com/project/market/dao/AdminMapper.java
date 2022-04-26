@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.project.market.vo.EmpVO;
 import com.project.market.vo.ItemVO;
+import com.project.market.vo.UserVO;
 
 public interface AdminMapper {
 
@@ -57,5 +58,9 @@ public interface AdminMapper {
 	ArrayList<ItemVO> getAdminItemList(String itemChk); // 상품 수정 페이지 기존 정보 가져오기
 
 	int itemUpdate(HashMap<String, Object> map); // 상품 수정
+
+	int getUserTotalRecordsCount(HashMap<String, Object> map); // 총 유저수 확인
+
+	ArrayList<UserVO> searchUser(HashMap<String, Object> map); //회원 검색
 
 }

@@ -1,5 +1,6 @@
 package com.project.market.controller;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
@@ -16,16 +17,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.market.service.UserService;
 import com.project.market.util.FileService;
+import com.project.market.util.PageNavigator;
 import com.project.market.vo.UserVO;
 
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
 	
+	private static final int COUNT_PER_PAGE = 5; // 한 페이지 당 보여줄 최대 게시글 수
+	private static final int PAGE_PER_GROUP = 5; // 한 그룹 당 보여줄 최대 페이지 수
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired
@@ -383,4 +388,5 @@ public class UserController {
 		
 		return returnUrl;
 	}
+	
 }

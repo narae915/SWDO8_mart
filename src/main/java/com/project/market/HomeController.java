@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.project.market.service.ItemService;
 import com.project.market.service.RecipeService;
+import com.project.market.util.lookingImgSrc;
 import com.project.market.vo.ItemVO;
 import com.project.market.vo.RecipeVO;
 
@@ -30,6 +31,9 @@ public class HomeController {
 
 	@Autowired
 	private RecipeService rService;
+	
+	//이미지 주소를 불러오는 Class
+	private lookingImgSrc imgSrc;
 	
 	//기본 메인화면
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -50,6 +54,21 @@ public class HomeController {
 		
 		//게시글 조회 최근 3개
 		ArrayList<RecipeVO> recipeList = rService.getRecipeList(countPerPage);
+		
+		String temp = "";
+		String titleImg = "";
+		for(int i = 0; i < recipeList.size(); i++) {
+			temp = recipeList.get(i).getContent();
+			titleImg = lookingImgSrc.getImgSrc(temp);
+			//등록된 이미지가 없을 경우 기본 이미지가 나오게끔 설정
+			if(titleImg == null || titleImg == "") {
+				recipeList.get(i).setTitleImg("/resources/img/cooking_recipe.png");
+				continue;
+			}
+			//등록된 이미지가 있다면 그 이미지가 출력되게 설정
+			recipeList.get(i).setTitleImg(titleImg);
+		}
+		
 		logger.info("recipeList:{}", recipeList);
 		model.addAttribute("recipeList", recipeList);
 		

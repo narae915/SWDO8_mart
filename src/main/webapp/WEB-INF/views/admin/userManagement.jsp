@@ -93,12 +93,9 @@
 												<td>${user.userName }</td>
 												<td>${fn:substring(user.userCall,0,3) }&nbsp;-&nbsp;${fn:substring(user.userCall,3,7) }&nbsp;-&nbsp;${fn:substring(user.userCall,7,11) }</td>
 												<td>${user.userMail }</td>
-												<c:if test="${user.userAddress == null}">
-												<td>등록된 주소 없음</td>
-												</c:if>
-												<c:if test="${user.userAddress != null}">
-												<td>${user.userAddress }</td>
-												</c:if>
+												<td>
+													<c:if test="${user.postcode != 0 }">${user.postcode },</c:if> 
+													${user.userAddress }</td>
 												<c:if test="${sessionScope.loginPosition eq '사장' || sessionScope.loginPosition eq '부장'}">
 												<td><input type="button" value="탈퇴" onclick="empDelete(${emp.empNum}, '${emp.savedFilename }');"></td>
 												</c:if>
@@ -114,11 +111,9 @@
 							<!-- 현재 페이지가 첫 페이지가 아니라면, 이전 그룹/페이지로 이동 -->
 							<span>
 							<c:choose>
-								<c:when test="${searchWord eq '' }">
+								<c:when test="${searchWord eq null }">
 									<c:if test="${navi.currentPage > 1 }">
 										<!-- 이전 그룹으로 이동 -->
-										<c:if test="">
-										</c:if>
 										<a href="/admin/userManagement?currentPage=${(navi.currentGroup - 1) * 5 + 1 }" style="color: #e7ab3c; text-decoration: none; font-size: 1.5em; text-align: center;">
 											< 이전&nbsp;
 										</a>
@@ -186,15 +181,15 @@
 						</div>
 						<!-- Paging End -->
 						<hr>
-						<!-- Emp Search Begin -->
-						<form action="empManagement" method="get" onsubmit="return searchEmp();">
+						<!-- user Search Begin -->
+						<form action="/admin/searchUser" method="GET" onsubmit="return searchUser();">
 							<select id="" name="searchType" style="width: 15%; height: 45px; position:relative; left: 20em; bottom:-1em; border: none; border-radius: 5px; border: #e7ab3c solid 3px; padding-right: 20px;">
-								<option value="searchEmpName">이름</option>
-								<option value="searchEmpNum">사원 번호</option>
-								<option value="searchPosition">직급</option>
+								<option value="searchName">이름</option>
+								<option value="searchTelNum">연락처</option>
+								<option value="searchMail">메일주소</option>
 							</select>
 							<input type="text" id="searchWord" name="searchWord" placeholder="검색어를 입력해주세요." style="position:relative; left: 20em; bottom:-1em; border: none; border: #e7ab3c solid 3px; padding-right: 20px;">
-							<button type="submit" class="primary-btn" style="width:5px; height:45px; border-radius:5px; left: 20em; bottom:-1.12em"><i class="ti-search"></i></button>
+							<button type="submit" class="primary-btn" style="width:5px; height:45px; border-radius:5px; left: 254px; bottom:-1.12em"><i class="ti-search"></i></button>
 						</form>
 						<!-- Emp Search End -->
 					</div>
@@ -226,6 +221,33 @@
     <script src="/resources/js/main.js"></script>
     <script src="/resources/js/adminJs/empManagement.js"></script>
 	<script type="text/javascript">
-	var positionCheck = "${loginPosition }"; // 로그인한 직원의 직급
+	/* 직원 검색 */
+	function searchUser() 
+	{
+		var searchWord = $.trim($("input[name=searchWord]").val());
+		//길이 확인
+		var lengthCheck = /([^{2,5}])/i;
+		if ( !(lengthCheck.test(searchWord)) ) 
+		{
+			modalContent();
+			$("#modalAlert_content").prepend("2글자 이상, 5글자 이하로 입력해주십시오.");
+			showModalAlert();
+			return false;
+		} 
+		else 
+		{	
+			//특수문자 확인
+			var kor_check = /([^가-힣ㄱ-ㅎㅏ-ㅣ\x20a-zA-Z0-9])/i;
+			if ( kor_check.test(searchWord) )
+			{
+				modalContent();
+				$("#modalAlert_content").prepend("특수문자는 입력할 수 없습니다.");
+				showModalAlert();
+				return false;
+			} 
+		}
+		
+		return true;
+	}
 	</script>
 </html>

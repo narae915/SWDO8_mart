@@ -119,16 +119,4 @@
 	where
 		user_mail = #{userMail }
 </select>
-
-<!-- 회원 조회(관리자페이지) -->
-<select id="getUserList" resultType="User">
-	select
-		user_num as userNum,
-		user_name as userName,
-		user_mail as userMail,
-		user_call as userCall,
-		user_address as userAddress
-	from
-		user_table
-</select>
 </mapper>

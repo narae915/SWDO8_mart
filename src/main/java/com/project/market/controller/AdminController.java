@@ -46,9 +46,6 @@ public class AdminController {
 	@Autowired
 	private AdminService service;
 	
-	@Autowired
-	private UserService uService;
-	
 	// 직원인지 확인
 	@ResponseBody
 	@RequestMapping(value = "/staffOnlyChk", method = RequestMethod.GET)
@@ -108,16 +105,11 @@ public class AdminController {
 		
 		if(result) {
 			logger.info("상품 삭제 성공");
-			
 			return "success";
-			
 		} else {
 			logger.info("상품 삭제 실패");
-			
 			return null;
 		}
-		
-		
 	}
 	
 	
@@ -754,11 +746,69 @@ public class AdminController {
 	
 	//회원 관리 페이지 이동
 	@RequestMapping (value = "/userManagement", method = RequestMethod.GET)
-	public String userManagement(Model model) {
+	public String userManagement(@RequestParam(defaultValue = "1") int currentPage, Model model) {
 		logger.info("userManagement 메소드 실행(GET).");
 		
-		ArrayList<UserVO> userList = uService.getUserList();
+		String userAddress = null;
+		
+		// 총 회원 수를 가져옴
+		int totalRecordsCount = service.getUserTotalRecordsCount(null, null);
+		logger.info("회원 수: {}", totalRecordsCount);
+
+		// 페이징 처리를 위한 내비게이터 객체 생성
+		PageNavigator navi = new PageNavigator(COUNT_PER_PAGE, PAGE_PER_GROUP, currentPage, totalRecordsCount);
+		model.addAttribute("navi", navi);
+		model.addAttribute("searchType", null);
+		model.addAttribute("searchWord", null);
+		
+		//모든 회원 정보를 조회
+		ArrayList<UserVO> userList = service.searchUser(navi.getStartRecord(), COUNT_PER_PAGE, null, null);
+		
+		// 주소를 등록하지 않은 회원은 등록되지 않았다고 표시
+		for(int i = 0; i < userList.size(); i++) {
+			userAddress = userList.get(i).getUserAddress();
+			if(userAddress.equals("_ ")) {
+				userList.get(i).setUserAddress("등록된 주소 없음");
+			}
+		}
+		
 		logger.info("userList : {}", userList);
+		model.addAttribute("userList", userList);
+		
+		return "admin/userManagement";
+	}
+	
+	//회원 검색
+	@RequestMapping(value = "/searchUser", method = RequestMethod.GET)
+	public String searchUser(@RequestParam(defaultValue = "1") int currentPage, String searchType, String searchWord, Model model) {
+		logger.info("searchUser 유저 검색 메소드 (GET)");
+		logger.info("searchType: {}", searchType);
+		logger.info("searchWord: {}", searchWord);
+		
+		// 총 회원 수를 가져옴
+		int totalRecordsCount = service.getUserTotalRecordsCount(searchType, searchWord);
+		logger.info("회원 수: {}", totalRecordsCount);
+
+		// 페이징 처리를 위한 내비게이터 객체 생성
+		PageNavigator navi = new PageNavigator(COUNT_PER_PAGE, PAGE_PER_GROUP, currentPage, totalRecordsCount);
+		model.addAttribute("navi", navi);
+		model.addAttribute("searchType", searchType);
+		model.addAttribute("searchWord", searchWord);
+	
+		//회원 검색 결과를 조회
+		// 게시글 시작 번호, 불러올 게시글 수를 전달해서 현재 페이지에 해당하는 5개의 게시글만 가져오도록 설정
+		ArrayList<UserVO> userList = service.searchUser(navi.getStartRecord(), COUNT_PER_PAGE, searchType, searchWord);
+		
+		String userAddress = null;
+		// 주소를 등록하지 않은 회원은 등록되지 않았다고 표시
+		for(int i = 0; i < userList.size(); i++) {
+			userAddress = userList.get(i).getUserAddress();
+			if(userAddress.equals("_ ")) {
+				userList.get(i).setUserAddress("등록된 주소 없음");
+			}
+		}
+		
+		logger.info("userList: {}", userList);
 		model.addAttribute("userList", userList);
 		
 		return "admin/userManagement";

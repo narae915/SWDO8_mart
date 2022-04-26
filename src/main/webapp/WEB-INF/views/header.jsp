@@ -40,7 +40,7 @@
                             <option value='yt' data-image="/resources/img/flag-1.jpg" data-imagecss="flag yt"
                                 data-title="Korea">한국어</option>
                             <option value='yu' data-image="/resources/img/flag-2.jpg" data-imagecss="flag yu"
-                                data-title="Japanese">일본어 </option>
+                                data-title="Japanese">日本語 </option>
                         </select>
                     </div>
                     <div class="top-social">

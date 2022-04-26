@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.project.market.vo.EmpVO;
 import com.project.market.vo.FileListVO;
 import com.project.market.vo.ItemVO;
+import com.project.market.vo.UserVO;
 
 @Repository
 public class AdminDAO {
@@ -343,6 +344,34 @@ public class AdminDAO {
 			e.printStackTrace();
 		}
 		
+		return result;
+	}
+
+	//회원 검색
+	public ArrayList<UserVO> searchUser(HashMap<String, Object> map) {
+		ArrayList<UserVO> result = null;
+		AdminMapper mapper = null;
+		
+		try {
+			mapper = session.getMapper(AdminMapper.class);
+			result = mapper.searchUser(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	//총 유저수 확인
+	public int getUserTotalRecordsCount(HashMap<String, Object> map) {
+		int result = 0;
+		AdminMapper mapper = null;
+		
+		try {
+			mapper = session.getMapper(AdminMapper.class);
+			result = mapper.getUserTotalRecordsCount(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return result;
 	}
 

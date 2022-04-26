@@ -17,4 +17,5 @@ public class RecipeVO {
 	private int rownum; //번호 매기기
 	private int prev; // 이전글 번호를 조회
 	private int next; // 다음글 번호를 조회
+	private String titleImg; // 게시글 리스트 페이지에서 보여주는 이미지
 }

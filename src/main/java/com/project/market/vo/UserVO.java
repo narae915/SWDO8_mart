@@ -13,5 +13,7 @@ public class UserVO {
 	private int postcode;		// 우편번호
 	private String userAddress;	// 유저 주소
 	private String role;		// 권한
+	
+	private int serialNumber; // 일련번호
 
 }

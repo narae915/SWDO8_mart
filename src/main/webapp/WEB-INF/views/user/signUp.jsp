@@ -185,7 +185,7 @@
 		
 		//주소 입력했으면 우편번호를 controller에 보내기 , 그렇지 않으면 hidden의 value인 0이 가도록 설정
 		var postcode = $("#postcode").val();
-		if(postcode != null) {
+		if(postcode != null && postcode != "") {
 			$("input[name=postcode]").attr("value", postcode);
 		}
 		return true;

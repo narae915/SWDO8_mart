@@ -26,6 +26,7 @@
 	    r.title as title,
 	    r.score as score,
 	    r.read_count as readCount,
+	    r.content as content,
 	    to_char(r.indate, 'YYYY-MM-DD') as indate
 	from
 	    recipe_table r
@@ -43,6 +44,7 @@
 		r.user_num as userNum,
 		r.title as title,
 		r.score as score,
+		r.content as content,
 		to_char(r.indate, 'YYYY-MM-DD') as indate
 	from
 		recipe_table r

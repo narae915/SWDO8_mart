@@ -296,8 +296,8 @@
             <div class="row">
             	<c:forEach items="${recipeList }" var="recipe" varStatus="status">
                 <div class="col-lg-4 col-md-6">
-                    <div class="single-latest-blog">
-                        <img src="/resources/img/latest-${status.count }.jpg" alt="">
+                    <div class="single-latest-blog" style="cursor: pointer;" onclick="location.href='/recipe/readRecipe?recipeNum=${recipe.recipeNum }';">
+                        <img src="${recipe.titleImg }" alt="" style="width: 355px; height: 256px;">
                         <div class="latest-text">
                             <div class="tag-list">
                                 <div class="tag-item">
@@ -312,7 +312,6 @@
                             <a href="/recipe/readRecipe?recipeNum=${recipe.recipeNum }">
                                 <h4>${recipe.title }</h4>
                             </a>
-                            <p>게시글 보기</p>
                         </div>
                     </div>
                 </div>

@@ -380,4 +380,60 @@
 		where
 			item_num = #{itemNum }
 	</update>
+	
+	<!-- 회원 검색 -->
+	<select id="searchUser" parameterType="HashMap" resultType="User">
+		select
+			rt.rn as serialNumber,
+			ut.user_num as userNum,
+			ut.user_name as userName,
+			ut.user_call as userCall,
+			ut.user_mail as userMail,
+			ut.postcode as postcode,
+			ut.user_address as userAddress
+		from
+			user_table ut,
+			(select
+		        rownum as rn,
+		        user_num as un
+		    from
+		        user_table
+		    order by
+		        user_num desc) rt
+		where
+			ut.user_num = rt.un
+			and
+		    rt.rn between #{startRecord } + 1 and #{startRecord } + #{countPerPage }
+			<if test="searchType == 'searchName'">
+				and
+				ut.user_name like '%'||#{searchWord }||'%'
+			</if>
+			<if test="searchType == 'searchTelNum'">
+				and
+				ut.user_call like '%'||#{searchWord }||'%'
+			</if>
+			<if test="searchType == 'searchMail'">
+				and
+				ut.user_mail like '%'||#{searchWord }||'%'
+			</if>
+	</select>
+	
+	<!-- 총 유저수 확인 -->
+	<select id="getUserTotalRecordsCount" parameterType="HashMap" resultType="int">
+		select
+			count(*)
+		from
+			user_table
+		<where>
+			<if test="searchType == 'searchName'">
+				user_name like '%'||#{searchWord }||'%'
+			</if>
+			<if test="searchType == 'searchTelNum'">
+				user_call like '%'||#{searchWord }||'%'
+			</if>
+			<if test="searchType == 'searchMail'">
+				user_mail like '%'||#{searchWord }||'%'
+			</if>
+		</where>	
+	</select>
 </mapper>

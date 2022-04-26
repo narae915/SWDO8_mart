@@ -11,6 +11,7 @@ import com.project.market.dao.AdminDAO;
 import com.project.market.vo.EmpVO;
 import com.project.market.vo.FileListVO;
 import com.project.market.vo.ItemVO;
+import com.project.market.vo.UserVO;
 
 @Service
 public class AdminService {
@@ -213,6 +214,24 @@ public class AdminService {
 		map.put("category", category);
 		
 		return dao.itemUpdate(map) > 0;
+	}
+
+	//회원 검색
+	public ArrayList<UserVO> searchUser(int startRecord, int countPerPage, String searchType, String searchWord) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("searchType", searchType);
+		map.put("searchWord", searchWord);
+		map.put("startRecord", startRecord);
+		map.put("countPerPage", countPerPage);
+		return dao.searchUser(map);
+	}
+
+	//총 유저수 확인
+	public int getUserTotalRecordsCount(String searchType, String searchWord) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("searchType", searchType);
+		map.put("searchWord", searchWord);
+		return dao.getUserTotalRecordsCount(map);
 	}
 
 }

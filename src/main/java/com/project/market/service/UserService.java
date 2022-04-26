@@ -1,6 +1,7 @@
 package com.project.market.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -89,8 +90,4 @@ public class UserService {
 		return dao.selectUser(user);
 	}
 
-	//회원 조회(관리자페이지)
-	public ArrayList<UserVO> getUserList() {
-		return dao.getUserList();
-	}
 }

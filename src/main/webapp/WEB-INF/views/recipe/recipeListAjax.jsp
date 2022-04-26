@@ -13,7 +13,7 @@
 		<input type="hidden" class="scores" id="avg-score${status.count }" value="${recipe.score }">
 			<div class="blog-item">
 				<div class="bi-pic" style="cursor:pointer;" onclick="location.href='/recipe/readRecipe?recipeNum=${recipe.recipeNum }'">
-					<img src="/resources/img/blog/blog-${status.count }.jpg" alt="">
+					<img src="${recipe.titleImg }" alt="">
 				</div>
 				<div class="bi-text">
 					<a href="/recipe/readRecipe?recipeNum=${recipe.recipeNum }">

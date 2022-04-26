@@ -160,7 +160,7 @@
                             	<c:forEach items="${recipeList }" var="recipe" varStatus="status">
 									<a href="/recipe/readRecipe?recipeNum=${recipe.recipeNum }" class="rb-item">
 	                                    <div class="rb-pic">
-	                                        <img src="/resources/img/blog/recent-${status.count }.jpg" alt="">
+	                                        <img src="${recipe.titleImg }" alt="">
 	                                    </div>
 	                                    <div class="rb-text">
 	                                        <h6>${recipe.title }</h6>
@@ -215,7 +215,7 @@
 							<input type="hidden" class="scores" id="avg-score${status.count }" value="${recipe.score }">
                             <div class="blog-item">
                                 <div class="bi-pic" style="cursor:pointer;" onclick="location.href='/recipe/readRecipe?recipeNum=${recipe.recipeNum }'">
-                                    <img src="/resources/img/blog/blog-${status.count }.jpg" alt="">
+                                    <img src="${recipe.titleImg }" alt="" style="cursor:pointer;width: 400px; height:280px;">
                                 </div>
                                 <div class="bi-text">
                                 	<a href="/recipe/readRecipe?recipeNum=${recipe.recipeNum }">
