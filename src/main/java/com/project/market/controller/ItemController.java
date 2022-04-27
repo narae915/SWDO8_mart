@@ -60,6 +60,7 @@ public class ItemController {
 		logger.info("itemList:{}", itemList);
 		
 		model.addAttribute("itemList", itemList);
+		model.addAttribute("categoryNum", categoryNum);
 		
 		return "item/itemListAjax";
 	}
@@ -79,11 +80,20 @@ public class ItemController {
 		
 		int countPerPage = startNum + viewNum;
 
-		ArrayList<ItemVO> itemList = service.getItemList(countPerPage, sorting,categoryNum);
-		logger.info("itemList:{}", itemList);
-		
-		model.addAttribute("itemList", itemList);
+		//상품 테이블의 등록된 상품 수 확인
+		int countColumn = service.countRecipeList(categoryNum);
+		logger.info("countColumn:{}",countColumn);
 
+		//총 상품 수가 조회되어 있는 상품 수와 같거나,적을 경우 null을 보내므로서 ajax실패를 만듬
+		if(countColumn <= startNum) {
+			return null;
+		//총 게시글 수가 조회되어 있는 게시글 수보다 많을 경우
+		} else {
+			ArrayList<ItemVO> itemList = service.getItemList(countPerPage,sorting,categoryNum);
+			logger.info("itemList:{}", itemList);
+			
+			model.addAttribute("itemList", itemList);
+		}
 		return "item/itemListAjax";
 	}
 	

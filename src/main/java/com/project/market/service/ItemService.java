@@ -54,4 +54,9 @@ public class ItemService {
 	public ArrayList<ItemVO> getProduceList() {
 		return dao.getProduceList();
 	}
+
+	//상품테이블에 등록된 상품 수 확인
+	public int countRecipeList(int categoryNum) {
+		return dao.countRecipeList(categoryNum);
+	}
 }

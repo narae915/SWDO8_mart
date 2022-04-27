@@ -157,14 +157,14 @@
                         <div class="recent-post">
                             <h4>최신글</h4>
                             <div class="recent-blog">
-                            	<c:forEach items="${recipeList }" var="recipe" varStatus="status">
-									<a href="/recipe/readRecipe?recipeNum=${recipe.recipeNum }" class="rb-item">
+                            	<c:forEach items="${newPostList }" var="newPost" varStatus="status">
+									<a href="/recipe/readRecipe?recipeNum=${newPost.recipeNum }" class="rb-item">
 	                                    <div class="rb-pic">
-	                                        <img src="${recipe.titleImg }" alt="">
+	                                        <img src="${newPost.titleImg }" alt="">
 	                                    </div>
 	                                    <div class="rb-text">
-	                                        <h6>${recipe.title }</h6>
-	                                        <p><span>${recipe.indate }</span></p>
+	                                        <h6>${newPost.title }</h6>
+	                                        <p><span>${newPost.indate }</span></p>
 	                                    </div>
                                 	</a>
 								</c:forEach>
@@ -269,6 +269,12 @@
     <!-- Footer -->
     <%@ include file="/WEB-INF/views/footer.jsp" %>
     
+    <!-- modal -->
+	<div class="modal" id="footer-modal">
+		<div class="modal_content" id="footer-modal-content">
+		</div>
+	</div>
+    
     <!-- Js Plugins -->
     <script src="/resources/js/jquery-3.6.0.min.js"></script>
     <script src="/resources/js/bootstrap.min.js"></script>
@@ -281,20 +287,35 @@
     <script src="/resources/js/owl.carousel.min.js"></script>
     <script src="/resources/js/main.js"></script>
     <script type="text/javascript">
+	// 닫기 모달
+	function exitAlert() {
+		$("#footer-modal-content").append('<button name="modalClose" class="primary-btn" id="footer-modal-button" style="margin-top:30px; border-radius:5px; border:none">창 닫기</button>');
+	}
+
+	// 모달 출력
+	function showModalAlert() {
+		$("#footer-modal").fadeIn();
+		$("button[name=modalClose]").click(function() {
+			$("#footer-modal").fadeOut();
+		});
+	}
     
-    //검색어 폼 체크
-    function searchFormChk() {
+	//검색어 폼 체크
+	function searchFormChk() {
 		var searchword = $("#search-word").val().trim();
 		console.log(searchword);
-    	if(searchword == null || searchword.length == 0 || searchword == "") {
-    		alert("검색어를 입력해주세요.");
+		if(searchword == null || searchword.length == 0 || searchword == "") {
+			$("#footer-modal-content").html("검색어를 입력해주세요.");
+			exitAlert();
+			showModalAlert();
     		return false;
     	} else {
     		return true;
     	}
     }
+	
 	//jsp페이지 출력과 동시에 실행
-	$(function(){
+	$(function() {
 		var score = 0;
 		var countPost = $(".scores").length;
 		console.log(countPost);
@@ -335,7 +356,10 @@
    				$("#getRecipeList").html(res);
     		},
 			error: function(e){
-				alert("표시할 게시물이 없습니다.");
+				$("#footer-modal-content").html("");
+				$("#footer-modal-content").html("표시할 게시물이 없습니다.");
+				exitAlert();
+				showModalAlert();
 				console.log("실패");
 			}
 		});
@@ -370,7 +394,11 @@
    				$("#getRecipeList").html(res);
     		},
 			error: function(e){
-				alert("표시할 게시물이 없습니다.");
+				//원래 모달안에 있던 글을 지우고, 다시 쓰고 싶은 말을 추가
+				$("#footer-modal-content").html("");
+				$("#footer-modal-content").html("표시할 게시물이 없습니다.");
+				exitAlert();
+				showModalAlert();
 				console.log("실패");
 			}
 		});

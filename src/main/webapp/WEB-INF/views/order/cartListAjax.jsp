@@ -31,12 +31,6 @@
 					</td>
 				</tr>
 			</c:forEach>
-			<tr>
-				<td colspan="3" style="vertical-align : bottom;">최근에 넣은 상품 3개까지 확인가능</td>
-			</tr>
-			<tr>
-				<td colspan="3" style="vertical-align : top;">전체 상품은 아래를 클릭해주세요</td>
-			</tr>
 			</c:if>
 		</tbody>
 	</table>

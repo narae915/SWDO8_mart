@@ -32,6 +32,9 @@
 			</div>
 		</div>
 	</c:forEach>
+	<input type="hidden" id="cate-num" value="${requestScope.categoryNum }">
+	<input type="hidden" id="viewCount" value="0">
+	<input type="hidden" id="startCount" value="0">
 	
 	<script src="/resources/js/jquery-3.6.0.min.js"></script>
 	<script type="text/javascript">
@@ -40,6 +43,57 @@
 		//현재 페이지를 선택했음을 알림 4/17 박나래
 		$("li#menu-foodMart").attr("class", "active");
 	});
+	
+	// 닫기 모달
+	function exitAlert() {
+		$("#footer-modal-content").append('<button name="modalClose" class="primary-btn" id="footer-modal-button" style="margin-top:30px; border-radius:5px; border:none">창 닫기</button>');
+	}
+
+	// 모달 출력
+	function showModalAlert() {
+		$("#footer-modal").fadeIn();
+		$("button[name=modalClose]").click(function() {
+			$("#footer-modal").fadeOut();
+		});
+	}
+	
+	//더보기 실행하기(페이징)
+	function loadingMore(cnt){
+		var temp = $("#productList>div>div>div>ul").length;
+		console.log(temp);
+		var sorting = $("#sorting").val();
+		var searchNum = $("#cate-num").val();
+
+		var startCount = $("input#startCount").val(temp);
+		startCount = startCount.val();
+		console.log(startCount);
+		
+		var viewCount = $("input#viewCount").val(cnt);
+		viewCount = viewCount.val();
+		console.log(viewCount);
+		
+		$.ajax({
+			url: "/item/loading",
+			type: "GET", 
+			data: {
+				startCount : startCount,
+				viewCount : viewCount,
+				sorting: sorting,
+				searchNum: searchNum
+			},
+    		success: function(res){
+    			console.log(res);
+    				$(".row > .col-lg-4 col-sm-6").remove();
+    				$("#productList").html(res);
+    		},
+    		error: function(e){
+   				$("#footer-modal-content").html("표시할 게시물이 없습니다.");
+   				exitAlert();
+   				showModalAlert();
+				console.log("실패");
+			}
+		});
+	}
 	
 	//장바구니에 넣기
 	function insertCart(itemNum) {

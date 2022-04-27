@@ -13,7 +13,7 @@
 		<input type="hidden" class="scores" id="avg-score${status.count }" value="${recipe.score }">
 			<div class="blog-item">
 				<div class="bi-pic" style="cursor:pointer;" onclick="location.href='/recipe/readRecipe?recipeNum=${recipe.recipeNum }'">
-					<img src="${recipe.titleImg }" alt="">
+					<img src="${recipe.titleImg }" alt="" style="cursor:pointer;width: 400px; height:280px;">
 				</div>
 				<div class="bi-text">
 					<a href="/recipe/readRecipe?recipeNum=${recipe.recipeNum }">
@@ -100,7 +100,11 @@
    				$("#getRecipeList").html(res);
     		},
 			error: function(e){
-				alert("표시할 게시물이 없습니다.");
+				//원래 모달안에 있던 글을 지우고, 다시 쓰고 싶은 말을 추가
+				$("#footer-modal-content").html("");
+				$("#footer-modal-content").html("표시할 게시물이 없습니다.");
+				exitAlert();
+				showModalAlert();
 				console.log("실패");
 			}
 		});
@@ -135,7 +139,11 @@
    				$("#getRecipeList").html(res);
     		},
 			error: function(e){
-				alert("표시할 게시물이 없습니다.");
+				//원래 모달안에 있던 글을 지우고, 다시 쓰고 싶은 말을 추가
+				$("#footer-modal-content").html("");
+				$("#footer-modal-content").html("표시할 게시물이 없습니다.");
+				exitAlert();
+				showModalAlert();
 				console.log("실패");
 			}
 		});

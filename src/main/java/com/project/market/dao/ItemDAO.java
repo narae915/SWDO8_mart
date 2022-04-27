@@ -100,4 +100,18 @@ public class ItemDAO {
 		return result;
 	}
 
+	//상품테이블에 등록된 상품 수 확인
+	public int countRecipeList(int categoryNum) {
+		int result = 0;
+		ItemMapper mapper = null;
+
+		try {
+			mapper = session.getMapper(ItemMapper.class);
+			result = mapper.countRecipeList(categoryNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 }

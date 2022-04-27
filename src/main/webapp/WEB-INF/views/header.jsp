@@ -101,8 +101,8 @@
                                         </table>
                                     </div>
                                     <div class="select-button">
-                                        <a href="/order/cart" class="primary-btn view-card">장바구니 바로가기</a>
-                                        <a href="/order/orderList" class="primary-btn checkout-btn">결제 바로가기</a>
+	                                    <a>최근에 넣은 상품 3개까지 표시됩니다.</a>
+										<a href="/order/cart" class="primary-btn checkout-btn">장바구니 바로가기</a>
                                     </div>
                                 </div>
                             </li>

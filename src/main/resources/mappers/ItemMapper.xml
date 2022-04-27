@@ -136,4 +136,14 @@ select
 	order by
 		i.item_num desc
 </select>
+
+<!-- 상품테이블에 등록된 상품수 확인 -->
+<select id="countRecipeList" resultType="int" parameterType="int">
+	select
+		count(*)
+	from
+		item_table
+	where
+		category_num = ${categoryNum }
+</select>
 </mapper>

@@ -24,4 +24,7 @@ public interface ItemMapper {
 
 	//과일, 채소 조회하는 메소드(메인화면에서 사용)
 	ArrayList<ItemVO> getProduceList();
+
+	//상품테이블에 등록된 상품 수 확인
+	int countRecipeList(int categoryNum);
 }

@@ -201,6 +201,12 @@
     <!-- Footer -->
     <%@ include file="/WEB-INF/views/footer.jsp" %>
     
+    <!-- modal -->
+	<div class="modal" id="footer-modal">
+		<div class="modal_content" id="footer-modal-content">
+		</div>
+	</div>
+    
     <!-- Js Plugins -->
     <script src="/resources/js/jquery-3.6.0.min.js"></script>
     <script src="/resources/js/bootstrap.min.js"></script>
@@ -218,7 +224,20 @@
 		//현재 페이지를 선택했음을 알림 4/17 박나래
 		$("li#menu-foodMart").attr("class", "active");
 	});
-    
+	
+	// 닫기 모달
+	function exitAlert() {
+		$("#footer-modal-content").append('<button name="modalClose" class="primary-btn" id="footer-modal-button" style="margin-top:30px; border-radius:5px; border:none">창 닫기</button>');
+	}
+
+	// 모달 출력
+	function showModalAlert() {
+		$("#footer-modal").fadeIn();
+		$("button[name=modalClose]").click(function() {
+			$("#footer-modal").fadeOut();
+		});
+	}
+	
     //카테고리 번호 찾기(정렬 select에서 categoryNum을 알 수 없기 때문)
     function searchCategoryNum(categoryNum) {
     	var searchNum = $("#cate-num").val();
@@ -292,7 +311,11 @@
 				$(".row > .col-lg-4 col-sm-6").remove();
 				$("#productList").html(res);
     		},
-			error: function(e){
+    		error: function(e){
+				$("#footer-modal-content").html("");
+				$("#footer-modal-content").html("표시할 상품이 없습니다.");
+				exitAlert();
+				showModalAlert();
 				console.log("실패");
 			}
 		});

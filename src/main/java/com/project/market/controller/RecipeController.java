@@ -56,6 +56,9 @@ public class RecipeController {
 		
 		ArrayList<RecipeVO> recipeList = service.getRecipeList(countPerPage);
 		
+		//최신글 전용
+		ArrayList<RecipeVO> newPostList = service.getRecipeList(6);
+		
 		if(recipeList != null) {
 			
 			String temp = "";
@@ -74,18 +77,41 @@ public class RecipeController {
 				logger.info("recipeList : {}", recipeList);
 				model.addAttribute("recipeList", recipeList);
 		}
+		
+		//최신글 이미지 설정
+		if(newPostList != null) {
+			
+			String temp = "";
+			String titleImg = "";
+			for(int i = 0; i < newPostList.size(); i++) {
+				temp = newPostList.get(i).getContent();
+				titleImg = lookingImgSrc.getImgSrc(temp);
+				//등록된 이미지가 없을 경우 기본 이미지가 나오게끔 설정
+				if(titleImg == null || titleImg == "") {
+					newPostList.get(i).setTitleImg("/resources/img/cooking_recipe.png");
+					continue;
+				}
+				//등록된 이미지가 있다면 그 이미지가 출력되게 설정
+				newPostList.get(i).setTitleImg(titleImg);
+			}
+			//최신글 전용
+			model.addAttribute("newPostList", newPostList);
+		}
 		return "recipe/recipeList";
 	}
 
 	//레시피 검색
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String search(String searchword, Model model) {
-		logger.info("검색 메소드(GET)");
+		logger.info("search 검색 메소드(GET)");
 		logger.info("searchword : {}", searchword);
 
 		//검색결과 list에 저장
 		ArrayList<RecipeVO> sRecipeList = service.searchRecipe(searchword, countPerPage);
 		logger.info("검색 결과 : {}", sRecipeList);
+		
+		//최신글 전용
+		ArrayList<RecipeVO> newPostList = service.getRecipeList(6);
 		
 		if(sRecipeList != null) {
 			String temp = "";
@@ -103,6 +129,26 @@ public class RecipeController {
 			}
 		model.addAttribute("recipeList", sRecipeList);
 		model.addAttribute("searchword", searchword);
+		}
+		
+		//최신글 이미지 설정
+		if(newPostList != null) {
+			
+			String temp = "";
+			String titleImg = "";
+			for(int i = 0; i < newPostList.size(); i++) {
+				temp = newPostList.get(i).getContent();
+				titleImg = lookingImgSrc.getImgSrc(temp);
+				//등록된 이미지가 없을 경우 기본 이미지가 나오게끔 설정
+				if(titleImg == null || titleImg == "") {
+					newPostList.get(i).setTitleImg("/resources/img/cooking_recipe.png");
+					continue;
+				}
+				//등록된 이미지가 있다면 그 이미지가 출력되게 설정
+				newPostList.get(i).setTitleImg(titleImg);
+			}
+			//최신글 전용
+			model.addAttribute("newPostList", newPostList);
 		}
 		return "recipe/recipeList";
 	}
@@ -128,11 +174,27 @@ public class RecipeController {
 		} else {
 			//검색결과 list에 저장
 			ArrayList<RecipeVO> sRecipeList = service.searchRecipe(searchword, countPerPage);
+			
+			if(sRecipeList != null) {
+				
+				String temp = "";
+				String titleImg = "";
+				for(int i = 0; i < sRecipeList.size(); i++) {
+					temp = sRecipeList.get(i).getContent();
+					titleImg = lookingImgSrc.getImgSrc(temp);
+					//등록된 이미지가 없을 경우 기본 이미지가 나오게끔 설정
+					if(titleImg == null || titleImg == "") {
+						sRecipeList.get(i).setTitleImg("/resources/img/cooking_recipe.png");
+						continue;
+					}
+					//등록된 이미지가 있다면 그 이미지가 출력되게 설정
+					sRecipeList.get(i).setTitleImg(titleImg);
+				}
+			}
+			
 			logger.info("검색 결과 : {}", sRecipeList);
-
 			model.addAttribute("recipeList", sRecipeList);
 			model.addAttribute("searchword", searchword);
-			
 		}
 		return "recipe/recipeListAjax";
 	}
@@ -158,6 +220,23 @@ public class RecipeController {
 		//총 게시글 수가 조회되어 있는 게시글 수보다 많을 경우
 		} else {
 			ArrayList<RecipeVO> recipeList = service.getRecipeList(countPerPage);
+			
+			if(recipeList != null) {
+				
+				String temp = "";
+				String titleImg = "";
+				for(int i = 0; i < recipeList.size(); i++) {
+					temp = recipeList.get(i).getContent();
+					titleImg = lookingImgSrc.getImgSrc(temp);
+					//등록된 이미지가 없을 경우 기본 이미지가 나오게끔 설정
+					if(titleImg == null || titleImg == "") {
+						recipeList.get(i).setTitleImg("/resources/img/cooking_recipe.png");
+						continue;
+					}
+					//등록된 이미지가 있다면 그 이미지가 출력되게 설정
+					recipeList.get(i).setTitleImg(titleImg);
+				}
+			}
 			logger.info("recipeList:{}", recipeList);
 			model.addAttribute("recipeList", recipeList);
 		}
