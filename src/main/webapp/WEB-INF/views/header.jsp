@@ -7,9 +7,11 @@
 <html lang="zxx">
 <head>
     <title>SpringDay | Header</title>
+
 </head>
 
 <body>
+
     <!-- Header Section Begin -->
     <header class="header-section">
         <div class="header-top">
@@ -43,6 +45,7 @@
                                 data-title="Japanese">日本語 </option>
                         </select>
                     </div>
+                    
                     <div class="top-social">
                     </div>
                 </div>
@@ -58,6 +61,7 @@
                             </a>
                         </div>
                     </div>
+                    
                     <div class="col-lg-7 col-md-7">
                     <form action="/allSearch" method="GET">
                         <div class="advanced-search">
@@ -148,6 +152,7 @@
             </div>
         </div>
     </header>
+    
     <!-- Header End -->
     <script src="/resources/js/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
