@@ -12,7 +12,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>SpringDay | 내 주문 목록</title>
+    <title>SpringDay | 마이 페이지</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/orderCss/orderList.css" type="text/css">
+    <script src="https://kit.fontawesome.com/af95d2c333.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -46,7 +47,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="/"><i class="fa fa-home"></i> Home</a>
-                        <span>내 주문 목록</span>
+                        <span>마이 페이지</span>
                     </div>
                 </div>
             </div>
@@ -61,7 +62,7 @@
                 <div class="col-lg-12"> <!-- 본문을 우측으로 조금 변경 -->
                     <div class="faq-accordin"> <!-- 폰트 크기, 아이콘 -->
                     <!-- 22/03/24~22/03/25 노채린 -->
-                    <h1 id="content-title">주문 조회</h1>
+                    <h2 id="content-title">주문 확인</h2>
                     <br>
                     <div class="container-h5">
                     <br>
@@ -219,6 +220,17 @@
 					<h2 id="emptyList">주문 정보가 없습니다</h2>
 					</div>
 					</c:if>
+					<br><hr><br>
+					<!--회원정보 begin -->
+                    <h2 id="content-title">회원정보</h2><br>
+                    <input type="hidden" value="${sessionScope.userMail }" id="loginMail">
+                  	<input type="button" value="회원 정보 수정" onclick="userConfirm('${sessionScope.userMail }');" style="border-radius: 5px;">
+					<div id="gocart" class="">
+		                <div class="clear"></div>
+		                <div class="buttongroup center-align cmd">
+		                </div>
+		            </div>
+		            <!-- 회원정보 end -->
                     </div>
                 </div>
             </div>
@@ -226,40 +238,6 @@
     </div>
     <!-- Faq Section End -->
     
-    <!-- Partner Logo Section Begin -->
-    <div class="partner-logo">
-        <div class="container">
-            <div class="logo-carousel owl-carousel">
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="/resources/img/logo-carousel/logo-1.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="/resources/img/logo-carousel/logo-2.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="/resources/img/logo-carousel/logo-3.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="/resources/img/logo-carousel/logo-4.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="/resources/img/logo-carousel/logo-5.png" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Partner Logo Section End -->
-
     <!-- Footer Section Begin -->
     <%@ include file="/WEB-INF/views/footer.jsp" %>
     
@@ -278,8 +256,54 @@
  	
  	
     <script type="text/javascript">
-
-
+ 	//jsp페이지 출력과 동시에 실행 
+	$(function(){
+		//현재 페이지를 선택했음을 알림 4/17 박나래
+		$("li#menu-mypage").css("background", "#e7ab3c");
+	});
+ 	
+	function userConfirm(userId) 
+    {
+    	confirmModal();
+    	$("#footer-modal-content").html("");
+		$("#footer-modal-content").append('<button class="primary-btn" id="yes-button" style="border-radius:5px; position: relative; top: 45px; right: 60px; width: 102px;">예</button>');
+		$("#footer-modal-content").append('<button class="primary-btn" id="no-button" style="border-radius:5px; position: relative; left: 60px;">아니오</button>');
+    	$("#footer-modal-content").prepend("&ensp;&ensp;<b style='color: red; position: absolute; left: 7.3em; bottom: 10em;'>본인 확인이 필요합니다.</b>");
+    	$("#footer-modal-content").prepend("<b style='position: absolute; left: 3.5em;'>비밀번호:</b>&ensp;<input type='password' id='userPw' name='userPw' style='position: absolute; right: 3em;'>");
+    	$("#footer-modal-content").prepend("<b style='position: absolute; left: 6.5em; bottom: 8em;'>ID:</b>&ensp;<span style='position: absolute; right: 5.3em; bottom: 8em;'>" + userId + "</span>");
+    	
+    	showModalAlert();
+    	
+    	$('#yes-button').click(function() 
+		{
+			$.ajax
+			({
+				url: "/user/userConfirm",
+				type: "get",
+				data:
+				{
+					userId: userId,
+					userPw: $("#userPw").val()
+				},
+				success: function(result)
+				{
+					if ( result == "success" )
+					{
+						exitAlert();
+						$("#footer-modal-content").prepend("확인되셨습니다.");
+						showModalAlert();
+						location.href = "/user/userUpdate?userMail="+userId;
+					}
+				}
+			});
+		});
+   				
+		$('#no-button').click(function() 
+		{
+			$("#footer-modal").fadeOut();
+			return false;
+		});
+    }
     </script>
     
 </body>

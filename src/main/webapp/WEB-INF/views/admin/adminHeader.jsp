@@ -54,7 +54,7 @@
                        		</c:if>
                             </ul>
                         </li>
-                        <li><a href="empChatting">메신저 | Messenger</a></li>
+                        <li><a href="#" id="openPop">메신저 | Messenger</a></li>
                         <c:if test="${empty sessionScope.loginName }">
                         	<li class="active"><a href="adminLogin"><i class="fa fa-user"></i> Login</a></li>
                         </c:if>
@@ -68,5 +68,14 @@
         </div>
     </header>
     <!-- Header End -->
+    
+    <script src="/resources/js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+    /* 메신저 팝업창 열기 */
+    $("#openPop").click(function() 
+   	{
+   		 var popUp = window.open("empChattingPop", "직원용 채팅 팝업", "width=500px, height=500px, top=500px, left=500px, scrollbars=yes");
+	});
+    </script>
 </body>
 </html>
