@@ -36,6 +36,25 @@
 			height: 200px;
 			flex-direction: column;
 		}
+		
+		    		
+		#katock {
+			position : fixed;
+			bottom: 10%;
+			right: 0.8%;
+			z-index: 1;
+		} 
+		#topButton {
+			position : fixed;
+			bottom: 18%;
+			right: 0.8%;
+			z-index: 1;
+		}
+		
+		html {
+	  		scroll-behavior: smooth;
+		}
+		
 	</style>
 </head>
 
@@ -104,6 +123,38 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> 1조 
                 </div>
             </div>
         </div>
+      	<div id="chatbotId">
+      	<div id="frogue-container" class="position-right-bottom"
+			data-chatbot="f5ec9dae-b96c-4cc6-8fd8-8aa55ec90405"
+			data-user="사용자ID"
+			data-init-key="value"
+			data-close-use="Y" data-close-bgcolor="#ffffff" data-close=linecolor="#000000"
+			data-move-use="Y" data-move-bgcolor="#ffffff" data-move=linecolor="#000000">
+		</div>
+		</div>
+		<!-- data-init-식별키=값 으로 셋팅하면 챗플로우에 파라미터와 연동가능. 식별키는 소문자만 가능 -->
+		<!-- data 속성 매뉴얼 https://doc.danbee.ai/channel_frogu.html -->
+		<script>
+			(function(d, s, id){
+			    var js, fjs = d.getElementsByTagName(s)[0];
+			    if (d.getElementById(id)) {return;}
+			    js = d.createElement(s); js.id = id;
+			    js.src = "https:\/\/danbee.ai/js/plugins/frogue-embed/frogue-embed.min.js";
+			    fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'frogue-embed'));
+		</script>
+      	
+		<div id="katock">
+			<a href="http://pf.kakao.com/_QwxkWb" target='_blank'>
+				<img src="/resources/img/katock.png" width="70" height="70">
+			</a>
+		</div>
+		<div id="topButton">
+		<a href="#top">
+			<img src="/resources/img/top2.png" width="70" height="70">
+		</a>
+		</div>
+        
     </footer>
     <!-- Footer Section End -->
 

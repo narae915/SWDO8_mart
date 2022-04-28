@@ -71,10 +71,13 @@
 			z-index: 1; /* 태그에 순서를 줌 */
 			height:400px;
 		}
+
     </style>
 </head>
 
 <body>
+
+
     <!-- Page Preloder -->	
     <div id="preloder">
         <div class="loader"></div>
