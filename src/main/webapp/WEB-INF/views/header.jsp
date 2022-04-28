@@ -118,9 +118,9 @@
                         <i class="ti-menu"></i>
                         <span>모든 메뉴</span>
                         <ul class="depart-hover">
-                            <li class="active"><a href="/item/itemList">식품 마트</a></li>
+                            <li><a href="/item/itemList">식품 마트</a></li>
                             <li><a href="/recipe/recipeList">커뮤니티</a></li>
-                            <li><a href="/user/mypage">마이 페이지</a></li>
+                            <li><a href="/order/orderList">마이 페이지</a></li>
                         </ul>
                     </div>
                 </div>
@@ -131,10 +131,10 @@
                         <li id="menu-community"><a href="/recipe/recipeList">커뮤니티 | Community</a>
                         <c:choose>
                         <c:when test="${not empty sessionScope.userMail }">
-							<li id="menu-mypage"><a href="/user/mypage">마이 페이지 | My Page</a>
+							<li id="menu-mypage"><a href="/order/orderList">마이 페이지 | My Page</a>
 								<ul class="dropdown">
-									<li><a href="/order/orderList">내 주문 목록</a></li>
-									<li><a href="#" onclick="userConfirm('${sessionScope.userMail }');">회원 정보 수정</a></li>
+									<li><a href="/order/orderList">주문 확인</a></li>
+									<li><a href="#" onclick="userConfirm('${sessionScope.userMail }');">회원 정보</a></li>
 								</ul>
                         	</li>
                         </c:when>

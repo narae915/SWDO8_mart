@@ -3,48 +3,104 @@ package com.project.market;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.websocket.OnClose;
+import javax.websocket.OnError;
+import javax.websocket.OnMessage;
+import javax.websocket.OnOpen;
+import javax.websocket.Session;
+import javax.websocket.RemoteEndpoint.Basic;
+import javax.websocket.server.ServerEndpoint;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.socket.CloseStatus;
-import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketSession;
-import org.springframework.web.socket.handler.TextWebSocketHandler;
+import org.springframework.stereotype.Controller;
 
-@RequestMapping("/empChatting")
-public class ChattingHandler extends TextWebSocketHandler
+@Controller
+@ServerEndpoint(value = "/empChatting") // 서버가 어떤 주소로 바인딩 되는지를 정의
+public class ChattingHandler
 {
     // 세션 리스트
-    private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
-
+    private static final List<Session> sessionList = new ArrayList<Session>();
+    
     private static Logger logger = LoggerFactory.getLogger(ChattingHandler.class);
-
-    // 클라이언트가 연결 되었을 때 실행
-    @Override
-    public void afterConnectionEstablished(WebSocketSession session) throws Exception 
+    
+    public ChattingHandler() 
     {
-        sessionList.add(session);
-        logger.info("{} 연결됨", session.getId()); 
-    }
-
-    // 클라이언트가 웹소켓 서버로 메시지를 전송했을 때 실행
-    @Override
-    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception 
-    {
-        logger.info("{}로 부터 {} 받음", session.getId(), message.getPayload());
-        // 모든 유저에게 메세지 출력
-        for(WebSocketSession sess : sessionList)
-        {
-            sess.sendMessage(new TextMessage(message.getPayload()));
-        }
-	  
+        System.out.println("웹소켓(서버) 객체생성");
     }
     
-    //클라이언트 연결을 끊었을 때 실행
-    @Override
-    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception 
+    @OnOpen
+    public void onOpen(Session session) 
     {
+        logger.info("loginId: {}", session.getId());
+        try 
+        {
+            final Basic basic = session.getBasicRemote();
+            basic.sendText("<b>채팅방에 연결 되었습니다.<b>");
+        }
+        catch (Exception e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        sessionList.add(session);
+    }
+    
+    /*
+     * 모든 사용자에게 메시지를 전달한다.
+     * @param self
+     * @param sender
+     * @param message
+     */
+    private void sendAllSessionToMessage(Session self, String sender, String message) 
+    {
+        try 
+        {
+            for ( Session session : ChattingHandler.sessionList ) 
+            {
+                if ( !( self.getId().equals( session.getId() ) ) ) 
+                {
+                    session.getBasicRemote().sendText("<div style='float: left;'>"+ sender + "</div><br>" + "<div class='toChatting'>&ensp;" + message + "&ensp;</div><br>");
+                }
+            }
+        }
+        catch (Exception e) 
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    /*
+     * 내가 입력하는 메세지
+     * @param message
+     * @param session
+     */
+    @OnMessage
+    public void onMessage(String message, Session session) 
+    {
+    	String sender = message.split(",")[1];
+    	message = message.split(",")[0];
+    	
+        logger.info("Message From " + sender + ": " + message);
+        
+        try 
+        {
+            final Basic basic = session.getBasicRemote(); // 문자 전송 컨트롤
+            basic.sendText("<div class='fromChatting'>&ensp;" + message + "&ensp;</div><br>");
+        }
+        catch (Exception e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        sendAllSessionToMessage(session, sender, message); // 보낸 사람을 제외한 연결된 세션에  메세지 전송
+    }
+    
+    @OnError
+    public void onError(Throwable e, Session session) {}
+    
+    @OnClose
+    public void onClose(Session session) 
+    {
+        logger.info("Session " + session.getId() + " has ended");
         sessionList.remove(session);
-        logger.info("{} 연결 끊김.", session.getId());
     }
 }

@@ -94,7 +94,7 @@
                     <div class="footer-widget">
                         <h5>Messenger</h5>
                         <ul>
-                            <li><a href="/admin/empChatting">메신저</a></li>
+                            <li><a href="#" onclick="openPop();">메신저</a></li>
                         </ul>
                     </div>
                 </div>
@@ -198,7 +198,12 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> 1조 
     		$("#footer-modal-content").append('<button class="primary-btn" id="yes-button" style="border-radius:5px; position: relative; top: 49px; right: 60px; width: 106px;">예</button>');
     		$("#footer-modal-content").append('<button class="primary-btn" id="no-button" style="border-radius:5px; position: relative; left: 60px;">아니오</button>');
     	}
-
+		
+    	function openPop() 
+    	{
+    		window.open("empChattingPop", "직원용 채팅 팝업", "width=500px, height=500px, top=500px, left=500px, scrollbars=yes");
+		}
+	    
     </script>
 </body>
 

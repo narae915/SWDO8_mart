@@ -724,12 +724,12 @@ public class AdminController {
 	}
 	
 	/* 메신저 페이지 이동 */
-	@RequestMapping (value = "/empChatting", method = RequestMethod.GET)
-	public String empChatting() 
+	@RequestMapping (value = "/empChattingPop", method = RequestMethod.GET)
+	public String empChattingPop() 
 	{
-		logger.info("empChatting 메소드 실행(GET).");
+		logger.info("empChattingPop 메소드 실행(GET).");
 		
-		return "admin/empChatting";
+		return "admin/empChattingPop";
 	}
 	
 	// 상품 판매글 등록 페이지
