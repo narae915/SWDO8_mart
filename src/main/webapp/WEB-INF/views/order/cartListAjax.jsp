@@ -31,6 +31,9 @@
 					</td>
 				</tr>
 			</c:forEach>
+				<tr>
+					<td colspan="3"><p style="margin-bottom:-20px">최대 3개상품까지 표시됩니다.</p></td>
+				</tr>
 			</c:if>
 		</tbody>
 	</table>

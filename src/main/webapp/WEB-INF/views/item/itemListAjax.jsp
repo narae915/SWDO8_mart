@@ -63,6 +63,10 @@
 		console.log(temp);
 		var sorting = $("#sorting").val();
 		var searchNum = $("#cate-num").val();
+		
+		if(searchNum == null || searchNum == "" ){
+    		searchNum = 0;
+    	}
 
 		var startCount = $("input#startCount").val(temp);
 		startCount = startCount.val();

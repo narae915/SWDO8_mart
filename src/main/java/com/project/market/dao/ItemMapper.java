@@ -27,4 +27,7 @@ public interface ItemMapper {
 
 	//상품테이블에 등록된 상품 수 확인
 	int countRecipeList(int categoryNum);
+
+	//상품 리스트 불러오기(메인화면용)
+	ArrayList<ItemVO> mainItemList(int categoryNum);
 }

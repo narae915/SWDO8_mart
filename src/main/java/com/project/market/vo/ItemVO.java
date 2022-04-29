@@ -20,4 +20,5 @@ public class ItemVO {
 	
 	//22-04-11 박나래
 	private int rownum; // 번호 매기기
+	private int salePrice; // 세일 가격
 }

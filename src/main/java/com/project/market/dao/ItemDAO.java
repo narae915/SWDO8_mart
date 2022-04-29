@@ -114,4 +114,18 @@ public class ItemDAO {
 		return result;
 	}
 
+	//상품 리스트 불러오기(메인화면용)
+	public ArrayList<ItemVO> mainItemList(int categoryNum) {
+		ArrayList<ItemVO> result = null;
+		ItemMapper mapper = null;
+
+		try {
+			mapper = session.getMapper(ItemMapper.class);
+			result = mapper.mainItemList(categoryNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 }

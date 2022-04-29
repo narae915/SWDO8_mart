@@ -30,6 +30,11 @@ public class ItemService {
 		
 		return dao.getItemList(map);
 	}
+	
+	//상품 리스트 불러오기(메인화면용)
+	public ArrayList<ItemVO> mainItemList(int categoryNum) {
+		return dao.mainItemList(categoryNum);
+	}
 
 	//상품 1개의 정보 불러오기
 	public ItemVO getOneItem(int itemNum) {

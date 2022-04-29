@@ -69,8 +69,7 @@ public class ItemController {
 	@RequestMapping(value = "/loading", method = RequestMethod.GET)
 	public String loading(String startCount, String viewCount, String sorting, String searchNum, Model model) {
 		logger.info("loading 메소드 실행(GET)");
-		logger.info("startCount:{}", startCount);
-		logger.info("viewCount:{}", viewCount);
+		logger.info("startCount,viewCount:{} , {}", startCount, viewCount);
 		logger.info("searchNum:{}", searchNum);
 		logger.info("sorting:{}", sorting);
 	

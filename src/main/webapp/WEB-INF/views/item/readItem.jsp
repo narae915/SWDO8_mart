@@ -141,6 +141,7 @@
                                 <div class="pd-desc">
                                     <p>- 상품 설명 -</p>
                                     <p>현재 남은 수량 ${item.itemAmount }</p>
+                                    <input type="hidden" id="item-amount" value="${item.itemAmount }">
                                     <h4><fmt:formatNumber value="${item.price }" pattern="#,###원"/></h4>
                                 </div>
                                 <div class="quantity">
@@ -149,7 +150,6 @@
                                     </div>
                                     <a class="primary-btn pd-cart" onclick="insertCart(${item.itemNum });">장바구니에 담기</a>
                                 </div>
-                                <span id="amount-zero" style="color:red;"></span>
                             </div>
                         </div>
                     </div>
@@ -336,6 +336,12 @@
 	<input type="hidden" id="loginMail" value="${sessionScope.userMail }">
     <!-- Footer -->
     <%@ include file="/WEB-INF/views/footer.jsp" %>
+    
+    <!-- modal -->
+	<div class="modal" id="footer-modal">
+		<div class="modal_content" id="footer-modal-content">
+		</div>
+	</div>
 
     <!-- Js Plugins -->
     <script src="/resources/js/jquery-3.6.0.min.js"></script>
@@ -350,46 +356,85 @@
     <script src="/resources/js/main.js"></script>
     <script type="text/javascript">
     
-  //jsp페이지 출력과 동시에 실행 
+	//jsp페이지 출력과 동시에 실행 
 	$(function(){
 		//현재 페이지를 선택했음을 알림 4/17 박나래
 		$("li#menu-foodMart").attr("class", "active");
 	});
 
+	// 닫기 모달
+	function exitAlert() {
+		$("#footer-modal-content").append('<button name="modalClose" class="primary-btn" id="footer-modal-button" style="margin-top:30px; border-radius:5px; border:none">창 닫기</button>');
+	}
+
+	// 모달 출력
+	function showModalAlert() {
+		$("#footer-modal").fadeIn();
+		$("button[name=modalClose]").click(function() {
+			$("#footer-modal").fadeOut();
+		});
+	}
+	
 	//장바구니에 상품 넣기
 	function insertCart(itemNum) {
 		console.log(itemNum);
 		itemNum = parseInt(itemNum);
 		cartAmount = $("input[name=cartAmount]").val();
 		var userMail = $("#loginMail").val();
-		console.log(userMail);
 		console.log(cartAmount);
+		var itemAmount = $("#item-amount").val();
 		
-		if(cartAmount == 0) {
-			var zeromsg = "수량을 1개 이상 선택해주세요";
-			$("#amount-zero").text(zeromsg);
-		} else {
-			$.ajax({
-				url: "/order/insertCart",
-				type: "POST", 
-				data: {
-					itemNum : itemNum,
-					cartAmount : cartAmount,
-					userMail : userMail
-				},
-				success: function(res) { //cart테이블에 입력
-					if(res = "yes"){
-						showModal();
-						$("#ri-modal-button").click(function(){
-							location.href="/order/cart";
-						});
-						$("#ri-modal-close").click(function(){
-							location.href="/item/readItem?itemNum="+itemNum;
-						});
-					}
-				}
+		//아이템 수량이 0개 이하일 때 더이상 구매할 수 없게 한 뒤, 페이지 이동
+		if(itemAmount <= 0) {
+			$("#footer-modal-content").html("");
+			$("#footer-modal-content").css({"text-align": "center"});
+			$("#footer-modal-content").html("준비 중인 상품입니다.<br>창닫기를 누르시면 상품 리스트 페이지로 이동합니다.");
+			exitAlert();
+			showModalAlert();
+			
+			$("button[name=modalClose]").click(function() {
+				location.href="/item/itemList";
 			});
+			
+		//사용자가 입력한 수량이 등록된 아이템 수량보다 클 때			
+		} else if(itemAmount < cartAmount) {
+			$("#footer-modal-content").html("");
+			$("#footer-modal-content").css({"text-align": "center"});
+			$("#footer-modal-content").html("입력한 개수가 너무 많습니다.");
+			exitAlert();
+			showModalAlert();
+		} else {
+			// 사용자가 입력한 수량이 없을 때
+			if(cartAmount == 0) {
+				$("#footer-modal-content").html("");
+				$("#footer-modal-content").html("수량을 1개 이상 선택해주세요.");
+				exitAlert();
+				showModalAlert();
+			} else {
+				//장바구니에 상품 넣기
+				$.ajax({
+					url: "/order/insertCart",
+					type: "POST", 
+					data: {
+						itemNum : itemNum,
+						cartAmount : cartAmount,
+						userMail : userMail
+					},
+					success: function(res) { //cart테이블에 입력
+						if(res = "yes"){
+							showModal();
+							$("#ri-modal-button").click(function(){
+								location.href="/order/cart";
+							});
+							$("#ri-modal-close").click(function(){
+								location.href="/item/readItem?itemNum="+itemNum;
+							});
+						}
+					}
+				});
+			}
 		}
+		
    	}
    	
 	//모달창 띄워주기

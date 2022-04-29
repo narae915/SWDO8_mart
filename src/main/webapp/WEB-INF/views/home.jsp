@@ -160,7 +160,7 @@
                 <div class="col-lg-8 offset-lg-1">
                     <div class="filter-control">
                         <ul>
-                            <li class="active">추천상품</li>
+                            <li class="active">신규 상품</li>
                         </ul>
                     </div>
                     <div class="product-slider owl-carousel">
@@ -168,7 +168,9 @@
                         <div class="product-item">
                             <div class="pi-pic">
                                 <img src="/resources/img/products/women-${status.count }.jpg" alt="">
-                                <div class="sale">Sale</div>
+                                <c:if test="${mealItem.salePrice != 0 }">
+    	                            <div class="sale">Sale</div>
+                                </c:if>
                                 <ul>
                                     <li class="w-icon active"><a onclick="insertCart(${mealItem.itemNum });" style="cursor:pointer;"><i class="icon_bag_alt"></i></a></li>
                                     <li class="quick-view"><a href="/item/readItem?itemNum=${mealItem.itemNum }">+ 상세보기</a></li>
@@ -180,8 +182,13 @@
                                     <h5>${mealItem.itemName }</h5>
                                 </a>
                                 <div class="product-price">
-                                    $14.00
-                                    <span><fmt:formatNumber value="${mealItem.price }" pattern="#,###원"/></span>
+                                	<c:if test="${mealItem.salePrice != 0 }">
+	                                    <fmt:formatNumber value="${mealItem.salePrice }" pattern="#,###원"/>
+    	                                <span><fmt:formatNumber value="${mealItem.price }" pattern="#,###원"/></span>
+                                    </c:if>
+                                    <c:if test="${mealItem.salePrice == 0 }">
+                                    	<fmt:formatNumber value="${mealItem.price }" pattern="#,###원"/>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>
@@ -200,7 +207,7 @@
                 <div class="col-lg-8">
                     <div class="filter-control">
                         <ul>
-                            <li class="active">추천상품</li>
+                            <li class="active">신규 상품</li>
                         </ul>
                     </div>
                     <div class="product-slider owl-carousel">
@@ -250,7 +257,7 @@
                 <div class="col-lg-8 offset-lg-1">
                     <div class="filter-control">
                         <ul>
-                            <li class="active">추천상품</li>
+                            <li class="active">신규 상품</li>
                         </ul>
                     </div>
                     <div class="product-slider owl-carousel">
@@ -258,7 +265,9 @@
                         <div class="product-item">
                             <div class="pi-pic">
                                 <img src="/resources/img/products/women-${status.count }.jpg" alt="">
-                                <div class="sale">Sale</div>
+                                <c:if test="${produceItem.salePrice != 0 }">
+    	                            <div class="sale">Sale</div>
+                                </c:if>
                                 <ul>
                                     <li class="w-icon active"><a onclick="insertCart(${produceItem.itemNum });" style="cursor:pointer;"><i class="icon_bag_alt"></i></a></li>
                                     <li class="quick-view"><a href="/item/readItem?itemNum=${produceItem.itemNum }">+ 상세보기</a></li>
@@ -270,8 +279,13 @@
                                     <h5>${produceItem.itemName }</h5>
                                 </a>
                                 <div class="product-price">
-                                    $14.00
+                                <c:if test="${produceItem.salePrice != 0 }">
+	                                <fmt:formatNumber value="${produceItem.salePrice }" pattern="#,###원"/>
                                     <span><fmt:formatNumber value="${produceItem.price }" pattern="#,###원"/></span>
+                                </c:if>
+                                <c:if test="${produceItem.salePrice == 0 }">
+                                    <fmt:formatNumber value="${produceItem.price }" pattern="#,###원"/>
+                                </c:if>
                                 </div>
                             </div>
                         </div>

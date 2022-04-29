@@ -70,6 +70,7 @@
 			position:absolute;
 			z-index: 1; /* 태그에 순서를 줌 */
 			height:400px;
+/* 			cursor: not-allowed; */
 		}
     </style>
 </head>
@@ -141,7 +142,7 @@
 							<c:forEach items="${itemList }" var="item" varStatus="status">
 							<div class="col-lg-4 col-sm-6">
 							<c:if test="${item.itemAmount == 0}">
-							<img class="sold-out-img" src="/resources/img/products/sold-out.png">
+							<img class="sold-out-img" src="/resources/img/products/sold-out.png" >
 							</c:if>
 								<div class="product-item">
 									<div class="pi-pic">
