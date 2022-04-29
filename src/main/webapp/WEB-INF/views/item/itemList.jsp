@@ -72,10 +72,13 @@
 			height:400px;
 /* 			cursor: not-allowed; */
 		}
+
     </style>
 </head>
 
 <body>
+
+
     <!-- Page Preloder -->	
     <div id="preloder">
         <div class="loader"></div>

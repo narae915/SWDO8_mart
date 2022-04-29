@@ -82,15 +82,6 @@ public class UserController {
 	}
 
 	// 22-04-05 노채린
-	// 회원정보 수정 페이지
-	@RequestMapping(value="/mypage", method = RequestMethod.GET)
-	public String mypage() {
-		logger.info("회원정보 수정 페이지(GET)");
-		
-		return "user/mypage";
-	}
-	
-	// 22-04-05 노채린
 	// 회원 탈퇴
 	@ResponseBody 
 	@RequestMapping(value="/userDelete", method = RequestMethod.GET)

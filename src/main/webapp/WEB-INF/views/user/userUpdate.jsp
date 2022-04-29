@@ -25,6 +25,26 @@
     <link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
+    <style type="text/css">
+    	#userDeleteBtn
+    	{
+    		background-color: #ebebe4;
+    		color: #b2b2b2;
+    		border-radius: 5px;
+    		border: 0;
+    		outline: 0;
+    	}
+    	
+    	#userDeleteBtn:hover
+    	{
+    		background-color: #ebebe4;
+    		color: black;
+    		font-weight: bold;
+    		border-radius: 5px;
+    		border: 0;
+    		outline: 0;
+    	}
+    </style>
 </head>
 
 <body>
@@ -101,6 +121,8 @@
                                 <span id="extraAddress"></span>
 							</div>
                             <button type="submit" class="site-btn register-btn">수정</button>
+                            <br><br><input type="button" value="회원 탈퇴" id="userDeleteBtn" style="float: right;">
+                    		<input type="hidden" value="${sessionScope.userMail }" id="loginMail">
                         </form>
                     </div>
                 </div>
@@ -192,6 +214,36 @@
 	{
 		location.href = "/user/resetPw";
 	}
+	
+	$('#userDeleteBtn').click(function() {
+		confirmModal();	
+		$("#footer-modal-content").prepend("정말 탈퇴하시겠습니까?");
+		showModalAlert();
+		
+		$('#yes-button').click(function() {
+			$.ajax({
+				url: "/user/userDelete",
+				type: "get",
+				data: {
+					userMail: $('#loginMail').val()
+				},
+				success: function() {
+					exitAlert();
+  					$("#footer-modal-content").prepend("탈퇴가 완료되었습니다.");
+  					$("#footer-modal").fadeIn()	;
+  		    		$("button[name=modalClose]").click(function() {
+  		    			$("#footer-modal").fadeOut();
+  		    			location.href="/user/logout";	
+  		    		});
+				}
+			});
+		});
+		
+		$('#no-button').click(function() {
+			$("#footer-modal").fadeOut();
+			return false;
+		});
+	})
     </script>
 </body>
 </html>
