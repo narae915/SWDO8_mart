@@ -1,12 +1,18 @@
 package com.project.market.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.UUID;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +28,13 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.mail.internet.MimeMessage;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
+import com.google.gson.JsonObject;
 import com.project.market.service.AdminService;
 import com.project.market.service.UserService;
 import com.project.market.util.FileService;
 import com.project.market.util.PageNavigator;
 import com.project.market.vo.EmpVO;
+import com.project.market.vo.FileListVO;
 import com.project.market.vo.ItemVO;
 import com.project.market.vo.UserVO;
 
@@ -88,6 +96,16 @@ public class AdminController {
 		ArrayList<ItemVO> itemList = service.getItemList(navi.getStartRecord(), COUNT_PER_PAGE, searchWord, category);
 		model.addAttribute("itemList", itemList);
 		
+		ArrayList<Integer> itemNumList = new ArrayList<Integer>();
+		for (int i = 0; i < itemList.size(); i++) {
+			itemNumList.add(i, itemList.get(i).getItemNum());
+		}
+		logger.info("itemNumList:{}",itemNumList);
+		
+		/*
+		ArrayList<FileListVO> fileList = service.getFileList(itemNumList);
+		logger.info("fileList:{}",fileList);
+		*/
 		return "/admin/itemManagement";
 	}
 	
@@ -698,6 +716,7 @@ public class AdminController {
 		logger.info("itemChk:{}", itemChk);
 		model.addAttribute("itemChk", itemChk);
 		
+		// 상품 수정 페이지 기존 정보 가져오기
 		ArrayList<ItemVO> itemList = service.getAdminItemList(itemChk);
 		logger.info("itemList:{}",itemList);
 		model.addAttribute("itemList",itemList);
@@ -737,11 +756,75 @@ public class AdminController {
 	public String itemSale(String itemNum, Model model) {
 		logger.info("itemSale 메소드 실행(GET).");
 		
+		model.addAttribute("itemNum", itemNum);
+		
+		// 기존 상품 정보 불러오기
 		ArrayList<ItemVO> itemList = service.getAdminItemList(itemNum);
-		model.addAttribute("itemList", itemList);
 		logger.info("itemList:{}",itemList);
+		model.addAttribute("itemList", itemList);
 
+		// 상품에 첨부된 사진들 불러오기
+		ArrayList<String> fileList = service.getItemFileList(itemNum);
+		logger.info("fileList:{}",fileList);
+		model.addAttribute("fileList", fileList);
+		
+		logger.info("파일 수 :{}", fileList.size());
+		model.addAttribute("fileCount", fileList.size());
+		
 		return "admin/itemSale";
+	}
+	
+	// 상품 판매글- 사진 등록
+	@RequestMapping (value = "/itemSale", method = RequestMethod.POST)
+	public String itemSale(@RequestParam("uploadFile") MultipartFile[] mfile, String itemNum) {
+		logger.info("itemSale 메소드 실행(POST)");
+		
+		logger.info("itemNum:{}", itemNum);
+		
+		for(int i = 0; i < mfile.length; i++) {
+			logger.info(i+"번 mfile: {}", mfile[i]);
+			
+			String originalFilename = null;
+			if(mfile[i] != null) {
+				originalFilename = mfile[i].getOriginalFilename();
+				logger.info(i+"번 originalFilename: {}", originalFilename);
+			}
+			
+			String savedFilename = FileService.saveFile(mfile[i], UPLOAD_PATH);
+
+			if(savedFilename != null) {
+				logger.info(i+"번 저장 파일명: {}", savedFilename);
+			} else {
+				logger.info(i+"번 사진 저장 실패.");
+			}
+			
+			// 사진 등록 메서드
+			boolean result = service.itemImgSave(originalFilename, savedFilename, itemNum);
+			
+			if(result) {
+				logger.info(i+"번 사진 등록 성공");
+			} else {
+				logger.info(i+"번 사진 등록 실패");
+			}
+		}
+		return "redirect:/admin/itemManagement";
+	}
+	
+	// 사진 삭제
+	@ResponseBody
+	@RequestMapping(value="/itemImgDelete", method=RequestMethod.GET)
+	public String itemImgDelete(String fileName) {
+		logger.info("itemImgDelete 메소드 실행(GET)");
+		logger.info("fileName:{}", fileName);
+		
+		boolean result = service.itemImgDelete(fileName);
+		if(result) {
+			logger.info("성공");
+			return "success";
+		}else {
+			logger.info("실패");
+			return null;
+		}
 	}
 	
 	//회원 관리 페이지 이동
@@ -812,5 +895,126 @@ public class AdminController {
 		model.addAttribute("userList", userList);
 		
 		return "admin/userManagement";
+	}
+	
+	// 상품 판매글-보관법 페이지 열기
+	@RequestMapping(value="/itemInventory", method = RequestMethod.GET)
+	public String itemInventory(String itemNum, Model model) {
+		logger.info("itemInventory 실행(GET)");
+		logger.info("itemNum:{}",itemNum);
+		model.addAttribute("itemNum", itemNum);
+		
+		return "admin/itemInventory";
+	}
+	// 상품 판매글-보관법 작성
+	@RequestMapping(value="/itemInventory", method = RequestMethod.POST)
+	public String itemInventory(String itemNum, String editordata) {
+		logger.info("itemInventory 실행(POST)");
+		logger.info("itemNum:{}", itemNum);
+		logger.info("editordata:{}", editordata);
+		
+		boolean result = service.itemInventoryWrite(itemNum, editordata);
+		if(result) {
+			logger.info("보관법 작성 성공");
+		} else {
+			logger.info("보관법 작성 실패");
+		}
+		
+		return "admin/itemInventory";
+	}
+	
+	// 상품 판매글-상품정보 페이지 열기
+	@RequestMapping(value="/itemInfor", method = RequestMethod.GET)
+	public String itemInfor(String itemNum, Model model) {
+		logger.info("itemInfor 실행(GET)");
+		logger.info("itemNum:{}",itemNum);
+		model.addAttribute("itemNum", itemNum);
+		
+		return "admin/itemInfor";
+	}
+	
+	// 상품 판매글-상품정보 작성
+	@RequestMapping(value="/itemInfor", method = RequestMethod.POST)
+	public String itemInfor(String itemNum, String editordata) {
+		logger.info("itemInfor 실행(POST)");
+		logger.info("itemNum:{}", itemNum);
+		logger.info("editordata:{}", editordata);
+		
+		boolean result = service.itemInforWrite(itemNum, editordata);
+		if(result) {
+			logger.info("상품정보 작성 성공");
+		} else {
+			logger.info("상품정보 작성 실패");
+		}
+		
+		return "admin/itemInfor";
+	}
+	
+	// 상품 판매글-손질법 페이지 열기
+	@RequestMapping(value="/itemCook", method = RequestMethod.GET)
+	public String itemCook(String itemNum, Model model) {
+		logger.info("itemCook 실행(GET)");
+		logger.info("itemNum:{}",itemNum);
+		model.addAttribute("itemNum", itemNum);
+		
+		return "admin/itemCook";
+	}
+	
+	// 상품 판매글-손질법 작성
+	@RequestMapping(value="/itemCook", method = RequestMethod.POST)
+	public String itemCook(String itemNum, String editordata) {
+		logger.info("itemCook 실행(POST)");
+		logger.info("itemNum:{}", itemNum);
+		logger.info("editordata:{}", editordata);
+		
+		boolean result = service.itemCookWrite(itemNum, editordata);
+		if(result) {
+			logger.info("손질법 작성 성공");
+		} else {
+			logger.info("손질법 작성 실패");
+		}
+		
+		return "admin/itemCook";
+	}
+	 	
+
+	// 사진을 드래그 앤 드롭 시 파일명을 읽어 사진을 출력함.
+	@RequestMapping(value="/uploadSummernoteImageFile", method= RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request )  {
+		JsonObject jsonObject = new JsonObject();
+		
+        /*
+		 * String fileRoot = "C:\\summernote_image\\"; // 외부경로로 저장을 희망할때.
+		 */
+		
+		// 내부경로로 저장
+		String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
+		String fileRoot = contextRoot+"resources/temp/";
+		// logger.info("fileRoot:{}",fileRoot); // 파일 저장 주소
+		
+		String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
+		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
+		//ㅣ-> 오리지널 파일명과 확장자를 분리
+		
+		// UUID.randomUUID()를 통해 고유 이름으로 바꿔 저장.(중복 파일명 방지)
+		String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
+		
+		File targetFile = new File(fileRoot + savedFileName);	
+		try {
+			InputStream fileStream = multipartFile.getInputStream();
+			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
+			
+			// 업로드 url을 리턴, 이미지 미리보기 실행
+			jsonObject.addProperty("url", "/resources/temp/"+savedFileName); // contextroot + resources + 저장할 내부 폴더명
+			jsonObject.addProperty("responseCode", "success");
+				
+		} catch (IOException e) {
+			FileUtils.deleteQuietly(targetFile);	//저장된 파일 삭제
+			jsonObject.addProperty("responseCode", "error");
+			e.printStackTrace();
+		}
+		String a = jsonObject.toString(); // Json 객체의 전체 파일을 String으로 변환 후 리턴 시작
+		return a;
 	}
 }

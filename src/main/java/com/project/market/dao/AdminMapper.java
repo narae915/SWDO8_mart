@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.project.market.vo.EmpVO;
+import com.project.market.vo.FileListVO;
 import com.project.market.vo.ItemVO;
 import com.project.market.vo.UserVO;
 
@@ -45,9 +46,9 @@ public interface AdminMapper {
 	
 	int empDelete(int empNum); // 직원 정보 삭제
 	
-	ItemVO readitem(int upItemNum);
+	// ItemVO readitem(int upItemNum);
 
-	ArrayList<ItemVO> itemUpdateList(List<Integer> intUpdateNum);
+	// ArrayList<ItemVO> itemUpdateList(List<Integer> intUpdateNum);
 
 	int selectEmpId(EmpVO emp); // ID 찾기
 
@@ -62,5 +63,20 @@ public interface AdminMapper {
 	int getUserTotalRecordsCount(HashMap<String, Object> map); // 총 유저수 확인
 
 	ArrayList<UserVO> searchUser(HashMap<String, Object> map); //회원 검색
+
+	int itemInventoryWrite(HashMap<String, Object> map); // 상품 판매글-보관법 작성
+
+	int itemInforWrite(HashMap<String, Object> map); // 상품 판매글-상품정보 작성
+
+	int itemCookWrite(HashMap<String, Object> map); // 상품 판매글-손질법 작성
+
+	int itemImgSave(FileListVO newFile); // 사진 등록 메서드
+
+	ArrayList<String> getItemFileList(String itemNum); // 품에 첨부된 사진들 불러오기
+
+	int itemImgDelete(String fileName); // 사진 삭제
+
+	// ArrayList<FileListVO> getFileList(ArrayList<Integer> itemNumList);
+
 
 }
