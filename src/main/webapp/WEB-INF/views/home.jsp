@@ -64,6 +64,10 @@
 			align-content: center;
 			justify-content: center;
 		}
+		
+		.product-itemImg {
+			cursor: pointer;
+		}
     </style>
 </head>
 
@@ -167,7 +171,8 @@
                     <c:forEach items="${mealItemList }" var="mealItem" varStatus="status">
                         <div class="product-item">
                             <div class="pi-pic">
-                                <img src="/resources/img/products/women-${status.count }.jpg" alt="">
+                                <img src="/resources/img/products/women-${status.count }.jpg" 
+                                	onclick="location.href='/item/readItem?itemNum=${mealItem.itemNum }';" class="product-itemImg">
                                 <c:if test="${mealItem.salePrice != 0 }">
     	                            <div class="sale">Sale</div>
                                 </c:if>
@@ -214,7 +219,8 @@
                     <c:forEach items="${seafoodItemList }" var="seafoodItem" varStatus="status">
                         <div class="product-item">
                             <div class="pi-pic">
-                                <img src="/resources/img/products/man-${status.count }.jpg" alt="">
+                                <img src="/resources/img/products/man-${status.count }.jpg"
+									onclick="location.href='/item/readItem?itemNum=${seafoodItem.itemNum }';" class="product-itemImg">
                                 <ul>
                                     <li class="w-icon active"><a onclick="insertCart(${seafoodItem.itemNum });" style="cursor:pointer;"><i class="icon_bag_alt"></i></a></li>
                                     <li class="quick-view"><a href="/item/readItem?itemNum=${seafoodItem.itemNum }">+ 상세보기</a></li>
@@ -264,7 +270,8 @@
                     <c:forEach items="${produceItemList }" var="produceItem" varStatus="status">
                         <div class="product-item">
                             <div class="pi-pic">
-                                <img src="/resources/img/products/women-${status.count }.jpg" alt="">
+                                <img src="/resources/img/products/women-${status.count }.jpg" 
+                                	onclick="location.href='/item/readItem?itemNum=${produceItem.itemNum }';" class="product-itemImg">
                                 <c:if test="${produceItem.salePrice != 0 }">
     	                            <div class="sale">Sale</div>
                                 </c:if>

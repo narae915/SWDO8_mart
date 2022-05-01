@@ -25,6 +25,14 @@
     <link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
+    <style type="text/css">
+    	label span {
+    		color: red;
+    	}
+    	span.signChk {
+    		color: red;
+    	}
+    </style>
 </head>
 
 <body>
@@ -63,24 +71,29 @@
                         <input type="hidden" name="userAddress">
                         <input type="hidden" name="postcode" value="0">
                             <div class="group-input">
-                                <label for="username">이름 *</label>
+                                <label for="username">이름 <span>*</span></label>
                                 <input type="text" id="username" name="userName">
+                                <span class="signChk" id="signChk-name"></span>
                             </div>
                             <div class="group-input">
-                                <label for="username">메일 주소 *</label>
-                                <input type="text" name="userMail">
+                                <label for="username">메일 주소 <span>*</span></label>
+                                <input type="email" id="userMail" name="userMail">
+                                <span class="signChk" id="signChk-mail"></span>
                             </div>
                             <div class="group-input">
-                                <label for="pass">비밀번호 *</label>
+                                <label for="pass">비밀번호 <span>*</span></label>
                                 <input type="password" id="pass" name="userPw">
+                                <span class="signChk" id="signChk-pw"></span>
                             </div>
                             <div class="group-input">
-                                <label for="con-pass">비밀번호 확인 *</label>
+                                <label for="con-pass">비밀번호 확인 <span>*</span></label>
                                 <input type="password" id="con-pass">
+                                <span class="signChk" id="signChk-pwChk"></span>
                             </div>
                             <div class="group-input">
-                                <label>연락처 *</label>
-                                <input type="text" name="userCall" placeholder="(-)는 제외">
+                                <label>연락처 <span>*</span></label>
+                                <input type="text" id="userCall" name="userCall" placeholder="(-)는 제외">
+                                <span class="signChk" id="signChk-tel"></span>
                             </div>
                             <div class="group-input">
                                 <label>우편번호</label>
@@ -128,7 +141,90 @@
 	$(function(){
 		//현재 페이지를 선택했음을 알림 4/17 박나래
 		$("li#menu-mypage").css("background", "#e7ab3c");
-	});
+		
+		//유저 이름 확인
+		$("#username").keyup(function(){
+			var userName = $(this).val();
+			
+			//글자수 세기
+			if(userName.length == 0 || userName == "") {
+				$("#signChk-name").text("이름을 입력해주세요");
+			} else {
+				$("#signChk-name").text(" ");
+			}
+		});
+		
+		//유저 메일 확인
+		$("#userMail").keyup(function(){
+			var userMail = $(this).val();
+			var pattern =/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+			
+			if(userMail.length == 0 || userMail == "") {
+				$("#signChk-mail").text("이메일을 입력해주세요");
+			} else if(pattern.test(userMail) == false) {
+				//이메일 형식이 알파벳+숫자@알파벳+숫자.알파벳+숫자 형식이 아닐경우
+				$("#signChk-mail").text("이메일 형식을 확인해주세요");
+			} else{
+				$("#signChk-mail").text(" ");
+			}
+		});
+		
+		//유저 비밀번호 확인
+		$("#pass").keyup(function(){
+			var userPw = $(this).val();
+			//글자수 8자 + 최소 한개의 영문자 + 최소 한개의 숫자 + 최소 한개의 특수 문자
+			var pattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+			
+			if(userPw.length == 0 || userPw == "") {
+				$("#signChk-pw").text("비밀번호를 입력해주세요");
+			} else if(userPw.length<8 || userPw.length>16 || (pattern.test(userPw) == false) ) {
+				$("#signChk-pw").text("비밀번호는 특수문자 포함 8자리~16자리로 입력해주세요");
+			} else{
+				$("#signChk-pw").text(" ");
+			}
+		});
+		
+		//유저 비밀번호 확인 입력 여부
+		$("#con-pass").keyup(function(){
+			var passwordChk = $(this).val();
+			var userPw = $("#pass").val();
+			
+			if(passwordChk != userPw) {
+				$("#signChk-pwChk").text("비밀번호가 일치하지 않아요");
+			} else{
+				$("#signChk-pwChk").text(" ");
+			}
+		});
+		
+		//유저 연락처 확인
+		$("#userCall").keyup(function(){
+			var userCall = $(this).val();
+			// 하이푼 지우기
+			var pattern = /^(?:(010\d{4})|(01[1|6|7|8|9]-\d{3,4}))(\d{4})$/;
+
+			if(userCall.length == 0 || userCall == "") {
+				$("#signChk-tel").text("전화번호를 입력해주세요");
+			} else if(pattern.test(userCall) == false) {
+				$("#signChk-tel").text("전화번호 형식을 확인해주세요");
+			} else {
+				$("#signChk-tel").text(" ");
+			}
+		});
+	});//윈도우 load시 실행하는 함수
+	
+	// 닫기 모달
+	function exitAlert() {
+		$("#footer-modal-content").append('<button name="modalClose" class="primary-btn" id="footer-modal-button" style="margin-top:30px; border-radius:5px; border:none">창 닫기</button>');
+	}
+	
+	// 모달 출력
+	function showModalAlert() {
+		$("#footer-modal").fadeIn();
+
+		$("button[name=modalClose]").click(function() {
+			$("#footer-modal").fadeOut();
+		});
+	}
 
 	//우편 번호로 주소찾기(다음 API)
 	function daumPostcode() {
@@ -179,6 +275,8 @@
 	}
 
 	function formChk() {
+		var returnVal = false;
+		
 		//주소 hidden태그에 채우기
 		var userAddress= $("#address").val() + "_" + $("#detailAddress").val() + " " + $("#extraAddress").text();
 		$("input[name=userAddress]").attr("value", userAddress);
@@ -188,7 +286,60 @@
 		if(postcode != null && postcode != "") {
 			$("input[name=postcode]").attr("value", postcode);
 		}
-		return true;
+		
+		var userName = $("#username").val();
+		var userMail = $("#userMail").val();
+		var userPw = $("#pass").val();
+		var userPwChk = $("#con-pass").val();
+		var userCall = $("#userCall").val();
+		
+		if(userName.length == 0 || userMail.length == 0 || userPw.length == 0 || userCall.length == 0) {
+			$("#footer-modal-content").html("");
+			$("#footer-modal-content").append("입력하지 않은 정보가 존재합니다");
+			exitAlert();
+			showModalAlert();
+			return returnVal;
+		}
+		
+		if(userPw != userPwChk) {
+			$("#footer-modal-content").html("");
+			$("#footer-modal-content").append("비밀번호를 확인해주세요");
+			exitAlert();
+			showModalAlert();
+			return returnVal;
+		}
+
+		//이메일 정규식
+		var pattern =/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+		if(pattern.test(userMail) == false) {
+			$("#footer-modal-content").html("");
+			$("#footer-modal-content").append("이메일 형식을 확인해주세요");
+			exitAlert();
+			showModalAlert();
+			return returnVal;
+		}
+		//비밀번호 정규식
+		pattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+		if(userPw.length<8 || userPw.length>16 || (pattern.test(userPw) == false)) {
+			$("#footer-modal-content").html("");
+			$("#footer-modal-content").append("비밀번호를 확인해주세요");
+			exitAlert();
+			showModalAlert();
+			return returnVal;
+		}
+		
+		//연락처 정규식
+		pattern = /^(?:(010\d{4})|(01[1|6|7|8|9]-\d{3,4}))(\d{4})$/;
+		if(pattern.test(userCall) == false) {
+			$("#footer-modal-content").html("");
+			$("#footer-modal-content").append("전화번호를 올바르게 입력해주세요");
+			exitAlert();
+			showModalAlert();
+			return returnVal;
+		}
+		
+		returnVal = true;
+		return returnVal;
 	}
     </script>
 </body>

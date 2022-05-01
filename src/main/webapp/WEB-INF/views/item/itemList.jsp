@@ -150,7 +150,9 @@
 								<div class="product-item">
 									<div class="pi-pic">
 										<img src="/resources/img/products/product-${status.count }.jpg" alt="">
-										<!-- 세일상품 <div class="sale pp-sale">Sale</div> -->
+										<c:if test="${item.salePrice != 0 }">
+    	                            		<div class="sale pp-sale">Sale</div>
+                                		</c:if>
 										<ul>
 											<li class="w-icon active" onclick="insertCart(${item.itemNum });" style="cursor:pointer;">
 												<a><i class="icon_bag_alt"></i></a>
@@ -162,7 +164,14 @@
 										<div class="catagory-name">${item.categoryName }</div>
 										<a href="#"><h5>${item.itemName }</h5></a>
 										<!-- 가격사이에 ,를 찍기 위해 fmt 사용 -->
-										<div class="product-price"><fmt:formatNumber value="${item.price }" pattern="#,###원"/></div>
+										<c:if test="${item.salePrice != 0 }">
+											<div class="product-price"><fmt:formatNumber value="${item.salePrice }" pattern="#,###원"/>
+	                                            <span><fmt:formatNumber value="${item.price }" pattern="#,###원"/></span>
+	                                        </div>
+                                        </c:if>
+                                        <c:if test="${item.salePrice == 0 }">
+											<div class="product-price"><fmt:formatNumber value="${item.price }" pattern="#,###원"/></div>
+										</c:if>
 									</div>
 								</div>
 							</div>

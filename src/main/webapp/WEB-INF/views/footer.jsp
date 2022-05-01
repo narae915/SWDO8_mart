@@ -55,6 +55,19 @@
 	  		scroll-behavior: smooth;
 		}
 		
+		#staffBtn {
+			display: inline-block;
+		    color: #ffffff;
+		    background: #e7ab3c;
+		    font-size: 13px;
+		    font-weight: 700;
+		    text-transform: uppercase;
+		    border: 1px solid #e7ab3c;
+		    right: 0;
+		    top: 0;
+		    padding: 13px 20px 12px;
+		    cursor: pointer;
+		}
 	</style>
 </head>
 
@@ -102,10 +115,16 @@
                 <div class="col-lg-4">
                     <div class="newslatter-item">
                         <h5>Staff Only</h5>
-                        <form action="/admin/adminLogin" class="subscribe-form" onsubmit="return staffOnlyChk()">
-                            <input type="text" name="admin">
-                            <button>입장</button>
-                        </form>
+                        <c:if test="${sessionScope.loginName != null}">
+                        	<button type="button" onclick="location.href='/admin/adminMain';" id="staffBtn">관리자 페이지로 이동</button>
+                        </c:if>
+                        <c:if test="${sessionScope.loginName == null}">
+	                        <form action="/admin/adminLogin" class="subscribe-form" onsubmit="return staffOnlyChk()">
+	                            <input type="text" name="admin">
+	                            <button>입장</button>
+	                        </form>
+                        </c:if>
+                        
                     </div>
                 </div>
             </div>
@@ -157,14 +176,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> 1조 
         
     </footer>
     <!-- Footer Section End -->
-
-	<!-- 모달 연습 -->
-	<!-- <div class="modal" id="staff-modal">
-		<div class="modal_content" id="staff-modal-content">
-			관계자만 접속할 수 있습니다.<br><br>
-			<input type="button" class="modal-button" id="staff-modal-button" value="창 닫기">
-		</div>
-	</div> -->
 	
 	<!-- 22-04-05 노채린 -->
 	<!-- 모달 방식 수정 -->

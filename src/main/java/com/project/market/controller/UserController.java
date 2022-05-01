@@ -314,18 +314,6 @@ public class UserController {
 			resultString = null;
 		}
 		
-		
-//		if ( selectUser != null )
-//		{
-//			logger.info("ID 찾기 성공.");
-//			resultString = "success";
-//		}
-//		else
-//		{
-//			logger.info("ID 찾기 실패.");
-//			resultString = null;
-//		}
-		
 		return resultString;
 	}
 	
@@ -378,6 +366,25 @@ public class UserController {
 		}
 		
 		return returnUrl;
+	}
+	
+	//로그인 확인
+	@ResponseBody
+	@RequestMapping(value = "/userChk", method = RequestMethod.POST)
+	public String userChk(String userId, String userPw) {
+		logger.info("userConfirm 메소드 실행(GET).");
+		logger.info("userId: {}", userId);
+		logger.info("userPw: {}", userPw);
+		
+		String selectUser = service.selectUser(userId);
+		
+		if ( pwdEncoder.matches(userPw, selectUser) ) {
+			logger.info("있는 유저");
+			return "yes";
+		} else {
+			logger.info("없는 유저");
+			return "no";
+		}
 	}
 	
 }

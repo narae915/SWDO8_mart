@@ -42,6 +42,37 @@ public class ItemController {
 		String sorting = null;
 		model.addAttribute("countPerPage", countPerPage);
 		ArrayList<ItemVO> itemList = service.getItemList(countPerPage, sorting, categoryNum);
+		
+		String saleMenu = null;
+		int salePrice = 0; // 할인된 가격
+		int price = 0; //원래 가격
+		
+		//세일 상품 처리하는 for문
+		for(int i = 0; i < itemList.size(); i++) {
+			saleMenu = itemList.get(i).getItemName();
+			price = itemList.get(i).getPrice();
+			if(saleMenu.contains("포도")) {
+				//20% 할인
+				salePrice = (int)(price * 0.80);
+				itemList.get(i).setSalePrice(salePrice);
+			} else if(saleMenu.contains("참외")) {
+				//30% 할인
+				salePrice = (int)(price * 0.70);
+				itemList.get(i).setSalePrice(salePrice);
+			} else if(saleMenu.contains("오렌지")) {
+				//50% 할인
+				salePrice = (int)(price * 0.50);
+				itemList.get(i).setSalePrice(salePrice);
+			} else if(saleMenu.contains("스테이크")) { // "스테이크" 를 동적으로 이용하고 싶으면 변수로 지정
+				//30% 할인
+				salePrice = (int)(price * 0.70);
+				itemList.get(i).setSalePrice(salePrice);
+			} else {
+				//할인 상품이 아닐경우 jsp에 표현하기 위해 0을 입력
+				itemList.get(i).setSalePrice(0);
+			}
+		}
+		
 		logger.info("itemList:{}", itemList);
 
 		model.addAttribute("itemList", itemList);

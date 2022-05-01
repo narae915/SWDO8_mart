@@ -25,6 +25,11 @@
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
 	<link rel="stylesheet" href="/resources/css/userCss/login.css" type="text/css">
+	<style type="text/css">
+    	label span {
+    		color: red;
+    	}
+    </style>
 </head>
 
 <body>
@@ -58,13 +63,13 @@
                 <div class="col-lg-6 offset-lg-3">
                     <div class="login-form">
                         <h2>로그인</h2>
-                        <form action="/user/auth" method= "post">
+                        <form action="/user/auth" method="POST" onsubmit="return formChk();">
                             <div class="group-input">
-                                <label for="username">로그인ID(메일주소) *</label>
-                                <input type="text" id="username" name="userMail">
+                                <label for="username">로그인ID(메일주소) <span>*</span></label>
+                                <input type="email" id="username" name="userMail">
                             </div>
                             <div class="group-input">
-                                <label for="pass">비밀번호 *</label>
+                                <label for="pass">비밀번호 <span>*</span></label>
                                 <input type="password" id="pass" name="userPw">
 							</div>
 							<div class="group-input gi-check">
@@ -97,6 +102,12 @@
 
     <!-- Footer -->
     <%@ include file="/WEB-INF/views/footer.jsp" %>
+    
+    <!-- modal -->
+	<div class="modal" id="footer-modal">
+		<div class="modal_content" id="footer-modal-content">
+		</div>
+	</div>
 
     <!-- Js Plugins -->
 	<script src="/resources/js/jquery-3.6.0.min.js"></script>
@@ -115,6 +126,82 @@
 	$(function(){
 		$("li#menu-mypage").css("background", "#e7ab3c");
 	});
+	
+	// 닫기 모달
+	function exitAlert() {
+		$("#footer-modal-content").append('<button name="modalClose" class="primary-btn" id="footer-modal-button" style="margin-top:30px; border-radius:5px; border:none">창 닫기</button>');
+	}
+	
+	// 모달 출력
+	function showModalAlert() {
+		$("#footer-modal").fadeIn();
+
+		$("button[name=modalClose]").click(function() {
+			$("#footer-modal").fadeOut();
+		});
+	}
+	
+	function formChk() {
+		var userMail = $("#username").val();
+		var userPw = $("#pass").val();
+		var returnVal = false;
+		
+		//메일 길이 확인
+		if(userMail.length == 0) {
+			$("#footer-modal-content").html("");
+			$("#footer-modal-content").append("ID를 입력해주세요");
+			exitAlert();
+			showModalAlert();
+			return returnVal;
+		}
+		
+		//비밀번호 길이 확인
+		if(userPw.length == 0) {
+			$("#footer-modal-content").html("");
+			$("#footer-modal-content").append("비밀번호를 입력해주세요");
+			exitAlert();
+			showModalAlert();
+			return returnVal;
+		}
+		
+		returnVal = true;
+
+		if(returnVal) {
+			var response = null;
+			//ID와 비밀번호 확인
+			$.ajax({
+				url: "/user/userChk",
+				type: "POST",
+				data: {
+					userId: $("#username").val(),
+					userPw: $("#pass").val()
+				},
+				async: false,
+				success: function(res) {
+					if(res == "no") {
+						$("#footer-modal-content").html("");
+						$("#footer-modal-content").append("ID와 비밀번호를 확인해주세요");
+						exitAlert();
+						$("#footer-modal").fadeIn();
+					}
+					response = res;
+				},
+				error: function(e) {
+					console.log(e);
+				}
+			});
+			
+			//ID와 비밀번호가 일치하지 않다는 모달이 뜨고, 창닫기를 누르면 새로고침 된다.
+			if(response == "no") {
+				$("#footer-modal-button").on("click", function() {
+					location.reload();
+				});
+				return false;
+			}
+		} //ID, PW가 일치하는지 확인
+		
+		return returnVal;
+	}// formChk 함수 닫기
 	</script>
 </body>
 

@@ -50,6 +50,11 @@
                 <div class="col-lg-12">
 					<input type="text" name="subject" id="subject" placeholder="제목을 입력하세요.">
 					<textarea id="summernote" name="editordata"></textarea>
+					<br>
+					<div class="recipe-tag">
+						<span>dfsdfsf</span>
+						<input type="text" name="tag" id="tag-btn" placeholder="사용된  주재료를 #을 이용해서 작성해주세요.">
+					</div>
                 </div>
                 <div class="col-lg-10" id="btn-div">
   					<input type="submit" class="primary-btn" id="submit-btn" value="완료">
