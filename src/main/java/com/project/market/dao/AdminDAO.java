@@ -317,7 +317,8 @@ public class AdminDAO {
 		
 		return result;
 	}
-
+	
+	// 상품 수정 페이지 기존 정보 가져오기
 	public ArrayList<ItemVO> getAdminItemList(String itemChk) {
 		ArrayList<ItemVO> result = null;
 		AdminMapper mapper = null;
@@ -332,6 +333,7 @@ public class AdminDAO {
 		return result;
 	}
 
+	// 상품 수정
 	public int itemUpdate(HashMap<String, Object> map) {
 		int result = 0;
 		AdminMapper mapper = null;
@@ -375,4 +377,106 @@ public class AdminDAO {
 		return result;
 	}
 
+	// 상품 판매글-보관법 작성
+	public int itemInventoryWrite(HashMap<String, Object> map) {
+		int result = 0;
+		AdminMapper mapper = null;
+		
+		try {
+			mapper = session.getMapper(AdminMapper.class);
+			result = mapper.itemInventoryWrite(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	// 상품 판매글-상품정보 작성
+	public int itemInforWrite(HashMap<String, Object> map) {
+		int result = 0;
+		AdminMapper mapper = null;
+		
+		try {
+			mapper = session.getMapper(AdminMapper.class);
+			result = mapper.itemInforWrite(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	// 상품 판매글-손질법 작성
+	public int itemCookWrite(HashMap<String, Object> map) {
+		int result = 0;
+		AdminMapper mapper = null;
+		
+		try {
+			mapper = session.getMapper(AdminMapper.class);
+			result = mapper.itemCookWrite(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	// 사진 등록 메서드
+	public int itemImgSave(FileListVO newFile) {
+		int result = 0;
+		AdminMapper mapper = null;
+		
+		try {
+			mapper = session.getMapper(AdminMapper.class);
+			result = mapper.itemImgSave(newFile);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	// 상품에 첨부된 사진들 불러오기
+	public ArrayList<String> getItemFileList(String itemNum) {
+		ArrayList<String> result = null;
+		AdminMapper mapper = null;
+		
+		try {
+			mapper = session.getMapper(AdminMapper.class);
+			result = mapper.getItemFileList(itemNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	// 사진 삭제
+	public int itemImgDelete(String fileName) {
+		int result = 0;
+		AdminMapper mapper = null;
+		
+		try {
+			mapper = session.getMapper(AdminMapper.class);
+			result = mapper.itemImgDelete(fileName);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	/*
+	public ArrayList<FileListVO> getFileList(ArrayList<Integer> itemNumList) {
+		ArrayList<FileListVO> result = null;
+		AdminMapper mapper = null;
+		
+		try {
+			mapper = session.getMapper(AdminMapper.class);
+			result = mapper.getFileList(itemNumList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	*/
 }

@@ -20,4 +20,8 @@ public class ItemVO {
 	
 	//22-04-11 박나래
 	private int rownum; // 번호 매기기
+	
+	//22-04-30 노채린
+	private String originalFilename; // 원본 파일 명
+	private String savedFilename; // 저장된 파일 명
 }

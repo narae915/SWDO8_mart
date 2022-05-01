@@ -106,7 +106,15 @@
 			                       			<td>
 			                       				<input type="radio" id="itemChk" name="itemChk" value="${Item.itemNum }" />
 			                       			</td>
-			                       			<td id="td-image"><img src="/resources/img/cart-page/product-1.jpg" alt="임시사진"></td>
+			                       			<c:if test="${not empty fileList }">
+			                       			<c:forEach var="File" items="${fileList }">
+			                       			
+			                       			<c:if test="${fileList.itemNum eq itemList.itemNum }">
+			                       				<td id="td-image"><img src="/resources/img/cart-page/product-1.jpg" alt="임시사진"></td>
+			                       			</c:if>
+											</c:forEach>
+											</c:if>
+											<td id="td-image"><img src="/resources/img/itemDefault.png" alt="임시사진">${fileList0 }</td>
 			                       			<td id="itemNum">${Item.itemNum }</td>
 			                       			<td id="itemName">${Item.itemName }</td>
 			                       			<td id="price">${Item.price}</td>

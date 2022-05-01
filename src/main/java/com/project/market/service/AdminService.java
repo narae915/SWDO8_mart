@@ -234,4 +234,61 @@ public class AdminService {
 		return dao.getUserTotalRecordsCount(map);
 	}
 
+	// 상품 판매글-보관법 작성
+	public boolean itemInventoryWrite(String itemNum, String editordata) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("itemNum", itemNum);
+		map.put("editordata", editordata);
+		
+		return dao.itemInventoryWrite(map) > 0;
+	}
+
+	// 상품 판매글-상품정보 작성
+	public boolean itemInforWrite(String itemNum, String editordata) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("itemNum", itemNum);
+		map.put("editordata", editordata);
+		
+		return dao.itemInforWrite(map) > 0;
+	}
+
+	// 상품 판매글-손질법 작성
+	public boolean itemCookWrite(String itemNum, String editordata) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("itemNum", itemNum);
+		map.put("editordata", editordata);
+		
+		return dao.itemCookWrite(map) > 0;
+	}
+
+	// 사진 등록 메서드
+	public boolean itemImgSave(String originalFilename, String savedFilename, String itemNum) {
+
+		int intItemNum = Integer.parseInt(itemNum);
+		
+		FileListVO newFile = new FileListVO();
+		newFile.setOriginalFilename(originalFilename);
+		newFile.setSavedFilename(savedFilename);
+		newFile.setItemNum(intItemNum);
+		
+		return dao.itemImgSave(newFile) > 0;
+	}
+
+	// 상품에 첨부된 사진들 불러오기
+	public ArrayList<String> getItemFileList(String itemNum) {
+		
+		return dao.getItemFileList(itemNum);
+	}
+
+	// 사진 삭제
+	public boolean itemImgDelete(String fileName) {
+
+		return dao.itemImgDelete(fileName) > 0;
+	}
+/*
+	public ArrayList<FileListVO> getFileList(ArrayList<Integer> itemNumList) {
+
+		return dao.getFileList(itemNumList);
+	}
+*/
 }
