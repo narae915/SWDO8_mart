@@ -65,13 +65,28 @@
                     
                     <!-- 22/03/30, 04/17 노채린 -->
                     <!-- 상품 수정 -->
-                    <form action="itemUpdate" method="post">
+                    <form action="itemUpdate" method="post" enctype="multipart/form-data" onsubmit="">
                     
                        <table>
                        <c:forEach items="${itemList }" var="item">
                        		<tr>
                        			<th id="th-image">IMAGE</th>
-                       			<td id="td-image"><img src="/resources/img/cart-page/product-1.jpg" alt="임시사진"></td>
+                       			<td id="td-image">
+									<c:if test="${not empty itemList }">
+	                                	<img src="/uploadImg/${item.savedFilename }" style="height:300px;width:280px"alt="">
+	                                	<input type="hidden" value="${item.savedFilename }" name="basicFile">
+	                                </c:if>
+	                                <c:if test="${empty itemList }">
+	                        			<img src="/resources/img/itemDefault.png" style="height:300px;width:280px"alt="">
+	                        		</c:if>
+	                        		
+										<input type = "hidden" name = "itemNum" value="${itemChk }">
+										<label class="primary-btn" id="file-btn" for="input-file">
+											사진 첨부하기
+										</label>
+										<input type="file" style="border:1px solid #000; padding:1em;display:none;" id= "input-file" name="uploadFile" accept="image/*" multiple>
+		                           	
+								</td>
                        			<th>카테고리</th>
                        			<td>
                        				<select name="category" id="category">
@@ -106,7 +121,6 @@
                        				<input type="submit" id="submit-btn" class="primary-btn" value="완료">
                        			</td>
                        		</tr>
-                       		<input type = "hidden" name = "itemNum" value="${itemChk }">
 						</c:forEach>
 						</table>
 					

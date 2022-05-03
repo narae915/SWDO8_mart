@@ -65,14 +65,14 @@
                                 <input type="text" id="empName" name="empName" placeholder="이름">
                             </div>
                             <div class="group-input">
-                                <input type="text" id="empNum" placeholder="사원 번호 (자동으로 생성됩니다.)" disabled="disabled" style="background-color: #ebebe4;">
+                                <input type="text" id="empNum" placeholder="사원 번호 (자동으로 생성됩니다.)" disabled="disabled">
                             </div>
                             <div class="group-input">
                                 <input type="password" id="empPw" name="empPw" placeholder="비밀번호">
                             </div>
                             <div class="group-input">
                                 <input type="password" id="empPwCheck" name="empPwCheck" placeholder="비밀번호 확인">
-                                <span id="pw_warn" style="position: absolute; left: 2.23em; bottom: 28.2em;"></span>
+                                <span id="pw_warn"></span>
                             </div>
                             <div class="group-input">
                                <input type="text" id="empCall" name="empCall" placeholder="연락처">
@@ -82,14 +82,14 @@
                             </div>
                             <div class="group-input" id="pinNumChk_false">
                                <input type="text" id="pinNumChk" name="pinNumChk" placeholder="인증번호" disabled="disabled">
-                               <input type="button" id="pinNumChk_Btn" value="확인" disabled="disabled" style="position: absolute; right: 0.95em; bottom: 15.7em;">
-							   <span id="pinNumChk_warn" style="position: absolute; left: 2.23em; bottom: 14.15em;"></span>
+                               <input type="button" id="pinNumChk_Btn" value="확인" disabled="disabled">
+							   <span id="pinNumChk_warn"></span>
                             </div>
                             <div class="group-input">
-								<input type="button" id="sendMailBtn" value="인증번호 전송" style="position: absolute; right: 0.95em; bottom: 20.4em;">
+								<input type="button" id="sendMailBtn" value="인증번호 전송">
                             </div>
                             <div class="group-input">
-								<select id="position" name="position" style="width: 100%; height: 50px;">
+								<select id="position" name="position">
 									<option value="0" disabled="disabled" selected="selected">직급</option>
 									<option value="사원">사원</option>
 									<option value="주임">주임</option>

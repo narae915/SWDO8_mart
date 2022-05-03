@@ -87,8 +87,7 @@
 		                    	<input type="submit" id="upButton" class="primary-btn" value="상품 수정" onclick = "return itemUpdate();">
 			                    <input type="button" id="deButton" name="itemNum" class="primary-btn" value="상품 삭제" onclick ="return deValueChk();">
 			                   	<!-- 상품 관리 테이블 시작 -->
-								<table>
-									<thead>
+			                   	<table>
 			                       		<tr>
 			                       			<th>선택</th>
 			                       			<th id="th-image">IMAGE</th>
@@ -99,33 +98,47 @@
 			                       			<th>카테고리</th>
 			                       			<th>판매글 작성</th>
 			                       		</tr>
-									</thead>
-			                       	<tbody>
-			                       		<c:forEach var="Item" items="${itemList }">
-			                       		<tr>
-			                       			<td>
-			                       				<input type="radio" id="itemChk" name="itemChk" value="${Item.itemNum }" />
-			                       			</td>
-			                       			<c:if test="${not empty fileList }">
-			                       			<c:forEach var="File" items="${fileList }">
-			                       			
-			                       			<c:if test="${fileList.itemNum eq itemList.itemNum }">
-			                       				<td id="td-image"><img src="/resources/img/cart-page/product-1.jpg" alt="임시사진"></td>
-			                       			</c:if>
-											</c:forEach>
-											</c:if>
-											<td id="td-image"><img src="/resources/img/itemDefault.png" alt="임시사진">${fileList0 }</td>
-			                       			<td id="itemNum">${Item.itemNum }</td>
-			                       			<td id="itemName">${Item.itemName }</td>
-			                       			<td id="price">${Item.price}</td>
-			                       			<td id="itemAmount">${Item.itemAmount }</td>
-			                       			<td id="itemCategory">${Item.categoryName }</td>
-			                       			<td><input type="button" class="primary-btn" id="write-button" value="write" onclick="location.href='/admin/itemSale?itemNum=${Item.itemNum}'"></td>
-			                       		</tr>
-			                       		</c:forEach>
-			                       </tbody>
+			                       		
+				                       	<!-- itemList 반복 -->
+				                       	<c:forEach var="Item" items="${itemList }">
+				                       		<tr>
+				                       			<td>
+				                       				<input type="radio" id="itemChk" name="itemChk" value="${Item.itemNum }" />
+				                       			</td>
+				                       			<c:choose>
+					                       			<c:when test="${fileList[0].itemNum eq Item.itemNum }">
+				                       				<td id="td-image"><img src="/uploadImg/${fileList[0].savedFilename }" alt="임시사진" style="height: 222px; width:260px;"></td>
+				                       				</c:when>
+					                       			<c:when test="${fileList[1].itemNum eq Item.itemNum }">
+				                       				<td id="td-image"><img src="/uploadImg/${fileList[1].savedFilename }" alt="임시사진" style="height: 222px; width:260px;"></td>
+				                       				</c:when>
+					                       			<c:when test="${fileList[2].itemNum eq Item.itemNum }">
+				                       				<td id="td-image"><img src="/uploadImg/${fileList[2].savedFilename }" alt="임시사진" style="height: 222px; width:260px;"></td>
+				                       				</c:when>
+					                       			<c:when test="${fileList[3].itemNum eq Item.itemNum }">
+				                       				<td id="td-image"><img src="/uploadImg/${fileList[3].savedFilename }" alt="임시사진" style="height: 222px; width:260px;"></td>
+				                       				</c:when>
+					                       			<c:when test="${fileList[4].itemNum eq Item.itemNum }">
+				                       				<td id="td-image"><img src="/uploadImg/${fileList[4].savedFilename }" alt="임시사진" style="height: 222px; width:260px;"></td>
+				                       				</c:when>
+													<c:otherwise>                       				
+													<td id="td-image"><img src="/resources/img/itemDefault.png" alt="임시사진" style="height: 222px; width:260px;"></td>
+													</c:otherwise>
+												</c:choose>
+												
+				                       			<td id="itemNum">${Item.itemNum }</td>
+				                       			<td id="itemName">${Item.itemName }</td>
+				                       			<td id="price">${Item.price}</td>
+				                       			<td id="itemAmount">${Item.itemAmount }</td>
+				                       			<td id="itemCategory">${Item.categoryName }</td>
+				                       			<td><input type="button" class="primary-btn" id="write-button" value="write" onclick="location.href='/admin/itemSale?itemNum=${Item.itemNum}'"></td>
+				                       			
+				                       		</tr>
+				                       	</c:forEach>
+				                       	
+				                       	
 								</table>
-								<!--상품 관리 테이블 끝  -->
+								<!-- 상품 관리 테이블 끝  -->
 		                        <!-- 페이징 시작 -->
 		                        <div style="text-align: center; margin-top: 20px;">
 									<span>

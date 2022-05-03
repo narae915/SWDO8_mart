@@ -101,7 +101,14 @@
 					                <div class="row data" >
 					                    <div class="subdiv">
 					                        <div class="check"><input type="checkbox" name="buy" value="${Cart.cartNum }" onclick="javascript:basket.checkItem();">&nbsp;</div>
-					                        <div class="img" sytle = "padding: 0px"><img src="/resources/img/cart-page/product-1.jpg" alt="임시사진"></div>
+					                        <c:if test="${Cart.savedFileNum eq Cart.itemNum }">
+
+					                        <div class="img"><img src="/uploadImg/${Cart.savedFilename }" style="height:130px; width:280px" alt="임시사진"></div>
+					                        </c:if>
+					                        <c:if test="${Cart.savedFileNum ne Cart.itemNum }">
+					                        <div class="img"><img src="/resources/img/itemDefault.png" style="height:130px; width:280px" alt="임시사진"></div>
+					                        </c:if>
+					                        
 					                        <div class="pname"><!-- 상품명 -->
 					                            <span>${Cart.itemName }</span>
 					                        </div>

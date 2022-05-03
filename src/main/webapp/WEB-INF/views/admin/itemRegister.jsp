@@ -63,54 +63,62 @@
                 <div class="col-lg-12"> <!-- 본문을 우측으로 조금 변경 -->
                     <div class="faq-accordin"> <!-- 폰트 크기, 아이콘 -->
                     
-                    <!-- 22/03/30, 04/16 노채린 -->
-                    <!-- 상품 신규 등록 -->
-                    <form action="itemRegister" method="POST" onsubmit="return false">
-                       <table>
-                       		<tr>
-                       			<th id="th-image">IMAGE</th>
-                       			<td id="table-td"><img src="/resources/img/cart-page/product-1.jpg" alt="임시사진"></td>
-                       			<th>카테고리</th>
-                       			<td>
-                       				<select name="category" id="category">
-	                       				<option value="">카테고리 선택</option>
-	                       				<option value="10">육류</option>
-	                       				<option value="20">어패류</option>
-	                       				<option value="30">과일</option>
-	                       				<option value="40">채소</option>
-	                       				<option value="50">조미료</option>
-	                       				<option value="60">음료</option>
-	                       				<option value="70">그 외</option>
-	                       			</select>
-	                       		</td>
-                       		</tr>
-                       		<tr>
-                       			<th id="th-name">상품 이름</th>
-                       			<td>
-                       				<input type="text" name="itemName" class="text-type" id="itemName" required>
-                       			</td>
-                       			<th style="width:18%">가격</th>
-                       			<td>
-                       				<input type="text" name="price" class="text-type" id="price" required>
-                       			</td>
-                       		</tr>
-                       		<tr>
-                       			<th style="height:80px;">재고</th>
-                       			<td style="width:40%">
-                       				<input type="text" name="itemAmount" class="text-type" id="itemAmount" required>
-                       			</td>
-                       			<th></th>
-                       			<td style="width:50%">
-                       				<input type="submit" id="submit-btn" class="primary-btn" value="완료">
-                       			</td>
-                       		</tr>
-                       </table>
-                       
-                       <!-- 수정 시 수정값 -->
-                       <input type="hidden" name="updateNum" value="updateNum">
-                       
-                       <!--상품 관리 테이블 끝  -->
-					</form>
+	                    <!-- 22/03/30, 04/16 노채린 -->
+	                    <!-- 상품 신규 등록 -->
+	                    <form action="itemRegister" method="POST" enctype="multipart/form-data">
+	                       <table>
+	                       		<tr>
+	                       			<th id="th-image">IMAGE</th>
+	                       			<td id="table-td">
+	                       				<img src="/resources/img/itemDefault.png" style="height:300px;width:300px" alt="임시사진">
+	                       				<label class="primary-btn" id="file-btn" for="input-file">
+											사진 첨부하기
+										</label>
+										<!-- <input type="submit" name="file-btn" value="사진 등록하기" class="primary-btn"> -->
+										<input type="file" style="border:1px solid #000; padding:1em;display:none;" id= "input-file" name="uploadFile" accept="image/*">
+	                       			</td>
+	                       			
+	                       			<th>카테고리</th>
+	                       			<td>
+	                       				<select name="category" id="category">
+		                       				<option value="">카테고리 선택</option>
+		                       				<option value="10">육류</option>
+		                       				<option value="20">어패류</option>
+		                       				<option value="30">과일</option>
+		                       				<option value="40">채소</option>
+		                       				<option value="50">조미료</option>
+		                       				<option value="60">음료</option>
+		                       				<option value="70">그 외</option>
+		                       			</select>
+		                       		</td>
+	                       		</tr>
+	                       		<tr>
+	                       			<th id="th-name">상품 이름</th>
+	                       			<td>
+	                       				<input type="text" name="itemName" class="text-type" id="itemName" required>
+	                       			</td>
+	                       			<th style="width:18%">가격</th>
+	                       			<td>
+	                       				<input type="text" name="price" class="text-type" id="price" required>
+	                       			</td>
+	                       		</tr>
+	                       		<tr>
+	                       			<th style="height:80px;">재고</th>
+	                       			<td style="width:40%">
+	                       				<input type="text" name="itemAmount" class="text-type" id="itemAmount" required>
+	                       			</td>
+	                       			<th></th>
+	                       			<td style="width:50%">
+	                       				<input type="submit" id="submit-btn" class="primary-btn" value="완료">
+	                       			</td>
+	                       		</tr>
+	                       </table>
+	                       
+	                       <!-- 수정 시 수정값 -->
+	                       <input type="hidden" name="updateNum" value="updateNum">
+	                       
+	                       <!--상품 관리 테이블 끝  -->
+						</form>
                     </div>
                 </div>
             </div>

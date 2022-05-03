@@ -19,4 +19,8 @@ public class OrderVO {
 	private String userMail;		// 유저 메일 (ID)
 	private String itemName;		// 상품 이름
 	private int price;				// 가격
+	
+// 22-05-03 노채린
+	private String savedFilename;	// 주문 상품 사진명
+	private String savedFileNum;	// 주문 상품 사진 번호
 }

@@ -1,3 +1,4 @@
+/* 비밀번호, ID 찾기 */
 .find ul
 {
 	list-style: none;
@@ -46,4 +47,10 @@
 	background: #e7ab3c;
 	height: 45px;
 	padding: 12px 16px 12px;
+}
+
+/* 에러 메시지 */
+#login-err {
+	font-weight: bold;
+	color: red;
 }

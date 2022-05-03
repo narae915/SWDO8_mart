@@ -62,10 +62,10 @@
                         <form action="adminLogin" method="post" onsubmit="return checkForm();">
                            	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             <div class="group-input">
-                                <input type="text" id="empNum" name="empNum" placeholder="ID를 입력해주세요.">
+                                <input type="text"  id="empNum" name="empNum"placeholder="ID를 입력해주세요.">
                             </div>
                             <div class="group-input">
-                                <input type="password" id="empPw" name="empPw" placeholder="비밀번호를 입력해주세요.">
+                                <input type="password"  id="empPw" name="empPw"placeholder="비밀번호를 입력해주세요.">
                             </div>
                             <div class="group-input gi-check">
                                 <div class="gi-more">
@@ -80,14 +80,14 @@
                                     </ul>
                                 </div>
                             </div>
-                            <button type="submit" id="loginBtn" class="site-btn login-btn">로그인</button>
+                            <button type="submit" class="site-btn login-btn" id="loginBtn">로그인</button>
                         </form>
                         <div class="switch-login">
                         	<c:if test="${empty errorMessage }">
                         		 <span class="or-login">관리자 페이지에 오신 것을 환영합니다.</span>
                         	</c:if>
                         	<c:if test="${not empty errorMessage }">
-                        		<span class="or-login" style="font-weight: bold; color: red;">${errorMessage }</span>
+                        		<span class="or-login" id="login-err">${errorMessage }</span>
                         	</c:if>
                         </div>
                     </div>
