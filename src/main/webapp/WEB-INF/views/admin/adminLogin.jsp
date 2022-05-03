@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Fashi Template">
@@ -25,7 +25,6 @@
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/adminCss/adminLogin.css" type="text/css">
-    
 </head>
 
 <body>
@@ -75,8 +74,8 @@
                                         <span class="checkmark"></span>
                                     </label>
                                     <ul class="find">
-                                    	<li><a href="empFindPw" target='_blank' class="forget-pass">/&ensp;&ensp;비밀번호 찾기</a></li>
-                                    	<li><a href="empFindId" target='_blank' class="forget-pass">ID 찾기&ensp;&ensp;</a></li>
+                                    	<li><a href="empFindPw" target="_blank" class="forget-pass">/&ensp;&ensp;비밀번호 찾기</a></li>
+                                    	<li><a href="empFindId" target="_blank" class="forget-pass">ID 찾기&ensp;&ensp;</a></li>
                                     </ul>
                                 </div>
                             </div>
