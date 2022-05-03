@@ -155,11 +155,12 @@
 	                    <div class="row"><!-- 위쪽 파트 -->
 	                        <div class="col-lg-5"><!-- 사진모음 -->
 	                            <div class="product-pic-zoom"><!-- 줌 가능 페이지 -->
-
-	                                <!-- <img class="product-big-img" src="/uploadImg/${fileList[0] }" style="height:390px;width:330px"alt=""> --><!-- 큰 이미지 -->
-
-	                        		<img class="product-big-img" src="/resources/img/itemDefault.png" style="height:390px;width:330px"alt=""><!-- 큰 이미지 -->
-
+									<c:if test="${not empty fileList }">
+	                                	<img class="product-big-img" src="/uploadImg/${fileList[0] }" style="height:390px;width:330px"alt=""><!-- 큰 이미지 -->
+	                                </c:if>
+	                                <c:if test="${empty fileList }">
+	                        			<img class="product-big-img" src="/resources/img/itemDefault.png" style="height:390px;width:330px"alt=""><!-- 큰 이미지 -->
+	                        		</c:if>
                                 <div class="zoom-icon"><!-- 줌 아이콘 -->
                                     <i class="fa fa-search-plus"></i>
                                 </div>
@@ -216,7 +217,7 @@
 									사진 첨부하기
 								</label>
 								<span style="font-size:36px; margin-right:1.6em;margin-left:1.6em">--></span>
-								<input type="submit" name="file=btn" value="사진 등록하기" class="primary-btn">
+								<input type="submit" name="file-btn" value="사진 등록하기" class="primary-btn">
 								
 								<input type="file" style="border:1px solid #000; padding:1em;display:none;" id= "input-file" name="uploadFile" accept="image/*" multiple>
                            	</form>
@@ -270,10 +271,11 @@
 	  	// 유효성 검사
 	  	function imgCheck(){
 	  		var fileInput = $('#input-file');
+	  		var fileInputCount = fileInput[0].files.length;
 	  		var fileCount = $('#fileCount').val();
 	  		
 	  		// 이미 업로드 된 사진 네 장 이상일 때 더 업로드 x
-	  		if(fileCount >= 4){
+	  		if(fileCount*1 >= 4){
 	  			exitAlert();
 				$("#footer-modal-content").prepend("사진을 더 이상 업로드 할 수 없습니다.<br>사진을 삭제해주세요.");
 				showModalAlert()
@@ -282,16 +284,16 @@
 	  		}
 	  		
 	  		// 빈 슬롯보다 첨부된 파일 개수가 더 많을 경우
-	  		if(fileCount - fileInput[0].files.length <= 0) {
+	  		if(fileCount*1 + fileInputCount*1  > 4) {
 	  			exitAlert();
 				$("#footer-modal-content").prepend("사진은 한 상품 당 4장까지 첨부할 수 있습니다.<br>다시 선택해주세요.");
 				showModalAlert()
 	  			
-	  			return false;	
+	  			return false;
 	  		}
 	  		
 	  		// 첨부된 사진이 없을 경우 업로드 불가
-	  		if(fileInput[0].files.length == 0) {
+	  		if(fileInputCount*1 == 0) {
 	  			exitAlert();
 				$("#footer-modal-content").prepend("첨부된 사진이 없습니다.");
 				showModalAlert()

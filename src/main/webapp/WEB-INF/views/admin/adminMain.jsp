@@ -24,25 +24,7 @@
     <link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
-    <style type="text/css">
-    	img#good-emp-member {
-    		margin-top: -100px;
-    		margin-bottom: 20px;
-    		margin-left: -80px;
-    	}
-    	h3, h4 {
-    		text-align: center;
-    		font-weight: 700;
-    	}
-    	h3 {
-    		color: #f1cc5d;
-    	}
-    	p {
-    		text-align: center;
-    		font-size: 20px;
-    	}
-    </style>
-    
+    <link rel="stylesheet" href="/resources/css/adminCss/adminMain.css" type="text/css">
 </head>
 
 <body>
@@ -61,7 +43,7 @@
 	        <div class="tab-content">
 	            <div class="tab-pane fade-in active" id="tab-1" role="tabpanel">
 	                <div class="product-content">
-	                    <div class="row" style="justify-content: center;">
+	                    <div class="row">
 	                        <div class="col-lg-7">
 	                            <h3>이달의 우수사원</h3><br>
 	                            <h4>성명 : 노채린</h4>

@@ -95,6 +95,7 @@ public class AdminController {
 		// 상품 리스트 불러오기 메소드
 		ArrayList<ItemVO> itemList = service.getItemList(navi.getStartRecord(), COUNT_PER_PAGE, searchWord, category);
 		model.addAttribute("itemList", itemList);
+		logger.info("itemList:{}",itemList);
 		
 		ArrayList<Integer> itemNumList = new ArrayList<Integer>();
 		for (int i = 0; i < itemList.size(); i++) {
@@ -102,10 +103,11 @@ public class AdminController {
 		}
 		logger.info("itemNumList:{}",itemNumList);
 		
-		/*
+		// 상품 사진 가져오기
 		ArrayList<FileListVO> fileList = service.getFileList(itemNumList);
 		logger.info("fileList:{}",fileList);
-		*/
+		model.addAttribute("fileList", fileList);
+		
 		return "/admin/itemManagement";
 	}
 	
@@ -692,16 +694,42 @@ public class AdminController {
 	
 	// 상품 신규 등록
 	@RequestMapping(value = "/itemRegister", method = RequestMethod.POST)
-	public String itemRegister(int category, String itemName, String price, String itemAmount) {
+	public String itemRegister(int category, String itemName, String price, String itemAmount, @RequestParam("uploadFile") MultipartFile mfile) {
 		logger.info("itemRegister 메소드 실행(POST)");
-
-		boolean result = service.itemInsert(category, itemName, price, itemAmount);
 		
-		if(result) {
+		String originalFilename = null;
+		
+		if(mfile != null) {
+			originalFilename = mfile.getOriginalFilename();
+			logger.info("originalFilename:{}", originalFilename);
+		}
+
+		String savedFilename = FileService.saveFile(mfile, UPLOAD_PATH);
+
+		if(savedFilename != null) {
+			logger.info("저장 파일 명:{}",savedFilename);
+		} else {
+			logger.info("사진 저장 실패");
+		}
+		
+		// 상품 정보 등록
+		boolean result1 = service.itemInsert(category, itemName, price, itemAmount);
+		
+		if(result1) {
 			logger.info("상품 신규 등록 성공");
 		} else {
 			logger.info("상품 신규 등록 실패");
 		}
+		
+		// 파일 등록
+		boolean result2 = service.itemFileInsert(originalFilename, savedFilename);
+		
+		if(result2) {
+			logger.info("상품 사진 등록 성공");
+		} else {
+			logger.info("상품 사진 등록 실패");
+		}
+		
 		
 		return "redirect:/admin/itemManagement";
 		
@@ -726,12 +754,26 @@ public class AdminController {
 
 	// 상품 수정
 	@RequestMapping(value = "/itemUpdate", method = RequestMethod.POST)
-	public String itemUpdate(String itemNum, String itemName, String price, String itemAmount, int category) {
+	public String itemUpdate(String itemNum, String itemName, String price, String itemAmount, int category, @RequestParam("uploadFile") MultipartFile mfile, String basicFile) {
 		logger.info("itemUpdate 메소드 실행(POST)");
 		
 		// 체크박스 itemNum
 		logger.info("itemNum:{}", itemNum);
 		
+		// 수정 전 파일 savedFilename
+		logger.info("basicFile:{}",basicFile);
+		
+		logger.info("mfile:{}", mfile);
+		String originalFilename = mfile.getOriginalFilename();
+		logger.info("originalFilename:{}",originalFilename);
+		
+		String savedFilename = FileService.saveFile(mfile, UPLOAD_PATH);
+		if(savedFilename != null) {
+			logger.info("savedFilename:{}", savedFilename);
+		} else {
+			logger.info("사진 저장 실패");
+		}
+				
 		boolean result = service.itemUpdate(itemNum, itemName, price, itemAmount, category);
 		
 		if(result) {
@@ -739,6 +781,14 @@ public class AdminController {
 		} else {
 			logger.info("수정 실패");
 		}
+		
+		boolean result2 = service.itemFileUpdate(originalFilename, savedFilename, basicFile);
+		if(result2) {
+			logger.info("사진 수정 성공");
+		} else {
+			logger.info("사진 수정 실패");
+		}
+		
 		return "redirect:/admin/itemManagement";
 	}
 	

@@ -26,6 +26,7 @@
 	<select id="getOrderList" resultType="Order" parameterType="HashMap">
 		select 
 		    ot.order_num as orderNum,
+		    ot.item_num as itemNum,
 			(select item_name
         		from item_table
 				where item_num = ot.item_num) as itemName,
@@ -36,7 +37,19 @@
 		    to_char(ot.indate, 'yy/mm/dd hh24:mi:ss') as indate,
             (select price
                 from item_table 
-                where item_num = ot.item_num) as price
+                where item_num = ot.item_num) as price,
+            (select saved_filename
+           	from file_list
+           	where file_num = (select min(fl.file_num)
+           						from file_list fl, order_table ot
+           						group by fl.item_num, ot.item_num
+           						having fl.item_num = ot.item_num)) as savedFilename,
+           (select item_num
+           	from file_list
+           	where file_num = (select min(fl.file_num)
+           						from file_list fl, order_table ot
+           						group by fl.item_num, ot.item_num
+           						having fl.item_num = ot.item_num)) as savedFileNum
 		from   
 		    order_table ot,
 		    (select
@@ -101,7 +114,19 @@
 		    cart_amount as cartAmount,
             (select price
                 from item_table 
-                where item_num = ct.item_num) as price
+                where item_num = ct.item_num) as price,
+            (select saved_filename
+            	from file_list
+            	where file_num = (select min(fl.file_num)
+            						from file_list fl, cart_table ct
+            						group by fl.item_num, ct.item_num
+            						having fl.item_num = ct.item_num)) as savedFilename,
+            (select item_num
+            	from file_list
+            	where file_num = (select min(fl.file_num)
+            						from file_list fl, cart_table ct
+            						group by fl.item_num, ct.item_num
+            						having fl.item_num = ct.item_num)) as savedFileNum
 		from   
 		    cart_table ct,
 		    (select rownum as rn, cart_num as ln

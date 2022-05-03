@@ -43,7 +43,8 @@ table, th, tr, td {
 		width:20%;
 		height: 200px;
 	}
-		
+	
+	#file-btn,	
     input[type="submit"] {
 		border:none;
 		position:relative;
@@ -53,11 +54,13 @@ table, th, tr, td {
 		border-radius:5px;
 	}
 	
+	#file-btn:hover,
 	input[type="submit"]:hover {
 		background:#000;
 		color:#E7AB3C;
 	}
 	
+	#file-btn:before,#file-btn:after,
 	input[type="submit"]:before,input[type="submit"]:after {
 		content:'';
 		position:absolute;
@@ -69,6 +72,7 @@ table, th, tr, td {
 		transition:400ms ease all;
 	}
 	
+	#file-btn:after,
 	input[type="submit"]:after {
 		right:inherit;
 		top:inherit;
@@ -76,6 +80,7 @@ table, th, tr, td {
 		bottom:0;
 	}
 	
+	#file-btn:hover:before, #file-btn:hover:after,
 	input[type="submit"]:hover:before, input[type="submit"]:hover:after {
 		width:100%;
 		transition:800ms ease all;

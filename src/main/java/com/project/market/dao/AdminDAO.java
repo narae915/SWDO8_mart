@@ -464,7 +464,7 @@ public class AdminDAO {
 		return result;
 	}
 
-	/*
+	// 상품 사진 가져오기
 	public ArrayList<FileListVO> getFileList(ArrayList<Integer> itemNumList) {
 		ArrayList<FileListVO> result = null;
 		AdminMapper mapper = null;
@@ -478,5 +478,34 @@ public class AdminDAO {
 		
 		return result;
 	}
-	*/
+
+	// 상품 사진 파일 추가
+	public int itemFileInsert(HashMap<String, Object> map) {
+		int result = 0;
+		AdminMapper mapper = null;
+		
+		try {
+			mapper = session.getMapper(AdminMapper.class);
+			result = mapper.itemFileInsert(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	public int itemFileUpdate(HashMap<String, Object> map) {
+		int result = 0;
+		AdminMapper mapper = null;
+		
+		try {
+			mapper = session.getMapper(AdminMapper.class);
+			result = mapper.itemFileUpdate(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
 }

@@ -116,14 +116,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> 1조 
     </footer>
     <!-- Footer Section End -->
 
-	<!-- 모달 연습 -->
-	<!-- <div class="modal" id="staff-modal">
-		<div class="modal_content" id="staff-modal-content">
-			관계자만 접속할 수 있습니다.<br><br>
-			<input type="button" class="modal-button" id="staff-modal-button" value="창 닫기">
-		</div>
-	</div> -->
-	
 	<!-- 22-04-05 노채린 -->
 	<!-- 모달 방식 수정 -->
 	<!-- 모달 창 형식 함수 추가, id 값 변경 및 StaffOnlyChk()의 success-else 부분 수정. -->

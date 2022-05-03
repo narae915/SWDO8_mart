@@ -40,14 +40,14 @@
 		    		
 		#katock {
 			position : fixed;
-			bottom: 10%;
-			right: 0.8%;
+			bottom: 14%;
+			right: 1.5%;
 			z-index: 1;
 		} 
 		#topButton {
 			position : fixed;
-			bottom: 18%;
-			right: 0.8%;
+			bottom: 24%;
+			right: 1.5%;
 			z-index: 1;
 		}
 		
@@ -165,12 +165,12 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> 1조 
       	
 		<div id="katock">
 			<a href="http://pf.kakao.com/_QwxkWb" target='_blank'>
-				<img src="/resources/img/katock.png" width="70" height="70">
+				<img src="/resources/img/katock.png" width="50" height="50">
 			</a>
 		</div>
 		<div id="topButton">
 		<a href="#top">
-			<img src="/resources/img/top2.png" width="70" height="70">
+			<img src="/resources/img/top2.png" width="50" height="50">
 		</a>
 		</div>
         

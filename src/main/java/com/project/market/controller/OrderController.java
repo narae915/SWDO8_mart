@@ -225,14 +225,6 @@ public class OrderController {
 		return "/order/cart";
 	}
 	
-/*
-	@RequestMapping(value = "/cart", method = RequestMethod.POST)
-	public String cart() {
-		logger.info("cart 메소드 실행(POST).");
-		
-		return "/order/orderForm";
-	}
-*/
 	// 22-04-04 노채린
 	// 장바구니 삭제
 	@RequestMapping(value = "/cartCancel", method = RequestMethod.POST)
@@ -337,4 +329,5 @@ public class OrderController {
 		}
 
 	}
+	
 }

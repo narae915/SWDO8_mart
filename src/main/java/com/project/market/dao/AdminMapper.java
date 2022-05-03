@@ -45,10 +45,6 @@ public interface AdminMapper {
 //	void empUpdateFile(@Param("empImg") String empImg, @Param("originalFilename") String originalFilename, @Param("savedFilename") String savedFilename); // 직원 사진 정보 수정
 	
 	int empDelete(int empNum); // 직원 정보 삭제
-	
-	// ItemVO readitem(int upItemNum);
-
-	// ArrayList<ItemVO> itemUpdateList(List<Integer> intUpdateNum);
 
 	int selectEmpId(EmpVO emp); // ID 찾기
 
@@ -74,9 +70,11 @@ public interface AdminMapper {
 
 	ArrayList<String> getItemFileList(String itemNum); // 품에 첨부된 사진들 불러오기
 
-	int itemImgDelete(String fileName); // 사진 삭제
+	int itemImgDelete(String fileName); // 상품 사진 삭제
 
-	// ArrayList<FileListVO> getFileList(ArrayList<Integer> itemNumList);
+	ArrayList<FileListVO> getFileList(ArrayList<Integer> itemNumList); // 상품 사진 가져오기
 
+	int itemFileInsert(HashMap<String, Object> map); // 상품 사진 파일 추가
 
+	int itemFileUpdate(HashMap<String, Object> map);
 }

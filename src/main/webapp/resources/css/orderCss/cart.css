@@ -72,7 +72,7 @@
 	    font-size: 3em;
 	}
 	.basketdiv .check {
-	    width: 10%;
+	    width: 20%;
 	}
     .basketdiv .check input[type=checkbox] {
         transform: scale(2.5);
@@ -81,7 +81,7 @@
         width: 20%;
     }
     .basketdiv .pname{
-        width: 70%;
+        width: 60%;
     }
     .basketdiv2 .pname {
         width: 80%;

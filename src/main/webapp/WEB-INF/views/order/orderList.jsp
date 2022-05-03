@@ -110,9 +110,12 @@
 				                        		<c:if test="${Order.price != 0}"> <!-- 상품정보 있을 시 금액 -->
 				                        			<td><fmt:formatNumber value="${Order.price * Order.amount }" pattern='#,### ₩'/></td>
 				                        		</c:if>
-				                        		
-				                        		<td rowspan="2"><img src="/resources/img/cart-page/product-1.jpg" alt="임시사진"></td><!-- 상품사진 -->
-				                        		
+				                        		<c:if test="${Order.savedFileNum eq Order.itemNum }">
+				                        		<td rowspan="2"><img src="/uploadImg/${Order.savedFilename }" style="height:76px; width:114px"alt="임시사진"></td><!-- 상품사진 -->
+				                        		</c:if>
+				                        		<c:if test="${Order.savedFileNum ne Order.itemNum }">
+				                        		<td rowspan="2"><img src="/resources/img/itemDefault.png"  style="height:76px; width:114px"alt="임시사진"></td><!-- 상품사진 -->
+				                        		</c:if>
 				                        		<c:if test="${Order.itemName == null }"> <!-- 상품정보 없을 시 상품명 -->
 				                        		<td rowspan="2">판매 중지된 상품</td> 
 				                        		</c:if>

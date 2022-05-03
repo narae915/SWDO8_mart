@@ -261,7 +261,7 @@ public class AdminService {
 		return dao.itemCookWrite(map) > 0;
 	}
 
-	// 사진 등록 메서드
+	// 상품 판매글-사진 등록 메서드
 	public boolean itemImgSave(String originalFilename, String savedFilename, String itemNum) {
 
 		int intItemNum = Integer.parseInt(itemNum);
@@ -285,10 +285,29 @@ public class AdminService {
 
 		return dao.itemImgDelete(fileName) > 0;
 	}
-/*
+	
+	// 상품 사진 가져오기
 	public ArrayList<FileListVO> getFileList(ArrayList<Integer> itemNumList) {
 
 		return dao.getFileList(itemNumList);
 	}
-*/
+
+	// 상품 사진파일 추가
+	public boolean itemFileInsert(String originalFilename, String savedFilename) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("originalFilename", originalFilename);
+		map.put("savedFilename", savedFilename);
+		
+		return dao.itemFileInsert(map) > 0;
+	}
+
+	public boolean itemFileUpdate(String originalFilename, String savedFilename, String basicFile) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("originalFilename", originalFilename);
+		map.put("savedFilename", savedFilename);
+		map.put("basicFile", basicFile);
+		
+		return dao.itemFileUpdate(map) > 0;
+	}
+
 }

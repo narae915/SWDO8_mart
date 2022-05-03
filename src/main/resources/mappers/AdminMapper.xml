@@ -76,17 +76,19 @@
  		order by item_num
  	</select>
  	
- 	<!-- 
- 	상품 조회 사진 가져오기
-	<select id="getFileList" resultType="File" parameterType="List">
-	<foreach items="itemNumList" var="itemNum" 
-		 select saved_filename
+ 	<!-- 상품 사진 가져오기 -->
+	<select id="getFileList" resultType="File" parameterType="Integer">
+		 select saved_filename as savedFilename,
+		 		item_num as itemNum
                 from file_list fl
-                where fl.file_num= (select min(fl.file_num) as fileNum
-                                    from file_list fl
-                                    group by fl.item_num
-                                    having fl.item_num= #{itemNum })
-	</select> -->
+                where fl.file_num= 
+	                <foreach collection='list' item='itemNum' separator="or fl.file_num =">
+	                (select min(fl.file_num)
+	                                    from file_list fl
+	                                    group by fl.item_num
+	                                    having fl.item_num= #{itemNum })
+					</foreach>
+	</select>
  	
  	<!-- 상품 삭제 -->
  	<delete id = "itemDelete" parameterType = "List">
@@ -368,22 +370,28 @@
 			item_name as itemName,
 			category_num as categoryNum,
 			(select category_name
-			from category_table
-			where category_num = (select category_num
-									from item_table
-									where item_num = #{itemChk })) as categoryName,
+				from category_table
+				where category_num = (select category_num
+										from item_table
+										where item_num = #{itemChk })) as categoryName,
 			price as price,
-			item_amount as itemAmount
-		from 
+			item_amount as itemAmount,
+			(select saved_filename
+				from file_list
+				where file_num = (select min(file_num)
+									from file_list
+									group by item_num
+									having item_num = #{itemChk })) as savedFilename
+		from
 			item_table
 		where 
 			item_num = #{itemChk }
 	</select>
 	
-	<!-- 상품 수정 -->
+	<!-- 상품 수정 - 정보 -->
 	<update id="itemUpdate" parameterType="HashMap">
 		update
-			item_table
+			item_table it
 		set
 			item_name = #{itemName },
 			price = #{price },
@@ -391,6 +399,17 @@
 			category_num = #{category }
 		where
 			item_num = #{itemNum }
+	</update>
+	
+	<!-- 상품 수정 - 파일 -->
+	<update id="itemFileUpdate" parameterType="HashMap">
+		update
+			file_list
+		set
+			original_filename = #{originalFilename },
+			saved_filename = #{savedFilename }
+		where
+			saved_filename = #{basicFile }
 	</update>
 	
 	<!-- 회원 검색 -->
@@ -506,4 +525,21 @@
 		delete from file_list
 		where saved_filename = #{fileName }
 	</delete>
+	
+	<!-- 상품 추가 시 사진 추가 -->
+	<insert id="itemFileInsert" parameterType="HashMap">
+		insert into file_list (
+			file_num,
+			item_num,
+			original_filename,
+			saved_filename
+		) values (
+			file_num_seq.nextval,
+			(select max(item_num)
+	 			from item_table),
+			#{originalFilename },
+			#{savedFilename }
+		)
+	</insert>
+	 
 </mapper>
