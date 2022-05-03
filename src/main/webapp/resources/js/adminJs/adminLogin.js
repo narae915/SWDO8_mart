@@ -22,13 +22,14 @@ function checkForm()
 	
 	return true;
 }
-  
+ 
+/* ID 기억하기 */
 $(document).ready(function() 
 {
 	var userInputId = getCookie("userInputId");
 	var setCookieYN = getCookie("setCookieYN");
 
-	if( setCookieYN == 'Y' ) 
+	if( setCookieYN == "Y" ) 
 	{
 		$("#saveIdChk").prop("checked", true);
 	} 
@@ -40,7 +41,7 @@ $(document).ready(function()
 	$("#empNum").val(userInputId); 
     
 	// 로그인 버튼 클릭시
-    $('#loginBtn').click(function() 
+    $("#loginBtn").click(function() 
 	{
 		if ( $("#saveIdChk").is(":checked") )
 		{ 
@@ -79,13 +80,13 @@ function deleteCookie(cookieName)
 function getCookie(cookie_name) 
 {
 	var x, y;
-	var val = document.cookie.split(';');
+	var val = document.cookie.split(";");
     
 	for ( var i = 0; i < val.length; i++ ) 
 	{
-		x = val[i].substr(0, val[i].indexOf('='));
-		y = val[i].substr(val[i].indexOf('=') + 1);
-		x = x.replace(/^\s+|\s+$/g, ''); // 앞과 뒤의 공백 제거하기
+		x = val[i].substr(0, val[i].indexOf("="));
+		y = val[i].substr(val[i].indexOf("=") + 1);
+		x = x.replace(/^\s+|\s+$/g, ""); // 앞과 뒤의 공백 제거하기
         
 		if ( x == cookie_name ) 
 		{

@@ -1,10 +1,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="ko">
 <head>
     <title>SpringDay | Header</title>
 </head>
@@ -26,11 +26,11 @@
                 </div>
                 <div class="ht-right">
                 	<sec:authorize access="isAnonymous()">
-                    <a href="/user/login" class="login-panel"><i class="fa fa-user"></i>로그인</a>
+                    <a href="/user/login" class="login-panel"><i class="fa fa-user"></i><spring:message code="message.header.login"/></a>
 					</sec:authorize>
 					<sec:authorize access="isAuthenticated()">
 					<!-- 로그아웃(form안의 내용을 가지고감) -->
-  					<a href="#" class="login-panel" onclick="document.getElementById('logout').submit();"><i class="fa fa-user"></i>로그아웃</a>
+  					<a href="#" class="login-panel" onclick="document.getElementById('logout').submit();"><i class="fa fa-user"></i><spring:message code="message.header.logout"/></a>
                     <form id="logout" action="/user/logout" method="POST">
    						<input name="${_csrf.parameterName}" id="token" type="hidden" value="${_csrf.token}"/>
 					</form>
@@ -38,9 +38,9 @@
                     <div class="lan-selector">
                         <select class="language_drop" name="countries" id="countries" style="width:300px;">
                             <option value='yt' data-image="/resources/img/flag-1.jpg" data-imagecss="flag yt"
-                                data-title="Korea">한국어</option>
+                                data-title="Korea"><spring:message code="message.header.languageKO"/></option>
                             <option value='yu' data-image="/resources/img/flag-2.jpg" data-imagecss="flag yu"
-                                data-title="Japanese">日本語 </option>
+                                data-title="Japanese" onclick="changeLangJA();"><spring:message code="message.header.languageJA"/></option>
                         </select>
                     </div>
                     <div class="top-social">
@@ -234,6 +234,11 @@
 			return false;
 		});
     }
+    
+    function changeLangJA() 
+    {
+    	location.href = "http://localhost:8888?lang=ja"
+	}
     </script>
 </body>
 </html>

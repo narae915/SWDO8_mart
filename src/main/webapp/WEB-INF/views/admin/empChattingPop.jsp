@@ -27,10 +27,10 @@
 	<style type="text/css">
 		.button
 		{
-			border:1x solid #e7ab3c;    /*---테두리 정의---*/
+			border:1x solid #e7ab3c;
 			border-radius: 5px;
-			background-Color:#e7ab3c;   /*--백그라운드 정의---*/
-			color: white;    /*--폰트 색깔---*/
+			background-Color:#e7ab3c;
+			color: white;
 		}    
 		.button:hover:enabled
 		{
@@ -74,10 +74,11 @@
 			border-radius: 5px;
 		    position: relative;
 		    background: #e7ab3c;
+			margin: 10px;
 		}
 		.fromChatting:after 
 		{
-		    content: '';
+		    content: "";
 		    position: absolute;
 		    border-top: 10px solid #e7ab3c;
 		    border-right: 10px solid transparent;
@@ -93,10 +94,11 @@
 			border-radius: 5px;
 		    position: relative;
 		    background: #ffeecf;
+		    margin: 10px;
 		}
 		.toChatting:after 
 		{
-		    content: '';
+		    content: "";
 		    position: absolute;
 		    border-top: 10px solid #ffeecf;
 		    border-right: 0px solid transparent;
@@ -118,7 +120,7 @@
             <div class="row">
                 <div class="col-lg-6 offset-lg-3">
 					<h2 style="text-align: center; margin-bottom: 35px; font-weight: bold;">메신저</h2>
-					<div style="position: relative; text-align: center; bottom: 10px; background: #f5fff6;">
+					<div class="scroll" style="position: relative; text-align: center; bottom: 10px; background: #f5fff6;">
 					<c:choose>
 						<c:when test="${empty sessionScope.loginName }">
 							<b style="color: red; font-size: 20px;">로그인이 필요합니다.</b><br><br>
@@ -132,7 +134,7 @@
 							<div class="divStatus" style="display: none;"> <!-- 입력 화면 비표시 -->
 								<b>메세지 입력 : </b>
 								<input type="text" id="sender" value="${sessionScope.loginName } ${sessionScope.loginPosition }" style="display: none;">
-								<input type="text" id="inputMessage">
+								<input type="text" id="inputMessage" maxlength="25" placeholder="25字씩 입력 가능">
 								<button type="button" class="button" id="sendBtn" onclick="send();" disabled="disabled">메세지 전송</button><br><br>
 								<button type="button" class="button" id="clearBtn" onclick="javascript:clearText();">대화내용 지우기</button>
 							</div>
@@ -164,15 +166,18 @@
     var ws;
     var messages = document.getElementById("messages");
     
+    /* 로그인 페이지 이동 */
     $(".loginBtn").click(function() 
    	{
-    	location.href = "/admin/adminLogin";
+    	window.open("/admin/adminLogin", "_blank");
+    	window.close(); // 팝업창 닫기
 	});
     
-    /* 텍스트 입력 시 전송 버튼 활성화 */
     $(function() 
     {
     	var divStatus = $(".divStatus");
+    	
+    	//$("#inputMessage").scrollTop($("#inputMessage").height());
     	
     	// 채팅 참여 시 메세지 작성란을 표시
     	$("#enterBtn").click(function() 
@@ -181,6 +186,12 @@
     		$("#inputMessage").focus();
 		});
     	
+    	$("#closeBtn").click(function() 
+    	{
+    		divStatus.css("display", "none");
+		});
+    	
+		// 텍스트 입력 시 전송 버튼 활성화
 		$("#inputMessage").on("input", function() 
 		{
 			if ( $("#inputMessage").val() == "" )
@@ -192,12 +203,25 @@
 				$("#sendBtn").attr("disabled", false);
 			}
 		});
+		
+		// 엔터키 누를 시 메세지 전송
+		$("#inputMessage").keydown(function(key) 
+		{
+	        if ( key.keyCode == 13 )
+        	{
+	        	if ( !($("#sendBtn").is(":disabled")) ) // 메세지 전송 버튼이 비활성화 상태가 아니라면
+	        	{
+	        		send();
+	        	}
+        	}
+		});
 	})
     
+	/* 웹소켓 */
     function openSocket()
     {
-    	$("#enterBtn").attr("disabled", true);
-    	$("#closeBtn").attr("disabled", false);
+    	$("#enterBtn").attr("disabled", true);	// 입장 버튼 비활성화
+    	$("#closeBtn").attr("disabled", false);	// 나가기 버튼 활성화
     	
         if ( ws !== undefined && ws.readyState !== WebSocket.CLOSED )
         {
@@ -206,7 +230,7 @@
         }
         
         // 웹소켓 객체 생성
-        ws = new WebSocket("ws://localhost:8888/empChatting");
+        ws = new WebSocket("ws://172.30.1.45:8888/empChatting");
         
         ws.onopen = function(event)
         {
@@ -226,26 +250,28 @@
         
         ws.onclose = function(event)
         {
-            writeResponse("<b>채팅 종료</b>");
+            writeResponse("<b style='color: red;'>채팅 종료</b>");
         }
     }
     
+    /* 메세지 전송 */
     function send()
     {
-        var text = document.getElementById("inputMessage").value + "," + document.getElementById("sender").value;
-        ws.send(text);
+    	var text = $("#inputMessage").val() + "," + $("#sender").val();
+        ws.send(text);							
         text = "";
-        $("#inputMessage").val("");
-        $("#sendBtn").attr("disabled", true);
+        $("#inputMessage").val("");				// 메세지 전송 후 입력란 비워주기
+        $("#sendBtn").attr("disabled", true);	// 입력란이 비어있게 되므로 메세지 전송 버튼 비활성화
     }
     
+    /* 채팅방 나가기 */
     function closeSocket()
     {
-    	$("#enterBtn").attr("disabled", false);
-    	$("#closeBtn").attr("disabled", true);
-        ws.close();
+    	$("#enterBtn").attr("disabled", false);	// 입장 버튼 활성화
+    	$("#closeBtn").attr("disabled", true);	// 나가기 버튼 비활성화
+        ws.close();								// 웹소켓 종료
     }
-    
+    ㅕ
     function writeResponse(text)
     {
         messages.innerHTML += "<br/>" + text;
