@@ -19,7 +19,7 @@
 			<c:if test="${cartList != null}">
 			<c:forEach items="${cartList }" var="cart" varStatus="status">
 				<tr>
-					<td class="si-pic"><img src="/resources/img/select-product-1.jpg" alt=""></td>
+					<td class="si-pic"><img src="${cart.savedFilename }" alt="" style="width:80px; height: 80px;"></td>
 					<td class="si-text">
 						<div class="product-selected">
 							<p><fmt:formatNumber value="${cart.price }" pattern="#,###"/> x ${cart.cartAmount }</p>

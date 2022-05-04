@@ -11,9 +11,15 @@
 <body>
 	<c:forEach items="${itemList }" var="item" varStatus="status">
 		<div class="col-lg-4 col-sm-6">
+		<c:if test="${item.itemAmount == 0}">
+			<img class="sold-out-img" src="/resources/img/products/sold-out.png" >
+		</c:if>
 			<div class="product-item">
 				<div class="pi-pic">
-					<img src="/resources/img/products/product-${item.itemNum }.jpg" alt="">
+					<img src="${item.savedFilename }" alt="" style="width:270px; height:330px;">
+					<c:if test="${item.salePrice != 0 }">
+                		<div class="sale pp-sale">Sale</div>
+					</c:if>
 					<ul>
 						<li class="w-icon active" onclick="insertCart(${item.itemNum });" style="cursor:pointer;">
 							<a><i class="icon_bag_alt"></i></a>
@@ -27,7 +33,14 @@
 					<div class="catagory-name">${item.categoryName }</div>
 					<a href="#"><h5>${item.itemName }</h5></a>
 					<!-- 가격사이에 ,를 찍기 위해 fmt 사용 -->
-					<div class="product-price"><fmt:formatNumber value="${item.price }" pattern="#,###원"/></div>
+					<c:if test="${item.salePrice != 0 }">
+						<div class="product-price"><fmt:formatNumber value="${item.salePrice }" pattern="#,###원"/>
+	                                       <span><fmt:formatNumber value="${item.price }" pattern="#,###원"/></span>
+                        </div>
+                    </c:if>
+                    <c:if test="${item.salePrice == 0 }">
+						<div class="product-price"><fmt:formatNumber value="${item.price }" pattern="#,###원"/></div>
+					</c:if>
 				</div>
 			</div>
 		</div>

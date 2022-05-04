@@ -28,7 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.JsonObject;
 import com.project.market.dao.UserDAO;
 import com.project.market.service.RecipeService;
-import com.project.market.util.lookingImgSrc;
+import com.project.market.util.LookingImgSrc;
 import com.project.market.vo.RecipeVO;
 import com.project.market.vo.ReplyVO;
 import com.project.market.vo.ScoreVO;
@@ -47,7 +47,7 @@ public class RecipeController {
 	private UserDAO uDao;
 	
 	//이미지 주소를 불러오는 Class
-	private lookingImgSrc imgSrc;
+	private LookingImgSrc imgSrc;
 	
 	//레시피 게시판 이동
 	@RequestMapping(value = "/recipeList", method = RequestMethod.GET)
@@ -65,7 +65,7 @@ public class RecipeController {
 			String titleImg = "";
 			for(int i = 0; i < recipeList.size(); i++) {
 				temp = recipeList.get(i).getContent();
-				titleImg = lookingImgSrc.getImgSrc(temp);
+				titleImg = LookingImgSrc.getImgSrc(temp);
 				//등록된 이미지가 없을 경우 기본 이미지가 나오게끔 설정
 				if(titleImg == null || titleImg == "") {
 					recipeList.get(i).setTitleImg("/resources/img/cooking_recipe.png");
@@ -85,7 +85,7 @@ public class RecipeController {
 			String titleImg = "";
 			for(int i = 0; i < newPostList.size(); i++) {
 				temp = newPostList.get(i).getContent();
-				titleImg = lookingImgSrc.getImgSrc(temp);
+				titleImg = LookingImgSrc.getImgSrc(temp);
 				//등록된 이미지가 없을 경우 기본 이미지가 나오게끔 설정
 				if(titleImg == null || titleImg == "") {
 					newPostList.get(i).setTitleImg("/resources/img/cooking_recipe.png");
@@ -118,7 +118,7 @@ public class RecipeController {
 			String titleImg = "";
 			for(int i = 0; i < sRecipeList.size(); i++) {
 				temp = sRecipeList.get(i).getContent();
-				titleImg = lookingImgSrc.getImgSrc(temp);
+				titleImg = LookingImgSrc.getImgSrc(temp);
 				//등록된 이미지가 없을 경우 기본 이미지가 나오게끔 설정
 				if(titleImg == null || titleImg == "") {
 					sRecipeList.get(i).setTitleImg("/resources/img/cooking_recipe.png");
@@ -138,7 +138,7 @@ public class RecipeController {
 			String titleImg = "";
 			for(int i = 0; i < newPostList.size(); i++) {
 				temp = newPostList.get(i).getContent();
-				titleImg = lookingImgSrc.getImgSrc(temp);
+				titleImg = LookingImgSrc.getImgSrc(temp);
 				//등록된 이미지가 없을 경우 기본 이미지가 나오게끔 설정
 				if(titleImg == null || titleImg == "") {
 					newPostList.get(i).setTitleImg("/resources/img/cooking_recipe.png");
@@ -181,7 +181,7 @@ public class RecipeController {
 				String titleImg = "";
 				for(int i = 0; i < sRecipeList.size(); i++) {
 					temp = sRecipeList.get(i).getContent();
-					titleImg = lookingImgSrc.getImgSrc(temp);
+					titleImg = LookingImgSrc.getImgSrc(temp);
 					//등록된 이미지가 없을 경우 기본 이미지가 나오게끔 설정
 					if(titleImg == null || titleImg == "") {
 						sRecipeList.get(i).setTitleImg("/resources/img/cooking_recipe.png");
@@ -227,7 +227,7 @@ public class RecipeController {
 				String titleImg = "";
 				for(int i = 0; i < recipeList.size(); i++) {
 					temp = recipeList.get(i).getContent();
-					titleImg = lookingImgSrc.getImgSrc(temp);
+					titleImg = LookingImgSrc.getImgSrc(temp);
 					//등록된 이미지가 없을 경우 기본 이미지가 나오게끔 설정
 					if(titleImg == null || titleImg == "") {
 						recipeList.get(i).setTitleImg("/resources/img/cooking_recipe.png");

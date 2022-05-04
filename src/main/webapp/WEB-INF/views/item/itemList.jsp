@@ -149,7 +149,7 @@
 							</c:if>
 								<div class="product-item">
 									<div class="pi-pic">
-										<img src="/resources/img/products/product-${status.count }.jpg" alt="">
+										<img src="${item.savedFilename }" alt="" style="width:270px; height:330px;">
 										<c:if test="${item.salePrice != 0 }">
     	                            		<div class="sale pp-sale">Sale</div>
                                 		</c:if>

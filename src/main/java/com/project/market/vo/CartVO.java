@@ -15,4 +15,6 @@ public class CartVO {
 	
 	private String savedFilename; // 사진파일 이름
 	private String savedFileNum; // 사진파일 번호
+	private String originalFilename; // 원래 파일이름
+
 }

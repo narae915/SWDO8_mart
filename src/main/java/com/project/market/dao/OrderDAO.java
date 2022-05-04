@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project.market.vo.CartVO;
+import com.project.market.vo.FileListVO;
 import com.project.market.vo.ItemVO;
 import com.project.market.vo.OrderVO;
 import com.project.market.vo.UserVO;
@@ -208,6 +209,21 @@ public class OrderDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return result;
+	}
+
+	//파일 리스트 조회
+	public ArrayList<FileListVO> getFileList() {
+		ArrayList<FileListVO> result = null;
+		OrderMapper mapper = null;
+		
+		try {
+			mapper = session.getMapper(OrderMapper.class);
+			result = mapper.getFileList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return result;
 	}
 

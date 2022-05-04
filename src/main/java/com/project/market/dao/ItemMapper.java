@@ -3,6 +3,7 @@ package com.project.market.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.project.market.vo.FileListVO;
 import com.project.market.vo.ItemVO;
 
 public interface ItemMapper {
@@ -30,4 +31,7 @@ public interface ItemMapper {
 
 	//상품 리스트 불러오기(메인화면용)
 	ArrayList<ItemVO> mainItemList(int categoryNum);
+
+	//전체 파일 불러오기
+	ArrayList<FileListVO> getFileList();
 }
