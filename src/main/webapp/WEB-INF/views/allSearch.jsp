@@ -47,22 +47,30 @@
     		color:blue;
     	}
     	div#not-found-search table th {
-    		font-size:20px;
-    		text-align :center;
+    		font-size: 20px;
+    		text-align: center;
     	}
     
+    	div.recipe-wrapper {
+    		display: inline-block;
+    		width: 300px;
+    		text-align: center;
+    	}
+    	
+    	div.recipe-wrapper p {
+			font-size:20px;
+    	}
+    	
 	    table#itemListTB
 		{
-			width: 80%;
+			width: 100%;
 			border-spacing: 10px;
 			border-collapse: separate;
+			text-align: center;
 		}
 		
 		input.buy-btn {
 			font-size: 16px;
-			margin-left: -440px;
-			margin-top: -20px;
-			position: absolute;
 			color: #ffffff;
 			border: 1px solid #e7ab3c;
 			background: #e7ab3c;
@@ -167,11 +175,19 @@
 									<c:if test="${!empty searchItemList }">
 									<c:forEach items="${searchItemList }" var="item">
 									<tr>
-									<td>이미지</td>
-									<td>
+									<td><img alt="" src="${item.savedFilename }" alt="" style="width:250px; height:300px;"></td>
+									<td style="text-align: left;">
 									<p style="font-size:14px;">${item.categoryName }</p>
-									<span class="itemName" style="display:block; font-size:20px;">${item.itemName }</span>
-									<span class="itemPrice" style="font-weight:bold;"><fmt:formatNumber value="${item.price }" pattern="#,###원"/></span>
+									<div class="itemName" style="display:block; font-size:25px; font-weight: bold;">${item.itemName }</div>
+									<!-- 가격사이에 ,를 찍기 위해 fmt 사용 -->
+									<c:if test="${item.salePrice != 0 }">
+										<div class="product-price"><span style="color:#e7ab3c; font-size:20px; font-weight: 700;"><fmt:formatNumber value="${item.salePrice }" pattern="#,###원" /></span>
+                                            <span class="itemPrice" style="font-size:12px; color:#b2b2b2; text-decoration: line-through;"><fmt:formatNumber value="${item.price }" pattern="#,###원"/></span>
+                                        </div>
+                                       </c:if>
+                                       <c:if test="${item.salePrice == 0 }">
+										<div class="product-price"><span style="color:#e7ab3c; font-size:20px; font-weight: 700;"><fmt:formatNumber value="${item.price }" pattern="#,###원"/></span></div>
+									</c:if>
 									</td>
 									<td>
 									<input type="button" class="buy-btn" value="구매하러가기" onclick="location.href='/item/readItem?itemNum=${item.itemNum }'">
@@ -183,6 +199,8 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            <hr>
                             <div class="card">
                                 <div class="card-heading active">
                                     <a>
@@ -193,13 +211,12 @@
                                     <div class="card-body">
                                     <c:choose>
 									<c:when test="${empty searchRecipeList }">
-									<span style="text-align: center;">검색 결과가 없습니다.</span>
 									</c:when>
 									<c:otherwise>
 									<c:forEach items="${searchRecipeList }" var="recipe" varStatus="status">
 									<div class="recipe-wrapper" <%-- onclick="location.href='/recipe/readRecipe?recipeNum=${recipe.recipeNum }';" --%>>
-									<p>이미지</p>
-									<p style="text-align:left; font-size:20px;">${recipe.title }</p>
+									<p><img alt="" src="${recipe.titleImg }"><p>
+									<p>${recipe.title }</p>
 									<div class="star-ratings">
 										<div class="star-ratings-fill space-x-2 text-lg" id="star-fill${status.count }" style="width:calc(${recipe.score } * 20)%">
 											<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>

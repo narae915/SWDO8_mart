@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.project.market.vo.CartVO;
+import com.project.market.vo.FileListVO;
 import com.project.market.vo.ItemVO;
 import com.project.market.vo.OrderVO;
 import com.project.market.vo.UserVO;
@@ -55,5 +56,8 @@ public interface OrderMapper {
 
 	// 주문 테이블에 입력 - 노채린
 	int insertOrder(HashMap<String, Object> map);
+
+	//파일 리스트 조회
+	ArrayList<FileListVO> getFileList();
 
 }

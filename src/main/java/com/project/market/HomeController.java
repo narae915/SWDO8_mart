@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.project.market.service.ItemService;
 import com.project.market.service.RecipeService;
-import com.project.market.util.lookingImgSrc;
+import com.project.market.util.LookingImgSrc;
+import com.project.market.vo.FileListVO;
 import com.project.market.vo.ItemVO;
 import com.project.market.vo.RecipeVO;
 
@@ -31,7 +32,7 @@ public class HomeController {
 	private RecipeService rService;
 	
 	//이미지 주소를 불러오는 Class
-	private lookingImgSrc imgSrc;
+	private LookingImgSrc imgSrc = new LookingImgSrc();
 	
 	//기본 메인화면
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -40,55 +41,37 @@ public class HomeController {
 		session.removeAttribute("findId");
 		int countPerPage = 3;
 		
+		//파일을 불러오는 list 생성
+		ArrayList<FileListVO> fileList = iService.getFileList();
+
 		//상품 조회
 		ArrayList<ItemVO> mealItemList = iService.mainItemList(10);
 		
-		String saleMenu = null;
-		int salePrice = 0; // 할인된 가격
-		int price = 0; //원래 가격
-
-		//세일 상품 처리하는 for문
-		for(int i = 0; i < mealItemList.size(); i++) {
-			saleMenu = mealItemList.get(i).getItemName();
-			price = mealItemList.get(i).getPrice();
-			if(saleMenu.contains("스테이크")) { // "스테이크" 를 동적으로 이용하고 싶으면 변수로 지정
-				//30% 할인
-				salePrice = (int)(price * 0.70);
-				mealItemList.get(i).setSalePrice(salePrice);
-			} else {
-				//할인 상품이 아닐경우 jsp에 표현하기 위해 0을 입력
-				mealItemList.get(i).setSalePrice(0);
-			}
-		}
+		//이미지 파일명을 itemList에 넣는 메소드
+		mealItemList = imgSrc.setFileImg(mealItemList, fileList);
+		logger.info("파일 입력완료 : {}", mealItemList);
+		
+		//세일상품 표현하는 메소드
+		mealItemList = iService.sale(mealItemList);
+		logger.info("세일 입력완료 :{}", mealItemList);
 		model.addAttribute("mealItemList", mealItemList);
 
-		
+		//해산물 조회하는 메소드
 		ArrayList<ItemVO> seafoodItemList = iService.mainItemList(20);
+		
+		//이미지 파일명을 itemList에 넣는 메소드
+		seafoodItemList = imgSrc.setFileImg(seafoodItemList, fileList);
 		model.addAttribute("seafoodItemList", seafoodItemList);
+		
 		//과일 + 채소를 함께 조회하기 위한 전용 메소드 
 		ArrayList<ItemVO> produceItemList = iService.getProduceList();
+		
+		//이미지 파일명을 itemList에 넣는 메소드
+		produceItemList = imgSrc.setFileImg(produceItemList, fileList);
 
-		//세일 상품 처리하는 for문
-		for(int i = 0; i < produceItemList.size(); i++) {
-			saleMenu = produceItemList.get(i).getItemName();
-			price = produceItemList.get(i).getPrice();
-			if(saleMenu.contains("포도")) {
-				//20% 할인
-				salePrice = (int)(price * 0.80);
-				produceItemList.get(i).setSalePrice(salePrice);
-			} else if(saleMenu.contains("참외")) {
-				//30% 할인
-				salePrice = (int)(price * 0.70);
-				produceItemList.get(i).setSalePrice(salePrice);
-			} else if(saleMenu.contains("오렌지")) {
-				//50% 할인
-				salePrice = (int)(price * 0.50);
-				produceItemList.get(i).setSalePrice(salePrice);
-			} else {
-				//할인 상품이 아닐경우 jsp에 표현하기 위해 0을 입력
-				produceItemList.get(i).setSalePrice(0);
-			}
-		}
+		//세일상품 표현하는 메소드
+		produceItemList = iService.sale(produceItemList);
+		logger.info("세일 입력완료 :{}", produceItemList);
 		model.addAttribute("produceItemList", produceItemList);
 	
 		//게시글 조회 최근 3개
@@ -99,7 +82,7 @@ public class HomeController {
 		String titleImg = "";
 		for(int i = 0; i < recipeList.size(); i++) {
 			temp = recipeList.get(i).getContent();
-			titleImg = lookingImgSrc.getImgSrc(temp);
+			titleImg = LookingImgSrc.getImgSrc(temp);
 			//등록된 이미지가 없을 경우 기본 이미지가 나오게끔 설정
 			if(titleImg == null || titleImg == "") {
 				recipeList.get(i).setTitleImg("/resources/img/cooking_recipe.png");
@@ -126,6 +109,7 @@ public class HomeController {
 		return "home";
 	}
 	
+	//상단바에서 검색했을 떄
 	@RequestMapping(value="/allSearch", method = RequestMethod.GET)
 	public String allSearch(String searchword, Model model) {
 		logger.info("모든 검색 결과(GET)");
@@ -138,10 +122,20 @@ public class HomeController {
 		model.addAttribute("countItem", countItem); //검색 결과 개수 model 저장
 		
 		ArrayList<ItemVO> searchItemList = iService.getSearchItem(searchword, countItem);
-		logger.info("searchItemList:{}",searchItemList);
+		
+		//파일을 불러오는 list 생성
+		ArrayList<FileListVO> fileList = iService.getFileList();
+		logger.info("상품 페이지 이미지파일 리스트 : {}", fileList);
 		
 		//검색 결과에 맞는 list가 있으면 model에 저장
 		if(searchItemList != null) {
+			//이미지 파일명을 itemList에 넣는 메소드
+			searchItemList = imgSrc.setFileImg(searchItemList, fileList);
+
+			//세일상품 표현하는 메소드
+			searchItemList = iService.sale(searchItemList);
+			logger.info("세일 입력완료 :{}", searchItemList);
+			
 			model.addAttribute("searchItemList", searchItemList);
 		}
 		
@@ -154,6 +148,19 @@ public class HomeController {
 
 		//검색 결과에 맞는 list가 있으면 model에 저장
 		if(searchRecipeList != null) {
+			String temp = "";
+			String titleImg = "";
+			for(int i = 0; i < searchRecipeList.size(); i++) {
+				temp = searchRecipeList.get(i).getContent();
+				titleImg = LookingImgSrc.getImgSrc(temp);
+				//등록된 이미지가 없을 경우 기본 이미지가 나오게끔 설정
+				if(titleImg == null || titleImg == "") {
+					searchRecipeList.get(i).setTitleImg("/resources/img/cooking_recipe.png");
+					continue;
+				}
+				//등록된 이미지가 있다면 그 이미지가 출력되게 설정
+				searchRecipeList.get(i).setTitleImg(titleImg);
+			}
 			model.addAttribute("searchRecipeList", searchRecipeList);
 		}
 		

@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.project.market.vo.FileListVO;
 import com.project.market.vo.ItemVO;
 
 
@@ -122,6 +123,20 @@ public class ItemDAO {
 		try {
 			mapper = session.getMapper(ItemMapper.class);
 			result = mapper.mainItemList(categoryNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	//전체파일 불러오기
+	public ArrayList<FileListVO> getFileList() {
+		ArrayList<FileListVO> result = null;
+		ItemMapper mapper = null;
+
+		try {
+			mapper = session.getMapper(ItemMapper.class);
+			result = mapper.getFileList();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

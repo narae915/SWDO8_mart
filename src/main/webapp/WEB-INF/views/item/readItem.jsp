@@ -115,21 +115,31 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="product-pic-zoom">
-                                <img class="product-big-img" src="/resources/img/product-single/product-1.jpg" alt="">
+                            <!-- 큰이미지 -->
+                            <c:if test="${not empty fileList }">
+	                            <img class="product-big-img" src="/uploadImg/${fileList[0] }" style="height:390px;width:330px"alt="">
+                            </c:if>
+                            <c:if test="${empty fileList }">
+                            	<img class="product-big-img" src="/resources/img/itemDefault.png" style="height:390px;width:330px"alt="">
+                            </c:if>
                                 <div class="zoom-icon">
                                     <i class="fa fa-search-plus"></i>
                                 </div>
                             </div>
                             <div class="product-thumbs">
                                 <div class="product-thumbs-track ps-slider owl-carousel">
-                                    <div class="pt active" data-imgbigurl="/resources/img/product-single/product-1.jpg"><img
-                                            src="/resources/img/product-single/product-1.jpg" alt=""></div>
-                                    <div class="pt" data-imgbigurl="/resources/img/product-single/product-2.jpg"><img
-                                            src="/resources/img/product-single/product-2.jpg" alt=""></div>
-                                    <div class="pt" data-imgbigurl="/resources/img/product-single/product-3.jpg"><img
-                                            src="/resources/img/product-single/product-3.jpg" alt=""></div>
-                                    <div class="pt" data-imgbigurl="/resources/img/product-single/product-3.jpg"><img
-                                            src="/resources/img/product-single/product-3.jpg" alt=""></div>
+                                <c:forEach var="i" begin="0" end="3">
+                              <c:if test="${not empty fileList[i] }">
+                                 <div class="pt" data-imgbigurl="/uploadImg/${fileList[i] }">
+                                    <img src="/uploadImg/${fileList[i] }" alt="" style="height:109px;width:139px">
+                                 </div>
+                              </c:if>
+                              <c:if test="${empty fileList[i] }">
+                                 <div class="pt" data-imgbigurl="/resources/img/itemDefault.png">
+                                    <img src="/resources/img/itemDefault.png" alt=""  style="height:109px; width:139px">
+                                 </div>
+                              </c:if>
+                                    </c:forEach>
                                 </div>
                             </div>
                         </div>

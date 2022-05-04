@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.project.market.service.ItemService;
+import com.project.market.util.LookingImgSrc;
+import com.project.market.vo.FileListVO;
 import com.project.market.vo.ItemVO;
 
 @Controller
@@ -23,6 +25,9 @@ public class ItemController {
 	private int countPerPage = 9;
 	@Autowired
 	private ItemService service;
+	
+	//이미지 주소를 불러오는 Class
+	private LookingImgSrc imgSrc = new LookingImgSrc();
 	
 	//상품 선택 페이지 이동
 	@RequestMapping(value = "/itemList", method = RequestMethod.GET)
@@ -43,37 +48,14 @@ public class ItemController {
 		model.addAttribute("countPerPage", countPerPage);
 		ArrayList<ItemVO> itemList = service.getItemList(countPerPage, sorting, categoryNum);
 		
-		String saleMenu = null;
-		int salePrice = 0; // 할인된 가격
-		int price = 0; //원래 가격
-		
-		//세일 상품 처리하는 for문
-		for(int i = 0; i < itemList.size(); i++) {
-			saleMenu = itemList.get(i).getItemName();
-			price = itemList.get(i).getPrice();
-			if(saleMenu.contains("포도")) {
-				//20% 할인
-				salePrice = (int)(price * 0.80);
-				itemList.get(i).setSalePrice(salePrice);
-			} else if(saleMenu.contains("참외")) {
-				//30% 할인
-				salePrice = (int)(price * 0.70);
-				itemList.get(i).setSalePrice(salePrice);
-			} else if(saleMenu.contains("오렌지")) {
-				//50% 할인
-				salePrice = (int)(price * 0.50);
-				itemList.get(i).setSalePrice(salePrice);
-			} else if(saleMenu.contains("스테이크")) { // "스테이크" 를 동적으로 이용하고 싶으면 변수로 지정
-				//30% 할인
-				salePrice = (int)(price * 0.70);
-				itemList.get(i).setSalePrice(salePrice);
-			} else {
-				//할인 상품이 아닐경우 jsp에 표현하기 위해 0을 입력
-				itemList.get(i).setSalePrice(0);
-			}
-		}
-		
-		logger.info("itemList:{}", itemList);
+		//파일을 불러오는 list 생성
+		ArrayList<FileListVO> fileList = service.getFileList();
+		logger.info("상품 페이지 이미지파일 리스트 : {}", fileList);
+		//파일 이미지 저장
+		itemList = imgSrc.setFileImg(itemList, fileList);
+		// 세일 상품 저장
+		itemList = service.sale(itemList);
+		logger.info("세일,파일 포함:{}", itemList);
 
 		model.addAttribute("itemList", itemList);
 		
@@ -88,7 +70,14 @@ public class ItemController {
 		int categoryNum = Integer.parseInt(sendNum); // int형으로 자료형변환
 		
 		ArrayList<ItemVO> itemList = service.getItemList(countPerPage, sorting, categoryNum);
-		logger.info("itemList:{}", itemList);
+		//파일을 불러오는 list 생성
+		ArrayList<FileListVO> fileList = service.getFileList();
+		logger.info("상품 페이지 이미지파일 리스트 : {}", fileList);
+		//파일 이미지 저장
+		itemList = imgSrc.setFileImg(itemList, fileList);
+		// 세일 상품 저장
+		itemList = service.sale(itemList);
+		logger.info("세일,파일 포함:{}", itemList);
 		
 		model.addAttribute("itemList", itemList);
 		model.addAttribute("categoryNum", categoryNum);
@@ -96,7 +85,7 @@ public class ItemController {
 		return "item/itemListAjax";
 	}
 	
-	//정렬하기, 카테고리 별로 보기( 더보기 눌렀을 때 ajax)
+	//정렬하기, 카테고리 별로 보기(더보기 눌렀을 때 ajax)
 	@RequestMapping(value = "/loading", method = RequestMethod.GET)
 	public String loading(String startCount, String viewCount, String sorting, String searchNum, Model model) {
 		logger.info("loading 메소드 실행(GET)");
@@ -120,7 +109,14 @@ public class ItemController {
 		//총 게시글 수가 조회되어 있는 게시글 수보다 많을 경우
 		} else {
 			ArrayList<ItemVO> itemList = service.getItemList(countPerPage,sorting,categoryNum);
-			logger.info("itemList:{}", itemList);
+			//파일을 불러오는 list 생성
+			ArrayList<FileListVO> fileList = service.getFileList();
+			logger.info("상품 페이지 이미지파일 리스트 : {}", fileList);
+			//파일 이미지 저장
+			itemList = imgSrc.setFileImg(itemList, fileList);
+			// 세일 상품 저장
+			itemList = service.sale(itemList);
+			logger.info("세일,파일 포함:{}", itemList);
 			
 			model.addAttribute("itemList", itemList);
 		}
@@ -143,6 +139,22 @@ public class ItemController {
 		ItemVO item = service.getOneItem(itemNum);
 		logger.info("item:{}", item);
 		
+		//파일을 불러오는 list 생성
+		ArrayList<FileListVO> tempList = service.getFileList();
+		ArrayList<String> fileList = new ArrayList<>();
+
+		
+		//모든 파일 정보를 알 수 있는 tempList에서 jsp에 표시하고 싶은 fileList로 옮기기
+		// 같은 아이템 번호일 경우만 옮긴다.
+		for(int i = 0; i < tempList.size(); i++) {
+			if(tempList.get(i).getItemNum() == itemNum) {
+				fileList.add(tempList.get(i).getSavedFilename());
+			}
+		}
+		
+		logger.info("상품 페이지 이미지파일 리스트 : {}", fileList);
+		
+		model.addAttribute("fileList", fileList);
 		model.addAttribute("item", item);
 		return "item/readItem";
 	}

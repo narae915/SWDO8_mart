@@ -156,9 +156,9 @@
 	                        <div class="col-lg-5"><!-- 사진모음 -->
 	                            <div class="product-pic-zoom"><!-- 줌 가능 페이지 -->
 
-	                                <!-- <img class="product-big-img" src="/uploadImg/${fileList[0] }" style="height:390px;width:330px"alt=""> --><!-- 큰 이미지 -->
+	                                <img class="product-big-img" src="/uploadImg/${fileList[0] }" style="height:390px;width:330px"alt=""><!-- 큰 이미지 -->
 
-	                        		<img class="product-big-img" src="/resources/img/itemDefault.png" style="height:390px;width:330px"alt=""><!-- 큰 이미지 -->
+	                        		<!-- <img class="product-big-img" src="/resources/img/itemDefault.png" style="height:390px;width:330px"alt=""> --><!-- 큰 이미지 -->
 
                                 <div class="zoom-icon"><!-- 줌 아이콘 -->
                                     <i class="fa fa-search-plus"></i>

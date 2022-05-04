@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.market.dao.OrderDAO;
 import com.project.market.vo.CartVO;
+import com.project.market.vo.FileListVO;
 import com.project.market.vo.ItemVO;
 import com.project.market.vo.OrderVO;
 import com.project.market.vo.UserVO;
@@ -164,6 +165,11 @@ public class OrderService {
 		}
 		return flag;
 	
+	}
+
+	//파일 리스트 조회
+	public ArrayList<FileListVO> getFileList() {
+		return dao.getFileList();
 	}
 
 }

@@ -266,5 +266,14 @@
 			#{orderCall }
 		)
 	</insert>
-	
+
+<!-- 파일리스트 조회 -->
+<select id="getFileList" resultType="File">
+	select
+		item_num as itemNum,
+		original_filename as originalFilename,
+		saved_filename as savedFilename
+	from
+		file_list
+</select>
 </mapper>

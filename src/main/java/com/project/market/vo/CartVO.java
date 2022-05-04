@@ -12,4 +12,7 @@ public class CartVO {
 	private int userNum;		// 회원번호
 	private int price;			// 가격
 	private String itemName;	// 상품명
+	
+	private String originalFilename; // 원래 파일이름
+	private String savedFilename; // 저장한 파일 이름
 }
