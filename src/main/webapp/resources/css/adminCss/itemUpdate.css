@@ -67,6 +67,8 @@
 		outline:none;
 		height:40px; 
 		border-radius:5px;
+		left: 40em;
+		top: 1em;
 	}
 	
 	input[type="submit"]:hover {
@@ -95,5 +97,10 @@
 	input[type="submit"]:hover:before, input[type="submit"]:hover:after {
 		width:100%;
 		transition:800ms ease all;
+	}
+	
+	#file-btn {
+		border-radius: 5px;
+		margin-top: 1em;
 	}
 	</style>

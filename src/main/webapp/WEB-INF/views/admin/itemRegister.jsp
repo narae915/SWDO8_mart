@@ -12,7 +12,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>상품 추가</title>
+    <title>SpringDay | 상품 추가</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -46,7 +46,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="/"><i class="fa fa-home"></i> Home</a>
-                        <a href="/admin/adminMain">Employee</a>
+                        <a href="/admin/adminMain">Admin</a>
                         <a href="/admin/itemManagement">상품 조회</a>
                         <span>상품 추가</span>
                     </div>
@@ -107,12 +107,13 @@
 	                       			<td style="width:40%">
 	                       				<input type="text" name="itemAmount" class="text-type" id="itemAmount" required>
 	                       			</td>
-	                       			<th></th>
+	                       			<th>상품소개(간략)</th>
 	                       			<td style="width:50%">
-	                       				<input type="submit" id="submit-btn" class="primary-btn" value="완료">
+	                       				<input type="text" name="introduce" class="text-type" required>
 	                       			</td>
 	                       		</tr>
 	                       </table>
+	                       <input type="submit" id="submit-btn" class="primary-btn" value="완료">
 	                       
 	                       <!-- 수정 시 수정값 -->
 	                       <input type="hidden" name="updateNum" value="updateNum">

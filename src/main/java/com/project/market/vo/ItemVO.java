@@ -25,4 +25,7 @@ public class ItemVO {
 	//22-04-30 노채린
 	private String originalFilename; // 원본 파일 명
 	private String savedFilename; // 저장된 파일 명
+	
+	//22-05-07 노채린
+	private String introduce; // 상품 설명
 }

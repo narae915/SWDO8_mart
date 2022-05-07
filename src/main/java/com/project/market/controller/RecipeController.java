@@ -317,6 +317,7 @@ public class RecipeController {
 		// 작성된 글의 제목과 내용을 불러오기
 		ArrayList<RecipeVO> recipe = service.getWriting(recipeNum);
 		model.addAttribute("recipe", recipe);
+		logger.info("recipe:{}",recipe);
 		
 		return "recipe/update";
 	}

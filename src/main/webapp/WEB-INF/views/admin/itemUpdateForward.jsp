@@ -12,7 +12,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>상품 수정</title>
+    <title>SpringDay | 상품 수정</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -46,7 +46,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="/"><i class="fa fa-home"></i> Home</a>
-                        <a href="/admin/adminMain">Employee</a>
+                        <a href="/admin/adminMain">Admin</a>
                         <a href="/admin/itemManagement">상품 조회</a>
                         <span>상품 수정</span>
                     </div>
@@ -73,7 +73,7 @@
                        			<th id="th-image">IMAGE</th>
                        			<td id="td-image">
 									<c:if test="${not empty itemList }">
-	                                	<img src="/uploadImg/${item.savedFilename }" style="height:300px;width:280px"alt="">
+	                                	<img src="/uploadImg/${item.savedFilename }" style="height:300px;width:280px; margin-top:1em"alt="">
 	                                	<input type="hidden" value="${item.savedFilename }" name="basicFile">
 	                                </c:if>
 	                                <c:if test="${empty itemList }">
@@ -116,14 +116,14 @@
                        			<td id="td-amount">
                        				<input type="text" name="itemAmount" class="text-type" id="itemAmount" value="${item.itemAmount }" required>
                        			</td>
-                       			<th></th>
+                       			<th>상품소개(간략)</th>
                        			<td id="td-submit">
-                       				<input type="submit" id="submit-btn" class="primary-btn" value="완료">
+                       				<input type="text" name="introduce" class="text-type" value="${item.introduce }" required>
                        			</td>
                        		</tr>
 						</c:forEach>
 						</table>
-					
+					<input type="submit" id="submit-btn" class="primary-btn" value="완료">
                     <!--상품 관리 테이블 끝  -->
 					</form>
                     </div>

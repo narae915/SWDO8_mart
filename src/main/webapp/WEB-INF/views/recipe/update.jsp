@@ -51,13 +51,13 @@
 	                <div class="col-lg-12">
 						<input type="text" name="subject"  id="subject" placeholder="제목을 입력하세요." value="${Recipe.title }">
 						<textarea id="summernote" name="editordata"></textarea>
-						<input type="hidden" id="content" value="${Recipe.content }">
+						<input type="hidden" id="content" value='${Recipe.content }'>
 						<input type="hidden" name="recipeNum" value="${recipeNum }">
 	                </div>
 	                <div class="col-lg-10" id="btn-div">
 	  					<input type="submit" class="primary-btn" id="submit-btn" value="완료">
 	  					&emsp;
-						<input type="button" class="primary-btn" value="취소">
+						<input type="button" class="primary-btn" value="취소" onclick="location.href='/recipe/recipeList'">
 	                </div>
 	            </c:forEach>
             </form>

@@ -54,6 +54,11 @@ table, th, tr, td {
 		border-radius:5px;
 	}
 	
+	input[type="submit"] {
+		left: 40em;
+    	top: 2em;
+	}
+	
 	#file-btn:hover,
 	input[type="submit"]:hover {
 		background:#000;

@@ -51,7 +51,7 @@ public class AdminService {
 	}
 
 	// 3.상품 추가 메소드
-	public boolean itemInsert(int category, String itemName, String price, String itemAmount) {
+	public boolean itemInsert(int category, String itemName, String price, String itemAmount, String introduce) {
 		int intPrice = Integer.parseInt(price);
 		
 		HashMap<String, Object> map = new HashMap<>();
@@ -59,6 +59,7 @@ public class AdminService {
 		map.put("itemName", itemName);
 		map.put("intPrice", intPrice);
 		map.put("itemAmount", itemAmount);
+		map.put("introduce", introduce);
 		
 		return dao.itemInsert(map) > 0;
 	}
@@ -204,7 +205,7 @@ public class AdminService {
 	}
 
 	// 상품 수정
-	public boolean itemUpdate(String itemNum, String itemName, String price, String itemAmount, int category) {
+	public boolean itemUpdate(String itemNum, String itemName, String price, String itemAmount, int category, String introduce) {
 		HashMap<String, Object> map = new HashMap<>();
 		
 		map.put("itemNum", itemNum);
@@ -212,6 +213,7 @@ public class AdminService {
 		map.put("price", price);
 		map.put("itemAmount", itemAmount);
 		map.put("category", category);
+		map.put("introduce", introduce);
 		
 		return dao.itemUpdate(map) > 0;
 	}

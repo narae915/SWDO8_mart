@@ -332,8 +332,10 @@ public class UserController {
 			return "user/userUpdate";
 		}
 		else
-		{
-			return "redirect:mypage";
+		{	
+			// 220504 노채린 수정 
+			// return "redirect:mypage";
+			return "/order/orderList";
 		}
 	}
 	
@@ -356,7 +358,9 @@ public class UserController {
 		{
 			logger.info("회원 정보 수정 성공.");
 			
-			returnUrl = "user/mypage";
+			// 220504 노채린
+			// returnUrl = "user/mypage";
+			returnUrl = "/order/orderList";
 		}
 		else
 		{

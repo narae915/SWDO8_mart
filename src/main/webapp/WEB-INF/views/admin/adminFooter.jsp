@@ -67,7 +67,7 @@
                         <h5>Item</h5>
                         <ul>
                             <li><a href="/admin/itemManagement">상품 조회</a></li>
-                            <li><a href="#">상품 등록</a></li>
+                            <li><a href="/admin/itemRegister">상품 등록</a></li>
                         </ul>
                     </div>
                 </div>

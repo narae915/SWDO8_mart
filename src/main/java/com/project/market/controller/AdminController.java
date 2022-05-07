@@ -694,7 +694,7 @@ public class AdminController {
 	
 	// 상품 신규 등록
 	@RequestMapping(value = "/itemRegister", method = RequestMethod.POST)
-	public String itemRegister(int category, String itemName, String price, String itemAmount, @RequestParam("uploadFile") MultipartFile mfile) {
+	public String itemRegister(int category, String itemName, String price, String itemAmount, @RequestParam("uploadFile") MultipartFile mfile, String introduce) {
 		logger.info("itemRegister 메소드 실행(POST)");
 		
 		String originalFilename = null;
@@ -713,7 +713,7 @@ public class AdminController {
 		}
 		
 		// 상품 정보 등록
-		boolean result1 = service.itemInsert(category, itemName, price, itemAmount);
+		boolean result1 = service.itemInsert(category, itemName, price, itemAmount, introduce);
 		
 		if(result1) {
 			logger.info("상품 신규 등록 성공");
@@ -754,7 +754,7 @@ public class AdminController {
 
 	// 상품 수정
 	@RequestMapping(value = "/itemUpdate", method = RequestMethod.POST)
-	public String itemUpdate(String itemNum, String itemName, String price, String itemAmount, int category, @RequestParam("uploadFile") MultipartFile mfile, String basicFile) {
+	public String itemUpdate(String itemNum, String itemName, String price, String itemAmount, int category, @RequestParam("uploadFile") MultipartFile mfile, String basicFile, String introduce) {
 		logger.info("itemUpdate 메소드 실행(POST)");
 		
 		// 체크박스 itemNum
@@ -774,7 +774,7 @@ public class AdminController {
 			logger.info("사진 저장 실패");
 		}
 				
-		boolean result = service.itemUpdate(itemNum, itemName, price, itemAmount, category);
+		boolean result = service.itemUpdate(itemNum, itemName, price, itemAmount, category, introduce);
 		
 		if(result) {
 			logger.info("수정 성공");

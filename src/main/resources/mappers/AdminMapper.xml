@@ -106,14 +106,16 @@
 			category_num,
 			item_name,
 			price,
-			item_amount 		
+			item_amount,
+			introduce 		
  		)
  		values (
  			item_num_seq.nextval,
  			#{category },
  			#{itemName },
  			#{intPrice },
- 			#{itemAmount }
+ 			#{itemAmount },
+ 			#{introduce }
  		)
  	</insert>
 
@@ -381,7 +383,8 @@
 				where file_num = (select min(file_num)
 									from file_list
 									group by item_num
-									having item_num = #{itemChk })) as savedFilename
+									having item_num = #{itemChk })) as savedFilename,
+			introduce as introduce
 		from
 			item_table
 		where 
@@ -396,7 +399,8 @@
 			item_name = #{itemName },
 			price = #{price },
 			item_amount = #{itemAmount },
-			category_num = #{category }
+			category_num = #{category },
+			introduce = #{introduce }
 		where
 			item_num = #{itemNum }
 	</update>

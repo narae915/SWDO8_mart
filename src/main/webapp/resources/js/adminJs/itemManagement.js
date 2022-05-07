@@ -43,7 +43,9 @@
 		});
 		
 		if(updateNum == "") { // 체크박스가 체크되어있지 않은 경우 경고창을 띄우며 수정을 진행하지 않음.
-			alert("선택된 항목이 없습니다.");
+			exitAlert();
+			$("#footer-modal-content").prepend("선택된 항목이 없습니다.")
+			showModalAlert();
 			
 			return false;
 		} 

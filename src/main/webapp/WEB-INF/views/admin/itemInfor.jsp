@@ -72,11 +72,11 @@
 	</style>    
 </head>
 <body>
-	<div class="col-lg-3" style="left:10em; top:3em">
+	<div class="col-lg-3">
 		<textarea id="summernote" name="editordata"></textarea>
 	</div>
 	<div class="col-lg-6">
-		<input type="submit" id="submit-btn" class="primary-btn" value="작성 완료" style="left: 36.5em;top: 5em;">
+		<input type="submit" id="submit-btn" class="primary-btn" value="작성 완료" style="left: 25em;top: 5em;">
 	</div>
 	<input type="hidden" id="itemNum" value="${itemNum }">
 </body>
@@ -126,10 +126,9 @@
 			
 			// 기본설정
 			var setting = {
-	            height : 500,
-	            minHeight : 500,
-	            maxHeight : 1000,
-	            width : 830,
+	            minHeight : 300,
+	            maxHeight : 300,
+	            width : 820,
 	            focus : true,
 	            lang : 'ko-KR',
 	            fontNames: fontList,

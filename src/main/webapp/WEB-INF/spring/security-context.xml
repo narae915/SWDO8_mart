@@ -21,6 +21,7 @@
 	<security:http auto-config="true" use-expressions="true">
 		<!-- 인터셉터, access는 권한자 -->
 		<security:intercept-url pattern="/recipe/**" access="hasRole('ROLE_USER')" />
+		<security:intercept-url pattern="/order/**" access="hasRole('ROLE_USER')" />
 		<security:intercept-url pattern="/**" access="permitAll()"/>
 	    
 	    <!-- 로그인 
@@ -40,7 +41,7 @@
 	    	logout-success-url="/"
 	    	delete-cookies="JSESSIONID" />
 	    	
-		<!-- http-basic  -->
+		<!-- http-basic -->
 		<security:http-basic />
 		
 		<!-- CSRF 설정을 true로 변경 -->
