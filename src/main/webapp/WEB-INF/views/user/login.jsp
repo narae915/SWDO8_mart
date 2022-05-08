@@ -1,15 +1,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Fashi Template">
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>SpringDay | 로그인</title>
+    <title>SpringDay | <spring:message code="message.header.login"/></title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -48,7 +49,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="/"><i class="fa fa-home"></i>Home</a>
-                        <span>로그인</span>
+                        <span><spring:message code="message.header.login"/></span>
                     </div>
                 </div>
             </div>
@@ -62,36 +63,31 @@
             <div class="row">
                 <div class="col-lg-6 offset-lg-3">
                     <div class="login-form">
-                        <h2>로그인</h2>
+                        <h2><spring:message code="message.header.login"/></h2>
                         <form action="/user/auth" method="POST" onsubmit="return formChk();">
                             <div class="group-input">
-                                <label for="username">로그인ID(메일주소) <span>*</span></label>
+                                <label for="username"><spring:message code="message.login.form.email"/> <span>*</span></label>
                                 <input type="email" id="username" name="userMail">
                             </div>
                             <div class="group-input">
-                                <label for="pass">비밀번호 <span>*</span></label>
+                                <label for="pass"><spring:message code="message.signUp.form.password"/> <span>*</span></label>
                                 <input type="password" id="pass" name="userPw">
 							</div>
 							<div class="group-input gi-check">
                                 <div class="gi-more">
-                                    <!-- <label for="saveIdChk">
-                                        ID 기억하기
-                                        <input type="checkbox" id="saveIdChk">
-                                        <span class="checkmark"></span>
-                                    </label> -->
                                     <ul class="find">
-                                    	<li><a href="findPw" target='_blank' class="forget-pass">/&ensp;&ensp;비밀번호 찾기</a></li>
-                                    	<li><a href="findId" target='_blank' class="forget-pass">ID 찾기&ensp;&ensp;</a></li>
+                                    	<li><a href="findPw" target='_blank' class="forget-pass">/&ensp;&ensp;<spring:message code="message.login.form.findPw"/></a></li>
+                                    	<li><a href="findId" target='_blank' class="forget-pass"><spring:message code="message.login.form.findId"/>&ensp;&ensp;</a></li>
                                     </ul>
                                 </div>
                             </div>
 							<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
 							<div class="group-input">
-							<button type="submit" class="site-btn login-btn">로그인</button>
+							<button type="submit" class="site-btn login-btn"><spring:message code="message.header.login"/></button>
 							</div>
 						</form>
 						<div class="switch-login">
-							<a href="/user/signUp" class="or-login">회원가입하기</a>
+							<a href="/user/signUp" class="or-login"><spring:message code="message.login.form.signUp"/></a>
 						</div>
                     </div>
                 </div>
@@ -129,7 +125,7 @@
 	
 	// 닫기 모달
 	function exitAlert() {
-		$("#footer-modal-content").append('<button name="modalClose" class="primary-btn" id="footer-modal-button" style="margin-top:30px; border-radius:5px; border:none">창 닫기</button>');
+		$("#footer-modal-content").append('<button name="modalClose" class="primary-btn" id="footer-modal-button" style="margin-top:30px; border-radius:5px; border:none"><spring:message code="message.footer.modal.close"/></button>');
 	}
 	
 	// 모달 출력
@@ -149,7 +145,7 @@
 		//메일 길이 확인
 		if(userMail.length == 0) {
 			$("#footer-modal-content").html("");
-			$("#footer-modal-content").append("ID를 입력해주세요");
+			$("#footer-modal-content").append("<spring:message code='message.login.formChk.modal.idChk'/>");
 			exitAlert();
 			showModalAlert();
 			return returnVal;
@@ -158,7 +154,7 @@
 		//비밀번호 길이 확인
 		if(userPw.length == 0) {
 			$("#footer-modal-content").html("");
-			$("#footer-modal-content").append("비밀번호를 입력해주세요");
+			$("#footer-modal-content").append("<spring:message code='message.signUp.form.pwChkMessage1'/>");
 			exitAlert();
 			showModalAlert();
 			return returnVal;
@@ -180,7 +176,7 @@
 				success: function(res) {
 					if(res == "no") {
 						$("#footer-modal-content").html("");
-						$("#footer-modal-content").append("ID와 비밀번호를 확인해주세요");
+						$("#footer-modal-content").append("<spring:message code='message.login.formChk.modal.idPwChk'/>");
 						exitAlert();
 						$("#footer-modal").fadeIn();
 					}

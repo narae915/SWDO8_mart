@@ -1,7 +1,6 @@
 package com.project.market;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
 
@@ -162,5 +161,4 @@ public class HomeController {
 
 		return "allSearch";
 	}
-
 }

@@ -277,7 +277,7 @@ ol {
 }
 
 .ht-right .lan-selector .ddcommon {
-	max-width: 142px;
+	max-width: 150px;
 	-webkit-box-shadow: none !important;
 	box-shadow: none !important;
 	outline: none;
@@ -3933,7 +3933,7 @@ ol {
 
 @media only screen and (min-width: 1200px) {
 	.container {
-		max-width: 1155px;
+		max-width: 1190px;
 	}
 }
 

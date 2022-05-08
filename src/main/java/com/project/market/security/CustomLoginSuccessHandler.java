@@ -27,7 +27,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		System.out.println(userMail);
 
 		//JSP에 표현하고 싶은 값 session에 저장
-		session.setAttribute("welcomeMessage", userMail + "님, 환영합니다.");
+		session.setAttribute("welcomeMessage", userMail);
 		session.setAttribute("userMail", authentication.getName());
 		
 		//로그인 성공 후 보내주고 싶은 페이지

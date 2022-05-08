@@ -1,8 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="ko">
 <head>
 
     <title>SpringDay | Footer</title>
@@ -82,14 +83,14 @@
                             <a href="/"><img src="/resources/img/footer-logo.png" alt=""></a>
                         </div>
                         <ul>
-                            <li>Address: 광주광역시 광산구</li>
+                            <li>Address: <spring:message code="message.footer.address"/></li>
                             <li>Phone: +82 62.123.456</li>
-                            <li>Email: springday24@gmail.com</li>
+                            <li>Email: springday24365@gmail.com</li>
                         </ul>
                         <div class="footer-social">
                             <a href="#"><i class="fa fa-facebook"></i></a>
                             <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="https://twitter.com/SprWingDO8?t=8GYHIWbiLgbcWrXkVP7rPQ&s=09" target="_blank"><i class="fa fa-twitter"></i></a>
                             <a href="#"><i class="fa fa-pinterest"></i></a>
                         </div>
                     </div>
@@ -98,8 +99,8 @@
                     <div class="footer-widget">
                         <h5>Spring Day24</h5>
                         <ul>
-                            <li><a href="/item/itemList">식품 마트</a></li>
-                            <li><a href="/recipe/recipeList">커뮤니티</a></li>
+                            <li><a href="/item/itemList"><spring:message code="message.header.group.itemList"/></a></li>
+                            <li><a href="/recipe/recipeList"><spring:message code="message.header.group.recipeList"/></a></li>
                         </ul>
                     </div>
                 </div>
@@ -107,8 +108,8 @@
                     <div class="footer-widget">
                         <h5>My Account</h5>
                         <ul>
-                            <li><a href="/user/mypage">마이 페이지</a></li>
-                            <li><a href="/order/orderList">장바구니</a></li>
+                            <li><a href="/user/mypage"><spring:message code="message.header.group.mypage"/></a></li>
+                            <li><a href="/order/orderList"><spring:message code="message.footer.cart"/></a></li>
                         </ul>
                     </div>
                 </div>
@@ -116,12 +117,12 @@
                     <div class="newslatter-item">
                         <h5>Staff Only</h5>
                         <c:if test="${sessionScope.loginName != null}">
-                        	<button type="button" onclick="location.href='/admin/adminMain';" id="staffBtn">관리자 페이지로 이동</button>
+                        	<button type="button" onclick="location.href='/admin/adminMain';" id="staffBtn"><spring:message code="message.footer.adminpageBtn1"/></button>
                         </c:if>
                         <c:if test="${sessionScope.loginName == null}">
 	                        <form action="/admin/adminLogin" class="subscribe-form" onsubmit="return staffOnlyChk()">
 	                            <input type="text" name="admin">
-	                            <button>입장</button>
+	                            <button><spring:message code="message.footer.adminpageBtn2"/></button>
 	                        </form>
                         </c:if>
                         
@@ -135,7 +136,7 @@
                     <div class="col-lg-12">
                         <div class="copyright-text">
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> 1조 박나래 안찬호 노채린 이상우 | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> | Team April showers | <spring:message code="message.footer.copyright"/> | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         </div>
                     </div>
@@ -206,8 +207,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> 1조 
         				result = true;
         			} else {
         				$("#footer-modal-content").html("");
-        	    		$("#footer-modal-content").prepend("관계자만 접속할 수 있습니다.");
-        	    		$("#footer-modal-content").append('<input type="button" class="modal-button" id="footer-modal-button" value="창 닫기">');
+        	    		$("#footer-modal-content").prepend("<spring:message code='message.footer.modal.staffOnlyChk'/>");
+        	    		$("#footer-modal-content").append('<input type="button" class="modal-button" id="footer-modal-button" value="<spring:message code='message.footer.modal.close'/>">');
         				
         	    		showStaffModal();
             			result = false;
@@ -232,7 +233,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> 1조 
     	// 닫기 모달
     	function exitAlert() {
     		$("#footer-modal-content").html("");
-    		$("#footer-modal-content").append('<button name="modalClose" class="primary-btn" id="footer-modal-button" style="margin-top:30px; border-radius:5px; border:none">창 닫기</button>');
+    		$("#footer-modal-content").append('<button name="modalClose" class="primary-btn" id="footer-modal-button" style="margin-top:30px; border-radius:5px; border:none"><spring:message code="message.footer.modal.close"/></button>');
     	}
 
     	// 모달 출력
@@ -247,8 +248,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> 1조 
     	// 컨펌 모달
     	function confirmModal() {
     		$("#footer-modal-content").html("");
-    		$("#footer-modal-content").append('<button class="primary-btn" id="yes-button" style="border-radius:5px; position: relative; top: 49px; right: 60px; width: 106px;">예</button>');
-    		$("#footer-modal-content").append('<button class="primary-btn" id="no-button" style="border-radius:5px; position: relative; left: 60px;">아니오</button>');
+    		$("#footer-modal-content").append('<button class="primary-btn" id="yes-button" style="border-radius:5px; position: relative; top: 49px; right: 60px; width: 106px;"><spring:message code="message.footer.modal.yes"/></button>');
+    		$("#footer-modal-content").append('<button class="primary-btn" id="no-button" style="border-radius:5px; position: relative; left: 60px;"><spring:message code="message.footer.modal.no"/></button>');
     	}
 
     </script>

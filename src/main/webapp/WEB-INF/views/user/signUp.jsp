@@ -1,16 +1,17 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Fashi Template">
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>SpringDay | 회원가입</title>
+    <title>SpringDay | <spring:message code="message.signUp.title"/></title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -51,7 +52,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="/"><i class="fa fa-home"></i> Home</a>
-                        <span>회원가입</span>
+                        <span><spring:message code="message.signUp.title"/></span>
                     </div>
                 </div>
             </div>
@@ -65,53 +66,53 @@
             <div class="row">
                 <div class="col-lg-6 offset-lg-3">
                     <div class="register-form">
-                        <h2>회원가입</h2>
+                        <h2><spring:message code="message.signUp.title"/></h2>
                         <form action="/user/signUp" method="post" onsubmit="return formChk();">
                         <sec:csrfInput/>
                         <input type="hidden" name="userAddress">
                         <input type="hidden" name="postcode" value="0">
                             <div class="group-input">
-                                <label for="username">이름 <span>*</span></label>
+                                <label for="username"><spring:message code="message.signUp.form.name"/> <span>*</span></label>
                                 <input type="text" id="username" name="userName">
                                 <span class="signChk" id="signChk-name"></span>
                             </div>
                             <div class="group-input">
-                                <label for="username">메일 주소 <span>*</span></label>
+                                <label for="username"><spring:message code="message.signUp.form.email"/> <span>*</span></label>
                                 <input type="email" id="userMail" name="userMail">
                                 <span class="signChk" id="signChk-mail"></span>
                             </div>
                             <div class="group-input">
-                                <label for="pass">비밀번호 <span>*</span></label>
+                                <label for="pass"><spring:message code="message.signUp.form.password"/> <span>*</span></label>
                                 <input type="password" id="pass" name="userPw">
                                 <span class="signChk" id="signChk-pw"></span>
                             </div>
                             <div class="group-input">
-                                <label for="con-pass">비밀번호 확인 <span>*</span></label>
+                                <label for="con-pass"><spring:message code="message.signUp.form.pwChk"/> <span>*</span></label>
                                 <input type="password" id="con-pass">
                                 <span class="signChk" id="signChk-pwChk"></span>
                             </div>
                             <div class="group-input">
-                                <label>연락처 <span>*</span></label>
-                                <input type="text" id="userCall" name="userCall" placeholder="(-)는 제외">
+                                <label><spring:message code="message.signUp.form.call"/> <span>*</span></label>
+                                <input type="text" id="userCall" name="userCall" placeholder="<spring:message code='message.signUp.form.call.placeholder'/>">
                                 <span class="signChk" id="signChk-tel"></span>
                             </div>
                             <div class="group-input">
-                                <label>우편번호</label>
+                                <label><spring:message code="message.signUp.form.postcode"/></label>
                                 <input type="text" id="postcode" readonly onclick="daumPostcode();">
 							</div>
                             <div class="group-input">
-                                <label>주소</label>
+                                <label><spring:message code="message.signUp.form.address"/></label>
                                 <input type="text" id="address" readonly onclick="daumPostcode();">
 							</div>
                             <div class="group-input">
-                                <label>상세주소</label>
+                                <label><spring:message code="message.signUp.form.detailAddress"/></label>
                                 <input type="text" id="detailAddress">
                                 <span id="extraAddress"></span>
 							</div>
-                            <button type="submit" class="site-btn register-btn">회원 가입</button>
+                            <button type="submit" class="site-btn register-btn"><spring:message code="message.signUp.title"/></button>
                         </form>
                         <div class="switch-login">
-                            <a href="/user/login" class="or-login">로그인</a>
+                            <a href="/user/login" class="or-login"><spring:message code="message.header.login"/></a>
                         </div>
                     </div>
                 </div>
@@ -148,7 +149,7 @@
 			
 			//글자수 세기
 			if(userName.length == 0 || userName == "") {
-				$("#signChk-name").text("이름을 입력해주세요");
+				$("#signChk-name").text("<spring:message code='message.signUp.form.nameChkMessage'/>");
 			} else {
 				$("#signChk-name").text(" ");
 			}
@@ -160,10 +161,10 @@
 			var pattern =/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 			
 			if(userMail.length == 0 || userMail == "") {
-				$("#signChk-mail").text("이메일을 입력해주세요");
+				$("#signChk-mail").text("<spring:message code='message.signUp.form.mailChkMessage1'/>");
 			} else if(pattern.test(userMail) == false) {
 				//이메일 형식이 알파벳+숫자@알파벳+숫자.알파벳+숫자 형식이 아닐경우
-				$("#signChk-mail").text("이메일 형식을 확인해주세요");
+				$("#signChk-mail").text("<spring:message code='message.signUp.form.mailChkMessage2'/>");
 			} else{
 				$("#signChk-mail").text(" ");
 			}
@@ -176,9 +177,9 @@
 			var pattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 			
 			if(userPw.length == 0 || userPw == "") {
-				$("#signChk-pw").text("비밀번호를 입력해주세요");
+				$("#signChk-pw").text("<spring:message code='message.signUp.form.pwChkMessage1'/>");
 			} else if(userPw.length<8 || userPw.length>16 || (pattern.test(userPw) == false) ) {
-				$("#signChk-pw").text("비밀번호는 특수문자 포함 8자리~16자리로 입력해주세요");
+				$("#signChk-pw").text("<spring:message code='message.signUp.form.pwChkMessage2'/>");
 			} else{
 				$("#signChk-pw").text(" ");
 			}
@@ -190,7 +191,7 @@
 			var userPw = $("#pass").val();
 			
 			if(passwordChk != userPw) {
-				$("#signChk-pwChk").text("비밀번호가 일치하지 않아요");
+				$("#signChk-pwChk").text("<spring:message code='message.signUp.form.pwChkMessage3'/>");
 			} else{
 				$("#signChk-pwChk").text(" ");
 			}
@@ -203,9 +204,9 @@
 			var pattern = /^(?:(010\d{4})|(01[1|6|7|8|9]-\d{3,4}))(\d{4})$/;
 
 			if(userCall.length == 0 || userCall == "") {
-				$("#signChk-tel").text("전화번호를 입력해주세요");
+				$("#signChk-tel").text("<spring:message code='message.signUp.form.telChkMessage1'/>");
 			} else if(pattern.test(userCall) == false) {
-				$("#signChk-tel").text("전화번호 형식을 확인해주세요");
+				$("#signChk-tel").text("<spring:message code='message.signUp.form.telChkMessage2'/>");
 			} else {
 				$("#signChk-tel").text(" ");
 			}
@@ -214,7 +215,7 @@
 	
 	// 닫기 모달
 	function exitAlert() {
-		$("#footer-modal-content").append('<button name="modalClose" class="primary-btn" id="footer-modal-button" style="margin-top:30px; border-radius:5px; border:none">창 닫기</button>');
+		$("#footer-modal-content").append('<button name="modalClose" class="primary-btn" id="footer-modal-button" style="margin-top:30px; border-radius:5px; border:none"><spring:message code="message.footer.modal.close"/></button>');
 	}
 	
 	// 모달 출력
@@ -295,7 +296,7 @@
 		
 		if(userName.length == 0 || userMail.length == 0 || userPw.length == 0 || userCall.length == 0) {
 			$("#footer-modal-content").html("");
-			$("#footer-modal-content").append("입력하지 않은 정보가 존재합니다");
+			$("#footer-modal-content").append("<spring:message code='message.signUp.formChk.modal.blankChk'/>");
 			exitAlert();
 			showModalAlert();
 			return returnVal;
@@ -303,7 +304,7 @@
 		
 		if(userPw != userPwChk) {
 			$("#footer-modal-content").html("");
-			$("#footer-modal-content").append("비밀번호를 확인해주세요");
+			$("#footer-modal-content").append("<spring:message code='message.signUp.formChk.modal.pwChk'/>");
 			exitAlert();
 			showModalAlert();
 			return returnVal;
@@ -313,7 +314,7 @@
 		var pattern =/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 		if(pattern.test(userMail) == false) {
 			$("#footer-modal-content").html("");
-			$("#footer-modal-content").append("이메일 형식을 확인해주세요");
+			$("#footer-modal-content").append("<spring:message code='message.signUp.formChk.modal.emailChk'/>");
 			exitAlert();
 			showModalAlert();
 			return returnVal;
@@ -322,7 +323,7 @@
 		pattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 		if(userPw.length<8 || userPw.length>16 || (pattern.test(userPw) == false)) {
 			$("#footer-modal-content").html("");
-			$("#footer-modal-content").append("비밀번호를 확인해주세요");
+			$("#footer-modal-content").append("<spring:message code='message.signUp.formChk.modal.pwChk'/>");
 			exitAlert();
 			showModalAlert();
 			return returnVal;
@@ -332,7 +333,7 @@
 		pattern = /^(?:(010\d{4})|(01[1|6|7|8|9]-\d{3,4}))(\d{4})$/;
 		if(pattern.test(userCall) == false) {
 			$("#footer-modal-content").html("");
-			$("#footer-modal-content").append("전화번호를 올바르게 입력해주세요");
+			$("#footer-modal-content").append("<spring:message code='message.signUp.formChk.modal.telChk'/>");
 			exitAlert();
 			showModalAlert();
 			return returnVal;

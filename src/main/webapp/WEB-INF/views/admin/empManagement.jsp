@@ -197,7 +197,7 @@
 						<hr>
 						<!-- Emp Search Begin -->
 						<form action="empManagement" method="get" onsubmit="return searchEmp();">
-							<select id="" name="searchType" style="width: 15%; height: 45px; position:relative; left: 20em; bottom:-1em; border: none; border-radius: 5px; border: #e7ab3c solid 3px; padding-right: 20px;">
+							<select id="searchType" name="searchType" style="width: 15%; height: 45px; position:relative; left: 20em; bottom:-1em; border: none; border-radius: 5px; border: #e7ab3c solid 3px; padding-right: 20px;">
 								<option value="searchEmpName">이름</option>
 								<option value="searchEmpNum">사원 번호</option>
 								<option value="searchPosition">직급</option>
