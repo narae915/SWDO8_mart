@@ -242,8 +242,8 @@ public class RecipeDAO {
 	}
 
 	// 작성된 글의 제목과 내용을 불러오기
-	public ArrayList<RecipeVO> getWriting(int recipeNum) {
-		ArrayList<RecipeVO> result = null;
+	public RecipeVO getWriting(int recipeNum) {
+		RecipeVO result = null;
 		RecipeMapper mapper = null;
 		
 		try {

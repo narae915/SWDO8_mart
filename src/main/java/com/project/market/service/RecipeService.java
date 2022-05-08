@@ -91,27 +91,29 @@ public class RecipeService {
 	}
 
 	// 게시판 글 작성
-	public boolean insertRecipe(String subject, String editordata, String userMail) {
+	public boolean insertRecipe(String subject, String editordata, String userMail, String recipeTag) {
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("subject", subject);
 		map.put("editordata", editordata);
 		map.put("userMail", userMail);
+		map.put("recipeTag", recipeTag);
 		
 		return dao.insertRecipe(map) > 0;
 	}
 
 	// 작성된 글의 제목과 내용을 불러오기
-	public ArrayList<RecipeVO> getWriting(int recipeNum) {
+	public RecipeVO getWriting(int recipeNum) {
 
 		return dao.getWriting(recipeNum);
 	}
 
 	// 게시판 글  수정
-	public boolean updateWriting(int recipeNum, String subject, String editordata) {
+	public boolean updateWriting(int recipeNum, String subject, String editordata, String recipeTag) {
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("recipeNum", recipeNum);
 		map.put("subject", subject);
 		map.put("editordata", editordata);
+		map.put("recipeTag", recipeTag);
 
 		return dao.updateWriting(map) > 0;
 	}

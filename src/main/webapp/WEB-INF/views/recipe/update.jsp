@@ -47,19 +47,32 @@
         <div class="container">
             <div class="row">
             <form action="/recipe/updateRecipe" method="post">
-	            <c:forEach var="Recipe" items="${recipe }">
+	            <c:if test="${recipe != null }">
 	                <div class="col-lg-12">
-						<input type="text" name="subject"  id="subject" placeholder="제목을 입력하세요." value="${Recipe.title }">
-						<textarea id="summernote" name="editordata"></textarea>
-						<input type="hidden" id="content" value="${Recipe.content }">
-						<input type="hidden" name="recipeNum" value="${recipeNum }">
+						<input type="text" name="subject"  id="subject" placeholder="제목을 입력하세요." value="${recipe.title }">
+						<textarea id="summernote" name="editordata">${recipe.content }</textarea>
+						<input type="hidden" id="content" value="${recipe.content }">
+						<input type="hidden" name="recipeNum" value="${recipe.recipeNum }">
 	                </div>
+	                <br>
+					<div class="recipe-tag">
+						<div class="tag-wrapper">
+                        	<c:if test="${tagArr != null }">
+                        		<c:forEach items="${tagArr }" var="tag">
+                        			<input type="hidden" name="recipeTag" value="${tag }">
+                        			<span class="recipe-tag"># ${tag } <input type='button' value='x' onclick='deleteTag(this);' >
+                        			</span>
+                        		</c:forEach>
+                        	</c:if>
+						</div><br>
+						<input type="text" name="tag" id="tag-content" placeholder="사용된  주재료를 작성해주세요.(태그작성)">
+					</div>
 	                <div class="col-lg-10" id="btn-div">
 	  					<input type="submit" class="primary-btn" id="submit-btn" value="완료">
 	  					&emsp;
 						<input type="button" class="primary-btn" value="취소">
 	                </div>
-	            </c:forEach>
+	            </c:if>
             </form>
             </div>
         </div>
@@ -172,6 +185,15 @@
 			
 			var subject = $('#subject').val();
 			var content = $('#summernote').val();
+			
+			//태그 개수가 10개를 넘었을 경우
+			if(totalTag > 10) {
+				exitAlert();
+				$("#footer-modal-content").prepend("태그는 10개까지만 입력 가능합니다.");
+				showModalAlert();
+				
+				return false;
+			}
 	
 			// 제목 칸이 비어있을 시,
 			if(subject.trim() == ''){
@@ -191,6 +213,24 @@
 				return false;
 			}
 			 checkUnload = false;
+		});
+		
+		function deleteTag(tag) {
+			//tag는 button태그를 가르키고, 그 태그의 부모태그를 불러와서 temp에 저장
+			var temp = tag.parentElement;
+			//tag내용이 적혀있던 temp 삭제
+			temp.remove();
+			//hiddenTag도 삭제할것
+		}
+		
+		// 태그 입력하는 기능
+		$("#tag-content").keyup(function(event) {
+			var inputText = $(this).val();
+			if(event.keyCode == 32) {
+				$(".tag-wrapper").append("<input type='hidden' name='recipeTag' value='"+ inputText +"'>");
+				$(".tag-wrapper").append("<span class='"+ inputText +"'># "+ inputText +"<input type='button' value='x' onclick='deleteTag(this);' ></span>");
+				$("#tag-content").val("");
+			}
 		});
 
 	</script>

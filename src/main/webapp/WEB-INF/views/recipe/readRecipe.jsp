@@ -125,6 +125,18 @@
 			flex-direction: column;
 		}
 		
+	input.recipe-tag {
+		display: inline-block;
+	    font-size: 12px;
+	    color: #636363;
+	    padding: 5px 15px;
+	    border: 1px solid #636363;
+	    margin-right: 5px;
+	    margin-bottom: 9px;
+	    border-radius: 2px;
+	    background-color: white;
+	}
+		
     </style>
 </head>
 
@@ -154,7 +166,15 @@
                         <div class="blog-quote">
                              ${recipe.content }
                         </div>
-                            
+                        
+                        <div>
+                        	<c:if test="${tagArr != null }">
+                        		<c:forEach items="${tagArr }" var="tag">
+                        			<input type="button" class="recipe-tag" value="# ${tag }" onclick="location.href='/allSearch?searchword=${tag }';">
+                        		</c:forEach>
+                        	</c:if>
+                        </div>
+                        
 						이 게시글의 평점
 						<div class="star-ratings">
 							<div class="star-ratings-fill space-x-2 text-lg" id="star-fill" style="width:calc(${recipe.score } * 20)%">

@@ -52,7 +52,7 @@
 	                            	매사에 근면/성실하며 타의 모범이 되어 우수사원으로 선정함</p>
 	                        </div>
 	                        <div>
-	                            <img id="good-emp-member" src="/resources/img/product-single/tab-desc.jpg" alt="">
+	                            <img id="good-emp-member" src="/resources/img/product-single/tab-desc.png" style="width:400px; height:400px;">
 	                        </div>
 	                    </div>
 	                </div>

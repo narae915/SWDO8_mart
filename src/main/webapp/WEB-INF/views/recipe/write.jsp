@@ -52,8 +52,8 @@
 					<textarea id="summernote" name="editordata"></textarea>
 					<br>
 					<div class="recipe-tag">
-						<span>dfsdfsf</span>
-						<input type="text" name="tag" id="tag-btn" placeholder="사용된  주재료를 #을 이용해서 작성해주세요.">
+						<div class="tag-wrapper"></div><br>
+						<input type="text" name="tag" id="tag-content" placeholder="사용된  주재료를 작성해주세요.(태그작성)">
 					</div>
                 </div>
                 <div class="col-lg-10" id="btn-div">
@@ -172,11 +172,23 @@
 			var subject = $('#subject').val();
 			var content = $('#summernote').val();
 	
+			var totalTag = $("input[name=recipeTag]").length;
+			console.log(totalTag);
+			
+			//태그 개수가 10개를 넘었을 경우
+			if(totalTag > 10) {
+				exitAlert();
+				$("#footer-modal-content").prepend("태그는 10개까지만 입력 가능합니다.");
+				showModalAlert();
+				
+				return false;
+			}
+			
 			// 제목 칸이 비어있을 시,
 			if(subject.trim() == ''){
 				exitAlert();
 				$("#footer-modal-content").prepend("제목을 입력해 주십시오.");
-				showModalAlert()
+				showModalAlert();
 				
 				return false;
 			}
@@ -185,13 +197,31 @@
 			if(content.trim() == ''){
 				exitAlert();
 				$("#footer-modal-content").prepend("내용을 입력해 주십시오.");
-				showModalAlert()
+				showModalAlert();
 				
 				return false;
 			}
+			
 			 checkUnload = false;
 		});
-
+		
+		function deleteTag(tag) {
+			//tag는 button태그를 가르키고, 그 태그의 부모태그를 불러와서 temp에 저장
+			var temp = tag.parentElement;
+			//tag내용이 적혀있던 temp 삭제
+			temp.remove();
+		}
+		
+		// 태그 입력하는 기능
+		$("#tag-content").keyup(function(event) {
+			var inputText = $(this).val();
+			if(event.keyCode == 32) {
+				$(".tag-wrapper").append("<input type='hidden' name='recipeTag' value='"+ inputText +"'>");
+				$(".tag-wrapper").append("<span class='"+ inputText +"'># "+ inputText +"<input type='button' value='x' onclick='deleteTag(this);' ></span>");
+				$("#tag-content").val("");
+			}
+		});
+		
 	</script>
 </body>
 
