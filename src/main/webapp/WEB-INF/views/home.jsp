@@ -11,7 +11,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>SpringDay | 메인</title>
+    <title>SpringDay | Home</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -88,10 +88,10 @@
                     <div class="row">
                         <div class="col-lg-5">
                             <span>BEST</span>
-                            <h1>추천상품</h1>
-                            <p>5월은 행사의 달!</p>
-                            <p>우리, 오늘 저녁은 스테이크 어때?</p>
-                            <a href="/item/itemList?categoryNum=10" class="primary-btn">지금 구매하기</a>
+                            <h1><spring:message code="message.home.heroSection.recommend1"/></h1>
+                            <p><spring:message code="message.home.heroSection.recommend2"/></p>
+                            <p><spring:message code="message.home.heroSection.recommend3"/></p>
+                            <a href="/item/itemList?categoryNum=10" class="primary-btn"><spring:message code="message.home.heroSection.recommendBtn"/></a>
                         </div>
                     </div>
                     <div class="off-card">
@@ -104,14 +104,14 @@
                     <div class="row">
                         <div class="col-lg-5">
                             <span>EVENT</span>
-                            <h1>제철 과일</h1>
-                            <p>5월 한달동안 이벤트를 실시합니다.</p>
-                            <p>포도, 참외, 오렌지 등 (5/31 23:59까지)</p>
-                            <a href="/item/itemList?categoryNum=30" class="primary-btn">지금 구매하기</a>
+                            <h1><spring:message code="message.home.heroSection.recommend4"/></h1>
+                            <p><spring:message code="message.home.heroSection.recommend5"/></p>
+                            <p><spring:message code="message.home.heroSection.recommend6"/></p>
+                            <a href="/item/itemList?categoryNum=30" class="primary-btn"><spring:message code="message.home.heroSection.recommendBtn"/></a>
                         </div>
                     </div>
                     <div class="off-card">
-                        <h2>최대 <span>50%</span></h2>
+                        <h2><spring:message code="message.home.heroSection.recommend7"/> <span>50%</span></h2>
                     </div>
                 </div>
             </div>
@@ -127,7 +127,7 @@
                     <div class="single-banner" onclick="location.href='/item/itemList?categoryNum=10';">
                         <img src="/resources/img/main/banner-1.jpg">
                         <div class="inner-text">
-                            <h4>육류</h4>
+                            <h4><spring:message code="message.home.bannerSection.banner1"/></h4>
                         </div>
                     </div>
                 </div>
@@ -135,7 +135,7 @@
                     <div class="single-banner" onclick="location.href='/item/itemList?categoryNum=20';">
                         <img src="/resources/img/main/banner-2.png" alt="">
                         <div class="inner-text">
-                            <h4>어패류</h4>
+                            <h4><spring:message code="message.home.bannerSection.banner2"/></h4>
                         </div>
                     </div>
                 </div>
@@ -143,7 +143,7 @@
                     <div class="single-banner" onclick="location.href='/item/itemList?categoryNum=30';">
                         <img src="/resources/img/main/banner-3.png" alt="">
                         <div class="inner-text">
-                            <h4>청과류</h4>
+                            <h4><spring:message code="message.home.bannerSection.banner3"/></h4>
                         </div>
                     </div>
                 </div>
@@ -159,13 +159,13 @@
                 <div class="col-lg-3">
                     <div class="product-large set-bg" id="product-large-meal" data-setbg="/resources/img/products/women-large.jpg">
                         <h2>Meal</h2>
-                        <a href="/item/itemList?categoryNum=10">신선 육류 코너</a>
+                        <a href="/item/itemList?categoryNum=10"><spring:message code="message.home.mealSection.banner1"/></a>
                     </div>
                 </div>
                 <div class="col-lg-8 offset-lg-1">
                     <div class="filter-control">
                         <ul>
-                            <li class="active">신규 상품</li>
+                            <li class="active"><spring:message code="message.home.mealSection1"/></li>
                         </ul>
                     </div>
                     <div class="product-slider owl-carousel">
@@ -179,7 +179,7 @@
                                 </c:if>
                                 <ul>
                                     <li class="w-icon active"><a onclick="insertCart(${mealItem.itemNum });" style="cursor:pointer;"><i class="icon_bag_alt"></i></a></li>
-                                    <li class="quick-view"><a href="/item/readItem?itemNum=${mealItem.itemNum }">+ 상세보기</a></li>
+                                    <li class="quick-view"><a href="/item/readItem?itemNum=${mealItem.itemNum }">+ <spring:message code="message.home.mealSection2"/></a></li>
                                 </ul>
                             </div>
                             <div class="pi-text">
@@ -213,7 +213,7 @@
                 <div class="col-lg-8">
                     <div class="filter-control">
                         <ul>
-                            <li class="active">신규 상품</li>
+                            <li class="active"><spring:message code="message.home.mealSection1"/></li>
                         </ul>
                     </div>
                     <div class="product-slider owl-carousel">
@@ -224,7 +224,7 @@
 									onclick="location.href='/item/readItem?itemNum=${seafoodItem.itemNum }';" class="product-itemImg">
                                 <ul>
                                     <li class="w-icon active"><a onclick="insertCart(${seafoodItem.itemNum });" style="cursor:pointer;"><i class="icon_bag_alt"></i></a></li>
-                                    <li class="quick-view"><a href="/item/readItem?itemNum=${seafoodItem.itemNum }">+ 상세보기</a></li>
+                                    <li class="quick-view"><a href="/item/readItem?itemNum=${seafoodItem.itemNum }">+ <spring:message code="message.home.mealSection2"/></a></li>
                                 </ul>
                             </div>
                             <div class="pi-text">
@@ -243,7 +243,7 @@
                 <div class="col-lg-3 offset-lg-1">
                     <div class="product-large set-bg m-large" id="product-large-seafood" data-setbg="/resources/img/products/man-large.jpg">
                         <h2>Seafood</h2>
-                        <a href="#">신선 해산 코너</a>
+                        <a href="/item/itemList?categoryNum=20"><spring:message code="message.home.seafoodSection"/></a>
                     </div>
                 </div>
             </div>
@@ -258,13 +258,13 @@
                 <div class="col-lg-3">
                     <div class="product-large set-bg" id="product-large-fruit" data-setbg="/resources/img/products/fruit-large.jpg">
                         <h2>Produce</h2>
-                        <a href="#">신선 청과 코너</a>
+                        <a href="/item/itemList?categoryNum=30"><spring:message code="message.home.fruitSection"/></a>
                     </div>
                 </div>
                 <div class="col-lg-8 offset-lg-1">
                     <div class="filter-control">
                         <ul>
-                            <li class="active">신규 상품</li>
+                            <li class="active"><spring:message code="message.home.mealSection1"/></li>
                         </ul>
                     </div>
                     <div class="product-slider owl-carousel">
@@ -278,7 +278,7 @@
                                 </c:if>
                                 <ul>
                                     <li class="w-icon active"><a onclick="insertCart(${produceItem.itemNum });" style="cursor:pointer;"><i class="icon_bag_alt"></i></a></li>
-                                    <li class="quick-view"><a href="/item/readItem?itemNum=${produceItem.itemNum }">+ 상세보기</a></li>
+                                    <li class="quick-view"><a href="/item/readItem?itemNum=${produceItem.itemNum }">+ <spring:message code="message.home.mealSection2"/></a></li>
                                 </ul>
                             </div>
                             <div class="pi-text">
@@ -311,7 +311,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title">
-                        <h2>커뮤니티 최신글</h2>
+                        <h2><spring:message code="message.home.blogSection"/></h2>
                     </div>
                 </div>
             </div>
@@ -347,8 +347,8 @@
                                 <img src="/resources/img/icon-1.png" alt="">
                             </div>
                             <div class="sb-text">
-                                <h6>무료배송 서비스</h6>
-                                <p>총 30,000원 이상 구매시 무료배송</p>
+                                <h6><spring:message code="message.home.info1"/></h6>
+                                <p><spring:message code="message.home.info2"/></p>
                             </div>
                         </div>
                     </div>
@@ -358,8 +358,8 @@
                                 <img src="/resources/img/icon-2.png" alt="">
                             </div>
                             <div class="sb-text">
-                                <h6>정시 배송</h6>
-                                <p>배송 시각을 지킵니다.</p>
+                                <h6><spring:message code="message.home.info3"/></h6>
+                                <p><spring:message code="message.home.info4"/></p>
                             </div>
                         </div>
                     </div>
@@ -369,8 +369,8 @@
                                 <img src="/resources/img/icon-1.png" alt="">
                             </div>
                             <div class="sb-text">
-                                <h6>안전 배송</h6>
-                                <p>파손/환불 100%</p>
+                                <h6><spring:message code="message.home.info5"/></h6>
+                                <p><spring:message code="message.home.info6"/></p>
                             </div>
                         </div>
                     </div>
@@ -383,18 +383,18 @@
     <!-- 모달 -->
 	<div class="modal" id="il-modal">
 		<div class="modal_content" id="il-modal_content">
-			장바구니에 추가하시겠습니까?<br>
-			<input type="button" class="modal-button" id="il-modal-button" value="네, 추가할래요">
-			<input type="button" class="modal-button1" value="아니요, 다른 상품을 볼래요">
+			<spring:message code="message.home.modal.cart1"/><br>
+			<input type="button" class="modal-button" id="il-modal-button" value="<spring:message code='message.home.modal.cart1.yes'/>">
+			<input type="button" class="modal-button1" value="<spring:message code='message.home.modal.cart1.no'/>">
 		</div>
 	</div>
 
     <!-- 모달 -->
 	<div class="modal" id="ri-modal">
 		<div class="modal_content" id="ri-modal_content">
-			장바구니에 추가되었습니다. 확인하시겠습니까?
-			<input type="button" class="modal-button" id="ri-modal-button" value="장바구니로">
-			<input type="button" class="modal-button1" value="쇼핑 계속하기">
+			<spring:message code="message.home.modal.cart2"/>
+			<input type="button" class="modal-button" id="ri-modal-button" value="<spring:message code='message.home.modal.cart2.cartPage'/>">
+			<input type="button" class="modal-button1" value="<spring:message code='message.home.modal.cart2.shopping'/>">
 		</div>
 	</div>
 
@@ -428,7 +428,9 @@
 		var cartAmount = 1;
 
 		if(userMail == null || userMail == "" || userMail == " "){
-			alert("로그인이 필요합니다.");
+			exitAlert();
+			$("#footer-modal-content").prepend("<spring:message code='message.home.modal.login'/>");
+			showModalAlert();
 		} else {
 			//장바구니에 넣을 것인지 확인하는 모달창
 			ilShowModal();

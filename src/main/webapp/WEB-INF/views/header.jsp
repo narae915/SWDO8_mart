@@ -7,11 +7,8 @@
 <html lang="ko">
 <head>
     <title>SpringDay | Header</title>
-
 </head>
-
 <body>
-
     <!-- Header Section Begin -->
     <header class="header-section">
         <div class="header-top">
@@ -19,7 +16,7 @@
                 <div class="ht-left">
                     <div class="mail-service">
                         <i class=" fa fa-envelope"></i>
-                        springday24@gmail.com
+                        springday24365@gmail.com
                     </div>
                     <div class="phone-service">
                         <i class=" fa fa-phone"></i>
@@ -38,15 +35,15 @@
 					</form>
 					</sec:authorize>
                     <div class="lan-selector">
-                        <select class="language_drop" name="countries" id="countries" style="width:300px;">
-                            <option value='yt' data-image="/resources/img/flag-1.jpg" data-imagecss="flag yt"
+                        <select class="language_drop" name="countries" id="countries" style="width:300px;" onchange="changeLocale();">
+                        	<option>For Foreigners</option>
+                            <option value="yt" data-image="/resources/img/flag-1.jpg" data-imagecss="flag yt"
                                 data-title="Korea"><spring:message code="message.header.languageKO"/></option>
-                            <option value='yu' data-image="/resources/img/flag-2.jpg" data-imagecss="flag yu"
-                                data-title="Japanese" onclick="changeLangJA();"><spring:message code="message.header.languageJA"/></option>
+                            <option value="yu" data-image="/resources/img/flag-2.jpg" data-imagecss="flag yu"
+                                data-title="Japanese"><spring:message code="message.header.languageJA"/></option>
                         </select>
                     </div>
-                    
-                    <div class="top-social">
+                    <div class="top-social" style="width: 110px;">
                     </div>
                 </div>
             </div>
@@ -66,7 +63,7 @@
                     <form action="/allSearch" method="GET">
                         <div class="advanced-search">
                             <div class="input-group">
-                                <input type="text" name="searchword" placeholder="무엇을 원하시나요?">
+                                <input type="text" name="searchword" placeholder="<spring:message code='message.header.searchword.placeholder'/>">
                                 <button><i class="ti-search"></i></button>
                             </div>
                         </div>
@@ -76,7 +73,7 @@
                         <ul class="nav-right">
                         	<li class="heart-icon">
  	                      	<sec:authorize access="isAuthenticated()">
-                                <span>${sessionScope.welcomeMessage }</span>
+                                <span>${sessionScope.welcomeMessage }<spring:message code="message.header.welcomeMessage"/></span>
                             </sec:authorize>
                             <li class="cart-icon">
                                 <a href="#" onmouseover="selectCartList();">
@@ -105,7 +102,7 @@
                                         </table>
                                     </div>
                                     <div class="select-button">
-										<a href="/order/cart" class="primary-btn checkout-btn">장바구니 바로가기</a>
+										<a href="/order/cart" class="primary-btn checkout-btn"><spring:message code="message.header.cartBtn"/></a>
                                     </div>
                                 </div>
                             </li>
@@ -119,30 +116,30 @@
                 <div class="nav-depart">
                     <div class="depart-btn">
                         <i class="ti-menu"></i>
-                        <span>모든 메뉴</span>
+                        <span><spring:message code="message.header.group.menu"/></span>
                         <ul class="depart-hover">
-                            <li><a href="/item/itemList">식품 마트</a></li>
-                            <li><a href="/recipe/recipeList">커뮤니티</a></li>
-                            <li><a href="/order/orderList">마이 페이지</a></li>
+                            <li><a href="/item/itemList"><spring:message code="message.header.group.itemList"/></a></li>
+                            <li><a href="/recipe/recipeList"><spring:message code="message.header.group.recipeList"/></a></li>
+                            <li><a href="/order/orderList"><spring:message code="message.header.group.mypage"/></a></li>
                         </ul>
                     </div>
                 </div>
                 <nav class="nav-menu mobile-menu">
                     <ul>
-                        <li id="menu-home"><a href="/">메인 | Home</a></li>
-                        <li id="menu-foodMart"><a href="/item/itemList">식품 마트 | Food Mart</a></li>
-                        <li id="menu-community"><a href="/recipe/recipeList">커뮤니티 | Community</a>
+                        <li id="menu-home"><a href="/"><spring:message code="message.header.group.menuHome"/> | Home</a></li>
+                        <li id="menu-foodMart"><a href="/item/itemList"><spring:message code="message.header.group.itemList"/> | Food Mart</a></li>
+                        <li id="menu-community"><a href="/recipe/recipeList"><spring:message code="message.header.group.recipeList"/> | Community</a>
                         <c:choose>
                         <c:when test="${not empty sessionScope.userMail }">
-							<li id="menu-mypage"><a href="/order/orderList">마이 페이지 | My Page</a>
+							<li id="menu-mypage"><a href="/order/orderList"><spring:message code="message.header.group.mypage"/> | My Page</a>
 								<ul class="dropdown">
-									<li><a href="/order/orderList">주문 확인</a></li>
-									<li><a href="#" onclick="userConfirm('${sessionScope.userMail }');">회원 정보</a></li>
+									<li><a href="/order/orderList"><spring:message code="message.header.group.mypage.orderList"/></a></li>
+									<li><a href="#" onclick="userConfirm('${sessionScope.userMail }');"><spring:message code="message.header.group.mypage.userInfo"/></a></li>
 								</ul>
                         	</li>
                         </c:when>
                         <c:otherwise>
-                        	<li><a href="/user/signUp">회원가입 | Sign Up</a></li>
+                        	<li><a href="/user/signUp"><spring:message code="message.header.group.signUp"/> | Sign Up</a></li>
                         </c:otherwise>
                         </c:choose>
                     </ul>
@@ -151,11 +148,11 @@
             </div>
         </div>
     </header>
-    
-    <!-- Header End -->
+	<!-- Header End -->
+	
+	<!-- Js Plugins -->
     <script src="/resources/js/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
-    
     //상품 조회
     function selectCartList(){
     	var str = "";
@@ -239,9 +236,19 @@
 		});
     }
     
-    function changeLangJA() 
+    function changeLocale() 
     {
-    	location.href = "http://localhost:8888?lang=ja"
+		var selectLocale =  $(".language_drop option:selected").val();
+		if ( selectLocale == "yu" )
+		{
+			//$(".language_drop option:eq(1)").prop("selected", true);
+			location.href = "/?lang=ja";
+		}
+		if ( selectLocale == "yt" )
+		{
+			//$(".language_drop option:eq(0)").prop("selected", true);
+			location.href = "/?lang=ko";
+		}
 	}
     </script>
 </body>
