@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -460,11 +458,9 @@ public class RecipeController {
 		logger.info("write 메서드 실행(POST)");
 		
 		String userMail = authentication.getName();
-		/*
 		logger.info("subject:{}",subject);
 		logger.info("editordata:{}",editordata);
 		logger.info("userMail:{}",userMail);
-		*/
 		boolean result = service.insertRecipe(subject, editordata, userMail);
 		if(result) {
 			logger.info("게시글 작성 성공");
@@ -481,14 +477,14 @@ public class RecipeController {
 	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request )  {
 		JsonObject jsonObject = new JsonObject();
 		
-        /*
-		 * String fileRoot = "C:\\summernote_image\\"; // 외부경로로 저장을 희망할때.
-		 */
+//		  String fileRoot = "C:\\Upload Files\\springday"; // 외부경로로 저장을 희망할때.
+		 
 		
 		// 내부경로로 저장
 		String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
-		String fileRoot = contextRoot+"resources/temp/";
-		// logger.info("fileRoot:{}",fileRoot); // 파일 저장 주소
+		String fileRoot = contextRoot+"resources/img/";
+		
+		logger.info("fileRoot:{}",fileRoot); // 파일 저장 주소
 		
 		String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
 		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
@@ -499,14 +495,16 @@ public class RecipeController {
 		
 		File targetFile = new File(fileRoot + savedFileName);	
 		try {
+			logger.info("try");
 			InputStream fileStream = multipartFile.getInputStream();
 			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
 			
 			// 업로드 url을 리턴, 이미지 미리보기 실행
-			jsonObject.addProperty("url", "/resources/temp/"+savedFileName); // contextroot + resources + 저장할 내부 폴더명
+			jsonObject.addProperty("url", "/resources/img/"+savedFileName); // contextroot + resources + 저장할 내부 폴더명
 			jsonObject.addProperty("responseCode", "success");
 				
 		} catch (IOException e) {
+			logger.info("catch");
 			FileUtils.deleteQuietly(targetFile);	//저장된 파일 삭제
 			jsonObject.addProperty("responseCode", "error");
 			e.printStackTrace();
