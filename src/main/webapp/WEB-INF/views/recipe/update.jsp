@@ -50,9 +50,9 @@
 		<c:if test="${recipe != null }">
 		<div class="col-lg-12">
 			<input type="text" name="subject"  id="subject" placeholder="제목을 입력하세요." value="${recipe.title }">
-			<textarea id="summernote" name="editordata">${recipe.content }</textarea>
-			<input type="hidden" id="content" value="${recipe.content }">
-			<input type="hidden" name="recipeNum" value="${recipe.recipeNum }">
+			<textarea id="summernote" name="editordata"></textarea>
+			<input type="hidden" id="content" value='${recipe.content }'>
+			<input type="hidden" name="recipeNum" value="${recipeNum }">
 		</div>
 		<br>
 		<div class="recipe-tag">
@@ -185,6 +185,7 @@
 			
 			var subject = $('#subject').val();
 			var content = $('#summernote').val();
+			var totalTag = $("input[name=recipeTag]").length;
 			
 			//태그 개수가 10개를 넘었을 경우
 			if(totalTag > 10) {
@@ -194,7 +195,7 @@
 				
 				return false;
 			}
-	
+			
 			// 제목 칸이 비어있을 시,
 			if(subject.trim() == ''){
 				exitAlert();
@@ -216,18 +217,23 @@
 		});
 		
 		function deleteTag(tag) {
+			console.log(tag);
 			//tag는 button태그를 가르키고, 그 태그의 부모태그를 불러와서 temp에 저장
 			var temp = tag.parentElement;
+			console.log(temp);
+			
+			//형제 태그 삭제(controller로 가는 히든 태그 삭제)
+			var preSibling = temp.previousElementSibling;
+			preSibling.remove();
 			//tag내용이 적혀있던 temp 삭제
 			temp.remove();
-			//hiddenTag도 삭제할것
 		}
 		
 		// 태그 입력하는 기능
 		$("#tag-content").keyup(function(event) {
 			var inputText = $(this).val();
 			if(event.keyCode == 32) {
-				$(".tag-wrapper").append("<input type='hidden' name='recipeTag' value='"+ inputText +"'>");
+				$(".tag-wrapper").append("<input type='hidden' id='" + inputText + "' name='recipeTag' value='"+ inputText +"'>");
 				$(".tag-wrapper").append("<span class='"+ inputText +"'># "+ inputText +"<input type='button' value='x' onclick='deleteTag(this);' ></span>");
 				$("#tag-content").val("");
 			}

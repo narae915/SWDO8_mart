@@ -140,6 +140,11 @@
                             </div>
                         </div>
                     </div>
+
+                    <c:if test="${empty itemList }">
+                    	<img alt="" src="/resources/img/preparing_item.png" style="margin-left: 100px;">
+                    </c:if>
+                    
                     <div class="product-list">
 						<div class="row" id="productList">
 							<c:forEach items="${itemList }" var="item" varStatus="status">

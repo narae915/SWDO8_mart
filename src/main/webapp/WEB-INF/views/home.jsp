@@ -60,8 +60,8 @@
 			width: 400px;
 			height: 200px;
 			display: flex;
+			flex-direction: column;
 			flex-wrap: wrap;
-			flex-direction: row;
 			align-content: center;
 			justify-content: center;
 		}

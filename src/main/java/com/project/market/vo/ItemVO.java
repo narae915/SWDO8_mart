@@ -28,4 +28,7 @@ public class ItemVO {
 	
 	//22-05-07 노채린
 	private String introduce; // 상품 설명
+	private String infor; // 상품 정보(상세설명)
+	private String cook; // 손질법
+	private String inventory; // 보관법
 }

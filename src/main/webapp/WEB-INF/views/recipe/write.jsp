@@ -83,8 +83,6 @@
     <script src="/resources/js/main.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
     
-    
-    
     <!-- 썸머노트 -->
     <script src="/resources/js/summernote/lang/summernote-ko-KR.js"></script>
 	<script src="/resources/js/summernote/summernote-lite.js"></script>
@@ -173,7 +171,6 @@
 			var content = $('#summernote').val();
 	
 			var totalTag = $("input[name=recipeTag]").length;
-			console.log(totalTag);
 			
 			//태그 개수가 10개를 넘었을 경우
 			if(totalTag > 10) {
@@ -208,6 +205,10 @@
 		function deleteTag(tag) {
 			//tag는 button태그를 가르키고, 그 태그의 부모태그를 불러와서 temp에 저장
 			var temp = tag.parentElement;
+			var inputText = temp.className;
+			//controller로 가는 히든 태그 삭제
+			var hiddenTag = document.getElementById(inputText);
+			hiddenTag.remove();
 			//tag내용이 적혀있던 temp 삭제
 			temp.remove();
 		}
@@ -216,7 +217,7 @@
 		$("#tag-content").keyup(function(event) {
 			var inputText = $(this).val();
 			if(event.keyCode == 32) {
-				$(".tag-wrapper").append("<input type='hidden' name='recipeTag' value='"+ inputText +"'>");
+				$(".tag-wrapper").append("<input type='hidden' id='" + inputText + "' name='recipeTag' value='"+ inputText +"'>");
 				$(".tag-wrapper").append("<span class='"+ inputText +"'># "+ inputText +"<input type='button' value='x' onclick='deleteTag(this);' ></span>");
 				$("#tag-content").val("");
 			}
