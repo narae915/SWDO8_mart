@@ -47,7 +47,7 @@ public class ItemController {
 		String sorting = null;
 		model.addAttribute("countPerPage", countPerPage);
 		ArrayList<ItemVO> itemList = service.getItemList(countPerPage, sorting, categoryNum);
-		
+
 		//파일을 불러오는 list 생성
 		ArrayList<FileListVO> fileList = service.getFileList();
 		logger.info("상품 페이지 이미지파일 리스트 : {}", fileList);
@@ -138,6 +138,29 @@ public class ItemController {
 
 		ItemVO item = service.getOneItem(itemNum);
 		logger.info("item:{}", item);
+		
+		//세일 확인
+		String itemName = item.getItemName();
+		int salePrice = 0;
+		if(itemName.contains("포도")) {
+			//20%할인
+			salePrice = (int)(item.getPrice() * 0.80);
+			item.setSalePrice(salePrice);
+		} else if(itemName.contains("참외")) {
+			//30%할인
+			salePrice = (int)(item.getPrice() * 0.70);
+			item.setSalePrice(salePrice);
+		} else if(itemName.contains("오렌지")) {
+			//50%할인
+			salePrice = (int)(item.getPrice() * 0.50);
+			item.setSalePrice(salePrice);
+		} else if(itemName.contains("스테이크")) {
+			//30%할인
+			salePrice = (int)(item.getPrice() * 0.70);
+			item.setSalePrice(salePrice);
+		} else {
+			item.setSalePrice(0);
+		}
 		
 		//파일을 불러오는 list 생성
 		ArrayList<FileListVO> tempList = service.getFileList();

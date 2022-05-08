@@ -60,8 +60,8 @@
 			width: 400px;
 			height: 200px;
 			display: flex;
+			flex-direction: column;
 			flex-wrap: wrap;
-			flex-direction: row;
 			align-content: center;
 			justify-content: center;
 		}
@@ -427,8 +427,13 @@
 		itemNum = parseInt(itemNum);
 		var cartAmount = 1;
 
-		if(userMail == null || userMail == "" || userMail == " "){
-			alert("로그인이 필요합니다.");
+		if(userMail == null || userMail == "" || userMail == " ") {
+			//장바구니로 이동할 것인지 확인
+			$("#ri-modal_content").html("로그인 후 이용 가능합니다. <br><input type='button' class='modal-button' id='ri-modal-button' value='창닫기'>");
+			showModal();
+			$(".modal-button").click(function(){
+				$("#ri-modal").fadeOut();
+			});
 		} else {
 			//장바구니에 넣을 것인지 확인하는 모달창
 			ilShowModal();

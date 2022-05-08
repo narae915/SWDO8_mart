@@ -346,7 +346,7 @@ public class RecipeController {
 	@RequestMapping(value="/updateRecipe", method = RequestMethod.POST)
 	public String updateRecipe(int recipeNum, String subject, String editordata, String recipeTag) {
 		logger.info("recipe 게시글 수정(POST)");
-		
+		logger.info("recipeTag : {}", recipeNum);
 		boolean result = service.updateWriting(recipeNum, subject, editordata, recipeTag);
 		
 		if(result) {

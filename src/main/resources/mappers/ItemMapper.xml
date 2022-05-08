@@ -126,7 +126,9 @@ select
         c.category_name as categoryName,
 		i.item_name as itemName,
 		i.price as price,
-		i.item_amount as itemAmount
+		i.item_amount as itemAmount,
+		i.infor as infor,
+		i.introduce as introduce
 	from
 		item_table i, category_table c
     where
