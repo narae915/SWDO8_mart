@@ -264,6 +264,15 @@ public class RecipeController {
 		if(recipeNum != 0) {
 			//게시글을 조회할때 dao에서 조회수도 1회 올라가게 하였음
 			RecipeVO recipe = service.getRecipe(recipeNum);
+			
+			//게시글 태그 조회
+			String str = recipe.getRecipeTag();
+			if(str != null) {
+				String[] arr = new String[10];
+				arr = str.split(",");
+				model.addAttribute("tagArr", arr);
+			}
+
 			model.addAttribute("recipe", recipe);
 
 			logger.info("recipe : {} ", recipe);
@@ -315,7 +324,18 @@ public class RecipeController {
 		model.addAttribute("recipeNum", recipeNum);
 		
 		// 작성된 글의 제목과 내용을 불러오기
-		ArrayList<RecipeVO> recipe = service.getWriting(recipeNum);
+		RecipeVO recipe = service.getWriting(recipeNum);
+		logger.info("recipe : {}", recipe);
+		
+		//게시글 태그 조회
+		String str = recipe.getRecipeTag();
+
+		if(str != null) {
+			String[] arr = new String[10];
+			arr = str.split(",");
+			model.addAttribute("tagArr", arr);
+		}
+
 		model.addAttribute("recipe", recipe);
 		logger.info("recipe:{}",recipe);
 		
@@ -324,10 +344,10 @@ public class RecipeController {
 
 	// 레시피 게시글 수정
 	@RequestMapping(value="/updateRecipe", method = RequestMethod.POST)
-	public String updateRecipe(int recipeNum, String subject, String editordata) {
+	public String updateRecipe(int recipeNum, String subject, String editordata, String recipeTag) {
 		logger.info("recipe 게시글 수정(POST)");
 		
-		boolean result = service.updateWriting(recipeNum, subject, editordata);
+		boolean result = service.updateWriting(recipeNum, subject, editordata, recipeTag);
 		
 		if(result) {
 			logger.info("게시글 수정 성공");
@@ -456,7 +476,7 @@ public class RecipeController {
 
 	// 게시글 작성 
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String write(Authentication authentication, String subject, String editordata) {
+	public String write(Authentication authentication, String subject, String editordata, String recipeTag) {
 		logger.info("write 메서드 실행(POST)");
 		
 		String userMail = authentication.getName();
@@ -465,7 +485,8 @@ public class RecipeController {
 		logger.info("editordata:{}",editordata);
 		logger.info("userMail:{}",userMail);
 		*/
-		boolean result = service.insertRecipe(subject, editordata, userMail);
+		logger.info("recipeTag: {}", recipeTag);
+		boolean result = service.insertRecipe(subject, editordata, userMail, recipeTag);
 		if(result) {
 			logger.info("게시글 작성 성공");
 		} else {

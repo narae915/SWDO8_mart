@@ -68,6 +68,7 @@
 			content as content,
 			read_count as readCount,
 			score as score,
+			recipeTag as recipeTag,
 			indate as indate,
 			LAG(recipe_num,1,-1) OVER(ORDER BY recipe_num ASC) as prev,
 			LEAD(recipe_num,1,-1) OVER(ORDER BY recipe_num ASC) as next
@@ -227,7 +228,8 @@
 		recipe_num,
 		user_num,
 		title,
-		content
+		content,
+		recipeTag
 	)
 	values (
 		recipe_num_seq.nextval,
@@ -235,7 +237,8 @@
 			from user_table
 			where user_mail = #{userMail }),
 		#{subject },
-		#{editordata }
+		#{editordata },
+		#{recipeTag }
 	)
 	
 </insert>
@@ -244,7 +247,8 @@
 <select id="getWriting" parameterType="int" resultType="Recipe">
 	select
 		title as title,
-		content as content
+		content as content,
+		recipeTag as recipeTag
 	from 
 		recipe_table
 	where
@@ -256,7 +260,8 @@
 	update recipe_table
 	set 
 		title = #{subject },
-		content = #{editordata }
+		content = #{editordata },
+		recipeTag = #{recipeTag }
 	where
 		recipe_num = #{recipeNum }
 </update>

@@ -66,7 +66,7 @@
 			width: 100%;
 			border-spacing: 10px;
 			border-collapse: separate;
-			text-align: center;
+			text-align: left;
 		}
 		
 		input.buy-btn {
@@ -175,7 +175,7 @@
 									<c:if test="${!empty searchItemList }">
 									<c:forEach items="${searchItemList }" var="item">
 									<tr>
-									<td><img alt="" src="${item.savedFilename }" alt="" style="width:250px; height:300px;"></td>
+									<td style="width:250px;"><img src="${item.savedFilename }" style="width:250px; height:300px; cursor:pointer;" onclick="location.href='/item/readItem?itemNum=${item.itemNum }';"></td>
 									<td style="text-align: left;">
 									<p style="font-size:14px;">${item.categoryName }</p>
 									<div class="itemName" style="display:block; font-size:25px; font-weight: bold;">${item.itemName }</div>
