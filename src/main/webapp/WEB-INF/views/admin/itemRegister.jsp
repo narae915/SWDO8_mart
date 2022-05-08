@@ -161,9 +161,6 @@
     </div>
     <!-- Partner Logo Section End -->
 
-    <!-- Footer Section Begin -->
-    <%@ include file="/WEB-INF/views/admin/adminFooter.jsp" %>
-    
     <!-- Js Plugins -->
     <script src="/resources/js/jquery-3.6.0.min.js"></script>
     <script src="/resources/js/bootstrap.min.js"></script>

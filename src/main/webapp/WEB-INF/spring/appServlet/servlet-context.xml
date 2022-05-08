@@ -36,4 +36,5 @@
 			<beans:property name="paramName" value="lang"/>
 		</beans:bean>
     </interceptors>
+    
 </beans:beans>
