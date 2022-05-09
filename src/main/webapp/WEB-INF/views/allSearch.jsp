@@ -214,9 +214,9 @@
 									</c:when>
 									<c:otherwise>
 									<c:forEach items="${searchRecipeList }" var="recipe" varStatus="status">
-									<div class="recipe-wrapper" <%-- onclick="location.href='/recipe/readRecipe?recipeNum=${recipe.recipeNum }';" --%>>
-									<p><img alt="" src="${recipe.titleImg }"><p>
-									<p>${recipe.title }</p>
+									<div class="recipe-wrapper">
+									<p><img alt="" src="${recipe.titleImg }" onclick="location.href='/recipe/readRecipe?recipeNum=${recipe.recipeNum }';" style="cursor: pointer; margin-bottom: 10px;"><p>
+									<p onclick="location.href='/recipe/readRecipe?recipeNum=${recipe.recipeNum }';" style="cursor: pointer;">${recipe.title }</p>
 									<div class="star-ratings">
 										<div class="star-ratings-fill space-x-2 text-lg" id="star-fill${status.count }" style="width:calc(${recipe.score } * 20)%">
 											<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>

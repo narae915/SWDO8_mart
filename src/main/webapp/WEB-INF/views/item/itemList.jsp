@@ -69,8 +69,7 @@
 		img.sold-out-img {
 			position:absolute;
 			z-index: 1; /* 태그에 순서를 줌 */
-			height:400px;
-/* 			cursor: not-allowed; */
+			height:440px;
 		}
 
     </style>
@@ -154,7 +153,7 @@
 							</c:if>
 								<div class="product-item">
 									<div class="pi-pic">
-										<img src="${item.savedFilename }" alt="" style="width:270px; height:330px;">
+										<img src="${item.savedFilename }"  onclick="location.href='/item/readItem?itemNum=${item.itemNum }';" style="cursor:pointer; width:270px; height:330px;">
 										<c:if test="${item.salePrice != 0 }">
     	                            		<div class="sale pp-sale">Sale</div>
                                 		</c:if>

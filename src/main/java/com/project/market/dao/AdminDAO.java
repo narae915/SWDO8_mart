@@ -508,4 +508,19 @@ public class AdminDAO {
 		return result;
 	}
 
+	//강제 회원 탈퇴
+	public int deleteUser(int userNum) {
+		int result = 0;
+		AdminMapper mapper = null;
+		
+		try {
+			mapper = session.getMapper(AdminMapper.class);
+			result = mapper.deleteUser(userNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
 }

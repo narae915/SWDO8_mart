@@ -198,7 +198,7 @@
 						    <option value="2">★★☆☆☆</option>
 						    <option value="1">★☆☆☆☆</option>
 						</select>
-						<input type="button" value="점수주기" onclick="addScore(${loginNum });">
+						<input type="button" id="rating-btn" value="점수주기" onclick="addScore(${loginNum });">
 						</c:if>
 						<c:if test="${scoreFlag == 1 }">
 						<span>평가하셨습니다.</span>
@@ -219,7 +219,7 @@
                             	<div class="col-lg-5 col-md-6">
                                     <a style="cursor:default;" class="prev-blog">
                                         <div class="pb-text">
-                                            <h5>${emptyMessage }</h5>
+                                            <h5>${emptyPrevMessage }</h5>
                                         </div>
                                     </a>
                                 </div>
@@ -241,7 +241,7 @@
                             	<div class="col-lg-5 offset-lg-2 col-md-6">
                                     <a style="cursor:default;" class="next-blog">
 		                                <div class="nb-text">
-		                                    <h5>${emptyMessage }</h5>
+		                                    <h5>${emptyNextMessage }</h5>
 		                                </div>
 	                                </a>
                                 </div>

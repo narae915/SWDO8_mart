@@ -51,8 +51,14 @@ public class RecipeController {
 	@RequestMapping(value = "/recipeList", method = RequestMethod.GET)
 	public String recipeList(Model model) {
 		logger.info("recipeList 게시판(GET)");
-		
+		String nothing = null;
 		ArrayList<RecipeVO> recipeList = service.getRecipeList(countPerPage);
+
+		//레시피 게시판에 게시글이 없을 때
+		if(recipeList.size() == 0) {
+			nothing = "nothing";
+		}
+		model.addAttribute("nothing", nothing);
 		
 		//최신글 전용
 		ArrayList<RecipeVO> newPostList = service.getRecipeList(6);
@@ -75,6 +81,7 @@ public class RecipeController {
 				logger.info("recipeList : {}", recipeList);
 				model.addAttribute("recipeList", recipeList);
 		}
+		
 		
 		//최신글 이미지 설정
 		if(newPostList != null) {
@@ -297,7 +304,7 @@ public class RecipeController {
 				}
 			} else {
 				emptyMessage = "이전 글이 존재하지 않습니다.";
-				model.addAttribute("emptyMessage", emptyMessage);
+				model.addAttribute("emptyPrevMessage", emptyMessage);
 			}
 			if(next != -1) {
 				RecipeVO nextRecipe = service.getRecipe(next);
@@ -306,7 +313,7 @@ public class RecipeController {
 				}
 			} else {
 				emptyMessage = "다음 글이 존재하지 않습니다.";
-				model.addAttribute("emptyMessage", emptyMessage);
+				model.addAttribute("emptyNextMessage", emptyMessage);
 			}
 		}
 		

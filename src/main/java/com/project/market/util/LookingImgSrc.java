@@ -76,6 +76,11 @@ public class LookingImgSrc {
 					itemList.get(i).setSavedFilename("/resources/img/itemDefault.png");
 				}
 			}
+			
+			//파일테이블에 아무런 값이 들어있지 않을 때 기본 이미지로 나오게 하기
+			if(fileList.size() == 0) {
+				itemList.get(i).setSavedFilename("/resources/img/itemDefault.png");
+			}
 		}
 		return itemList;
 	}

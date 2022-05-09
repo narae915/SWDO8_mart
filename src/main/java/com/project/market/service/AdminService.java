@@ -312,4 +312,9 @@ public class AdminService {
 		return dao.itemFileUpdate(map) > 0;
 	}
 
+	//강제 회원 탈퇴
+	public boolean deleteUser(int userNum) {
+		return dao.deleteUser(userNum) > 0;
+	}
+
 }

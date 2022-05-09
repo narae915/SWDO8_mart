@@ -545,5 +545,11 @@
 			#{savedFilename }
 		)
 	</insert>
-	 
+	
+	<!-- 강제 회원 탈퇴 -->
+	<delete id="deleteUser" parameterType="int">
+		delete from user_table
+		where
+			user_num = #{userNum }
+	</delete>
 </mapper>

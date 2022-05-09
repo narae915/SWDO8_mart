@@ -228,8 +228,10 @@
 		recipe_num,
 		user_num,
 		title,
-		content,
-		recipeTag
+		content
+		<if test="recipeTag != null">
+			,recipeTag
+		</if>
 	)
 	values (
 		recipe_num_seq.nextval,
@@ -237,8 +239,10 @@
 			from user_table
 			where user_mail = #{userMail }),
 		#{subject },
-		#{editordata },
-		#{recipeTag }
+		#{editordata }
+		<if test="recipeTag != null">
+			,#{recipeTag }
+		</if>
 	)
 	
 </insert>
@@ -260,8 +264,10 @@
 	update recipe_table
 	set 
 		title = #{subject },
-		content = #{editordata },
-		recipeTag = #{recipeTag }
+		content = #{editordata }
+		<if test="recipeTag != null">
+			,recipeTag = #{recipeTag }
+		</if>
 	where
 		recipe_num = #{recipeNum }
 </update>
