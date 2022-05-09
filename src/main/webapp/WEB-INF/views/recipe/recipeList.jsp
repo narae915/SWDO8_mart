@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
-    
+    <link rel="stylesheet" href="/resources/css/font.css" type="text/css">
     <style type="text/css">
     
     	/* 검색결과 없을 때 테이블 정렬 */

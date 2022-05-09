@@ -5,8 +5,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<!-- Css Styles -->
+	<link rel="stylesheet" href="/resources/css/font.css" type="text/css">
 </head>
 <body>
 	<table>
