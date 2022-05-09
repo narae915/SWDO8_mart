@@ -184,5 +184,16 @@
     <script src="/resources/js/adminJs/itemUpdate.js"></script>
     
 </body>
-
+<script type="text/javascript">
+// 파일 첨부 시 알림
+$("#input-file").change(function(){
+	var fileInput = $('#input-file');
+	var fileInputCount = fileInput[0].files.length;
+	if (fileInputCount == 1) {
+		exitAlert();
+		$("#footer-modal-content").prepend("파일이 첨부되었습니다.");
+		showModalAlert()
+	}
+});
+</script>
 </html>
