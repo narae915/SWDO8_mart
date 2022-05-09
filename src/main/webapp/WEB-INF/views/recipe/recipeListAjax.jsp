@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>검색결과를 보여주는 페이지</title>
+<link rel="stylesheet" href="/resources/css/font.css" type="text/css">
 </head>
 <body>
 	<c:forEach items="${recipeList }" var="recipe" varStatus="status">

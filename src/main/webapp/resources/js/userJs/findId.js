@@ -13,7 +13,7 @@ function checkForm()
 	if ( userName.length == 0 || checkSpc.test(userName) || checkNum.test(userName) )
 	{
 		exitAlert();
-		$("#footer-modal-content").prepend("이름을 올바르게 입력해주세요.");
+		$("#footer-modal-content").prepend(nameChk);
 		showModalAlert();
 		return result;
 	}
@@ -21,7 +21,7 @@ function checkForm()
 	if ( userCall.length == 0 || userCall.length != 11 || isNaN(userCall) )
 	{
 		exitAlert();
-		$("#footer-modal-content").prepend("연락처를 올바르게 입력해주세요.");
+		$("#footer-modal-content").prepend(telChk);
 		showModalAlert();
 		return result;
 	}

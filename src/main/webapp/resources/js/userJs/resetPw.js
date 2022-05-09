@@ -14,7 +14,7 @@ function checkForm()
 	if ( userMail.length == 0 || !(emailChk.test(userMail)) )
 	{
 		exitAlert();
-		$("#footer-modal-content").prepend("이메일을 올바르게 입력해주세요.");
+		$("#footer-modal-content").prepend(emailChk);
 		showModalAlert();
 		return result;
 	}
@@ -22,15 +22,15 @@ function checkForm()
 	if ( !(pwChk.test(userPw)) )
 	{
 		exitAlert();
-		$("#footer-modal-content").prepend("비밀번호는 영문, 숫자, 특수문자를 포함하여<br> 8~16자로 작성해주세요.");
+		$("#footer-modal-content").prepend(pwChk1);
 		showModalAlert();
 		return result;
 	}
 	
-	if ( userPw.length == 0 )
+	if ( userPw.length == 0 || userPwCheck == 0 )
 	{
 		exitAlert();
-		$("#footer-modal-content").prepend("비밀번호를 입력해주세요.");
+		$("#footer-modal-content").prepend(pwChk2);
 		showModalAlert();
 		return result;
 	}
@@ -38,7 +38,7 @@ function checkForm()
 	if ( userPw != userPwCheck )
 	{
 		exitAlert();
-		$("#footer-modal-content").prepend("비밀번호가 일치하지 않습니다.");
+		$("#footer-modal-content").prepend(pwChk3);
 		showModalAlert();
 		return result;
 	}
@@ -63,12 +63,12 @@ $("#userPwCheck").blur(function()
 	{
 		if ( inputUserPw == pwChk ) // 일치하는지 확인
 		{
-			pwWarn.html("일치합니다.");
+			pwWarn.html(pwWarn1);
 			pwWarn.attr("class", "correct");       
 		}
 		else 
 		{
-			pwWarn.html("다시 확인해주세요.");
+			pwWarn.html(pwWarn2);
 			pwWarn.attr("class", "incorrect");
 		} 
 	}

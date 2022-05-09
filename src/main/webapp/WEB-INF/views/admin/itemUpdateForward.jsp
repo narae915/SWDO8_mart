@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/adminCss/itemUpdate.css" type="text/css">
-
+	<link rel="stylesheet" href="/resources/css/font.css" type="text/css">
 </head>
 <body>
     <!-- Page Preloder -->

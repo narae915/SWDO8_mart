@@ -34,7 +34,7 @@
 html,
 body {
 	height: 100%;
-	font-family: "Muli", sans-serif;
+	font-family: Overlock-Regular, NanumSquareRoundOTFR, KiwiMaru-Regular;
 	-webkit-font-smoothing: antialiased;
 	font-smoothing: antialiased;
 }
@@ -48,7 +48,7 @@ h6 {
 	margin: 0;
 	color: #111111;
 	font-weight: 400;
-	font-family: "Muli", sans-serif;
+	font-family: Overlock-Regular, NanumSquareRoundOTFR, KiwiMaru-Regular;
 }
 
 h1 {
@@ -77,7 +77,7 @@ h6 {
 
 p {
 	font-size: 16px;
-	font-family: "Muli", sans-serif;
+	font-family: Overlock-Regular, NanumSquareRoundOTFR, KiwiMaru-Regular;
 	color: #636363;
 	font-weight: 400;
 	line-height: 26px;
@@ -136,6 +136,7 @@ ol {
 	font-weight: 700;
 	margin-bottom: 38px;
 	position: relative;
+	font-family: Overlock-Regular, NanumSquareRoundOTFR, KiwiMaru-Regular;
 }
 
 .section-title h2:before {
@@ -265,19 +266,15 @@ ol {
 	}
 }
 
-/*---------------------
-  Header
------------------------*/
-
 .ht-right .lan-selector {
-	max-width: 150px;
+	max-width: 155px;
 	cursor: pointer;
 	display: inline-block;
 	position: relative;
 }
 
 .ht-right .lan-selector .ddcommon {
-	max-width: 150px;
+	max-width: 155px;
 	-webkit-box-shadow: none !important;
 	box-shadow: none !important;
 	outline: none;
@@ -794,6 +791,7 @@ ol {
 .nav-item .nav-menu li .dropdown li:hover>a {
 	background: transparent;
 	color: #e7ab3c;
+	font-size: 18px;
 }
 
 .nav-item .nav-menu li .dropdown li a {
@@ -836,6 +834,7 @@ ol {
 	position: relative;
 	top: 50px;
 	opacity: 0;
+	font-family: Overlock-Regular, NanumSquareRoundOTFR, KiwiMaru-Regular;
 }
 
 .hero-items .single-hero-items p {
@@ -888,6 +887,7 @@ ol {
 	font-weight: 700;
 	color: #ffffff;
 	text-transform: uppercase;
+	font-family: Overlock-Regular, NanumSquareRoundOTFR, KiwiMaru-Regular;
 }
 
 .hero-items .off-card h2 span {
@@ -1022,6 +1022,8 @@ ol {
 	padding: 11px 28px;
 	background: #ffffff;
 	border-radius: 2px;
+	background-color: rgba(255, 255, 255, 0.5);
+	font-family: Overlock-Regular, NanumSquareRoundOTFR, KiwiMaru-Regular;
 }
 
 /*---------------------
@@ -1049,6 +1051,7 @@ ol {
 	font-weight: 700;
 	margin-top: -180px;
 	margin-bottom: 13px;
+	font-family: Overlock-Regular, NanumSquareRoundOTFR, KiwiMaru-Regular;
 }
 
 #product-large-meal a{
@@ -1076,6 +1079,7 @@ ol {
 	margin-top: -60px;
 	margin-bottom: 13px;
 	margin-left: 20px;
+	font-family: Overlock-Regular, NanumSquareRoundOTFR, KiwiMaru-Regular;
 }
 
 #product-large-seafood a {
@@ -1102,6 +1106,7 @@ ol {
 	font-size: 48px;
 	font-weight: 700;
 	margin-top: -260px;
+	font-family: Overlock-Regular, NanumSquareRoundOTFR, KiwiMaru-Regular;
 }
 
 #product-large-fruit a{
@@ -1487,6 +1492,7 @@ ol {
 	font-weight: 700;
 	line-height: 30px;
 	margin-bottom: 16px;
+	font-family: Overlock-Regular, NanumSquareRoundOTFR, KiwiMaru-Regular;
 }
 
 .benefit-items {
@@ -1516,12 +1522,14 @@ ol {
 	line-height: 20px;
 	font-weight: 700;
 	text-transform: uppercase;
+	font-family: Overlock-Regular, NanumSquareRoundOTFR, KiwiMaru-Regular;
 }
 
 .benefit-items .single-benefit .sb-text p {
 	margin-bottom: 0;
-	color: #252525;
+	color: #b2b2b2;
 	line-height: 20px;
+	font-family: Overlock-Regular, NanumSquareRoundOTFR, KiwiMaru-Regular;
 }
 
 /*---------------------
@@ -1623,6 +1631,7 @@ ol {
 	color: #ffffff;
 	font-weight: 700;
 	margin-bottom: 26px;
+	font-family: Overlock-Regular, NanumSquareRoundOTFR, KiwiMaru-Regular;
 }
 
 .footer-widget ul li {
@@ -1639,6 +1648,7 @@ ol {
 	color: #ffffff;
 	font-weight: 700;
 	margin-bottom: 30px;
+	font-family: Overlock-Regular, NanumSquareRoundOTFR, KiwiMaru-Regular;
 }
 
 .newslatter-item p {

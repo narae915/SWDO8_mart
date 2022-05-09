@@ -55,10 +55,9 @@
                             <li>Email: springday24@gmail.com</li>
                         </ul>
                         <div class="footer-social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-pinterest"></i></a>
+                            <a href="https://www.facebook.com/profile.php?id=100080818072532" target="_blank"><i class="fa fa-facebook"></i></a>
+                            <a href="https://www.instagram.com/spring_day24365" target="_blank"><i class="fa fa-instagram"></i></a>
+                            <a href="https://twitter.com/SprWingDO8?t=8GYHIWbiLgbcWrXkVP7rPQ&s=09" target="_blank"><i class="fa fa-twitter"></i></a>
                         </div>
                     </div>
                 </div>
