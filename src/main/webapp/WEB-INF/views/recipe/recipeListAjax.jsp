@@ -36,7 +36,7 @@
 			<div class="loading-more">
 				<i class="icon_loading"></i>
 				<a href="javascript:loadingMore(6);" style="cursor: pointer;">
-				상품 더 보기
+				게시글 더 보기
 				</a>
 				<input type="hidden" id="viewCount" value="0">
 				<input type="hidden" id="startCount" value="0">

@@ -7,7 +7,15 @@ tr, th, td
 {
 	border: 3px solid #efefef;
 }
-  
+
+table input[type="button"] {
+	border:none;
+	position:relative;
+	transition:800ms ease all;
+	outline:none;
+	border-radius: 5px;
+}
+ 
 button 
 {
 	border:none;
@@ -106,4 +114,20 @@ button:hover:before, button:hover:after
 	background: #e7ab3c;
 	height: 45px;
 	padding: 12px 16px 12px;
+}
+
+.user-table table {
+	width: 100%;	
+}
+
+.user-table table tr {
+	padding-top: 10px;
+	text-align: center;
+	padding-bottom: 10px;
+}
+
+.user-table table td {
+	padding-top: 10px;
+	text-align: center;
+	padding-bottom: 10px;
 }

@@ -77,4 +77,6 @@ public interface AdminMapper {
 	int itemFileInsert(HashMap<String, Object> map); // 상품 사진 파일 추가
 
 	int itemFileUpdate(HashMap<String, Object> map);
+
+	int deleteUser(int userNum); //강제 회원 탈퇴
 }

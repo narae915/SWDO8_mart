@@ -102,6 +102,7 @@
   
 	<script type="text/javascript">
 		$(document).ready(function() {
+			$("li#menu-community").attr("class", "active");
 			// 글꼴 리스트
 			var fontList = ['맑은 고딕','굴림','돋움','바탕','궁서','Arial','Courier New','Tahoma'];
 

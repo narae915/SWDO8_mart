@@ -27,13 +27,6 @@
 	<link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
 	<link rel="stylesheet" href="/resources/css/style.css" type="text/css">
 	<link rel="stylesheet" href="/resources/css/adminCss/empManagement.css" type="text/css">
-	<style type="text/css">
-		.cart-table table tr td {
-			padding-top: 10px;
-			text-align: center;
-			padding-bottom: 10px;
-		}
-	</style>
 </head>
 
 <body>
@@ -65,7 +58,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-					<div class="cart-table">
+					<div class="user-table">
                         <table>
                             <thead>
                                 <tr style="background-color: #252525;">
@@ -97,7 +90,7 @@
 													<c:if test="${user.postcode != 0 }">${user.postcode },</c:if> 
 													${user.userAddress }</td>
 												<c:if test="${sessionScope.loginPosition eq '사장' || sessionScope.loginPosition eq '부장'}">
-												<td><input type="button" value="탈퇴" onclick="empDelete(${emp.empNum}, '${emp.savedFilename }');"></td>
+												<td><input type="button" value="탈퇴" onclick="deleteUser(${user.userNum });"></td>
 												</c:if>
 											</tr>
 										</c:forEach>
@@ -208,6 +201,11 @@
 		</div>
 	</div>
 	
+	<div class="modal" id="footer-modal">
+		<div class="modal_content" id="footer-modal-content">
+		</div>
+	</div>
+	
     <!-- Js Plugins -->
     <script src="/resources/js/jquery-3.6.0.min.js"></script>
     <script src="/resources/js/bootstrap.min.js"></script>
@@ -222,8 +220,7 @@
     <script src="/resources/js/adminJs/empManagement.js"></script>
 	<script type="text/javascript">
 	/* 직원 검색 */
-	function searchUser() 
-	{
+	function searchUser() {
 		var searchWord = $.trim($("input[name=searchWord]").val());
 		//길이 확인
 		var lengthCheck = /([^{2,5}])/i;
@@ -249,5 +246,31 @@
 		
 		return true;
 	}
+	
+	function deleteUser(userNum) {
+		confirmModal();
+		$("#footer-modal-content").prepend("정말 강제 회원탈퇴 시키겠습니까?");
+		showModalConfirm();
+		
+		$("#yes-button").click(function(){
+			location.href = "/admin/deleteUser?userNum="+ userNum;
+		});
+	}
+	
+	// 컨펌 모달
+	function confirmModal() {
+		$("#footer-modal-content").html("");
+		$("#footer-modal-content").append('<button class="primary-btn" id="yes-button" style="border-radius:5px; position: relative; top: 45px; right: 60px; width: 106px;">예</button>');
+		$("#footer-modal-content").append('<button class="primary-btn" id="no-button" style="border-radius:5px; position: relative; left: 60px;">아니오</button>');
+	}
+	
+	function showModalConfirm() {
+		$("#footer-modal").fadeIn();
+		
+		$("#no-button").click(function(){
+			$("#footer-modal").fadeOut();
+		});
+	}
+
 	</script>
 </html>

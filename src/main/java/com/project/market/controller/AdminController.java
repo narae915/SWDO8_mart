@@ -1067,4 +1067,23 @@ public class AdminController {
 		String a = jsonObject.toString(); // Json 객체의 전체 파일을 String으로 변환 후 리턴 시작
 		return a;
 	}
+	
+	//강제 회원 탈퇴
+	@RequestMapping(value = "/deleteUser", method = RequestMethod.GET)
+	public String deleteUser(int userNum) {
+		logger.info("deleteUser 강제 회원 탈퇴(GET)");
+		logger.info("userNum: {}", userNum);
+		
+		String returnUrl = null;
+		boolean result = service.deleteUser(userNum);
+		if(result) {
+			logger.info("회원 탈퇴 성공");
+			returnUrl = "admin/userManagement";
+		} else {
+			logger.info("강제 회원 탈퇴 실패");
+			returnUrl = "admin/adminMain";
+		}
+		
+		return returnUrl;
+	}
 }

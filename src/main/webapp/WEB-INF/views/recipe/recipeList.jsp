@@ -38,6 +38,12 @@
     		height: 300px;
     		bottom: 100px;
     	}
+    	table#nothing {
+    		margin-left:auto;
+    		margin-right: auto;
+    		height: 300px;
+    		bottom: 100px;
+    	}
     	div table td {
     		 text-align:center;
     	}
@@ -177,6 +183,23 @@
                 <div class="col-lg-9 order-1 order-lg-2">
                     <div class="row" id="getRecipeList">
                     <c:if test="${empty recipeList }">
+                    <c:if test="${nothing eq 'nothing' }">
+                    	<table id="nothing">
+							<tr>
+								<td><img alt="검색 결과 없음" src="/resources/img/no-message.png"></td>
+							</tr>
+							<tr>
+								<td></td>
+							</tr>
+							<tr>
+								<th>등록된 게시글이 없습니다.</th>
+							</tr>
+							<tr>
+								<td><a href="/recipe/write">글 쓰러 가기</a></td>
+							</tr>
+						</table>
+                    </c:if>
+                    <c:if test="${nothing eq null }">
 						<div id="not-found-search">
 						<table>
 							<tr>
@@ -196,6 +219,7 @@
 							</tr>
 						</table>
 						</div>
+					</c:if>
 					</c:if>
 					<c:if test="${!empty recipeList }">
                     	<c:forEach items="${recipeList }" var="recipe" varStatus="status">
@@ -226,7 +250,7 @@
                             <div class="loading-more">
                                 <i class="icon_loading"></i>
                                 <a href="javascript:loadingMore(6);" style="cursor: pointer;">
-                           			상품 더 보기
+                           			게시글 더 보기
 		                        </a>
 		                        <input type="hidden" id="viewCount" value="0">
 		                        <input type="hidden" id="startCount" value="0">
@@ -275,6 +299,10 @@
     <script src="/resources/js/owl.carousel.min.js"></script>
     <script src="/resources/js/main.js"></script>
     <script type="text/javascript">
+    //jsp페이지 출력과 동시에 실행 
+	$(function(){
+		$("li#menu-community").attr("class", "active");
+	});
 	// 닫기 모달
 	function exitAlert() {
 		$("#footer-modal-content").append('<button name="modalClose" class="primary-btn" id="footer-modal-button" style="margin-top:30px; border-radius:5px; border:none">창 닫기</button>');
