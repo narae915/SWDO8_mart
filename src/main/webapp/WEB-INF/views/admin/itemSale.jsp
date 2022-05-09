@@ -151,6 +151,7 @@
         <div class="container">
 	        <div class="line">
 	            <div class="row">
+	            <div class="col-lg-1"></div>
 	                <div class="col-lg-9" style="left:2em;">
 	                    <div class="row"><!-- 위쪽 파트 -->
 	                        <div class="col-lg-5"><!-- 사진모음 -->
@@ -239,11 +240,8 @@
 		                        </c:forEach>
 		                    </div>
 	                    </div>
-	                    
 	                </div>
-	                
 	            </div>
-	            
             </div>
             
     </section>
