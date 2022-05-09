@@ -127,39 +127,9 @@
     </div>
     <!-- Faq Section End -->
     
-    <!-- Partner Logo Section Begin -->
-    <div class="partner-logo">
-        <div class="container">
-            <div class="logo-carousel owl-carousel">
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="/resources/img/logo-carousel/logo-1.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="/resources/img/logo-carousel/logo-2.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="/resources/img/logo-carousel/logo-3.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="/resources/img/logo-carousel/logo-4.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="/resources/img/logo-carousel/logo-5.png" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Partner Logo Section End -->
+    <!-- Footer -->
+    <%@ include file="/WEB-INF/views/admin/adminFooter.jsp" %>
+
 
     <!-- Js Plugins -->
     <script src="/resources/js/jquery-3.6.0.min.js"></script>
@@ -174,5 +144,18 @@
     <script src="/resources/js/main.js"></script>
     <script src="/resources/js/adminJs/itemRegister.js"></script>
 </body>
+<script type="text/javascript">
+// 파일 첨부 시 알림
+$("#input-file").change(function(){
+	var fileInput = $('#input-file');
+	var fileInputCount = fileInput[0].files.length;
+	if (fileInputCount == 1) {
+		exitAlert();
+		$("#footer-modal-content").prepend("파일이 첨부되었습니다.");
+		showModalAlert()
+	}
+});
+</script>
+
 
 </html>

@@ -862,9 +862,9 @@ public class AdminController {
 	
 	// 사진 삭제
 	@ResponseBody
-	@RequestMapping(value="/itemImgDelete", method=RequestMethod.GET)
+	@RequestMapping(value="/itemImgDelete", method=RequestMethod.POST)
 	public String itemImgDelete(String fileName) {
-		logger.info("itemImgDelete 메소드 실행(GET)");
+		logger.info("itemImgDelete 메소드 실행(POST)");
 		logger.info("fileName:{}", fileName);
 		
 		boolean result = service.itemImgDelete(fileName);

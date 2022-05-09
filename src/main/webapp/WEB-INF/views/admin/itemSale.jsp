@@ -80,7 +80,8 @@
 		}
 		
 		.primary-btn:hover,
-		input[type="button"]:hover {
+		input[type="button"]:hover
+		 {
 			background:#000;
 			color:#E7AB3C;
 		}
@@ -110,7 +111,6 @@
 			width:100%;
 			transition:800ms ease all;
 		}
-		
 		
 		.line {
 			border-right: solid 1px #d6d6d6;
@@ -197,9 +197,19 @@
                                     </c:forEach>
 								</div>
                             </div>
+                            <form action="itemSale" method="post" enctype="multipart/form-data" onsubmit="return imgCheck();">
+                            	<input type="hidden" name="itemNum" id="itemNum" value="${itemNum }">
+								<label class="primary-btn" id="file-btn" for="input-file" style="top:2em; left:7em;">
+									사진 첨부하기
+								</label>
+								
+								<input type="file" style="border:1px solid #000; padding:1em;display:none;" id= "input-file" name="uploadFile" accept="image/*" multiple>
+                           	</form>
+                           	<input type="hidden" value="${fileCount }" id="fileCount">
                         </div>
+                        <div class="col-lg-2"></div>
                         <c:forEach var="Item" items="${itemList }"><!-- 상품 정보 -->
-                        <div class="col-lg-7">
+                        <div class="col-lg-5">
                             <div class="product-details">
                                 <div class="pd-title">
                                     <span>${Item.categoryName }</span>
@@ -211,37 +221,31 @@
                                 </div>
                             </div>
                             
-                            <form action="itemSale" method="post" enctype="multipart/form-data" onsubmit="return imgCheck();">
-                            	<input type="hidden" name="itemNum" value="${itemNum }">
-								<label class="primary-btn" id="file-btn" for="input-file">
-									사진 첨부하기
-								</label>
-								<span style="font-size:36px; margin-right:1.6em;margin-left:1.6em">--></span>
-								<input type="submit" name="file-btn" value="사진 등록하기" class="primary-btn">
-								
-								<input type="file" style="border:1px solid #000; padding:1em;display:none;" id= "input-file" name="uploadFile" accept="image/*" multiple>
-                           	</form>
-                           	<input type="hidden" value="${fileCount }" id="fileCount">
                            	<br>
-		                    	<span style="font-size:36px;">💡상품 정보(상세 설명)</span>
+		                    	<span style="font-size:36px;">상세 설명&nbsp;</span>
 		                    	<input type="button" class="primary-btn" value="작성" onclick="window.open('/admin/itemInfor?itemNum=${itemNum }', '상품 상세설명 작성', 'width=800, height=600, location=no,status=no, scrollbars=yes')">
 		                    <div class="product-tab">
-		                    	<span style="font-size:36px;">👐간단한 손질법👐</span>
+		                    	<span style="font-size:36px;">손질법</span>
 		                    	&emsp;&emsp;&emsp;
 		                    	<input type="button" class="primary-btn" value="작성" onclick="window.open('/admin/itemCook?itemNum=${itemNum }', '상품 손질법 작성', 'width=800, height=600, location=no,status=no, scrollbars=yes')">
 		                    </div>
 		                    <div class="product-tab">
-		                    	<span style="font-size:36px;">👨식자재 보관법👩</span>
+		                    	<span style="font-size:36px;">보관법</span>
 		                    	&emsp;&emsp;&emsp;
 		                    	<input type="button" class="primary-btn" value="작성" onclick="window.open('/admin/itemInventory?itemNum=${itemNum }', '상품 보관법 작성', 'width=800, height=600, location=no,status=no, scrollbars=yes')">
 		                    </div>
 		                        </div>
+		                        <input type="submit" name="file-btn" id="submit-btn" value="등록하기" class="primary-btn" style="bottom: 1.8em;left: 48em; border:3px black double">
 		                        </c:forEach>
 		                    </div>
 	                    </div>
+	                    
 	                </div>
+	                
 	            </div>
+	            
             </div>
+            
     </section>
     <!-- Product Shop Section End -->
 
@@ -270,9 +274,45 @@
 
 	  	// 유효성 검사
 	  	function imgCheck(){
+	  	
+	  	}
+	  	
+	  	// 사진 삭제
+	  	function itemImgDelete(fileName) {
+	  		var itemNum = $("#itemNum").val();
+
+	  		$.ajax({
+				data : {
+					fileName: fileName
+				},
+				type: "post",
+				url: "/admin/itemImgDelete",
+				success: function(res) {
+					exitAlert();
+					$("#footer-modal-content").prepend("사진이 삭제되었습니다.");
+					$("#footer-modal").fadeIn();
+		    		
+					$("button[name=modalClose]").click(function() {
+		    			$("#footer-modal").fadeOut();
+		    			location.reload();
+		    		});
+				}
+			});
+	  	
+	  	}
+	  	
+	  	// 파일 첨부 시 알림
+	  	$("#input-file").change(function(){
 	  		var fileInput = $('#input-file');
 	  		var fileInputCount = fileInput[0].files.length;
 	  		var fileCount = $('#fileCount').val();
+	  		
+	  		
+	  		if (fileInputCount != 0) {
+	  			exitAlert();
+	  			$("#footer-modal-content").prepend("파일 "+fileInputCount+"개가 첨부되었습니다.");
+	  			showModalAlert()
+	  		}
 	  		
 	  		// 이미 업로드 된 사진 네 장 이상일 때 더 업로드 x
 	  		if(fileCount*1 >= 4){
@@ -301,25 +341,7 @@
 	  			return false;	
 	  		}
 	  		
-	  	}
-	  	
-	  	// 사진 삭제
-	  	function itemImgDelete(fileName) {
-			$.ajax({
-				data : {
-					fileName: fileName
-				},
-				type: "get",
-				url: "/admin/itemImgDelete",
-				success: function(res) {
-					exitAlert();
-					$("#footer-modal-content").prepend("사진이 삭제되었습니다.<br>새로고침 시 반영됩니다.");
-					showModalAlert()
-				}
-			});
-	  	
-	  	}
-	  	
+	  	});
     </script>
 </body>
 
