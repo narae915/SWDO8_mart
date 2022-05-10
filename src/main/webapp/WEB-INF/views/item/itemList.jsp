@@ -1,7 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -11,7 +12,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>SpringDay | 식품 마트</title>
+    <title>SpringDay | <spring:message code="message.header.group.itemList"/></title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -27,57 +28,10 @@
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
 	<link rel="stylesheet" href="/resources/css/font.css" type="text/css">
-    
-    <!-- CSS -->
-    <style type="text/css">
-		.modal-button {
-			font-size: 16px;
-			color: #ffffff;
-			border: 1px solid #e7ab3c;
-			background: #e7ab3c;
-			height: 45px;
-			padding: 12px 16px 12px;
-		}
-		
-		.modal-button1 {
-			font-size: 16px;
-			color: #ffffff;
-			border: 1px solid #787878;
-			background: #787878;
-			height: 45px;
-			padding: 12px 16px 12px;
-		}
-		
-		.modal{
-			position: fixed;
-			top:0; left: 0; bottom: 0; right: 0;
-			background: rgba(0, 0, 0, 0.8); /* 투명도 */
-		}
-		
-		#ri-modal_content{
-			position: absolute;  /* 배경 내에서 위치 조정 */
-			top: calc(50vh - 100px); left: calc(50vw - 200px);
-			background-color: white;
-			border-radius: 10px;
-			width: 400px;
-			height: 200px;
-			display: flex;
-			flex-wrap: wrap;
-			flex-direction: row;
-			align-content: center;
-			justify-content: center;
-		}
-		img.sold-out-img {
-			position:absolute;
-			z-index: 1; /* 태그에 순서를 줌 */
-			height:440px;
-		}
-
-    </style>
+	<link rel="stylesheet" href="/resources/css/itemCss/itemListCss.css" type="text/css">
 </head>
 
 <body>
-
 
     <!-- Page Preloder -->	
     <div id="preloder">
@@ -93,7 +47,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="/"><i class="fa fa-home"></i> Home</a>
-                        <span>식품 마트</span>
+                        <span><spring:message code="message.header.group.itemList"/></span>
                     </div>
                 </div>
             </div>
@@ -107,11 +61,11 @@
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter">
                     <div class="filter-widget">
-                        <h4 class="fw-title">카테고리</h4>
+                        <h4 class="fw-title"><spring:message code="message.itemList.category"/></h4>
                         <ul class="filter-catagories">
                         	<!-- HashMap 반복할 때는 안에 들어있는 key값을 대문자로 작성해야 한다. -->
                         	<c:forEach items="${categoryList }" var="category">
-	                        	<li><a style="cursor: pointer;" href="/item/itemList?categoryNum=${category.CATEGORYNUM }" <%-- onclick="option(${category.CATEGORYNUM });" --%>>
+	                        	<li><a style="cursor: pointer;" href="/item/itemList?categoryNum=${category.CATEGORYNUM }">
 	                        		${category.CATEGORYNAME }</a></li>
                         	</c:forEach>
                         </ul>
@@ -130,9 +84,9 @@
                                 <div class="select-option">
                                 	<c:if test="${categoryList != null }">
 	                                    <select class="sorting" id="sorting" name="sorting" onchange="searchCategoryNum();">
-	                                        <option value="new">최근 등록순</option>
-	                                        <option value="high">가격 높은순</option>
-	                                        <option value="low">가격 낮은순</option>
+	                                        <option value="new"><spring:message code="message.itemList.sort1"/></option>
+	                                        <option value="high"><spring:message code="message.itemList.sort2"/></option>
+	                                        <option value="low"><spring:message code="message.itemList.sort3"/></option>
 	                                    </select>
 	                                    <input type="hidden" id="cate-num" value="${requestScope.categoryNum }">
                                     </c:if>
@@ -162,7 +116,7 @@
 											<li class="w-icon active" onclick="insertCart(${item.itemNum });" style="cursor:pointer;">
 												<a><i class="icon_bag_alt"></i></a>
 											</li>
-											<li class="quick-view"><a href="/item/readItem?itemNum=${item.itemNum }">+ 상세 보기</a></li>
+											<li class="quick-view"><a href="/item/readItem?itemNum=${item.itemNum }">+ <spring:message code="message.home.mealSection2"/></a></li>
 										</ul>
 									</div>
 									<div class="pi-text">
@@ -186,7 +140,7 @@
                     <div class="loading-more">
                     	<i class="icon_loading"></i>
                         <a href="javascript:loadingMore(9);" style="cursor: pointer;">
-                           	상품 더 보기
+                           	<spring:message code="message.itemList.itemMore"/>
                         </a>
                         <input type="hidden" id="viewCount" value="0">
                         <input type="hidden" id="startCount" value="0">
@@ -200,18 +154,18 @@
 	<!-- 모달 -->
 	<div class="modal" id="il-modal">
 		<div class="modal_content" id="il-modal_content">
-			장바구니에 추가하시겠습니까?<br>
-			<input type="button" class="modal-button" id="il-modal-button" value="네, 추가할래요">
-			<input type="button" class="modal-button1" value="아니요, 다른 상품을 볼래요">
+			<spring:message code="message.itemList.cartConfirm"/><br>
+			<input type="button" class="modal-button" id="il-modal-button" value="<spring:message code="message.home.modal.cart1.yes"/>">
+			<input type="button" class="modal-button1" value="<spring:message code="message.home.modal.cart1.no"/>">
 		</div>
 	</div>
 
     <!-- 모달 -->
 	<div class="modal" id="ri-modal">
 		<div class="modal_content" id="ri-modal_content">
-			장바구니에 추가되었습니다. 확인하시겠습니까?
-			<input type="button" class="modal-button" id="ri-modal-button" value="장바구니로">
-			<input type="button" class="modal-button1" value="쇼핑 계속하기">
+			<spring:message code="message.home.modal.cart2"/>
+			<input type="button" class="modal-button" id="ri-modal-button" value="<spring:message code="message.home.modal.cart2.cartPage"/>">
+			<input type="button" class="modal-button1" value="<spring:message code="message.home.modal.cart2.shopping"/>">
 		</div>
 	</div>
 
@@ -245,7 +199,7 @@
 	
 	// 닫기 모달
 	function exitAlert() {
-		$("#footer-modal-content").append('<button name="modalClose" class="primary-btn" id="footer-modal-button" style="margin-top:30px; border-radius:5px; border:none">창 닫기</button>');
+		$("#footer-modal-content").append('<button name="modalClose" class="primary-btn" id="footer-modal-button" style="margin-top:30px; border-radius:5px; border:none"><spring:message code="message.footer.modal.close"/></button>');
 	}
 
 	// 모달 출력
@@ -331,7 +285,7 @@
     		},
     		error: function(e){
 				$("#footer-modal-content").html("");
-				$("#footer-modal-content").html("표시할 상품이 없습니다.");
+				$("#footer-modal-content").html("<spring:message code='message.itemList.nomoreItem'/>");
 				exitAlert();
 				showModalAlert();
 				console.log("실패");
@@ -349,7 +303,7 @@
 
 		if(userMail == null || userMail == "" || userMail == " "){
 			$("#footer-modal-content").html("");
-			$("#footer-modal-content").html("로그인이 필요합니다.");
+			$("#footer-modal-content").html("<spring:message code='message.home.modal.login'/>");
 			exitAlert();
 			showModalAlert();
 		} else {

@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -28,7 +29,7 @@
 							<a><i class="icon_bag_alt"></i></a>
 						</li>
 						<li class="quick-view">
-							<a href="/item/readItem?itemNum=${item.itemNum }">+ 상세 보기</a>
+							<a href="/item/readItem?itemNum=${item.itemNum }">+ <spring:message code="message.home.mealSection2"/></a>
 						</li>
 					</ul>
 				</div>
@@ -62,7 +63,7 @@
 	
 	// 닫기 모달
 	function exitAlert() {
-		$("#footer-modal-content").append('<button name="modalClose" class="primary-btn" id="footer-modal-button" style="margin-top:30px; border-radius:5px; border:none">창 닫기</button>');
+		$("#footer-modal-content").append('<button name="modalClose" class="primary-btn" id="footer-modal-button" style="margin-top:30px; border-radius:5px; border:none"><spring:message code="message.footer.modal.close"/></button>');
 	}
 
 	// 모달 출력
@@ -107,7 +108,7 @@
     				$("#productList").html(res);
     		},
     		error: function(e){
-   				$("#footer-modal-content").html("표시할 게시물이 없습니다.");
+   				$("#footer-modal-content").html("<spring:message code='message.itemList.nomoreItem'/>");
    				exitAlert();
    				showModalAlert();
 				console.log("실패");
@@ -124,7 +125,10 @@
 		var cartAmount = 1;
 
 		if(userMail == null || userMail == "" || userMail == " "){
-			alert("로그인이 필요합니다.");
+			$("#footer-modal-content").html("");
+			$("#footer-modal-content").html("<spring:message code='message.home.modal.login'/>");
+			exitAlert();
+			showModalAlert();
 		} else {
 			//장바구니에 넣을 것인지 확인하는 모달창
 			ilShowModal();
