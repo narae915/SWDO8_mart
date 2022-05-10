@@ -12,19 +12,86 @@
 
 	<!--로그인 성공시 커스텀한 핸들러 -->
 	<bean id="customLoginSuccessHandler" class="com.project.market.security.CustomLoginSuccessHandler"/>
-	
+	<bean id="customLoginSuccessHandler2" class="com.project.market.security.CustomLoginSuccessHandler2"/>
 	<!-- 이 URL은 Spring Security 쓰지 않겠다 -->
 	<security:http pattern="/favicon.ico" security="none" />
 	<security:http pattern="/resources/**" security="none" />
 	<security:http pattern="/fonts/**" security="none" />
 
- 	<security:http auto-config="true" use-expressions="true">
+	<!-- admin -->
+	<security:http auto-config="true" use-expressions="true" pattern="/admin/**" authentication-manager-ref="adminAuthManager"> 
+	
+		<security:intercept-url pattern="/admin/adminLogin"  access="permitAll()" />
+		<security:intercept-url pattern="/admin/adminMain" access="hasRole('EMP')" />
+		<security:intercept-url pattern="/admin/adminRegister" access="hasRole('EMP')" />
+		<security:intercept-url pattern="/admin/empChattingPop" access="hasRole('EMP')" />
+		<security:intercept-url pattern="/admin/empFindId" access="hasRole('EMP')" />
+		<security:intercept-url pattern="/admin/empFindPw" access="hasRole('EMP')" />
+		<security:intercept-url pattern="/admin/empFindPwView" access="hasRole('EMP')" />
+		<security:intercept-url pattern="/admin/empFindView" access="hasRole('EMP')" />
+		<security:intercept-url pattern="/admin/empManagement" access="hasRole('EMP')" />
+		<security:intercept-url pattern="/admin/empUpdate" access="hasRole('EMP')" />
+		<security:intercept-url pattern="/admin/itemCook" access="hasRole('EMP')" />
+		<security:intercept-url pattern="/admin/itemInfor" access="hasRole('EMP')" />
+		<security:intercept-url pattern="/admin/itemInventory" access="hasRole('EMP')" />
+		<security:intercept-url pattern="/admin/itemManagement" access="hasRole('EMP')" />
+		<security:intercept-url pattern="/admin/itemRegister" access="hasRole('EMP')" />
+		<security:intercept-url pattern="/admin/itemSale" access="hasRole('EMP')" />
+		<security:intercept-url pattern="/admin/itemUpdate" access="hasRole('EMP')" />
+		<security:intercept-url pattern="/admin/itemUpdateForward" access="hasRole('EMP')" />
+		<security:intercept-url pattern="/admin/userManagement" access="hasRole('EMP')" />
+		<security:intercept-url pattern="/" access="permitAll()"/>
+		
+		<security:form-login 
+			username-parameter="empNum" 
+			password-parameter="empPw"
+			login-processing-url="/admin/adminLogin"
+			login-page="/admin/adminLogin"
+			authentication-success-handler-ref="customLoginSuccessHandler2"
+		/> 
+	
+		<security:logout 
+			logout-url="/admin/logout" 
+			logout-success-url="/admin/adminMain"
+			invalidate-session="true" 
+			delete-cookies ="JSESSIONID" 
+		/> 
+
+		<!-- http-basic -->
+		<security:http-basic />
+		
+		<!-- CSRF 설정을 true로 변경 -->
+		<security:csrf disabled="true"/>
+
+		<security:session-management invalid-session-url="/admin/adminLogin"> 
+			<security:concurrency-control 
+				max-sessions="1" 
+				error-if-maximum-exceeded="false" 
+				expired-url="/admin/adminLogin"
+			/> 
+		</security:session-management>
+		
+	</security:http>
+	
+	<security:jdbc-user-service data-source-ref="dataSource" id="adminService"
+			users-by-username-query="SELECT EMP_NUM as empNum, EMP_PW as empPw, ENABLED as enabled FROM EMP_TABLE WHERE EMP_NUM = ?"
+			authorities-by-username-query="SELECT EMP_NUM as empNum, AUTHORITY as authority FROM EMP_TABLE e WHERE EMP_NUM = ?"/>
+	
+	<security:authentication-manager id="adminAuthManager">
+		<security:authentication-provider user-service-ref="adminService">
+		</security:authentication-provider>
+	</security:authentication-manager>
+	
+	
+	<!-- 유저 -->
+ 	<security:http auto-config="true" use-expressions="true" authentication-manager-ref="userAuthManager" pattern="/**" >
 		<!-- 인터셉터, access는 권한자 -->
-		<security:intercept-url pattern="/recipe/**" access="hasRole('ROLE_USER')" /> <!-- user 로그인 상태만 접근 가능 -->
-		<security:intercept-url pattern="/order/cart" access="hasRole('ROLE_USER')" />
+		<security:intercept-url pattern="/order/cart" access="hasRole('ROLE_USER')" /> <!-- user 로그인 상태만 접근 가능 -->
 		<security:intercept-url pattern="/order/orderForm" access="hasRole('ROLE_USER')" />
 		<security:intercept-url pattern="/order/orderFormForward" access="hasRole('ROLE_USER')" />
 		<security:intercept-url pattern="/order/orderList" access="hasRole('ROLE_USER')" />
+		<security:intercept-url pattern="/user/userUpdate" access="hasRole('ROLE_USER')" />
+		<security:intercept-url pattern="/recipe/**" access="hasRole('ROLE_USER')" />
 		<security:intercept-url pattern="/" access="permitAll()"/> <!-- 인증을 하지 않아도 접근 가능 -->
 	    
 	    <!-- 로그인 
@@ -49,84 +116,26 @@
 		
 		<!-- CSRF 설정을 true로 변경 -->
 		<security:csrf disabled="true"/>
+		
+		<security:session-management invalid-session-url="/user/login"> 
+			<security:concurrency-control 
+				max-sessions="1" 
+				error-if-maximum-exceeded="false" 
+				expired-url="/user/login"
+			/> 
+		</security:session-management>
 	</security:http>
-
+	
 	<!-- DB에 있는 값을 비교하고, 권한을 줌 -->
 	<security:jdbc-user-service data-source-ref="dataSource" id="userService"
 				users-by-username-query="SELECT USER_MAIL as username, USER_PW as password,ENABLED as enabled FROM USER_TABLE WHERE USER_MAIL = ?"
 				authorities-by-username-query="SELECT USER_MAIL as username, AUTHORITY as authority FROM USER_TABLE u WHERE USER_MAIL = ?"/>
 
-	<security:authentication-manager>
+	<security:authentication-manager id="userAuthManager">
 		<security:authentication-provider user-service-ref="userService">
 			<security:password-encoder ref="bcryptPasswordEncoder"/>
 		</security:authentication-provider>
 	</security:authentication-manager>
-
-
-	<!-- admin -->
-<!-- 
-	<security:jdbc-user-service data-source-ref="dataSource" id="adminService"
-			users-by-username-query="SELECT EMP_NUM as empnum, EMP_PW as emppw,ENABLED as enabled FROM EMP_TABLE WHERE EMP_NUM = ?"
-			authorities-by-username-query="SELECT EMP_NUM as empnum, AUTHORITY as authority FROM EMP_TABLE WHERE EMP_NUM = ?"/>
-	
-	<security:authentication-manager>
-		<security:authentication-provider user-service-ref="adminService">
-		</security:authentication-provider>
-	</security:authentication-manager>
-	
-	
-	<security:http 
-		auto-config="true" 
-		use-expressions="true"
-	> 
-		<security:csrf disabled="false"/> 
-		
-		<security:intercept-url pattern="/admin/login"  access="permitAll()" />
-		<security:intercept-url pattern="/admin/adminMain" access="hasRole('ROLL_EMP')" />
-		<security:intercept-url pattern="/admin/adminRegister" access="hasRole('ROLL_EMP')" />
-		<security:intercept-url pattern="/admin/empChattingPop" access="hasRole('ROLL_EMP')" />
-		<security:intercept-url pattern="/admin/empFindId" access="hasRole('ROLL_EMP')" />
-		<security:intercept-url pattern="/admin/empFindPw" access="hasRole('ROLL_EMP')" />
-		<security:intercept-url pattern="/admin/empFindPwView" access="hasRole('ROLL_EMP')" />
-		<security:intercept-url pattern="/admin/empFindView" access="hasRole('ROLL_EMP')" />
-		<security:intercept-url pattern="/admin/empManagement" access="hasRole('ROLL_EMP')" />
-		<security:intercept-url pattern="/admin/empUpdate" access="hasRole('ROLL_EMP')" />
-		<security:intercept-url pattern="/admin/itemCook" access="hasRole('ROLL_EMP')" />
-		<security:intercept-url pattern="/admin/itemInfor" access="hasRole('ROLL_EMP')" />
-		<security:intercept-url pattern="/admin/itemInventory" access="hasRole('ROLL_EMP')" />
-		<security:intercept-url pattern="/admin/itemManagement" access="hasRole('ROLL_EMP')" />
-		<security:intercept-url pattern="/admin/itemRegister" access="hasRole('ROLL_EMP')" />
-		<security:intercept-url pattern="/admin/itemSale" access="hasRole('ROLL_EMP')" />
-		<security:intercept-url pattern="/admin/itemUpdate" access="hasRole('ROLL_EMP')" />
-		<security:intercept-url pattern="/admin/itemUpdateForward" access="hasRole('ROLL_EMP')" />
-		<security:intercept-url pattern="/admin/userManagement" access="hasRole('ROLL_EMP')" />
-		
-		
-		<security:form-login 
-			login-page="/admin/adminLogin" 
-			username-parameter="empnum" 
-			password-parameter="emppw"
-			login-processing-url="/admin/adminLogin"
-			authentication-success-handler-ref="customLoginSuccessHandler"
-		/> 
-		
-		<security:logout 
-			logout-url="/admin/logout" 
-			logout-success-url="/"
-			invalidate-session="true" 
-			delete-cookies ="true" 
-		/> 
-
-		<security:session-management invalid-session-url="/admin/adminLogin"> 
-			<security:concurrency-control 
-				max-sessions="1" 
-				error-if-maximum-exceeded="false" 
-				expired-url="/admin/adminLogin"
-			/> 
-		</security:session-management>
-		
-		<security:http-basic />
-		
-		<security:csrf disabled="true"/>
-	</security:http>
- --></beans>
+ 
+ 
+ </beans>

@@ -92,13 +92,11 @@ function cartCancel() {
 		data: {
 			cartNum: $('#hiddenNum').val()
 		},
+		async: false,
 		success: function(res) {
+			
 			exitAlert();
-			$("#footer-modal-content").prepend("삭제되었습니다.");
-			showModalAlert();
-			setTimeout(function() {
-				location.reload();
-			}, 2000);				
+			location.reload();
 		}
 	});
 }

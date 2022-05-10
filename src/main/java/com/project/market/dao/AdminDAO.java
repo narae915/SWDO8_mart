@@ -512,7 +512,7 @@ public class AdminDAO {
 	public int deleteUser(int userNum) {
 		int result = 0;
 		AdminMapper mapper = null;
-		
+
 		try {
 			mapper = session.getMapper(AdminMapper.class);
 			result = mapper.deleteUser(userNum);
@@ -531,6 +531,20 @@ public class AdminDAO {
 		try {
 			mapper = session.getMapper(AdminMapper.class);
 			result = mapper.saleFlag(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	//로그인 확인
+	public ArrayList<EmpVO> selectAdmin(HashMap<String, Object> map) {
+		ArrayList<EmpVO> result = null;
+		AdminMapper mapper = null;
+		try {
+			mapper = session.getMapper(AdminMapper.class);
+			result = mapper.selectAdmin(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

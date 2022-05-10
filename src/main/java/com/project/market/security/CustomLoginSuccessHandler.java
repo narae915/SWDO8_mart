@@ -19,12 +19,12 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 		HttpSession session = request.getSession();
-
+		System.out.println("유저 핸들러");
 		//로그인 인증된 name(메일주소)
 		String userMail = authentication.getName();
+		
 		//메일 주소 중 아이디 부분만 자르기
 		userMail = userMail.substring(0, userMail.lastIndexOf("@"));
-		System.out.println(userMail);
 
 		//JSP에 표현하고 싶은 값 session에 저장
 		session.setAttribute("welcomeMessage", userMail);
@@ -35,3 +35,4 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 	}
 
 }
+

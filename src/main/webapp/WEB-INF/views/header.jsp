@@ -23,7 +23,7 @@
 				</div>
 				<div class="ht-right">
 					<sec:authorize access="isAnonymous()">
-						<a href="/user/login" class="login-panel"><i　class="fa fa-user"></i> 
+						<a href="/user/login" class="login-panel"><i class="fa fa-user"></i> 
 							<spring:message code="message.header.login" />
 						</a>
 					</sec:authorize>
@@ -201,7 +201,6 @@
 			</div>
 		</div>
 	</header>
->>>>>>> main
 	<!-- Header End -->
 
 	<!-- Js Plugins -->
