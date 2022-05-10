@@ -74,6 +74,7 @@
 			margin-left: 3px;
 			margin-bottom: 20px;
 			border:none;
+			top: 0.7px;
 		}
 		
 		#search-button {
@@ -81,7 +82,7 @@
 			height:45px;
 			border-radius:5px;
 			left: 10em;
-			bottom:-3.3em
+			bottom:-3.26em
 		}
 		
 		#orderNum {

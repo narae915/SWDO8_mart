@@ -2,17 +2,18 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Fashi Template">
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>SpringDay | 결제</title>
+    <title>SpringDay | <spring:message code="message.orderFormForward.title"/></title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -28,7 +29,6 @@
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
    <link rel="stylesheet" href="/resources/css/font.css" type="text/css">
-    
 </head>
 
 <body>
@@ -47,8 +47,8 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="/"><i class="fa fa-home"></i> Home</a>
-                        <a href="/order/cart"> 장바구니</a>
-                        <span>결제하기</span>
+                        <a href="/order/cart"> <spring:message code="message.cart.title"/></a>
+                        <span><spring:message code="message.orderFormForward.breacrumb"/></span>
                     </div>
                 </div>
             </div>
@@ -63,13 +63,13 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="register-form">
-                        <h2>결제 정보</h2>
+                        <h2><spring:message code="message.orderFormForward.formTitle"/></h2>
                         <sec:csrfInput/>
                         <c:forEach items="${userList }" var="user">
                         <input type="hidden" name="userAddress">
                         <input type="hidden" name="postcode" value="0">
 						<div class="group-input">
-						    <label for="username">이름</label>
+						    <label for="username"><spring:message code="message.signUp.form.name"/></label>
 						    <input type="text" id="username" name="userName" value="${user.userName }" readonly style="background-color:#E6E6E6">
 						</div>
 						<div class="group-input">
@@ -77,20 +77,20 @@
 						    <input type="text" name="userMail" id="userMail" value="${userMail }">
 						</div>
 						<div class="group-input">
-						    <label>전화번호 </label>
+						    <label><spring:message code="message.signUp.form.call"/> </label>
 						    <input type="text" name="userCall" id="userCall" placeholder="(-)는 제외" value="${user.userCall }">
 						</div>
 						</c:forEach>
 						<div class="group-input">
-						    <label>우편번호</label>
+						    <label><spring:message code="message.signUp.form.postcode"/></label>
 						    <input type="text" id="postcode" readonly onclick="daumPostcode();">
 						</div>
 		                     <div class="group-input">
-		                         <label>주소</label>
+		                         <label><spring:message code="message.signUp.form.address"/></label>
 		                         <input type="text" id="address" readonly onclick="daumPostcode();">
 						</div>
 						<div class="group-input">
-							<label>상세주소</label>
+							<label><spring:message code="message.signUp.form.detailAddress"/></label>
 							<input type="text" id="detailAddress">
 							<span id="extraAddress"></span>
 						</div>
@@ -98,7 +98,7 @@
                 </div>
                 <div class="col-lg-5 offset-lg-1">
                 	<div class="register-form">
-                		<h2>주문 정보</h2>	
+                		<h2><spring:message code="message.orderFormForward.formTitle2"/></h2>	
 						<c:forEach items="${pNumArr }" var="pNum" begin="0" end="4">
 						<c:if test="${pNum ne 0 }">
 						<c:forEach items="${itemList }" var="item">
@@ -117,9 +117,12 @@
 						<input type="hidden" id="cartNum" value="${cartNum }">
 						<hr>
 						<div style="font-size: xx-large;">
-							<label>합계&emsp;&emsp;&emsp;<fmt:formatNumber value="${totalPrice }" pattern='#,###원' /></label>
+							<label>
+								<spring:message code="message.cart.form.head6"/>&emsp;&emsp;&emsp;
+								<fmt:formatNumber value="${totalPrice }" pattern='#,###원' />
+							</label>
 						</div>
-						<input type="button" value="결제하기" class="site-btn register-btn" id="buyButton" style ="border-radius: 5px; font-size:20px;">
+						<input type="button" value="<spring:message code='message.orderFormForward.form.payBtn'/>" class="site-btn register-btn" id="buyButton" style ="border-radius: 5px; font-size:20px;">
 					</div>
                 </div>
             </div>
@@ -160,21 +163,21 @@
 		
 		if(!callChk.test(call)){
 			exitAlert();
-		    $("#footer-modal-content").prepend("전화번호를 확인해 주십시오.");
+		    $("#footer-modal-content").prepend("<spring:message code='message.signUp.form.telChkMessage2'/>");
 		    showModalAlert();
 		    return false;
 		}
 		// 유효성 검사: 이메일
 		if(!emailChk.test(email)) {
 			exitAlert();
-		    $("#footer-modal-content").prepend("이메일을 확인해 주십시오.");
+		    $("#footer-modal-content").prepend("<spring:message code='message.signUp.form.mailChkMessage2'/>");
 		    showModalAlert();
 		    return false;
 		}
 		// 유효성 검사: 주소
 		if(address == "") {
 			exitAlert();
-		    $("#footer-modal-content").prepend("주소를 입력해 주십시오.");
+		    $("#footer-modal-content").prepend("<spring:message code='message.orderFormForward.formChk.addressChk'/>");
 		    showModalAlert();
 		    return false;
 		}
@@ -196,7 +199,7 @@
 			
 		}, function(rsp) {
 			if ( rsp.success ) {
-				var msg = '결제가 완료되었습니다.';
+				var msg = '<spring:message code="message.orderFormForward.formChk.paySuccess"/>';
 /* 
 				msg += '고유ID : ' + rsp.imp_uid;
 				msg += '상점 거래ID : ' + rsp.merchant_uid;
@@ -222,8 +225,8 @@
 					}
 				});
 			} else {
-				var msg = '결제에 실패하였습니다.';
-				msg += '에러내용 : ' + rsp.error_msg;
+				var msg = '<spring:message code="message.orderFormForward.formChk.payfail"/>';
+				msg += '<spring:message code="message.orderFormForward.formChk.errorMsg"/>' + rsp.error_msg;
 				
 			}
 			alert(msg);

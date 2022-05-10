@@ -78,8 +78,7 @@
 						<div class="container-h5"><br>
 							<h5>* <spring:message code="message.cart.description1"/></h5>
 							<h5>* <spring:message code="message.cart.description2"/></h5>
-							<h5>* <spring:message code="message.cart.description3"/></h5>
-							<br>
+							<h5>* <spring:message code="message.cart.description3"/></h5><br>
 						</div>
 						<br>
 						<!-- 장바구니 취소 및 조회 -->
@@ -262,7 +261,11 @@
 	<script src="/resources/js/main.js"></script>
 	<script src="/resources/js/orderJs/cart.js"></script>
 	<script type="text/javascript">
-		var total = "<spring:message code='message.cart.form.head6'/>";
+		var total = "<spring:message code='message.cart.updateUI.total'/>";
+		var count = "<spring:message code='message.cart.updateUI.count'/>";
+		var totalPrice1 = "<spring:message code='message.cart.updateUI.totalPrice1'/>";
+		var totalPrice2 = "<spring:message code='message.cart.updateUI.totalPrice2'/>";
+		var purchaseEmpty = "<spring:message code='message.cart.formChk.modal.purchaseEmpty'/>";
 	</script>
 </body>
 
