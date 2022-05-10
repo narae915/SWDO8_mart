@@ -325,6 +325,4 @@ public class AdminService {
 		
 		return dao.selectAdmin(map);
 	}
-
-
 }

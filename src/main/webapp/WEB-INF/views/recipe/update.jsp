@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -12,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>SpringDay | 게시글 수정</title>
+    <title>SpringDay | <spring:message code="message.recipe.update"/></title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -50,7 +51,7 @@
             <form action="/recipe/updateRecipe" method="post">
 		<c:if test="${recipe != null }">
 		<div class="col-lg-12">
-			<input type="text" name="subject"  id="subject" placeholder="제목을 입력하세요." value="${recipe.title }">
+			<input type="text" name="subject"  id="subject" placeholder="<spring:message code="message.recipe.needTitle"/>" value="${recipe.title }">
 			<textarea id="summernote" name="editordata"></textarea>
 			<input type="hidden" id="content" value='${recipe.content }'>
 			<input type="hidden" name="recipeNum" value="${recipeNum }">
@@ -66,12 +67,12 @@
                         		</c:forEach>
                         	</c:if>
 						</div><br>
-						<input type="text" name="tag" id="tag-content" placeholder="사용된  주재료를 작성해주세요.(태그작성)">
+						<input type="text" name="tag" id="tag-content" placeholder="<spring:message code="message.recipe.tagContent"/>">
 					</div>
 	                <div class="col-lg-10" id="btn-div">
-	  					<input type="submit" class="primary-btn" id="submit-btn" value="완료">
+	  					<input type="submit" class="primary-btn" id="submit-btn" value="<spring:message code="message.recipe.success"/>">
 	  					&emsp;
-						<input type="button" class="primary-btn" value="취소" onclick="location.href='/recipe/recipeList'">
+						<input type="button" class="primary-btn" value="<spring:message code="message.readRecipe.cancel"/>" onclick="location.href='/recipe/recipeList'">
 	                </div>
 	            </c:if>
             </form>
@@ -138,7 +139,7 @@
 	            lang : 'ko-KR',
 	            fontNames: fontList,
 	            fontNamesignoreCheck: fontList,
-	            placeholder: '내용을 입력하세요.',
+	            placeholder: '<spring:message code="message.recipe.needContent"/>',
 	            toolbar : toolbar,
 	            callbacks : { // 콜백 함수
 	            	// 이미지 업로드 시 동작
@@ -192,7 +193,7 @@
 			//태그 개수가 10개를 넘었을 경우
 			if(totalTag > 10) {
 				exitAlert();
-				$("#footer-modal-content").prepend("태그는 10개까지만 입력 가능합니다.");
+				$("#footer-modal-content").prepend("<spring:message code='message.recipe.limitTag'/>");
 				showModalAlert();
 				
 				return false;
@@ -201,7 +202,7 @@
 			// 제목 칸이 비어있을 시,
 			if(subject.trim() == ''){
 				exitAlert();
-				$("#footer-modal-content").prepend("제목을 입력해 주십시오.");
+				$("#footer-modal-content").prepend("<spring:message code='message.recipe.needTitle'/>");
 				showModalAlert()
 				
 				return false;
@@ -210,7 +211,7 @@
 			// 내용 칸이 비어있을 시,
 			if(content.trim() == ''){
 				exitAlert();
-				$("#footer-modal-content").prepend("내용을 입력해 주십시오.");
+				$("#footer-modal-content").prepend("<spring:message code='message.recipe.needContent'/>");
 				showModalAlert()
 				
 				return false;
