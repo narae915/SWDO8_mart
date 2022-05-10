@@ -312,7 +312,6 @@ public class AdminService {
 		return dao.itemFileUpdate(map) > 0;
 	}
 
-<<<<<<< HEAD
 	//강제 회원 탈퇴
 	public boolean deleteUser(int userNum) {
 		return dao.deleteUser(userNum) > 0;
@@ -327,7 +326,6 @@ public class AdminService {
 		return dao.saleFlag(map) > 0;
 	}
 
-=======
 	//로그인 확인
 	public ArrayList<EmpVO> selectAdmin(String empNum, String empPw) {
 		HashMap<String, Object> map = new HashMap<>();
@@ -337,6 +335,4 @@ public class AdminService {
 		return dao.selectAdmin(map);
 	}
 
-
->>>>>>> chaerin
 }

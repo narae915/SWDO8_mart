@@ -190,10 +190,10 @@
 			}
 			
 			// 내용 칸이 비어있을 시,
-			if(content.trim() == ''){
+			if((content.trim() == '')||(content.trim() == '<p><br></p>')){
 				exitAlert();
 				$("#footer-modal-content").prepend("내용을 입력해 주십시오.");
-				showModalAlert();
+				showModalAlert()
 				
 				return false;
 			}
