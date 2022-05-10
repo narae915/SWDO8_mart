@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
@@ -27,10 +28,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.internet.MimeMessage;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.core.Authentication;
 
 import com.google.gson.JsonObject;
+import com.project.market.security.CustomLoginSuccessHandler2;
 import com.project.market.service.AdminService;
-import com.project.market.service.UserService;
 import com.project.market.util.FileService;
 import com.project.market.util.PageNavigator;
 import com.project.market.vo.EmpVO;
@@ -212,10 +214,10 @@ public class AdminController {
 		
 		return "admin/adminLogin";
 	}
-	
 	/* 로그인 */
 	@RequestMapping(value = "/adminLogin", method = RequestMethod.POST)
-	public String adminLogin(int empNum, String empPw, HttpSession session, Model model)
+	public String adminLogin(int empNum, String empPw, HttpSession session, Model model,HttpServletRequest request, HttpServletResponse response,
+			Authentication authentication)
 	{
 		logger.info("login 메소드 실행(POST).");
 		
@@ -247,6 +249,7 @@ public class AdminController {
 				session.setAttribute("loginName", empName);
 				session.setAttribute("loginId", empNum);
 				session.setAttribute("loginPosition", position);
+				
 				returnUrl = "redirect:adminMain";
 			}
 			else
@@ -1104,4 +1107,30 @@ public class AdminController {
 		}
 		return returnVal;
 	}
+
+	//로그인 확인
+	@ResponseBody
+	@RequestMapping(value = "/adminChk", method = RequestMethod.POST)
+	public String userChk(String empNum, String empPw, HttpSession session) {
+		logger.info("adminChk 메소드 실행(POST).");
+		logger.info("empNum: {}", empNum);
+		logger.info("empPw: {}", empPw);
+		
+		ArrayList<EmpVO> emp = service.selectAdmin(empNum,empPw);
+		
+		if ( emp.size() != 0 ) {
+			logger.info("있는 직원");
+
+			session.setAttribute("loginName", emp.get(0).getEmpName());
+			session.setAttribute("loginId", empNum);
+			session.setAttribute("loginPosition", emp.get(0).getPosition());
+
+			return "yes";
+		} else {
+			logger.info("없는 직원");
+			return "no";
+		}
+	}
+	
+	
 }

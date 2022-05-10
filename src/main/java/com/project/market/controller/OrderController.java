@@ -167,9 +167,9 @@ public class OrderController {
 	public String orderList(@RequestParam(defaultValue = "1") int currentPage, 
 								Model model, String searchWord, Authentication authentication) {
 		logger.info("orderList 메소드 실행(GET).");
-
-		String userMail = authentication.getName();
 		
+		String userMail = authentication.getName();
+
 		if(searchWord == null) {
 			searchWord = "";
 		}
@@ -253,7 +253,7 @@ public class OrderController {
 		if(result) {
 			logger.info("장바구니 삭제 성공");
 			
-			return "success";
+			return "res";
 		} else {
 			logger.info("장바구니 삭제 실패");
 			

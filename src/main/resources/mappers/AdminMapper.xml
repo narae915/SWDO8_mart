@@ -552,4 +552,16 @@
 		where
 			item_name like '%' || #{saleName } || '%'
 	</update>
+	 <!-- 로그인 확인 -->
+	 <select id="selectAdmin" parameterType="HashMap" resultType="Emp">
+	 	select 
+	 		emp_name as empName,
+	 		position as position
+	 	from
+	 		emp_table
+	 	where
+	 		emp_num = #{empNum }
+	 	and
+	 		emp_pw = #{empPw }
+	 </select>
 </mapper>

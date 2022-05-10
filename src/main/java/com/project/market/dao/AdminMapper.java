@@ -13,7 +13,6 @@ import com.project.market.vo.UserVO;
 
 public interface AdminMapper {
 
-
 	int getTotalRecordsCount(HashMap<String, Object> map); // 페이징
 
 	String StaffOnlyChk(String chkMessage); //직원인지 확인
@@ -81,4 +80,6 @@ public interface AdminMapper {
 	int deleteUser(int userNum); //강제 회원 탈퇴
 
 	int saleFlag(HashMap<String, Object> map); //세일 상품임을 알림
+
+	ArrayList<EmpVO> selectAdmin(HashMap<String, Object> map);	//로그인 확인
 }
