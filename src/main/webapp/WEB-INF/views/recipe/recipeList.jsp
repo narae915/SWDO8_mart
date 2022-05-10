@@ -63,14 +63,14 @@
                 <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1">
                     <div class="blog-sidebar">
                         <div class="search-form">
-                            <h4>레시피 검색</h4>
+                            <h4><spring:message code="message.recipeList.searchRecipe"/></h4>
                             <form id="searchForm" action="/recipe/search" method="GET" onsubmit="return searchFormChk();">
-                                <input type="text" id="search-word" name="searchword" placeholder="검색어 ">
+                                <input type="text" id="search-word" name="searchword" placeholder="<spring:message code="message.recipeList.searchWord"/>">
                                 <button><i class="fa fa-search"></i></button>
                             </form>
                         </div>
                         <div class="recent-post">
-                            <h4>최신글</h4>
+                            <h4><spring:message code="message.recipeList.newPost"/></h4>
                             <div class="recent-blog">
                             	<c:forEach items="${newPostList }" var="newPost" varStatus="status">
 									<a href="/recipe/readRecipe?recipeNum=${newPost.recipeNum }" class="rb-item">
@@ -86,7 +86,7 @@
                             </div>
                         </div>
                         <br>
-                    	<input type="button" value="작성하기" class="primary-btn" onclick="location.href = '/recipe/write'">
+                    	<input type="button" value="<spring:message code="message.recipeList.newPost1"/>" class="primary-btn" onclick="location.href = '/recipe/write'">
                     </div>
                 </div>
                 <div class="col-lg-9 order-1 order-lg-2">
@@ -95,16 +95,16 @@
                     <c:if test="${nothing eq 'nothing' }">
                     	<table id="nothing">
 							<tr>
-								<td><img alt="검색 결과 없음" src="/resources/img/no-message.png"></td>
+								<td><img alt="<spring:message code="message.recipeList.nothing"/>" src="/resources/img/no-message.png"></td>
 							</tr>
 							<tr>
 								<td></td>
 							</tr>
 							<tr>
-								<th>등록된 게시글이 없습니다.</th>
+								<th><spring:message code="message.recipeList.emptyPost"/></th>
 							</tr>
 							<tr>
-								<td><a href="/recipe/write">글 쓰러 가기</a></td>
+								<td><a href="/recipe/write"><spring:message code="message.recipeList.newPost1"/></a></td>
 							</tr>
 						</table>
                     </c:if>
@@ -112,19 +112,19 @@
 						<div id="not-found-search">
 						<table>
 							<tr>
-								<td><img alt="검색 결과 없음" src="/resources/img/not-found.png"></td>
+								<td><img alt="<spring:message code="message.recipeList.nothing"/>" src="/resources/img/not-found.png"></td>
 							</tr>
 							<tr>
 								<td></td>
 							</tr>
 							<tr>
-								<th><span style="color:blue;">'${searchword }'</span>에 대한 레시피를 찾을 수 없습니다.</th>
+								<th><span style="color:blue;">'${searchword }'</span><spring:message code="message.recipeList.noword"/></th>
 							</tr>
 							<tr>
-								<td>아직 등록되지 않은 레시피일 수 있습니다. 요리의 레시피를 직접 작성하시겠습니까?</td>
+								<td><spring:message code="message.recipeList.noword2"/></td>
 							</tr>
 							<tr>
-								<td><a href="/recipe/write">글 쓰러 가기</a></td>
+								<td><a href="/recipe/write"><spring:message code="message.recipeList.newPost1"/></a></td>
 							</tr>
 						</table>
 						</div>
@@ -159,7 +159,7 @@
                             <div class="loading-more">
                                 <i class="icon_loading"></i>
                                 <a href="javascript:loadingMore(6);" style="cursor: pointer;">
-                           			게시글 더 보기
+                           			<spring:message code="message.recipeList.loadingmore"/>
 		                        </a>
 		                        <input type="hidden" id="viewCount" value="0">
 		                        <input type="hidden" id="startCount" value="0">
@@ -171,7 +171,7 @@
                             <div class="loading-more">
                                 <i class="icon_loading"></i>
                                 <a href="javascript:searchLoadingMore(6);" style="cursor: pointer;">
-                           			검색 결과 더 보기
+                           			<spring:message code="message.recipeList.loadingmore2"/>
 		                        </a>
 		                        <input type="hidden" id="viewCount" value="0">
 		                        <input type="hidden" id="startCount" value="0">
@@ -213,8 +213,8 @@
 		$("li#menu-community").attr("class", "active");
 	});
 	// 닫기 모달
-	function exitAlert() {
-		$("#footer-modal-content").append('<button name="modalClose" class="primary-btn" id="footer-modal-button" style="margin-top:30px; border-radius:5px; border:none">창 닫기</button>');
+	function exitAlert() { 
+		$("#footer-modal-content").append('<button name="modalClose" class="primary-btn" id="footer-modal-button" style="margin-top:30px; border-radius:5px; border:none"><spring:message code="message.footer.modal.close"/></button>');
 	}
 
 	// 모달 출력
@@ -230,7 +230,7 @@
 		var searchword = $("#search-word").val().trim();
 		console.log(searchword);
 		if(searchword == null || searchword.length == 0 || searchword == "") {
-			$("#footer-modal-content").html("검색어를 입력해주세요.");
+			$("#footer-modal-content").html("<spring:message code='message.recipeList.inputSearch'/>");
 			exitAlert();
 			showModalAlert();
     		return false;
@@ -282,7 +282,7 @@
     		},
 			error: function(e){
 				$("#footer-modal-content").html("");
-				$("#footer-modal-content").html("표시할 게시물이 없습니다.");
+				$("#footer-modal-content").html("<spring:message code='message.recipeList.nomorePost'/>");
 				exitAlert();
 				showModalAlert();
 				console.log("실패");
@@ -321,7 +321,7 @@
 			error: function(e){
 				//원래 모달안에 있던 글을 지우고, 다시 쓰고 싶은 말을 추가
 				$("#footer-modal-content").html("");
-				$("#footer-modal-content").html("표시할 게시물이 없습니다.");
+				$("#footer-modal-content").html("<spring:message code='message.recipeList.nomorePost'/>");
 				exitAlert();
 				showModalAlert();
 				console.log("실패");

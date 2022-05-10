@@ -1,11 +1,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>검색결과를 보여주는 페이지</title>
+<title><spring:message code="message.recipeListAjax.search"/></title>
 <link rel="stylesheet" href="/resources/css/font.css" type="text/css">
 </head>
 <body>
@@ -37,7 +38,7 @@
 			<div class="loading-more">
 				<i class="icon_loading"></i>
 				<a href="javascript:loadingMore(6);" style="cursor: pointer;">
-				게시글 더 보기
+				<spring:message code="message.recipeList.loadingmore"/>
 				</a>
 				<input type="hidden" id="viewCount" value="0">
 				<input type="hidden" id="startCount" value="0">
@@ -49,7 +50,7 @@
 			<div class="loading-more">
 				<i class="icon_loading"></i>
 				<a href="javascript:searchLoadingMore(6);" style="cursor: pointer;">
-				검색 결과 더 보기
+				<spring:message code="message.recipeList.loadingmore2"/>
 				</a>
 				<input type="hidden" id="viewCount" value="0">
 				<input type="hidden" id="startCount" value="0">
@@ -103,7 +104,7 @@
 			error: function(e){
 				//원래 모달안에 있던 글을 지우고, 다시 쓰고 싶은 말을 추가
 				$("#footer-modal-content").html("");
-				$("#footer-modal-content").html("표시할 게시물이 없습니다.");
+				$("#footer-modal-content").html("<spring:message code='message.recipeList.nomorePost'/>");
 				exitAlert();
 				showModalAlert();
 				console.log("실패");
@@ -142,7 +143,7 @@
 			error: function(e){
 				//원래 모달안에 있던 글을 지우고, 다시 쓰고 싶은 말을 추가
 				$("#footer-modal-content").html("");
-				$("#footer-modal-content").html("표시할 게시물이 없습니다.");
+				$("#footer-modal-content").html("<spring:message code='message.recipeList.nomorePost'/>");
 				exitAlert();
 				showModalAlert();
 				console.log("실패");
