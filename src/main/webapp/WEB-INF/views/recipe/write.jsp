@@ -29,9 +29,7 @@
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/recipeCss/write.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/summernote/summernote-lite.css" type="text/css">
-<style>
-
-</style>
+	<link rel="stylesheet" href="/resources/css/font.css" type="text/css">
 </head>
 
 <body>

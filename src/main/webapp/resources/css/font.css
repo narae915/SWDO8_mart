@@ -1,0 +1,23 @@
+/* 영어 폰트 */
+@font-face 
+{
+	font-family: Overlock-Regular;
+	src: url('/resources/fonts/Overlock-Regular.ttf') format('truetype');
+	unicode-range: U+0041-005A, U+0061-007A;
+}
+/* 한국어 폰트 */
+@font-face 
+{
+	font-family: NanumSquareRoundOTFR;
+	src: url('/resources/fonts/NanumSquareRoundOTFR.otf') format('truetype');
+}
+/* 일본어 폰트 */
+@font-face 
+{
+	font-family: KiwiMaru-Regular;
+	src: url('/resources/fonts/KiwiMaru-Regular.ttf') format('truetype');;
+}
+*
+{
+	font-family: Overlock-Regular, NanumSquareRoundOTFR, KiwiMaru-Regular;
+}

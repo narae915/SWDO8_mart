@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/orderCss/cart.css" type="text/css">
+	<link rel="stylesheet" href="/resources/css/font.css" type="text/css">
 	<script src="https://kit.fontawesome.com/af95d2c333.js" crossorigin="anonymous"></script>
 	
 </head>

@@ -14,7 +14,7 @@ function checkForm()
 	if ( userMail.length == 0 || !(emailChk.test(userMail)) )
 	{
 		exitAlert();
-		$("#footer-modal-content").prepend("이메일을 올바르게 입력해주세요.");
+		$("#footer-modal-content").prepend(emailChk);
 		showModalAlert();
 		return result;
 	}
@@ -22,7 +22,7 @@ function checkForm()
 	if ( $("#pinNumChk").is(":disabled") || $("#pinNumChk_Btn").is(":disabled") ) // 인증확인 창이 비활성화 되있다면
 	{
 		exitAlert();
-		$("#footer-modal-content").prepend("이메일을 인증을 완료해주세요.");
+		$("#footer-modal-content").prepend(pinNumChk);
 		showModalAlert();
 		return result;
 	}
@@ -31,7 +31,7 @@ function checkForm()
 		if ( !( $("#pinNumChk_Btn_true").is(":disabled") ) ) // 인증확인 창이 활성 상태인데 인증확인 버튼이 비활성화 상태가 아닌경우
 		{
 			exitAlert();
-			$("#footer-modal-content").prepend("이메일을 인증을 완료해주세요.");
+			$("#footer-modal-content").prepend(pinNumChk);
 			showModalAlert();
 			return result;
 		}
@@ -39,7 +39,7 @@ function checkForm()
 		if ( isNaN(inputPinNum) ) // 인증번호가 숫자가 아닌경우
 		{
 			exitAlert();
-			$("#footer-modal-content").prepend("올바른 인증번호 형식이 아닙니다.");
+			$("#footer-modal-content").prepend(inputPinNum);
 			showModalAlert();
 			return result;
 		}
@@ -47,7 +47,7 @@ function checkForm()
 		if ( inputPinNum != pinNum ) // 인증번호가 일치하지 않는다면
 		{
 			exitAlert();
-			$("#footer-modal-content").prepend("이메일 인증번호가 일치하지 않습니다.");
+			$("#footer-modal-content").prepend(emailPinNum);
 			showModalAlert();
 			return result;
 		}
@@ -71,7 +71,7 @@ $("#sendMailBtn").click(function()
 	if ( userMail.length == 0 || !(emailChk.test(userMail)) )
 	{
 		exitAlert();
-		$("#footer-modal-content").prepend("이메일을 올바르게 입력해주세요.");
+		$("#footer-modal-content").prepend(emailChk);
 		showModalAlert();
 		return false;
 	}
@@ -87,17 +87,18 @@ $("#sendMailBtn").click(function()
 				
 				if ( result.length != 6 )
 				{
-					$("#errorMessage").prepend("입력하신 정보와 일치하는 ID를 찾을 수 없습니다.");
+					$("#errorMessage").prepend(errorMessage);
 				}
 				else
 				{
 					mailBox.attr("readonly", true) // 메일 발송 성공시 메일 수정 불가
-					$("#sendMailBtn").val("인증번호 재전송"); // 전송 성공 시 전송버튼 value값 변경
+					$("#sendMailBtn").val(reSendMailBtn); // 전송 성공 시 전송버튼 value값 변경
 					pinNumChk.attr("disabled", false); // 인증 번호 발송시 disabled 해제
 					checkBtn.attr("disabled", false);
 					pinNumBox.attr("id", "pinNumChk_true");  // 인증 번호 발송시 id를 변경함으로서 css적용
 					checkBtn.attr("id", "pinNumChk_Btn_true");
 					pinNum = result;
+					alert(sendSuccess);
 				}
 				
 				
@@ -115,7 +116,7 @@ $("#pinNumChk_Btn").click(function()
 	
 	if ( inputPinNum == pinNum )
 	{
-		checkPinNum.html("인증번호가 일치합니다.");
+		checkPinNum.html(checkPinNum1);
 		pinNumBox.attr("readonly", true);
 		checkPinNum.attr("class", "correct");       
 		$("#pinNumChk_Btn_true").attr("disabled", true);
@@ -123,7 +124,7 @@ $("#pinNumChk_Btn").click(function()
 	}
 	else 
 	{
-		checkPinNum.html("인증번호를 다시 확인해주세요.");
+		checkPinNum.html(checkPinNum2);
 		checkPinNum.attr("class", "incorrect");
 	}   
 });
