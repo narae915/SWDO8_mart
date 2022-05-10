@@ -169,11 +169,10 @@
 
 
 		// 작성 중 페이지를 벗어날 시,
-		var checkUnload = true;/* 
+		var checkUnload = true; 
 		$(window).on('beforeunload', function () {
 		    if (checkUnload) return "이 페이지를 벗어나면 작성된 내용은 저장되지 않습니다.";
 		});
-		 */
 		// 유효성 검사
 		$("#submit-btn").click(function() {
 			

@@ -209,7 +209,7 @@
 			}
 			
 			// 내용 칸이 비어있을 시,
-			if(content.trim() == ''){
+			if((content.trim() == '')||(content.trim() == '<p><br></p>')){
 				exitAlert();
 				$("#footer-modal-content").prepend("<spring:message code='message.recipe.needContent'/>");
 				showModalAlert()
