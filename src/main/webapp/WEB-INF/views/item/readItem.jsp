@@ -1,7 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -11,7 +12,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>SpringDay | 상세보기</title>
+    <title>SpringDay | <spring:message code="message.home.mealSection2"/></title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -27,47 +28,7 @@
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
 	<link rel="stylesheet" href="/resources/css/font.css" type="text/css">
-    
-    <!-- CSS -->
-	<style type="text/css">
-		.modal-button {
-			font-size: 16px;
-			color: #ffffff;
-			border: 1px solid #e7ab3c;
-			background: #e7ab3c;
-			height: 45px;
-			padding: 12px 16px 12px;
-		}
-		
-		.modal-button1 {
-			font-size: 16px;
-			color: #ffffff;
-			border: 1px solid #787878;
-			background: #787878;
-			height: 45px;
-			padding: 12px 16px 12px;
-		}
-		
-		.modal{
-			position: fixed;
-			top:0; left: 0; bottom: 0; right: 0;
-			background: rgba(0, 0, 0, 0.8); /* 투명도 */
-		}
-		
-		#ri-modal_content{
-			position: absolute;  /* 배경 내에서 위치 조정 */
-			top: calc(50vh - 100px); left: calc(50vw - 200px);
-			background-color: white;
-			border-radius: 10px;
-			width: 400px;
-			height: 200px;
-			display: flex;
-			flex-wrap: wrap;
-			flex-direction: row;
-			align-content: center;
-			justify-content: center;
-		}
-	</style>
+	<link rel="stylesheet" href="/resources/css/itemCss/readItemCss.css" type="text/css">
 </head>
 
 <body>
@@ -87,8 +48,8 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text product-more">
                         <a href="/"><i class="fa fa-home"></i> Home</a>
-                        <a href="/item/itemList">상품</a>
-                        <span>상세 보기</span>
+                        <a href="/item/itemList"><spring:message code="message.readItem.item"/></a>
+                        <span><spring:message code="message.home.mealSection2"/></span>
                     </div>
                 </div>
             </div>
@@ -102,7 +63,7 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="filter-widget">
-                        <h4 class="fw-title">카테고리</h4>
+                        <h4 class="fw-title"><spring:message code="message.itemList.category"/></h4>
                         <ul class="filter-catagories">
                         	<!-- HashMap 반복할 때는 안에 들어있는 key값을 대문자로 작성해야 한다. -->
                         	<c:forEach items="${categoryList }" var="category">
@@ -158,7 +119,7 @@
                                     	<p>${item.introduce }</p>
                                     </c:if>
                                     <input type="hidden" id="item-amount" value="${item.itemAmount }">
-                                    <p>현재 남은 수량 ${item.itemAmount }</p>
+                                    <p><spring:message code="message.readItem.amount"/> ${item.itemAmount }</p>
                                     <c:if test="${item.salePrice != 0 }">
 										<h4><fmt:formatNumber value="${item.salePrice }" pattern="#,###원"/></h4>
                                         <span style="text-decoration: line-through;color: #cfcfcf;"><fmt:formatNumber value="${item.price }" pattern="#,###원"/></span>
@@ -171,7 +132,7 @@
                                     <div class="pro-qty">
                                         <input type="text" name="cartAmount" value="1">
                                     </div>
-                                    <a class="primary-btn pd-cart" onclick="insertCart(${item.itemNum });">장바구니에 담기</a>
+                                    <a class="primary-btn pd-cart" onclick="insertCart(${item.itemNum });"><spring:message code="message.readItem.inputCart"/></a>
                                 </div>
                             </div>
                         </div>
@@ -180,13 +141,13 @@
                         <div class="tab-item">
                             <ul class="nav" role="tablist">
                                 <li>
-                                    <a class="active" data-toggle="tab" href="#tab-1" role="tab">💡상품 정보(상세 설명)</a>
+                                    <a class="active" data-toggle="tab" href="#tab-1" role="tab">💡<spring:message code="message.readItem.infoItem"/></a>
                                 </li>
                                 <li>
-                                    <a data-toggle="tab" href="#tab-2" role="tab">👐간단한 손질법👐</a>
+                                    <a data-toggle="tab" href="#tab-2" role="tab">👐<spring:message code="message.readItem.prepIngredients"/>👐</a>
                                 </li>
                                 <li>
-                                    <a data-toggle="tab" href="#tab-3" role="tab">👨식자재 보관법👩</a>
+                                    <a data-toggle="tab" href="#tab-3" role="tab">👨<spring:message code="message.readItem.store"/>👩</a>
                                 </li>
                             </ul>
                         </div>
@@ -233,10 +194,10 @@
 
 	<!-- 모달 -->
 	<div class="modal" id="ri-modal">
-		<div class="modal_content" id="ri-modal_content" title="클릭하면 창이 닫힙니다.">
-			장바구니에 추가되었습니다. 확인하시겠습니까?
-			<input type="button" class="modal-button" id="ri-modal-button" value="장바구니로">
-			<input type="button" class="modal-button1" id="ri-modal-close" value="쇼핑 계속하기">
+		<div class="modal_content" id="ri-modal_content" title="<spring:message code="message.readItem.closeMsg"/>">
+			<spring:message code="message.home.modal.cart2"/>
+			<input type="button" class="modal-button" id="ri-modal-button" value="<spring:message code="message.home.modal.cart2.cartPage"/>">
+			<input type="button" class="modal-button1" id="ri-modal-close" value="<spring:message code="message.home.modal.cart2.shopping"/>">
 		</div>
 	</div>
 
@@ -271,7 +232,7 @@
 
 	// 닫기 모달
 	function exitAlert() {
-		$("#footer-modal-content").append('<button name="modalClose" class="primary-btn" id="footer-modal-button" style="margin-top:30px; border-radius:5px; border:none">창 닫기</button>');
+		$("#footer-modal-content").append('<button name="modalClose" class="primary-btn" id="footer-modal-button" style="margin-top:30px; border-radius:5px; border:none"><spring:message code="message.footer.modal.close"/></button>');
 	}
 
 	// 모달 출력
@@ -295,7 +256,7 @@
 		if(itemAmount <= 0) {
 			$("#footer-modal-content").html("");
 			$("#footer-modal-content").css({"text-align": "center"});
-			$("#footer-modal-content").html("준비 중인 상품입니다.<br>창닫기를 누르시면 상품 리스트 페이지로 이동합니다.");
+			$("#footer-modal-content").html("<spring:message code='message.readItem.itemReady'/><br><spring:message code='message.readItem.closeInfo'/>");
 			exitAlert();
 			showModalAlert();
 			
@@ -307,14 +268,14 @@
 		} else if(itemAmount < cartAmount) {
 			$("#footer-modal-content").html("");
 			$("#footer-modal-content").css({"text-align": "center"});
-			$("#footer-modal-content").html("입력한 개수가 너무 많습니다.");
+			$("#footer-modal-content").html("<spring:message code='message.readItem.overAmount'/>");
 			exitAlert();
 			showModalAlert();
 		} else {
 			// 사용자가 입력한 수량이 없을 때
 			if(cartAmount == 0) {
 				$("#footer-modal-content").html("");
-				$("#footer-modal-content").html("수량을 1개 이상 선택해주세요.");
+				$("#footer-modal-content").html("<spring:message code='message.readItem.underAmount'/>");
 				exitAlert();
 				showModalAlert();
 			} else {
