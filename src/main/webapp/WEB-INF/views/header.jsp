@@ -295,6 +295,7 @@
 			});
 		}
 
+		/* 페이지 언어 변경 */
 		function changeLocale() 
 		{
 			var selectLocale = $(".language_drop option:selected").val();

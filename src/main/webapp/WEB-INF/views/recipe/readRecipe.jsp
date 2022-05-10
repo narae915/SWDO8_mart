@@ -111,7 +111,9 @@
                             	<div class="col-lg-5 col-md-6">
                                     <a style="cursor:default;" class="prev-blog">
                                         <div class="pb-text">
-                                            <h5>${emptyPrevMessage }</h5>
+                                            <c:if test="${not empty emptyPrevMessage }">
+                                            	<h5><spring:message code="message.readRecipe.emptyPrevMessage"/></h5>
+                                            </c:if>
                                         </div>
                                     </a>
                                 </div>
@@ -133,7 +135,9 @@
                             	<div class="col-lg-5 offset-lg-2 col-md-6">
                                     <a style="cursor:default;" class="next-blog">
 		                                <div class="nb-text">
-		                                    <h5>${emptyNextMessage }</h5>
+		                                	<c:if test="${not empty emptyNextMessage }">
+                                            	<h5><spring:message code="message.readRecipe.emptyNextMessage"/></h5>
+                                            </c:if>
 		                                </div>
 	                                </a>
                                 </div>
