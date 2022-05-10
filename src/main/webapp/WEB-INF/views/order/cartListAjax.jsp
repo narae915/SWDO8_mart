@@ -16,7 +16,12 @@
 		<tbody id="cartHover">
 			<c:if test="${cartList == null }">
 				<tr>
-					<td>${requestScope.emptyCart }</td>
+					<c:if test="${requestScope.emptyCart.length() == 15 }">
+						<td><spring:message code="message.cartListAjax.emptyCartLoginChk"/></td>
+					</c:if>
+					<c:if test="${requestScope.emptyCart.length() == 19 }">
+						<td><spring:message code="message.cartListAjax.emptyCartMsg"/></td>
+					</c:if>
 				</tr>
 			</c:if>
 			<c:if test="${cartList != null}">
