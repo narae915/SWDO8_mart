@@ -262,9 +262,13 @@
 		location.href = "/user/resetPw";
 	}
 	
+	/* 회원 탈퇴 */
 	$('#userDeleteBtn').click(function() 
 	{
-		confirmModal();	
+		confirmModal();
+		$("#footer-modal-content").html("");
+		$("#footer-modal-content").append('<button class="primary-btn" id="yes-button" style="border-radius:5px; position: relative; top: 45px; right: 60px; width: 98px;"><spring:message code="message.footer.modal.yes" /></button>');
+		$("#footer-modal-content").append('<button class="primary-btn" id="no-button" style="border-radius:5px; position: relative; left: 60px;"><spring:message code="message.footer.modal.no" /></button>');
 		$("#footer-modal-content").prepend("<spring:message code='message.userUpadate.modal.userDelete' />");
 		showModalAlert();
 		

@@ -318,7 +318,7 @@
     {
     	confirmModal();
     	$("#footer-modal-content").html("");
-		$("#footer-modal-content").append('<button class="primary-btn" id="yes-button" style="border-radius:5px; position: relative; top: 45px; right: 60px; width: 102px;"><spring:message code="message.footer.modal.yes" /></button>');
+		$("#footer-modal-content").append('<button class="primary-btn" id="yes-button" style="border-radius:5px; position: relative; top: 45px; right: 60px; width: 98px;"><spring:message code="message.footer.modal.yes" /></button>');
 		$("#footer-modal-content").append('<button class="primary-btn" id="no-button" style="border-radius:5px; position: relative; left: 60px;"><spring:message code="message.footer.modal.no" /></button>');
     	$("#footer-modal-content").prepend("&ensp;&ensp;<b style='color: red; position: absolute; left: 8.3em; bottom: 10em;'><spring:message code='message.header.modal.userConfirm' /></b>");
     	$("#footer-modal-content").prepend("<b style='position: absolute; left: 3.5em;'><spring:message code='message.signUp.form.password' />:</b>&ensp;<input type='password' id='userPw' name='userPw' style='position: absolute; right: 3em;'>");

@@ -2,90 +2,88 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <!DOCTYPE html>
-<html lang="zxx">
-
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Fashi Template">
-    <meta name="keywords" content="Fashi, unica, creative, html">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-    <title>SpringDay | <spring:message code="message.writeRecipe.write"/></title>
-
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-
-    <!-- Css Styles -->
-    <link rel="stylesheet" href="/resources/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="/resources/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="/resources/css/themify-icons.css" type="text/css">
-    <link rel="stylesheet" href="/resources/css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="/resources/css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="/resources/css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
-    <link rel="stylesheet" href="/resources/css/recipeCss/write.css" type="text/css">
-    <link rel="stylesheet" href="/resources/css/summernote/summernote-lite.css" type="text/css">
+	<meta charset="UTF-8">
+	<meta name="description" content="Fashi Template">
+	<meta name="keywords" content="Fashi, unica, creative, html">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	
+	<title>SpringDay | <spring:message code="message.writeRecipe.write" /></title>
+	
+	<!-- Google Font -->
+	<link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+	
+	<!-- Css Styles -->
+	<link rel="stylesheet" href="/resources/css/bootstrap.min.css" type="text/css">
+	<link rel="stylesheet" href="/resources/css/font-awesome.min.css" type="text/css">
+	<link rel="stylesheet" href="/resources/css/themify-icons.css" type="text/css">
+	<link rel="stylesheet" href="/resources/css/elegant-icons.css" type="text/css">
+	<link rel="stylesheet" href="/resources/css/owl.carousel.min.css" type="text/css">
+	<link rel="stylesheet" href="/resources/css/nice-select.css" type="text/css">
+	<link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
+	<link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
+	<link rel="stylesheet" href="/resources/css/style.css" type="text/css">
+	<link rel="stylesheet" href="/resources/css/recipeCss/write.css" type="text/css">
+	<link rel="stylesheet" href="/resources/css/summernote/summernote-lite.css" type="text/css">
 	<link rel="stylesheet" href="/resources/css/font.css" type="text/css">
 </head>
 
 <body>
-    <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
+	<!-- Page Preloder -->
+	<div id="preloder">
+		<div class="loader"></div>
+	</div>
 	<!-- Header -->
-	<%@ include file="/WEB-INF/views/header.jsp" %>
+	<%@ include file="/WEB-INF/views/header.jsp"%>
 
-    <!-- Blog Details Section Begin -->
-    <section class="blog-details spad">
-        <div class="container">
-            <div class="row">
-            <form action="/recipe/write" method="post">
-                <div class="col-lg-12">
-					<input type="text" name="subject" id="subject" placeholder="<spring:message code="message.recipe.needTitle"/>">
-					<textarea id="summernote" name="editordata"></textarea>
-					<br>
-					<div class="recipe-tag">
-						<div class="tag-wrapper"></div><br>
-						<input type="text" name="tag" id="tag-content" placeholder="<spring:message code="message.recipe.tagContent"/>">
+	<!-- Blog Details Section Begin -->
+	<section class="blog-details spad">
+		<div class="container">
+			<div class="row">
+				<form action="/recipe/write" method="post">
+					<div class="col-lg-12">
+						<input type="text" name="subject" id="subject" placeholder="<spring:message code="message.recipe.needTitle"/>">
+						<textarea id="summernote" name="editordata"></textarea>
+						<br>
+						<div class="recipe-tag">
+							<div class="tag-wrapper"></div><br> 
+							<input type="text" name="tag" id="tag-content" placeholder="<spring:message code="message.recipe.tagContent"/>">
+						</div>
 					</div>
-                </div>
-                <div class="col-lg-10" id="btn-div">
-  					<input type="submit" class="primary-btn" id="submit-btn" value="<spring:message code="message.recipe.success"/>">
-  					&emsp;
-					<input type="button" class="primary-btn" value="<spring:message code="message.readRecipe.cancel"/>">
-                </div>
-            </form>
-            </div>
-        </div>
-    </section>
-    
-    
-    <!-- Footer -->
-    <%@ include file="/WEB-INF/views/footer.jsp" %>
-    
-    <!-- Js Plugins -->
-    <script src="/resources/js/jquery-3.6.0.min.js"></script>
-    <script src="/resources/js/bootstrap.min.js"></script>
-    <script src="/resources/js/jquery-ui.min.js"></script>
-    <script src="/resources/js/jquery.countdown.min.js"></script>
-    <script src="/resources/js/jquery.nice-select.min.js"></script>
-    <script src="/resources/js/jquery.zoom.min.js"></script>
-    <script src="/resources/js/jquery.dd.min.js"></script>
-    <script src="/resources/js/jquery.slicknav.js"></script>
-    <script src="/resources/js/owl.carousel.min.js"></script>
-    <script src="/resources/js/main.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-    
-    <!-- 썸머노트 -->
-    <script src="/resources/js/summernote/lang/summernote-ko-KR.js"></script>
+					<div class="col-lg-10" id="btn-div">
+						<input type="submit" class="primary-btn" id="submit-btn" value="<spring:message code="message.recipe.success"/>">
+						&emsp; 
+						<input type="button" class="primary-btn" value="<spring:message code="message.readRecipe.cancel"/>">
+					</div>
+				</form>
+			</div>
+		</div>
+	</section>
+
+
+	<!-- Footer -->
+	<%@ include file="/WEB-INF/views/footer.jsp"%>
+
+	<!-- Js Plugins -->
+	<script src="/resources/js/jquery-3.6.0.min.js"></script>
+	<script src="/resources/js/bootstrap.min.js"></script>
+	<script src="/resources/js/jquery-ui.min.js"></script>
+	<script src="/resources/js/jquery.countdown.min.js"></script>
+	<script src="/resources/js/jquery.nice-select.min.js"></script>
+	<script src="/resources/js/jquery.zoom.min.js"></script>
+	<script src="/resources/js/jquery.dd.min.js"></script>
+	<script src="/resources/js/jquery.slicknav.js"></script>
+	<script src="/resources/js/owl.carousel.min.js"></script>
+	<script src="/resources/js/main.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+
+	<!-- 썸머노트 -->
+	<script src="/resources/js/summernote/lang/summernote-ko-KR.js"></script>
 	<script src="/resources/js/summernote/summernote-lite.js"></script>
-  
+
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("li#menu-community").attr("class", "active");
@@ -222,7 +220,6 @@
 				$("#tag-content").val("");
 			}
 		});
-		
 	</script>
 </body>
 

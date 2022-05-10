@@ -7,7 +7,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>SpringDay | <spring:message code="message.header.group.itemList"/></title>
 	
 	<!-- Css Styles -->
 	<link rel="stylesheet" href="/resources/css/font.css" type="text/css">
