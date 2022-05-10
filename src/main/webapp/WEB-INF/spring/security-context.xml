@@ -117,7 +117,7 @@
 		<!-- CSRF 설정을 true로 변경 -->
 		<security:csrf disabled="true"/>
 		
-		<security:session-management invalid-session-url="/user/login"> 
+		<security:session-management invalid-session-url="/"> 
 			<security:concurrency-control 
 				max-sessions="1" 
 				error-if-maximum-exceeded="false" 
