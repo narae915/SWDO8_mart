@@ -1086,4 +1086,22 @@ public class AdminController {
 		
 		return returnUrl;
 	}
+	
+	//세일 상품 설정
+	@ResponseBody
+	@RequestMapping(value="/saleProduct", method=RequestMethod.POST)
+	public String saleProduct(int salePercent, String saleName) {
+		logger.info("saleProduct 세일 상품 설정(POST)");
+		logger.info("salePercent : {}, saleName : {}", salePercent, saleName);
+		
+		String returnVal = null;
+		//세일 상품임을 알림(퍼센트도 추가)
+		boolean result = service.saleFlag(saleName, salePercent);
+		if(result) {
+			returnVal = "yes";
+		} else {
+			returnVal = "no";
+		}
+		return returnVal;
+	}
 }

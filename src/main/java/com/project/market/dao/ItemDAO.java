@@ -143,4 +143,18 @@ public class ItemDAO {
 		return result;
 	}
 
+	//세일 상품을 불러옴
+	public ItemVO getSaleProduct(int itemNum) {
+		ItemVO result = null;
+		ItemMapper mapper = null;
+
+		try {
+			mapper = session.getMapper(ItemMapper.class);
+			result = mapper.getSaleProduct(itemNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 }

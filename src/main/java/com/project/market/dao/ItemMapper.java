@@ -34,4 +34,7 @@ public interface ItemMapper {
 
 	//전체 파일 불러오기
 	ArrayList<FileListVO> getFileList();
+
+	//세일 상품을 불러옴
+	ItemVO getSaleProduct(int itemNum);
 }

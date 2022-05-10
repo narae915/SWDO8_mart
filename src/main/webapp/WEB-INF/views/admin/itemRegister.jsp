@@ -67,18 +67,18 @@
 	                    <!-- 상품 신규 등록 -->
 	                    <form action="itemRegister" method="POST" enctype="multipart/form-data">
 	                       <table>
+								<tr><th id="th-image" colspan="4">IMAGE</th></tr>
 	                       		<tr>
-	                       			<th id="th-image">IMAGE</th>
-	                       			<td id="table-td">
-	                       				<img src="/resources/img/itemDefault.png" style="height:300px;width:300px" alt="임시사진">
+	                       			<td id="table-td" colspan="4">
+	                       				<p><img src="/resources/img/itemDefault.png" style="height:300px;width:300px" alt="임시사진"></p>
 	                       				<label class="primary-btn" id="file-btn" for="input-file">
 											사진 첨부하기
 										</label>
 										<!-- <input type="submit" name="file-btn" value="사진 등록하기" class="primary-btn"> -->
 										<input type="file" style="border:1px solid #000; padding:1em;display:none;" id= "input-file" name="uploadFile" accept="image/*">
 	                       			</td>
-	                       			
-	                       			<th>카테고리</th>
+	                       		<tr>
+ 	                       			<th>카테고리</th>
 	                       			<td>
 	                       				<select name="category" id="category">
 		                       				<option value="">카테고리 선택</option>
@@ -91,25 +91,25 @@
 		                       				<option value="70">그 외</option>
 		                       			</select>
 		                       		</td>
-	                       		</tr>
-	                       		<tr>
 	                       			<th id="th-name">상품 이름</th>
 	                       			<td>
 	                       				<input type="text" name="itemName" class="text-type" id="itemName" required>
 	                       			</td>
+	                       		</tr>
+	                       		<tr>
 	                       			<th style="width:18%">가격</th>
 	                       			<td>
 	                       				<input type="text" name="price" class="text-type" id="price" required>
 	                       			</td>
-	                       		</tr>
-	                       		<tr>
-	                       			<th style="height:80px;">재고</th>
+	                       			<th style="height:40px;">재고</th>
 	                       			<td style="width:40%">
 	                       				<input type="text" name="itemAmount" class="text-type" id="itemAmount" required>
 	                       			</td>
-	                       			<th>상품소개(간략)</th>
-	                       			<td style="width:50%">
-	                       				<input type="text" name="introduce" class="text-type" required>
+	                       		</tr>
+	                       		<tr>
+	                       			<th>간략히 상품소개</th>
+	                       			<td colspan="3">
+	                       				<textarea rows="1" cols="70" name="introduce" required style="resize: none;float: left;"></textarea>
 	                       			</td>
 	                       		</tr>
 	                       </table>
@@ -152,7 +152,7 @@ $("#input-file").change(function(){
 	if (fileInputCount == 1) {
 		exitAlert();
 		$("#footer-modal-content").prepend("파일이 첨부되었습니다.");
-		showModalAlert()
+		showModalAlert();
 	}
 });
 </script>

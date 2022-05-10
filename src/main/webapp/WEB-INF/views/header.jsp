@@ -139,7 +139,7 @@
                         	</li>
                         </c:when>
                         <c:otherwise>
-                        	<li><a href="/user/signUp"><spring:message code="message.header.group.signUp"/> | Sign Up</a></li>
+                        	<li id="menu-signUp"><a href="/user/signUp"><spring:message code="message.header.group.signUp"/> | Sign Up</a></li>
                         </c:otherwise>
                         </c:choose>
                     </ul>

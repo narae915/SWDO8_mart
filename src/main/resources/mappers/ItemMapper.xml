@@ -193,4 +193,20 @@ select
 	from
 		file_list
 </select>
+
+<!-- 세일 상품을 불러옴 -->
+<select id="getSaleProduct" parameterType="int" resultType="Item">
+	select
+		item_num as itemNum,
+		item_name as itemName,
+		price as price,
+		saleFlag as saleFlag,
+		sale_percent as salePercent
+	from
+		item_table
+    where
+    	saleFlag = 1
+    	and
+    	item_num = #{itemNum }
+</select>
 </mapper>

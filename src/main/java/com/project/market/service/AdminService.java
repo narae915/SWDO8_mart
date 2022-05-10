@@ -317,4 +317,13 @@ public class AdminService {
 		return dao.deleteUser(userNum) > 0;
 	}
 
+	//세일 상품임을 알림
+	public boolean saleFlag(String saleName, int salePercent) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("saleName", saleName);
+		map.put("salePercent", salePercent);
+
+		return dao.saleFlag(map) > 0;
+	}
+
 }

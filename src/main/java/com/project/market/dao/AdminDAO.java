@@ -523,4 +523,19 @@ public class AdminDAO {
 		return result;
 	}
 
+	//세일 상품임을 알림
+	public int saleFlag(HashMap<String, Object> map) {
+		int result = 0;
+		AdminMapper mapper = null;
+		
+		try {
+			mapper = session.getMapper(AdminMapper.class);
+			result = mapper.saleFlag(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
 }

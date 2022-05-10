@@ -73,32 +73,29 @@ public class ItemService {
 	
 	//세일 상품 처리하는 메소드
 	public ArrayList<ItemVO> sale(ArrayList<ItemVO> itemList) {
-		String saleMenu = null;
+		ItemVO saleMenu = null;
 		int salePrice = 0; // 할인된 가격
 		int price = 0; //원래 가격
+		int itemNum = 0; // 아이템번호
+		double temp = 0; 
 		
 		//세일 상품 처리하는 for문
 		for(int i = 0; i < itemList.size(); i++) {
-			saleMenu = itemList.get(i).getItemName();
+			//상품의 원가
 			price = itemList.get(i).getPrice();
-			if(saleMenu.contains("포도")) {
-				//20% 할인
-				salePrice = (int)(price * 0.80);
-				itemList.get(i).setSalePrice(salePrice);
-			} else if(saleMenu.contains("참외")) {
-				//30% 할인
-				salePrice = (int)(price * 0.70);
-				itemList.get(i).setSalePrice(salePrice);
-			} else if(saleMenu.contains("오렌지")) {
-				//50% 할인
-				salePrice = (int)(price * 0.50);
-				itemList.get(i).setSalePrice(salePrice);
-			} else if(saleMenu.contains("스테이크")) { // "스테이크" 를 동적으로 이용하고 싶으면 변수로 지정
-				//30% 할인
-				salePrice = (int)(price * 0.70);
+			itemNum = itemList.get(i).getItemNum();
+			// 세일 상품인지 확인
+			saleMenu = dao.getSaleProduct(itemNum);
+			// 만약 세일 상품이라면
+			if(saleMenu != null) {
+				//할인율을 salePrice에 저장
+				salePrice = saleMenu.getSalePercent();
+				//할인율 계산 -> 사용자가 입력한 값이 30퍼였을 경우, 70퍼의 값을 받아야함. 할인된 가격을 구하기위해 100에서 빼고, 0.01을 곱함
+				temp =(100-salePrice)*0.01;
+				//원래 가격에서 할인되고 난 뒤의 값을 도출
+				salePrice = (int)(price*temp);
 				itemList.get(i).setSalePrice(salePrice);
 			} else {
-				//할인 상품이 아닐경우 jsp에 표현하기 위해 0을 입력
 				itemList.get(i).setSalePrice(0);
 			}
 		}

@@ -162,3 +162,23 @@ input[type="submit"]:hover:before, input[type="submit"]:hover:after {
 	font-weight: 900;
 	 margin-bottom:25%;
 }
+
+#sale-button {
+	display: inline-block;
+    left: 73%;
+    margin: 10px;
+    height: 40px;
+    position: relative;
+    top: 50px;
+    padding: 12px 30px;
+    border-radius: 5px;
+    border: none;
+}
+
+input.setup-sale {
+	position: relative;
+    height: 40px;
+    background-color: #E7AB3C;
+    color: white;
+    margin-top: 5px;
+}

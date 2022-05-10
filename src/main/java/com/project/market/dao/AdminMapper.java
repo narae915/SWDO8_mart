@@ -79,4 +79,6 @@ public interface AdminMapper {
 	int itemFileUpdate(HashMap<String, Object> map);
 
 	int deleteUser(int userNum); //강제 회원 탈퇴
+
+	int saleFlag(HashMap<String, Object> map); //세일 상품임을 알림
 }

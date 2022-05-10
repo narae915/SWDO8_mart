@@ -141,7 +141,7 @@
 	//jsp페이지 출력과 동시에 실행 
 	$(function(){
 		//현재 페이지를 선택했음을 알림 4/17 박나래
-		$("li#menu-mypage").css("background", "#e7ab3c");
+		$("li#menu-signUp").css("background", "#e7ab3c");
 		
 		//유저 이름 확인
 		$("#username").keyup(function(){

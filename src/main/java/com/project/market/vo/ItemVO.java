@@ -31,4 +31,8 @@ public class ItemVO {
 	private String infor; // 상품 정보(상세설명)
 	private String cook; // 손질법
 	private String inventory; // 보관법
+	
+	//22-05-10 박나래
+	private int saleFlag; // 세일 여부
+	private int salePercent; // 할인율
 }

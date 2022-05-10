@@ -312,18 +312,7 @@
 		where
 			saved_filename = #{empImg }
 	</delete>
-	
-	<!-- 직원 사진 정보 수정 -->
-	<!-- <update id="empUpdateFile" parameterType="File">
-		update 
-			file_list
-		set
-			original_filename = #{originalFilename },
-			saved_filename = #{savedFilename }
-		where
-			saved_filename = #{empImg }
-	</update> -->
-	
+
 	<!-- 직원 정보 삭제 -->
 	<delete id="empDelete" parameterType="int">
 		delete from emp_table
@@ -552,4 +541,15 @@
 		where
 			user_num = #{userNum }
 	</delete>
+	
+	<!-- 할인 상품임을 알림, 할인률 입력-->
+	<update id="saleFlag" parameterType="HashMap">
+		update
+			item_table
+		set
+			saleFlag = 1,
+			sale_percent = #{salePercent }
+		where
+			item_name like '%' || #{saleName } || '%'
+	</update>
 </mapper>
