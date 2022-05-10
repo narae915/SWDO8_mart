@@ -77,12 +77,14 @@
 					<div class="col-lg-3 text-right col-md-3">
 						<ul class="nav-right">
 							<li class="heart-icon">
+							<c:if test="${not empty sessionScope.empName }">
 								<sec:authorize access="isAuthenticated()">
 									<span>
 										${sessionScope.welcomeMessage }
 										<spring:message code="message.header.welcomeMessage"/>
 									</span>
 								</sec:authorize>
+							</c:if>
 							<li class="cart-icon">
 								<a href="#" onmouseover="selectCartList();">
 								<i class="icon_bag_alt" onmouseover="selectCartList();"></i> 

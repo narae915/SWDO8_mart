@@ -53,6 +53,7 @@
 						<span>
 							<spring:message code="message.header.group.mypage" />
 						</span>
+
 					</div>
 				</div>
 			</div>

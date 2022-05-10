@@ -201,7 +201,7 @@
                             </div>
                             <form action="itemSale" method="post" enctype="multipart/form-data" onsubmit="return imgCheck();">
                             	<input type="hidden" name="itemNum" id="itemNum" value="${itemNum }">
-								<label class="primary-btn" id="file-btn" for="input-file" style="top:2em; left:7em;">
+								<label class="primary-btn" id="file-btn" for="input-file" style="margin-top:3em; left:7em; border:none">
 									사진 첨부하기
 								</label>
 								
@@ -237,7 +237,7 @@
 		                    	<input type="button" class="primary-btn" value="작성" onclick="window.open('/admin/itemInventory?itemNum=${itemNum }', '상품 보관법 작성', 'width=800, height=600, location=no,status=no, scrollbars=yes')">
 		                    </div>
 		                        </div>
-		                        <input type="submit" name="file-btn" id="submit-btn" value="등록하기" class="primary-btn" style="bottom: 1.8em;left: 48em; border:3px black double">
+		                        <input type="submit" name="file-btn" id="submit-btn" value="등록하기" class="primary-btn" style="top:-4.4em;left: 48em; border:3px black double">
 		                        </c:forEach>
 		                    </div>
 	                    </div>
