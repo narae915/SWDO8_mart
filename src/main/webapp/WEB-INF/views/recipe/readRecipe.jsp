@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -12,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>SpringDay | 게시글</title>
+    <title>SpringDay | <spring:message code="message.readRecipe.title" /></title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -28,117 +29,7 @@
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/font.css" type="text/css">
-    <style type="text/css">
-    	div.comment-date {
-    		font-size: 12px;
-    		color: gray;
-    	}
-    	span.login-user-only {
-    		cursor: pointer;
-    	}
-    	form.update-comment {
-    		display: none;
-    	}
-    	form.update-comment-on {
-    		display: block;
-    	}
-    	div.comment-wrapper-off {
-    		display: none;
-    	}
-    	.update-comment-on .col-lg-12 textarea {
-    		resize: none;
-    		width: 77%;
-    		margin-bottom: -12px;
-    		border: 1px solid #ebebeb;
-    		padding-left: 20px;
-    		padding-top: 10px;
-    	}
-    	.update-comment-on .col-lg-12 input[name=upd] {
-    		width: 7%;
-    		margin-bottom: 20px;
-    		border-radius: 5px;
-    		height: 40px;
-    		padding-left: 23px;
-    	}
-    	.update-comment-on .col-lg-12 input[name=cxl] {
-    		width: 7%;
-    		margin-bottom: 20px;
-    		border-radius: 5px;
-    		height: 40px;
-    		padding-left: 23px;
-    		background-color: #DCDCDC;
-    		color: #787878;
-    		border: none;
-    	}
-    	/* 별점 */
-		.star-ratings {
-			display:inline-block;
-			color: #aaa9a9; 
-			position: relative;
-			unicode-bidi: bidi-override;
-			width: max-content;
-			-webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
-			-webkit-text-stroke-width: 0.5px;
-			-webkit-text-stroke-color: black;
-		}
-		.star-ratings-fill {
-			color: #fff58c;
-			padding: 0;
-			position: absolute;
-			z-index: 1;
-			display: inline-block;
-			top: 0;
-			left: 0;
-			overflow: hidden;
-			-webkit-text-fill-color: gold;
-		}
-		.star-ratings-base {
-			z-index: 0;
-			padding: 0;
-		}
-		
-		/* 모달 */
-		.modal-button {
-			font-size: 16px;
-			color: #ffffff;
-			border: 1px solid #e7ab3c;
-			background: #e7ab3c;
-			height: 45px;
-			padding: 12px 16px 12px;
-		}
-		
-		.modal{
-			position: fixed;
-			top:0; left: 0; bottom: 0; right: 0;
-			background: rgba(0, 0, 0, 0.8); /* 투명도 */
-		}
-		
-		.modal_content{
-			position: absolute;  /* 배경 내에서 위치 조정 */
-			top: calc(50vh - 100px); left: calc(50vw - 200px);
-			background-color: white;
-			display: flex; 
-			justify-content: center;
-			align-items: center;
-			border-radius: 10px;
-			width: 400px;
-			height: 200px;
-			flex-direction: column;
-		}
-		
-	input.recipe-tag {
-		display: inline-block;
-	    font-size: 12px;
-	    color: #636363;
-	    padding: 5px 15px;
-	    border: 1px solid #636363;
-	    margin-right: 5px;
-	    margin-bottom: 9px;
-	    border-radius: 2px;
-	    background-color: white;
-	}
-		
-    </style>
+	<link rel="stylesheet" href="/resources/css/recipeCss/readRecipe.css" type="text/css"> 
 </head>
 
 <body>
@@ -176,7 +67,7 @@
                         	</c:if>
                         </div>
                         
-						이 게시글의 평점
+						<spring:message code="message.readRecipe.rating"/>
 						<div class="star-ratings">
 							<div class="star-ratings-fill space-x-2 text-lg" id="star-fill" style="width:calc(${recipe.score } * 20)%">
 								<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
@@ -199,18 +90,18 @@
 						    <option value="2">★★☆☆☆</option>
 						    <option value="1">★☆☆☆☆</option>
 						</select>
-						<input type="button" id="rating-btn" value="점수주기" onclick="addScore(${loginNum });">
+						<input type="button" id="rating-btn" value="<spring:message code='message.readRecipe.ratingBtnValue'/>" onclick="addScore(${loginNum });">
 						</c:if>
 						<c:if test="${scoreFlag == 1 }">
-						<span>평가하셨습니다.</span>
+						<span><spring:message code="message.readRecipe.ratingMessage"/></span>
 						</c:if>
 						</div>
 						<span id="rating-complete"></span>
 						<div style="float:right; display: inline-block;">
-							<a style="color:black;" href="/recipe/recipeList">레시피 목록으로</a>
+							<a style="color:black;" href="/recipe/recipeList"><spring:message code="message.readRecipe.gotoRecipeList"/></a>
 							<c:if test="${recipe.userNum == loginNum }">
-								|<a style="color:black;" href="/recipe/updateRecipe?recipeNum=${recipe.recipeNum }">글 수정</a> |
-								<a style="color:black;" href="javascript:deleteRecipe(${recipe.recipeNum });">글 삭제</a>
+								|<a style="color:black;" href="/recipe/updateRecipe?recipeNum=${recipe.recipeNum }"><spring:message code="message.readRecipe.gotoUpdatePost"/></a> |
+								<a style="color:black;" href="javascript:deleteRecipe(${recipe.recipeNum });"><spring:message code="message.readRecipe.gotoDeletePost"/></a>
 							</c:if>
 						</div>
                         <hr>
@@ -232,7 +123,7 @@
                                             <i class="ti-arrow-left"></i>
                                         </div>
                                         <div class="pb-text">
-                                            <span>이전 게시글</span>
+                                            <span><spring:message code="message.readRecipe.prev"/></span>
                                             <h5>${prev.title }</h5>
                                         </div>
                                     </a>
@@ -254,7 +145,7 @@
                                             <i class="ti-arrow-right"></i>
                                         </div>
                                         <div class="nb-text">
-                                            <span>다음 게시글</span>
+                                            <span><spring:message code="message.readRecipe.prev"/></span>
                                             <h5>${next.title }</h5>
                                         </div>
                                     </a>
@@ -263,7 +154,7 @@
                             </div>
                         </div>
                         <div class="leave-comment">
-                            <h4 id="comment-title">댓글</h4>
+                            <h4 id="comment-title"><spring:message code="message.readRecipe.reply"/></h4>
                             <input type="hidden" id="loginNum" value="${loginNum }">
                             <input type="hidden" id="userMail" value="${requestScope.userMail }" >
                             <div class="comment-list">
@@ -273,20 +164,20 @@
 			                        	<div class="comment-content">${reply.replyContent }</div>
 			                        	<div class="comment-date">${reply.replyDate } 
 			                        		<c:if test="${reply.userNum == loginNum }">
-			                        		<span class="login-user-only" onclick="updateReply(${reply.replyNum })">수정</span> 
-			                        		<span class="login-user-only" onclick="deleteReply(${reply.replyNum })">삭제</span>
+			                        		<span class="login-user-only" onclick="updateReply(${reply.replyNum })"><spring:message code="message.readRecipe.uprply"/></span> 
+			                        		<span class="login-user-only" onclick="deleteReply(${reply.replyNum })"><spring:message code="message.readRecipe.delrply"/></span>
 			                        		</c:if>
 			                        	</div>
 		                        		<hr>
 	                        		</div>
 									<form id="updateReply${reply.replyNum }" class="update-comment">
 										<div class="col-lg-6">
-											<span style="font-weight:bold;">${requestScope.userMail }</span> 님
+											<span style="font-weight:bold;">${requestScope.userMail }</span> <spring:message code="message.readRecipe.userSama"/>
 										</div>
 										<div class="col-lg-12">
 											<textarea id="upContent${reply.replyNum }" name="updateContent">${reply.replyContent }</textarea>
-											<input type="button" class="site-btn" name="cxl" value="취소" onclick="updateCancel(${reply.replyNum });">
-											<input type="button" class="site-btn" name="upd" value="수정" onclick="updateReplyContent(${reply.replyNum });">
+											<input type="button" class="site-btn" name="cxl" value="<spring:message code="message.readRecipe.cancel"/>" onclick="updateCancel(${reply.replyNum });">
+											<input type="button" class="site-btn" name="upd" value="<spring:message code="message.readRecipe.uprply"/>" onclick="updateReplyContent(${reply.replyNum });">
 										</div>
 		                        	</form>
 	                        	</c:forEach>
@@ -295,13 +186,13 @@
                             	<input type="hidden" name="recipeNum" value="${recipe.recipeNum }" >
                                 <div class="row">
                                     <div class="col-lg-6">
-                                    	<span style="font-weight:bold;">${requestScope.userMail }</span> 님
+                                    	<span style="font-weight:bold;">${requestScope.userMail }</span> <spring:message code="message.readRecipe.userSama"/>
                                     </div>
                                     <div class="col-lg-6">
                                     </div>
                                     <div class="col-lg-12">
-                                        <textarea placeholder="댓글을 입력하세요" id="replyContent" name="replyContent"></textarea>
-                                        <input type="button" class="site-btn" value="작성" onclick="insertReply();">
+                                        <textarea placeholder="<spring:message code="message.readRecipe.replyComment"/>" id="replyContent" name="replyContent"></textarea>
+                                        <input type="button" class="site-btn" value="<spring:message code="message.readRecipe.write"/>" onclick="insertReply();">
                                     </div>
                                 </div>
                             </form>
@@ -361,10 +252,10 @@
     	}
 
 		// 컨펌 모달
-    	function confirmModal() {
-    		$("#confirm-modal-content").html("<p></p><span>삭제된 글을 되돌릴 수 없습니다.</span><p>정말로 삭제하시겠습니까?</p>");
-    		$("#confirm-modal-content").append('<button class="primary-btn" id="yes-button" style="border-radius:5px; position: relative; top: 20px; right: 50px;">예</button>');
-    		$("#confirm-modal-content").append('<button class="primary-btn" id="no-button" style="border-radius:5px; position: relative; bottom: 29px; left: 50px">아니오</button>');
+    	function confirmModal() {			
+    		$("#confirm-modal-content").html("<p></p><span><spring:message code='message.readRecipe.alertDelete1'/></span><p><spring:message code='message.readRecipe.alertDelete2'/></p>");
+    		$("#confirm-modal-content").append('<button class="primary-btn" id="yes-button" style="border-radius:5px; position: relative; top: 20px; right: 50px;"><spring:message code="message.footer.modal.yes"/></button>');
+    		$("#confirm-modal-content").append('<button class="primary-btn" id="no-button" style="border-radius:5px; position: relative; bottom: 29px; left: 50px"><spring:message code="message.footer.modal.no"/></button>');
     	}
 		
 		// 방금 작성한 댓글 조회
@@ -384,19 +275,19 @@
 					str += "<div class='comment-name'><strong>"+ reply.userMail +"</strong></div>";
 					str += "	<div class='comment-content'>"+ reply.replyContent + "</div>";
 					str += "		<div class='comment-date'>"+ reply.replyDate;
-					str += "			<span class='login-user-only' onclick='updateReply("+ reply.replyNum +")'>수정</span>";
-					str += "			<span class='login-user-only' onclick='deleteReply("+ reply.replyNum +")'>삭제</span>";
+					str += "			<span class='login-user-only' onclick='updateReply("+ reply.replyNum +")'><spring:message code='message.readRecipe.uprply'/></span>";
+					str += "			<span class='login-user-only' onclick='deleteReply("+ reply.replyNum +")'><spring:message code='message.readRecipe.delrply'/></span>";
 					str += "		</div>";
 					str += "	<hr>";
 					str += "</div>";
 					str += "	<form id='updateReply"+ reply.replyNum +"' class='update-comment'>";
 					str += "		<div class='col-lg-6'>";
-					str += "		<span style='font-weight:bold;'>"+userMail+"</span> 님";
+					str += "		<span style='font-weight:bold;'>"+userMail+"</span> <spring:message code='message.readRecipe.userSama'/>";
 					str += "		</div>";
 					str += "		<div class='col-lg-12'>";
 					str += "			<textarea id='upContent"+ reply.replyNum +"' name='updateContent'>"+ reply.replyContent +"</textarea>";
-					str += "			<input type='button' class='site-btn' name='cxl' value='취소' onclick='updateCancel("+reply.replyNum +");'>";
-					str += "			<input type='button' class='site-btn' name='upd' value='수정' onclick='updateReplyContent("+reply.replyNum +");'>";
+					str += "			<input type='button' class='site-btn' name='cxl' value='<spring:message code='message.readRecipe.cancel'/>' onclick='updateCancel("+reply.replyNum +");'>";
+					str += "			<input type='button' class='site-btn' name='upd' value='<spring:message code='message.readRecipe.uprply'/>' onclick='updateReplyContent("+reply.replyNum +");'>";
 					str += "		</div>";
 					str += "	</form>";
 					$(".comment-list").append(str);
@@ -449,20 +340,20 @@
 						str += "	<div class='comment-content'>"+ reply.replyContent + "</div>";
 						str += "	<div class='comment-date'>"+ reply.replyDate;
 						if(reply.userNum == loginNum) {
-							str += "		<span class='login-user-only' onclick='updateReply("+ reply.replyNum +")'>수정</span>";
-							str += "		<span class='login-user-only' onclick='deleteReply("+ reply.replyNum +")'>삭제</span>";
+							str += "		<span class='login-user-only' onclick='updateReply("+ reply.replyNum +")'><spring:message code='message.readRecipe.uprply'/></span>";
+							str += "		<span class='login-user-only' onclick='deleteReply("+ reply.replyNum +")'><spring:message code='message.readRecipe.delrply'/></span>";
 						}
 						str += "	</div>";
 						str += "	<hr>";
 						str += "</div>";
 						str += "	<form id='updateReply"+ reply.replyNum +"' class='update-comment'>";
 						str += "		<div class='col-lg-6'>";
-						str += "		<span style='font-weight:bold;'>"+userMail+"</span> 님";
+						str += "		<span style='font-weight:bold;'>"+userMail+"</span> <spring:message code='message.readRecipe.userSama'/>";
 						str += "		</div>";
 						str += "		<div class='col-lg-12'>";
 						str += "			<textarea id='upContent"+ reply.replyNum +"' name='updateContent'>"+ reply.replyContent +"</textarea>";
-						str += "			<input type='button' class='site-btn' name='cxl' value='취소' onclick='updateCancel("+reply.replyNum +");'>";
-						str += "			<input type='button' class='site-btn' name='upd' value='수정' onclick='updateReplyContent("+reply.replyNum +");'>";
+						str += "			<input type='button' class='site-btn' name='cxl' value='<spring:message code='message.readRecipe.cancel'/>' onclick='updateCancel("+reply.replyNum +");'>";
+						str += "			<input type='button' class='site-btn' name='upd' value='<spring:message code='message.readRecipe.uprply'/>' onclick='updateReplyContent("+reply.replyNum +");'>";
 						str += "		</div>";
 						str += "	</form>";
 					});
@@ -511,20 +402,20 @@
 						str += "	<div class='comment-content'>"+ reply.replyContent + "</div>";
 						str += "	<div class='comment-date'>"+ reply.replyDate;
 						if(reply.userNum == loginNum) {
-							str += "		<span class='login-user-only' onclick='updateReply("+ reply.replyNum +")'>수정</span>";
-							str += "		<span class='login-user-only' onclick='deleteReply("+ reply.replyNum +")'>삭제</span>";
+							str += "		<span class='login-user-only' onclick='updateReply("+ reply.replyNum +")'><spring:message code='message.readRecipe.uprply'/></span>";
+							str += "		<span class='login-user-only' onclick='deleteReply("+ reply.replyNum +")'><spring:message code='message.readRecipe.delrply'/></span>";
 						}
 						str += "	</div>";
 						str += "	<hr>";
 						str += "</div>";
 						str += "	<form id='updateReply"+ reply.replyNum +"' class='update-comment'>";
 						str += "		<div class='col-lg-6'>";
-						str += "		<span style='font-weight:bold;'>"+userMail+"</span> 님";
+						str += "		<span style='font-weight:bold;'>"+userMail+"</span> <spring:message code='message.readRecipe.userSama'/>";
 						str += "		</div>";
 						str += "		<div class='col-lg-12'>";
 						str += "			<textarea id='upContent"+ reply.replyNum +"' name='updateContent'>"+ reply.replyContent +"</textarea>";
-						str += "			<input type='button' class='site-btn' name='cxl' value='취소' onclick='updateCancel("+reply.replyNum +");'>";
-						str += "			<input type='button' class='site-btn' name='upd' value='수정' onclick='updateReplyContent("+reply.replyNum +");'>";
+						str += "			<input type='button' class='site-btn' name='cxl' value='<spring:message code='message.readRecipe.cancel'/>' onclick='updateCancel("+reply.replyNum +");'>";
+						str += "			<input type='button' class='site-btn' name='upd' value='<spring:message code='message.readRecipe.uprply'/>' onclick='updateReplyContent("+reply.replyNum +");'>";
 						str += "		</div>";
 						str += "	</form>";
 					});
@@ -556,7 +447,7 @@
 					res = res*20;
 					//1를 더하여 주는 이유는 half star일 시 미세하게 절반이 안되어보여서 보여지는 값을 조정하기 위해 추가한 offset 값이다.
 					$("#star-fill").css("width", res+1 +"%");
-					$("#rating-complete").text("평가하셨습니다.");
+					$("#rating-complete").text("<spring:message code='message.readRecipe.ratingMessage'/>");
 				},
 				error : function(e) {
 					console.log(e);

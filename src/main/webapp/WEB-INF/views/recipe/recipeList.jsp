@@ -1,5 +1,6 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -13,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>SpringDay | 커뮤니티</title>
+    <title>SpringDay | <spring:message code="message.header.group.recipeList"/></title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -29,99 +30,7 @@
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/font.css" type="text/css">
-    <style type="text/css">
-    
-    	/* 검색결과 없을 때 테이블 정렬 */
-    	div#not-found-search {
-    		margin-left:auto;
-    		margin-right:auto;
-    		height: 300px;
-    		bottom: 100px;
-    	}
-    	table#nothing {
-    		margin-left:auto;
-    		margin-right: auto;
-    		height: 300px;
-    		bottom: 100px;
-    	}
-    	div table td {
-    		 text-align:center;
-    	}
-    	div table td a {
-    		color:blue;
-    	}
-    	div table td a:hover {
-    		color:blue;
-    	}
-    	div table th {
-    		font-size:20px;
-    		text-align :center;
-    	}
-    	
-    	/* 별점 */
-		.star-ratings {
-			display:inline-block;
-			color: #aaa9a9; 
-			position: relative;
-			unicode-bidi: bidi-override;
-			width: max-content;
-			-webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
-			-webkit-text-stroke-width: 0.5px;
-			-webkit-text-stroke-color: black;
-		}
-		.star-ratings-fill {
-			color: #fff58c;
-			padding: 0;
-			position: absolute;
-			z-index: 1;
-			display: inline-block;
-			top: 0;
-			left: 0;
-			overflow: hidden;
-			-webkit-text-fill-color: gold;
-		}
-		.star-ratings-base {
-			z-index: 0;
-			padding: 0;
-		}
-		
-  	/* 버튼 관련 */
-  	input[type="button"] {
-		border:none;
-		position:relative;
-		transition:800ms ease all;
-		outline:none;
-		border-radius:5px;
-	}
-	
-	input[type="button"]:hover {
-		background:#000;
-		color:#E7AB3C;
-	}
-	
-	input[type="button"]:before,input[type="button"]:after {
-		content:'';
-		position:absolute;
-		top:0;
-		right:0;
-		height:2px;
-		width:0;
-		background: #E7AB3C;
-		transition:400ms ease all;
-	}
-	
-	input[type="button"]:after {
-		right:inherit;
-		top:inherit;
-		left:0;
-		bottom:0;
-	}
-	
-	input[type="button"]:hover:before, input[type="button"]:hover:after {
-		width:100%;
-		transition:800ms ease all;
-	}
-    </style>
+    <link rel="stylesheet" href="/resources/css/recipeCss/recipeList.css" type="text/css">
 </head>
 
 <body>
@@ -139,7 +48,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="/"><i class="fa fa-home"></i> Home</a>
-                        <span>게시판</span>
+                        <span><spring:message code="message.recipeList.board"/></span>
                     </div>
                 </div>
             </div>

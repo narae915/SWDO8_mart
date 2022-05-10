@@ -1,0 +1,109 @@
+
+   	div.comment-date {
+   		font-size: 12px;
+   		color: gray;
+   	}
+   	span.login-user-only {
+   		cursor: pointer;
+   	}
+   	form.update-comment {
+   		display: none;
+   	}
+   	form.update-comment-on {
+   		display: block;
+   	}
+   	div.comment-wrapper-off {
+   		display: none;
+   	}
+   	.update-comment-on .col-lg-12 textarea {
+   		resize: none;
+   		width: 77%;
+   		margin-bottom: -12px;
+   		border: 1px solid #ebebeb;
+   		padding-left: 20px;
+   		padding-top: 10px;
+   	}
+   	.update-comment-on .col-lg-12 input[name=upd] {
+   		width: 7%;
+   		margin-bottom: 20px;
+   		border-radius: 5px;
+   		height: 40px;
+   		padding-left: 23px;
+   	}
+   	.update-comment-on .col-lg-12 input[name=cxl] {
+   		width: 7%;
+   		margin-bottom: 20px;
+   		border-radius: 5px;
+   		height: 40px;
+   		padding-left: 23px;
+   		background-color: #DCDCDC;
+   		color: #787878;
+   		border: none;
+   	}
+   	/* 별점 */
+	.star-ratings {
+		display:inline-block;
+		color: #aaa9a9; 
+		position: relative;
+		unicode-bidi: bidi-override;
+		width: max-content;
+		-webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+		-webkit-text-stroke-width: 0.5px;
+		-webkit-text-stroke-color: black;
+	}
+	.star-ratings-fill {
+		color: #fff58c;
+		padding: 0;
+		position: absolute;
+		z-index: 1;
+		display: inline-block;
+		top: 0;
+		left: 0;
+		overflow: hidden;
+		-webkit-text-fill-color: gold;
+	}
+	.star-ratings-base {
+		z-index: 0;
+		padding: 0;
+	}
+	
+	/* 모달 */
+	.modal-button {
+		font-size: 16px;
+		color: #ffffff;
+		border: 1px solid #e7ab3c;
+		background: #e7ab3c;
+		height: 45px;
+		padding: 12px 16px 12px;
+	}
+	
+	.modal{
+		position: fixed;
+		top:0; left: 0; bottom: 0; right: 0;
+		background: rgba(0, 0, 0, 0.8); /* 투명도 */
+	}
+	
+	.modal_content{
+		position: absolute;  /* 배경 내에서 위치 조정 */
+		top: calc(50vh - 100px); left: calc(50vw - 200px);
+		background-color: white;
+		display: flex; 
+		justify-content: center;
+		align-items: center;
+		border-radius: 10px;
+		width: 400px;
+		height: 200px;
+		flex-direction: column;
+	}
+	
+	input.recipe-tag {
+		display: inline-block;
+	    font-size: 12px;
+	    color: #636363;
+	    padding: 5px 15px;
+	    border: 1px solid #636363;
+	    margin-right: 5px;
+	    margin-bottom: 9px;
+	    border-radius: 2px;
+	    background-color: white;
+	}

@@ -99,38 +99,10 @@ public class OrderController {
 		UserVO user = uDao.getUser(userMail);
 		ArrayList<ItemVO> cartList = service.selectCartList(user.getUserNum());
 		ArrayList<FileListVO> fileList = service.getFileList();
+		
 			// 장바구니에 조회된 목록이 있다면
 			if(cartList.size() >= 1) {
-				String temp = null;
-				int tempNum = 0;
-
-				//cartList에 이미지 파일 넣기
-				for(int i = 0; i < cartList.size(); i++) {
-					//가상의 int에 아이템 번호 넣기
-					tempNum = cartList.get(i).getItemNum();
-					
-					//파일리스트 크기만큼 반복
-					for(int j = 0; j <= fileList.size(); j++) {
-						
-						if(cartList.get(i).getSavedFilename() == null) {
-							//cartList의 아이템번호와 fileList의 아이템번호가 같을 때
-							if(tempNum == fileList.get(j).getItemNum()) {
-								//fileList의 제일 첫번째 올린 파일이름을 가상의 string에 저장
-								temp = fileList.get(0).getSavedFilename();
-								cartList.get(i).setSavedFilename("/uploadImg/" + temp);
-							} else {
-								//상품 사진이 없을 경우 기본 이미지로 설정
-								cartList.get(i).setSavedFilename("/resources/img/itemDefault.png");
-								break;
-							}
-						}
-						//파일리스트 테이블에 같은 상품 번호가 없을 경우 기본 이미지로 설정
-						if(cartList.get(i).getSavedFilename() == null) {
-							cartList.get(i).setSavedFilename("/resources/img/itemDefault.png");
-						}
-					}
-				}
-				
+				imgSrc.setFileImg(cartList, fileList);
 				logger.info("cartList :{}", cartList);
 				model.addAttribute("cartList", cartList);
 			// 장바구니에 조회된 목록이 없다면
@@ -145,7 +117,7 @@ public class OrderController {
 				model.addAttribute("emptyCart" , emptyCart);
 		}
 		
-		return "/order/cartListAjax";
+		return "order/cartListAjax";
 	}
 	
 	//마우스 오버의 장바구니 내역 삭제(실제로 cart_table 내역이 삭제됨)
@@ -172,9 +144,16 @@ public class OrderController {
 			logger.info("장바구니 삭제 성공");
 			
 			ArrayList<ItemVO> cartList = service.selectCartList(user.getUserNum());
+			ArrayList<FileListVO> fileList = service.getFileList();
+			
+			// 장바구니에 조회된 목록이 있다면
+			if(cartList.size() >= 1) {
+				imgSrc.setFileImg(cartList, fileList);
+			}
+			
 			model.addAttribute("cartList", cartList);
 			
-			return "/order/cartListAjax";
+			return "order/cartListAjax";
 
 		} else {
 			logger.info("장바구니 삭제 실패");

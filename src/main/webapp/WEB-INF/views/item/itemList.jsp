@@ -348,7 +348,10 @@
 		var cartAmount = 1;
 
 		if(userMail == null || userMail == "" || userMail == " "){
-			alert("로그인이 필요합니다.");
+			$("#footer-modal-content").html("");
+			$("#footer-modal-content").html("로그인이 필요합니다.");
+			exitAlert();
+			showModalAlert();
 		} else {
 			//장바구니에 넣을 것인지 확인하는 모달창
 			ilShowModal();
@@ -365,8 +368,12 @@
 					},
 					success: function(res) { //cart테이블에 입력
 						if(res = "yes") {
+							$("#il-modal").fadeOut();
 							//장바구니로 이동할 것인지 확인
-							showModal();
+							$("#ri-modal").fadeIn();
+							$(".modal-button1").click(function(){
+								location.reload();
+							});
 							$("#ri-modal-button").click(function(){
 								location.href="/order/cart";
 							});

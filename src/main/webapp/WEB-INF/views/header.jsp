@@ -201,7 +201,6 @@
 			</div>
 		</div>
 	</header>
->>>>>>> main
 	<!-- Header End -->
 
 	<!-- Js Plugins -->
