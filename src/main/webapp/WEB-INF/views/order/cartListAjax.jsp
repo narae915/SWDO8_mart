@@ -1,12 +1,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>SpringDay | <spring:message code="message.cart.title"/></title>
 	<!-- Css Styles -->
 	<link rel="stylesheet" href="/resources/css/font.css" type="text/css">
 </head>
@@ -34,7 +35,11 @@
 				</tr>
 			</c:forEach>
 				<tr>
-					<td colspan="3"><p style="margin-bottom:-20px">최대 3개상품까지 표시됩니다.</p></td>
+					<td colspan="3">
+						<p style="margin-bottom:-20px">
+							<spring:message code="message.cartListAjax.conten"/>
+						</p>
+					</td>
 				</tr>
 			</c:if>
 		</tbody>

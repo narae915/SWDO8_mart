@@ -29,8 +29,8 @@ let basket = {
     },
     //화면 업데이트
     updateUI: function () {
-        document.querySelector('#sum_p_num').textContent = '총 ' + this.totalCount.formatNumber() + '개';
-        document.querySelector('#sum_p_price').textContent = '합계금액: ' + this.totalPrice.formatNumber() + '원';
+        document.querySelector('#sum_p_num').textContent = total + this.totalCount.formatNumber() + count;
+        document.querySelector('#sum_p_price').textContent = totalPrice1 + this.totalPrice.formatNumber() + totalPrice2;
 
 		// 합계 히든에 넣음
         $("#totalPrice").attr('value',this.totalPrice);
@@ -59,7 +59,7 @@ let basket = {
         var price = item.parentElement.parentElement.previousElementSibling.firstElementChild.getAttribute('value');
         
         // item의 부모.부모.다음 형제의 내용을 조절된 수량과 가격을 곱한 값으로 한다. 즉, 변동된 가격
-        item.parentElement.parentElement.nextElementSibling.textContent = (newval * price).formatNumber()+"원";
+        item.parentElement.parentElement.nextElementSibling.textContent = (newval * price).formatNumber()+totalPrice2;
         
         //AJAX 업데이트 전송
 
@@ -114,7 +114,7 @@ $('#purchase').click(function () {
 	// 체크 확인
 	if(purchaseNum == "") {
 		exitAlert();
-		$("#footer-modal-content").prepend("선택된 항목이 없습니다.");
+		$("#footer-modal-content").prepend(purchaseEmpty);
 		showModalAlert()
 		
 		return false;
