@@ -1,40 +1,39 @@
 /* 유효성 검사 */
 function checkForm()
 {
-	var useName = $("#useName").val();			// 입력되있는 이름
+	var userName = $("#username").val();		// 입력되있는 이름
 	var userMail = $("#userMail").val();		// 입력되있는 ID
 	var userCall = $("#userCall").val();		// 연락처
-	
+
 	// 정규식
 	var emailChk = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // 이메일 정규식
+	var callChk = /^(?:(010\d{4})|(01[1|6|7|8|9]-\d{3,4}))(\d{4})$/;
 	
-	var result = false;
+	var result = true;
 	
-	if ( useName.length == 0 || useName.length > 4 )
+	if (userName.length == 0 || userMail.length == 0 || userCall.length == 0) 
 	{
 		exitAlert();
-		$("#footer-modal-content").prepend("이름을 올바르게 입력해주세요.");
+		$("#footer-modal-content").prepend(blankChk);
 		showModalAlert();
-		return result;
+		result = false;
 	}
 	
-	if ( userMail.length == 0 || !(emailChk.test(userMail)) )
+	if ( emailChk.test(userMail) == false )
 	{
 		exitAlert();
-		$("#footer-modal-content").prepend("이메일을 올바르게 입력해주세요.");
+		$("#footer-modal-content").prepend(mailChkMessage);
 		showModalAlert();
-		return result;
+		result = false;
 	}
 	
-	if ( userCall.length == 0 || userCall.length != 11 || isNaN(userCall) )
+	if ( callChk.test(userCall) == false  || isNaN(userCall) )
 	{
 		exitAlert();
-		$("#footer-modal-content").prepend("연락처를 올바르게 입력해주세요.");
+		$("#footer-modal-content").prepend(telChk);
 		showModalAlert();
-		return result;
+		result = false;
 	}
 	
-	result = true;
-	
-	return result;
+	return false;
 }

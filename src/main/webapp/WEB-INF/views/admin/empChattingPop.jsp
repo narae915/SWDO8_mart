@@ -231,7 +231,7 @@
         }
         
         // 웹소켓 객체 생성
-        ws = new WebSocket("ws://localhost:8888/empChatting");
+        ws = new WebSocket("ws://localhost:8889/empChatting");
         
         ws.onopen = function(event)
         {
