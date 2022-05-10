@@ -113,17 +113,18 @@ input[type="submit"]:hover:before, input[type="submit"]:hover:after {
 }
 #search-button {
 	width:5px;
-	height:45.7px;
+	height:45px;
 	border-radius:5px;
-	top:3.28em;
-	right:1.8em;
+    margin-top: 3.4em;
+    margin-left: -4.4em;
+    position: absolute;
 }
 
 #insert-button {
 	display: inline-block;
 	vertical-align:center;
 	border-radius:5px;
-	left: 21%;
+	left: 16.2em;
 	margin: 10px;
 	height: 40px;
 	position: relative;

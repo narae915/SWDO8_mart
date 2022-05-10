@@ -10,15 +10,6 @@
 
 	<!-- CSS -->
 	<style>
-		.modal-button {
-			font-size: 16px;
-			color: #ffffff;
-			border: 1px solid #e7ab3c;
-			background: #e7ab3c;
-			height: 45px;
-			padding: 12px 16px 12px;
-		}
-		
 		.modal{
 			position: fixed;
 			top:0; left: 0; bottom: 0; right: 0;
@@ -58,8 +49,6 @@
 		
 		#staffBtn {
 			display: inline-block;
-		    color: #ffffff;
-		    background: #e7ab3c;
 		    font-size: 13px;
 		    font-weight: 700;
 		    text-transform: uppercase;
@@ -69,6 +58,57 @@
 		    padding: 13px 20px 12px;
 		    cursor: pointer;
 		}
+			
+		.modal-button,
+		#staffBtn,
+	    button {
+			border:none;
+			position:relative;
+			transition:800ms ease all;
+			outline:none;
+			border-radius:5px;
+		}
+		
+		.modal-button:hover,
+		#staffBtn:hover,
+		button:hover {
+			background:#000;
+			color:#E7AB3C;
+		}
+		
+		.modal-button:before,.modal-button:after,
+		#staffBtn:before,#staffBtn:after,
+		button:before,button:after {
+			content:'';
+			position:absolute;
+			top:0;
+			right:0;
+			height:2px;
+			width:0;
+			background: #E7AB3C;
+			transition:400ms ease all;
+		}
+		
+		.modal-button:after,
+		#staffBtn:after,
+		button:after {
+			right:inherit;
+			top:inherit;
+			left:0;
+			bottom:0;
+		}
+		
+		.modal-button:hover:before,#staffBtn:hover:after
+		#staffBtn:hover:before,#staffBtn:hover:after
+		button:hover:before, button:hover:after {
+			width:100%;
+			transition:800ms ease all;
+		}
+		
+		.modal-button {
+			margin-top: 1em;
+		}
+	
 	</style>
 </head>
 
@@ -116,7 +156,7 @@
                     <div class="newslatter-item">
                         <h5>Staff Only</h5>
                         <c:if test="${sessionScope.loginName != null}">
-                        	<button type="button" onclick="location.href='/admin/adminMain';" id="staffBtn"><spring:message code="message.footer.adminpageBtn1"/></button>
+                        	<button type="button" onclick="location.href='/admin/adminMain';" class="primary-btn" id="staffBtn"><spring:message code="message.footer.adminpageBtn1"/></button>
                         </c:if>
                         <c:if test="${sessionScope.loginName == null}">
 	                        <form action="/admin/adminLogin" class="subscribe-form" onsubmit="return staffOnlyChk()">

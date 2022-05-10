@@ -75,7 +75,7 @@
 									<option value="60">음료</option>
 									<option value="70">그 외</option>
 								</select>
-		                    	<input type="text" name="searchWord" id="searchWord" placeholder="상품의 이름을 정확히 입력해주세요.">
+		                    	<input type="text" name="searchWord" id="searchWord" placeholder="상품의 이름을 입력해주세요.">
 		                    	<button type="submit" class="primary-btn" id="search-button"><i class="ti-search"></i></button>
 		                    </form>
 		                    
@@ -83,7 +83,7 @@
 			                <input type="button" class="primary-btn" id="insert-button" value="상품 추가" onclick="location.href='/admin/itemRegister'">
 			                
 			                <!-- 세일 상품 설정 -->
-							<input type="button" class="primary-btn" id="sale-button" value="세일 상품 설정" onclick="setUpSale();">
+							<input type="button" class="primary-btn" id="sale-button" value="세일 상품 설정" onclick="setUpSale();" style="top: 3.55em;height: 40px;margin-left: 2.2em;">
 
 		                    <form action="itemUpdate" method="get">
 		                    	<input type="submit" id="upButton" class="primary-btn" value="상품 수정" onclick = "return itemUpdate();">

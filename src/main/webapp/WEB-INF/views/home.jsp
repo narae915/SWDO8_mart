@@ -70,6 +70,45 @@
 		.product-itemImg {
 			cursor: pointer;
 		}
+		
+		
+    .primary-btn {
+		border:none;
+		position:rel.primary-btntive;
+		transition:800ms ease all;
+		outline:none;
+		height:40px;
+		border-radius:5px;
+	}
+	
+	.primary-btn:hover {
+		background:#000;
+		color:#E7AB3C;
+	}
+	
+	.primary-btn:before,.primary-btn:after {
+		content:'';
+		position:.primary-btnbsolute;
+		top:0;
+		right:0;
+		height:2px;
+		width:0;
+		b.primary-btnckground: #E7.primary-btnB3C;
+		transition:400ms ease all;
+	}
+	
+	.primary-btn:after {
+		right:inherit;
+		top:inherit;
+		left:0;
+		bottom:0;
+	}
+	
+	.primary-btn:hover:before, .primary-btn:hover:after {
+		width:100%;
+		transition:800ms ease all;
+	}
+	
     </style>
 </head>
 

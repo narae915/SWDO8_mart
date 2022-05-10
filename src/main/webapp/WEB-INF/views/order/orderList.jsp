@@ -75,7 +75,7 @@
                     <c:if test="${not empty orderList }">
 	                    <!-- 주문 검색 -->
 	                    <form action="orderList" method="get" onsubmit="return searchChk();">
-	                    	<input type="text" name="searchWord" id="searchWord" placeholder="상품의 이름을 정확히 입력해주세요.">
+	                    	<input type="text" name="searchWord" id="searchWord" placeholder="상품의 이름을 입력해주세요.">
 	                    	<button type="submit" class="primary-btn" id="search-button"><i class="ti-search"></i></button>
 	                    </form>
 	                    <!-- 주문 취소 및 주문 조회 -->
