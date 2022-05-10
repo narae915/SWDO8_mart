@@ -54,11 +54,12 @@
  <!-- Register Section Begin -->
     <div class="register-login-section spad">
         <div class="container">
+        
             <div class="row">
                 <div class="col-lg-6 offset-lg-3">
                     <div class="login-form">
                         <h2>로그인</h2>
-                        <form action="adminLogin" method="post" onsubmit="return checkForm();">
+                        <form action="/admin/adminLogin" method="post" onsubmit="return checkForm();">
                            	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             <div class="group-input">
                                 <input type="text"  id="empNum" name="empNum"placeholder="ID를 입력해주세요.">
@@ -112,4 +113,6 @@
     <script src="/resources/js/main.js"></script>
     <script src="/resources/js/adminJs/adminLogin.js"></script>
 </body>
+
+
 </html>

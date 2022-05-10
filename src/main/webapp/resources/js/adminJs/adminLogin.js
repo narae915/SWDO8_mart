@@ -1,28 +1,65 @@
 /* 유효성 검사 */
-function checkForm()
-{
-	var empNum = $("#empNum").val();	// 입력한 ID
-	var empPw = $("#empPw").val();		// 입력한 PW
+    function checkForm()
+    {
+    	var empNum = $("#empNum").val();	// 입력한 ID
+    	var empPw = $("#empPw").val();		// 입력한 PW
+		var returnVal = false;
+    	
+    	if ( empNum.length == 0 || empNum.length > 4 || isNaN(empNum) )
+    	{
+    		exitAlert();
+    		$("#footer-modal-content").prepend("ID를 올바르게 입력해주세요.");
+    		showModalAlert();
+    		return returnVal;
+    	}
+    	
+    	if ( empPw.length == 0 )
+    	{
+    		exitAlert();
+    		$("#footer-modal-content").prepend("비밀번호를 입력해주세요.");
+    		showModalAlert();
+    		return returnVal;
+    	}
+    	
+    	returnVal = true;
+    	
+    	if(returnVal) {
+    		var response = null;
+    		
+    		$.ajax({
+    			url: "/admin/adminChk",
+    			type: "POST",
+    			data: {
+    				empNum: empNum,
+    				empPw: empPw
+    			},
+    			async: false,
+    			success: function(res) {
+    				if(res == "no"){
+    					exitAlert();
+						$("#footer-modal-content").prepend("ID와 비밀번호를 확인해주세요");
+						showModalAlert();
+						$("#footer-modal").fadeIn();
+    				}
+    				response = res;
+    			},
+    			error: function(e) {
+    				console.log(e);
+    			}
+    		});
+    		
+    		if (response == "no") {
+    			$("#footer-modal-button").on("click", function() {
+					location.reload();
+				});
+				return false;
+    		}
+    		
+    	}
+    	return returnVal;
+    }
 
-	if ( empNum.length == 0 || empNum.length > 4 || isNaN(empNum) )
-	{
-		exitAlert();
-		$("#footer-modal-content").prepend("ID를 올바르게 입력해주세요.");
-		showModalAlert();
-		return false;
-	}
-	
-	if ( empPw.length == 0 )
-	{
-		exitAlert();
-		$("#footer-modal-content").prepend("비밀번호를 입력해주세요.");
-		showModalAlert();
-		return false;
-	}
-	
-	return true;
-}
- 
+
 /* ID 기억하기 */
 $(document).ready(function() 
 {
@@ -58,7 +95,6 @@ $(document).ready(function()
 		document.form.submit();
 	});
 });
-
 /* 쿠키값 set */
 function setCookie(cookieName, value, exdays)
 {

@@ -271,7 +271,7 @@
     	$("#closeBtn").attr("disabled", true);	// 나가기 버튼 비활성화
         ws.close();								// 웹소켓 종료
     }
-    ㅕ
+    
     function writeResponse(text)
     {
         messages.innerHTML += "<br/>" + text;

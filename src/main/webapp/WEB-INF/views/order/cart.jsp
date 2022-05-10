@@ -134,7 +134,7 @@
 					                    <div class="subdiv">
 				                        	<div class="basketcmd">
 				                        		<input type="hidden" id="hiddenNum" value="${Cart.cartNum }">
-				                        		<button id="cancel-btn" class="abutton"onclick="return cartCancel();"><i class="fa-solid fa-xmark fa-lg"></i></button>
+				                        		<input type="button" id="cancel-btn" class="abutton" onclick="return cartCancel();" value="X">
 				                        	</div>
 					                    </div>
 					                </div>

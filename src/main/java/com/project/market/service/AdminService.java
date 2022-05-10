@@ -312,4 +312,14 @@ public class AdminService {
 		return dao.itemFileUpdate(map) > 0;
 	}
 
+	//로그인 확인
+	public ArrayList<EmpVO> selectAdmin(String empNum, String empPw) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("empNum", empNum);
+		map.put("empPw", empPw);
+		
+		return dao.selectAdmin(map);
+	}
+
+
 }
