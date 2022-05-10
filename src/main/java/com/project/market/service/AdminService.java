@@ -67,15 +67,6 @@ public class AdminService {
 	/* 직원 ID 등록 */
 	public boolean adminRegister(String empName, String empPw, String empCall, String empMail, String position, String originalFilename, String savedFilename) 
 	{
-//		HashMap<String, Object> newEmp = new HashMap<>();
-//		newEmp.put("empName", empName);
-//		newEmp.put("empPw", empPw);
-//		newEmp.put("empCall", empCall);
-//		newEmp.put("empName", empName);
-//		newEmp.put("empMail", empMail);
-//		newEmp.put("originalFilename", originalFilename);
-//		newEmp.put("savedFilename", savedFilename);
-		
 		EmpVO newEmp = new EmpVO();
 		newEmp.setEmpName(empName);
 		newEmp.setEmpPw(empPw);
@@ -312,7 +303,6 @@ public class AdminService {
 		return dao.itemFileUpdate(map) > 0;
 	}
 
-<<<<<<< HEAD
 	//강제 회원 탈퇴
 	public boolean deleteUser(int userNum) {
 		return dao.deleteUser(userNum) > 0;
@@ -327,7 +317,6 @@ public class AdminService {
 		return dao.saleFlag(map) > 0;
 	}
 
-=======
 	//로그인 확인
 	public ArrayList<EmpVO> selectAdmin(String empNum, String empPw) {
 		HashMap<String, Object> map = new HashMap<>();
@@ -338,5 +327,4 @@ public class AdminService {
 	}
 
 
->>>>>>> chaerin
 }
