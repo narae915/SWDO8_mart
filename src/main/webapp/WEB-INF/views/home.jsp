@@ -267,7 +267,11 @@
 									</ul>
 								</div>
 								<div class="pi-text">
-									<div class="catagory-name">${mealItem.categoryName }</div>
+									<div class="catagory-name">
+										<c:if test="${mealItem.categoryName == '육류' }">
+											 <spring:message code="message.home.bannerSection.banner1" />
+										</c:if>
+									</div>
 									<a href="#">
 										<h5>${mealItem.itemName }</h5>
 									</a>
@@ -323,7 +327,11 @@
 									</ul>
 								</div>
 								<div class="pi-text">
-									<div class="catagory-name">${seafoodItem.categoryName }</div>
+									<div class="catagory-name">
+										<c:if test="${seafoodItem.categoryName== '어패류' }">
+											 <spring:message code="message.home.seafoodItem.categoryNm" />
+										</c:if>
+									</div>
 									<a href="#">
 										<h5>${seafoodItem.itemName }</h5>
 									</a>
@@ -390,7 +398,14 @@
 									</ul>
 								</div>
 								<div class="pi-text">
-									<div class="catagory-name">${produceItem.categoryName }</div>
+									<div class="catagory-name">
+										<c:if test="${produceItem.categoryName == '채소' }">
+											 <spring:message code="message.home.produceItem.categoryNm1" />
+										</c:if>
+										<c:if test="${produceItem.categoryName == '과일' }">
+											 <spring:message code="message.home.produceItem.categoryNm2" />
+										</c:if>
+									</div>
 									<a href="#">
 										<h5>${produceItem.itemName }</h5>
 									</a>
