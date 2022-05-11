@@ -42,7 +42,7 @@
 				<tr>
 					<td colspan="3">
 						<p style="margin-bottom:-20px">
-							<spring:message code="message.cartListAjax.conten"/>
+							<spring:message code="message.cartListAjax.content"/>
 						</p>
 					</td>
 				</tr>
