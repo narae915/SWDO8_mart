@@ -91,6 +91,7 @@
 		<security:intercept-url pattern="/order/orderFormForward" access="hasRole('ROLE_USER')" />
 		<security:intercept-url pattern="/order/orderList" access="hasRole('ROLE_USER')" />
 		<security:intercept-url pattern="/user/userUpdate" access="hasRole('ROLE_USER')" />
+		<security:intercept-url pattern="/user/mypage" access="hasRole('ROLE_USER')" />
 		<security:intercept-url pattern="/recipe/**" access="hasRole('ROLE_USER')" />
 		<security:intercept-url pattern="/" access="permitAll()"/> <!-- 인증을 하지 않아도 접근 가능 -->
 	    

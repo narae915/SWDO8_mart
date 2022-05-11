@@ -77,7 +77,7 @@
 					<div class="col-lg-3 text-right col-md-3">
 						<ul class="nav-right">
 							<li class="heart-icon">
-							<c:if test="${not empty sessionScope.empName }">
+							<c:if test="${not empty sessionScope.userMail }">
 								<sec:authorize access="isAuthenticated()">
 									<span>
 										${sessionScope.welcomeMessage }
