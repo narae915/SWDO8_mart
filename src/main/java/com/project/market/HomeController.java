@@ -47,42 +47,38 @@ public class HomeController {
 		session.removeAttribute("findId");
 		int countPerPage = 3;
 		
-		String userMail = (String)session.getAttribute("userMail");
+		//파일을 불러오는 list 생성
+		ArrayList<FileListVO> fileList = iService.getFileList();
+
+		//상품 조회
+		ArrayList<ItemVO> mealItemList = iService.mainItemList(10);
 		
-		if(userMail != null) {
-			//파일을 불러오는 list 생성
-			ArrayList<FileListVO> fileList = iService.getFileList();
+		//이미지 파일명을 itemList에 넣는 메소드
+		mealItemList = imgSrc.setFileImg(mealItemList, fileList);
+		logger.info("파일 입력완료 : {}", mealItemList);
+		
+		//세일상품 표현하는 메소드
+		mealItemList = iService.sale(mealItemList);
+		logger.info("세일 입력완료 :{}", mealItemList);
+		model.addAttribute("mealItemList", mealItemList);
 
-			//상품 조회
-			ArrayList<ItemVO> mealItemList = iService.mainItemList(10);
-			
-			//이미지 파일명을 itemList에 넣는 메소드
-			mealItemList = imgSrc.setFileImg(mealItemList, fileList);
-			logger.info("파일 입력완료 : {}", mealItemList);
-			
-			//세일상품 표현하는 메소드
-			mealItemList = iService.sale(mealItemList);
-			logger.info("세일 입력완료 :{}", mealItemList);
-			model.addAttribute("mealItemList", mealItemList);
+		//해산물 조회하는 메소드
+		ArrayList<ItemVO> seafoodItemList = iService.mainItemList(20);
+		
+		//이미지 파일명을 itemList에 넣는 메소드
+		seafoodItemList = imgSrc.setFileImg(seafoodItemList, fileList);
+		model.addAttribute("seafoodItemList", seafoodItemList);
+		
+		//과일 + 채소를 함께 조회하기 위한 전용 메소드 
+		ArrayList<ItemVO> produceItemList = iService.getProduceList();
+		
+		//이미지 파일명을 itemList에 넣는 메소드
+		produceItemList = imgSrc.setFileImg(produceItemList, fileList);
 
-			//해산물 조회하는 메소드
-			ArrayList<ItemVO> seafoodItemList = iService.mainItemList(20);
-			
-			//이미지 파일명을 itemList에 넣는 메소드
-			seafoodItemList = imgSrc.setFileImg(seafoodItemList, fileList);
-			model.addAttribute("seafoodItemList", seafoodItemList);
-			
-			//과일 + 채소를 함께 조회하기 위한 전용 메소드 
-			ArrayList<ItemVO> produceItemList = iService.getProduceList();
-			
-			//이미지 파일명을 itemList에 넣는 메소드
-			produceItemList = imgSrc.setFileImg(produceItemList, fileList);
-
-			//세일상품 표현하는 메소드
-			produceItemList = iService.sale(produceItemList);
-			logger.info("세일 입력완료 :{}", produceItemList);
-			model.addAttribute("produceItemList", produceItemList);
-		}
+		//세일상품 표현하는 메소드
+		produceItemList = iService.sale(produceItemList);
+		logger.info("세일 입력완료 :{}", produceItemList);
+		model.addAttribute("produceItemList", produceItemList);
 	
 		//게시글 조회 최근 3개
 		ArrayList<RecipeVO> recipeList = rService.getRecipeList(countPerPage);

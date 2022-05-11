@@ -30,85 +30,83 @@
 	<link rel="stylesheet" href="/resources/css/style.css" type="text/css">
 	<link rel="stylesheet" href="/resources/css/font.css" type="text/css">
 	<style type="text/css">
-		/* 검색결과 없을 때 테이블 정렬 */
-		div#not-found-search {
-			margin-left: 30em;
-			margin-right: auto;
-			margin-top: 50px;
-			height: 200px;
-		}
+	/* 검색결과 없을 때 테이블 정렬 */
+	div#not-found-search {
+		margin-left: 30em;
+		margin-right: auto;
+		margin-top: 50px;
+		height: 200px;
+	}
+	
+	div#not-found-search table td {
+		text-align: center;
+	}
+	
+	div#not-found-search table td a {
+		color: blue;
+	}
+	
+	div#not-found-search table td a:hover {
+		color: blue;
+	}
+	
+	div#not-found-search table th {
+		font-size: 20px;
+		text-align: center;
+	}
+	
+	div.recipe-wrapper {
+		display: inline-block;
+		width: 300px;
+		text-align: center;
+	}
+	
+	div.recipe-wrapper p {
+		font-size: 20px;
+	}
+	
+	table#itemListTB {
+		width: 100%;
+		border-spacing: 10px;
+		border-collapse: separate;
+		text-align: left;
+	}
+	
+	input.buy-btn {
+		font-size: 16px;
+		color: #ffffff;
+		border: 1px solid #e7ab3c;
+		background: #e7ab3c;
+		padding: 12px 16px 12px;
+	}
 		
-		div#not-found-search table td {
-			text-align: center;
-		}
-		
-		div#not-found-search table td a {
-			color: blue;
-		}
-		
-		div#not-found-search table td a:hover {
-			color: blue;
-		}
-		
-		div#not-found-search table th {
-			font-size: 20px;
-			text-align: center;
-		}
-		
-		div.recipe-wrapper {
-			display: inline-block;
-			width: 300px;
-			text-align: center;
-		}
-		
-		div.recipe-wrapper p {
-			font-size: 20px;
-		}
-		
-		table#itemListTB {
-			width: 100%;
-			border-spacing: 10px;
-			border-collapse: separate;
-			text-align: left;
-		}
-		
-		input.buy-btn {
-			font-size: 16px;
-			color: #ffffff;
-			border: 1px solid #e7ab3c;
-			background: #e7ab3c;
-			padding: 12px 16px 12px;
-		}
-		
-		/* 별점 */
-		.star-ratings {
-			display: inline-block;
-			color: #aaa9a9;
-			position: relative;
-			unicode-bidi: bidi-override;
-			width: max-content;
-			-webkit-text-fill-color: transparent;
-			/* Will override color (regardless of order) */
-			-webkit-text-stroke-width: 0.5px;
-			-webkit-text-stroke-color: black;
-		}
-		
-		.star-ratings-fill {
-			color: #fff58c;
-			padding: 0;
-			position: absolute;
-			z-index: 1;
-			display: inline-block;
-			top: 0;
-			left: 0;
-			overflow: hidden;
-			-webkit-text-fill-color: gold;
-		}
-		
-		.star-ratings-base {
-			z-index: 0;
-			padding: 0;
-		}
+	/* 별점 */
+	.star-ratings {
+		display:inline-block;
+		color: #aaa9a9; 
+		position: relative;
+		unicode-bidi: bidi-override;
+		width: max-content;
+		-webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+		-webkit-text-stroke-width: 0.5px;
+		-webkit-text-stroke-color: black;
+	}
+	.star-ratings-fill {
+		color: #fff58c;
+		padding: 0;
+		position: absolute;
+	    z-index: 1;
+	    display: inline-block;
+	    top: 0;
+	    left: 0;
+	    overflow: hidden;
+	    -webkit-text-fill-color: gold;
+	}
+	
+	.star-ratings-base {
+		z-index: 2;
+		padding: 0;
+	}
 	</style>
 </head>
 
@@ -249,27 +247,30 @@
 												<c:when test="${empty searchRecipeList }"></c:when>
 												<c:otherwise>
 													<c:forEach items="${searchRecipeList }" var="recipe" varStatus="status">
+													<input type="hidden" class="scores" id="avg-score${status.count }" value="${recipe.score }">
 														<div class="recipe-wrapper">
 															<p>
 																<img alt="" src="${recipe.titleImg }" onclick="location.href='/recipe/readRecipe?recipeNum=${recipe.recipeNum }';" style="cursor: pointer; margin-bottom: 10px;">
 															</p>
-															<p onclick="location.href='/recipe/readRecipe?recipeNum=${recipe.recipeNum }';" style="cursor: pointer;">
-																${recipe.title }
-															</p>
-															<div class="star-ratings">
-																<div class="star-ratings-fill space-x-2 text-lg" id="star-fill${status.count }" style="width:calc(${recipe.score } * 20)%">
-																	<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+															<div>
+																<p onclick="location.href='/recipe/readRecipe?recipeNum=${recipe.recipeNum }';" style="cursor: pointer;">
+																	${recipe.title }
+																</p>
+																<div class="star-ratings">
+																	<div class="star-ratings-fill space-x-2 text-lg" id="star-rate${status.count }" style="width:calc(${recipe.score } * 20)%">
+																		<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+																	</div>
+																	<div class="star-ratings-base space-x-2 text-lg">
+																		<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+																	</div>
 																</div>
-																<div class="star-ratings-base space-x-2 text-lg">
-																	<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-																</div>
+																<span class="score" id="avg${status.count }" style="display: inline; font-weight: bold; font-size: 15px;">
+																	${recipe.score }
+																</span>
+																<span class="indate" style="font-weight: bold; display: block">
+																	${recipe.indate }
+																</span>
 															</div>
-															<span class="score" id="avg-score${status.count }" style="display: inline; font-weight: bold; font-size: 15px;">
-																${recipe.score }
-															</span>
-															<span class="indate" style="font-weight: bold; display: block">
-																${recipe.indate }
-															</span>
 														</div>
 													</c:forEach>
 												</c:otherwise>
@@ -302,19 +303,22 @@
 	<script src="/resources/js/main.js"></script>
 	<script type="text/javascript">
 	//jsp페이지 출력과 동시에 실행
-	$(function(){
+	$(function() {
 		$("li#menu-home").attr("class", "active");
 		
 		var score = 0;
-		var countPost = $(".score").length;
+		var countPost = $(".scores").length;
 		console.log(countPost);
+		var starFill = null;
 		
-		for(var i = 1; i <= countPost; i++) {
-			score = $("#avg-score"+i).text();
+		/*  for(var i = 1; i <= countPost; i++) {
+			score = $("#avg-score"+i).val();
 			score = score*20;
+			console.log(score);
+			
 			//1를 더하여 주는 이유는 half star일 시 미세하게 절반이 안되어보여서 보여지는 값을 조정하기 위해 추가한 offset 값이다.
-			$("#star-fill"+i).css("width", score + 1 +"%");
-		}
+			$("#star-rate"+i).css("width", score+"%");
+		}  */
 	});
     </script>
 </body>
