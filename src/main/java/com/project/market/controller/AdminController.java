@@ -214,64 +214,6 @@ public class AdminController {
 		
 		return "admin/adminLogin";
 	}
-	/* 로그인 */
-	@RequestMapping(value = "/adminLogin", method = RequestMethod.POST)
-	public String adminLogin(int empNum, String empPw, HttpSession session, Model model,HttpServletRequest request, HttpServletResponse response,
-			Authentication authentication)
-	{
-		logger.info("login 메소드 실행(POST).");
-		
-		// 로그인을 시도하려고 하는 ID, PW를 출력
-		logger.info("empNum: {}", empNum);
-		logger.info("empPW: {}", empPw);
-		
-		String loginEmpName = service.selectEmpNm(empNum, empPw);
-		
-		// ID, PW를 데이터베이스에 전달해서 사원 이름과 직급을 가져옴
-		ArrayList<EmpVO> empInfoList = service.getEmpInfoList(empNum, empPw);
-		
-		String errorMessage = "아이디 또는 비밀번호를 잘못 입력하셨습니다.";
-		
-		String returnUrl = null;
-		
-		for ( int i = 0; i < empInfoList.size(); i++ )
-		{
-			logger.info("empInfoList: {}", empInfoList.get(i));
-			
-			String empName = empInfoList.get(i).getEmpName();
-			String position = empInfoList.get(i).getPosition();
-			
-			logger.info("empName: {}", empName);
-			logger.info("position: {}", position);
-			
-			if ( empName != null )
-			{
-				session.setAttribute("loginName", empName);
-				session.setAttribute("loginId", empNum);
-				session.setAttribute("loginPosition", position);
-				
-				returnUrl = "redirect:adminMain";
-			}
-			else
-			{
-				returnUrl = "admin/adminLogin";
-			}
-		}
-		
-		if ( loginEmpName != null )
-		{
-			logger.info("로그인 성공.");
-			returnUrl = "redirect:adminMain";
-		}
-		else
-		{
-			logger.info("로그인 실패.");
-			model.addAttribute("errorMessage", errorMessage);
-			returnUrl = "admin/adminLogin";
-		}
-		
-		return returnUrl;
-	}
 	
 	/* 로그아웃 */
 	@RequestMapping(value = "/adminLogout", method = RequestMethod.GET)
