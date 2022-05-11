@@ -84,7 +84,7 @@ $("#sendMailBtn").click(function()
 			success: function(result)
 			{
 				var pw = result;
-				
+				console.log(pw);
 				if ( result.length != 6 )
 				{
 					$("#errorMessage").prepend(errorMessage);

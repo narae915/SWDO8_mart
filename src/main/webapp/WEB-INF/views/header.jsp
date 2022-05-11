@@ -22,27 +22,23 @@
 					</div>
 				</div>
 				<div class="ht-right">
-				<c:if test="${sessionScope.empNum != null }">
-					<sec:authorize access="isAnonymous()">
+				
+				<!-- 회원 로그인 -->
+						<sec:authorize access="isAnonymous()">
 						<a href="/user/login" class="login-panel"><i class="fa fa-user"></i> 
 							<spring:message code="message.header.login" />
 						</a>
-					</sec:authorize>
-				</c:if>
-				<c:if test="${sessionScope.empNum != null }">
-					<li class="active"><a href="/admin/adminLogout"style="color:#000;left: 82em;position: absolute;top: 2.5em;"><i class="fa fa-user"></i> Logout</a></li>
-				</c:if>
-				<c:if test="${not empty sessionScope.userMail }">
-					<sec:authorize access="isAuthenticated()">
-						<!-- 로그아웃(form안의 내용을 가지고감) -->
+						</sec:authorize>
+					
+				<!-- 회원 로그아웃(form안의 내용을 가지고감) -->
+ 					<sec:authorize access="isAuthenticated()">
 						<a href="#" class="login-panel" onclick="document.getElementById('logout').submit();">
 							<i class="fa fa-user"></i> <spring:message code="message.header.logout" />
 						</a>
 						<form id="logout" action="/user/logout" method="POST">
-							<input name="${_csrf.parameterName}" id="token" type="hidden" value="${_csrf.token}"/>
+							<input name="${_csrf.parameterName }" id="token" type="hidden" value="${_csrf.token }"/>
 						</form>
 					</sec:authorize>
-				</c:if>
 					
 					<div class="lan-selector">
 						<select class="language_drop" name="countries" id="countries" style="width: 300px;" onchange="changeLocale();">

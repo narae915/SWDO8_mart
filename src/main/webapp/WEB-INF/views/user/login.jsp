@@ -212,7 +212,7 @@
 				//ID와 비밀번호가 일치하지 않다는 모달이 뜨고, 창닫기를 누르면 새로고침 된다.
 				if(response == "no") {
 					$("#footer-modal-button").on("click", function() {
-						location.reload();
+						location.href = "/user/login";
 					});
 					return false;
 				}

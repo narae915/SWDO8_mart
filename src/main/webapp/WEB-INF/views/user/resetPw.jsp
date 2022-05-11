@@ -119,7 +119,7 @@
 	<script src="/resources/js/userJs/resetPw.js"></script>
 	<script type="text/javascript">
 		var emailChk = "<spring:message code='message.findPw.checkForm.modal.email'/>";
-		var pwChk1 = "<spring:message code='message.signUp.form.pwChkMessage2'/>";
+		var pwChk1 = "<spring:message code='message.findPw.checkForm.modal.pwChkMsg'/>";
 		var pwChk2 = "<spring:message code='message.signUp.form.pwChkMessage1'/>";
 		var pwChk3 = "<spring:message code='message.signUp.form.pwChkMessage3'/>";
 		var pwWarn1 = "<spring:message code='message.resetPw.checkForm.pwWarn1'/>";
