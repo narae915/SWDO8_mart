@@ -568,8 +568,12 @@
 					},
 					success: function(res) { //cart테이블에 입력
 						if(res = "yes") {
+							$("#il-modal").fadeOut();
 							//장바구니로 이동할 것인지 확인
-							showModal();
+							$("#ri-modal").fadeIn();
+							$(".modal-button1").click(function(){
+								location.reload();
+							});
 							$("#ri-modal-button").click(function(){
 								location.href="/order/cart";
 							});
