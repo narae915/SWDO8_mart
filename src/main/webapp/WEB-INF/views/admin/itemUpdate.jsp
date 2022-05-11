@@ -7,7 +7,6 @@
 <html lang="zxx">
 
 <head>
-    <!-- <meta charset="UTF-8"> -->
     <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 
     <meta name="description" content="Fashi Template">

@@ -223,7 +223,6 @@
 					$(".select-items").html(res);
 				},
 				error : function(e) {
-					console.log(e);
 					console.log("실패");
 				}
 			});
@@ -243,7 +242,6 @@
 					$(".select-items").html(res);
 				},
 				error : function(e) {
-					console.log(e);
 					console.log("실패");
 				}
 

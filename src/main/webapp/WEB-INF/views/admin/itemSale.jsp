@@ -271,11 +271,6 @@
 			$("li#menu-foodMart").attr("class", "active");
 		});
 
-	  	// 유효성 검사
-	  	function imgCheck(){
-	  	
-	  	}
-	  	
 	  	// 사진 삭제
 	  	function itemImgDelete(fileName) {
 	  		var itemNum = $("#itemNum").val();

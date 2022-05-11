@@ -172,4 +172,18 @@ public class UserDAO {
 		return result;
 	}
 
+	//사용가능한 메일인지 확인
+	public String mailChk(String userMail) {
+		String result = null;
+		UserMapper mapper = null;
+		
+		try {
+			mapper = session.getMapper(UserMapper.class);
+			result = mapper.mailChk(userMail);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 }

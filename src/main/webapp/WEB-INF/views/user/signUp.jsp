@@ -47,7 +47,7 @@
 	<!-- Header -->
 	<%@ include file="/WEB-INF/views/header.jsp"%>
 
-	<!-- Breadcrumb Section Begin -->
+	<!-- sign-up Section Begin -->
 	<div class="breacrumb-section">
 		<div class="container">
 			<div class="row">
@@ -64,7 +64,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- Breadcrumb Form Section Begin -->
+	<!-- sign-up Form Section Begin -->
 
 	<!-- Register Section Begin -->
 	<div class="register-login-section spad">
@@ -82,16 +82,17 @@
 							<div class="group-input">
 								<label for="username">
 									<spring:message code="message.signUp.form.name" /> <span>*</span>
-								</label> 
-								<input type="text" id="username" name="userName"> 
+									<input type="text" id="username" name="userName"> 
+								</label>
 								<span class="signChk" id="signChk-name"></span>
 							</div>
 							<div class="group-input">
 								<label for="username">
 									<spring:message code="message.signUp.form.email" /> <span>*</span>
-								</label> 
-								<input type="email" id="userMail" name="userMail"> 
+									<input type="email" id="userMail" name="userMail"> 
+								</label>
 								<span class="signChk" id="signChk-mail"></span>
+								<input type="button" value="<spring:message code="message.signUp.form.mailChk" />" onclick="mailChk();">
 							</div>
 							<div class="group-input">
 								<label for="pass">
@@ -242,6 +243,41 @@
 			});
 		});//윈도우 load시 실행하는 함수
 
+		function mailChk() {
+			var userMail = $("#userMail").val();
+			if(userMail == null || userMail == "" || userMail ==" ") {
+				$("#footer-modal-content").html("");
+				$("#footer-modal-content").append("<spring:message code='message.signUp.form.mailChkMessage1'/>");
+				exitAlert();
+				showModalAlert();
+			} else {
+				$.ajax({
+					url: "/user/mailChk",
+					data: {
+						userMail: userMail
+					},
+					async: false,
+					success: function(res) {
+						console.log(res);
+						if(res == "yes") {
+							$("#footer-modal-content").html("");
+							$("#footer-modal-content").append("<spring:message code='message.signUp.form.mailChk.yes'/>");
+							exitAlert();
+							showModalAlert();
+						} else if(res == "no") {
+							$("#footer-modal-content").html("");
+							$("#footer-modal-content").append("<spring:message code='message.signUp.form.mailChk.no'/>");
+							exitAlert();
+							showModalAlert();
+						}
+					},
+					error: function(e) {
+						console.log("실패");
+					}
+				});
+			}
+		}
+		
 		// 닫기 모달
 		function exitAlert() {
 			$("#footer-modal-content").append('<button name="modalClose" class="primary-btn" id="footer-modal-button" style="margin-top:30px; border-radius:5px; border:none"><spring:message code="message.footer.modal.close"/></button>');
@@ -348,6 +384,33 @@
 				showModalAlert();
 				return returnVal;
 			}
+			
+			//등록된 메일인지 확인
+			if(userMail != null || userMail != "" || userMail !=" ") {
+				var temp = true;
+				$.ajax({
+					url: "/user/mailChk",
+					data: {
+						userMail: userMail
+					},
+					async: false,
+					success: function(res) {
+						console.log(res);
+						if(res == "no") {
+							$("#footer-modal-content").html("");
+							$("#footer-modal-content").append("<spring:message code='message.signUp.form.mailChk.no'/>");
+							exitAlert();
+							showModalAlert();
+							temp = returnVal;
+						}
+					},
+					error: function(e) {
+						console.log(e);	
+					}
+				});
+				return temp;
+			}
+				
 			//비밀번호 정규식
 			pattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 			if (userPw.length<8 || userPw.length>16

@@ -65,7 +65,6 @@
 		$(function(){
 			var score = 0;
 			var countPost = $(".scores").length;
-			console.log(countPost);
 			
 			for(var i = 0; i <= countPost; i++) {
 				score = $("#avg-score"+i).val();
@@ -79,15 +78,12 @@
 		//더보기 실행하기(페이징) - 일반 ver
 		function loadingMore(cnt){
 			var temp = $("#getRecipeList>div>div.blog-item").length;
-			console.log(temp);
 	
 			var startCount = $("input#startCount").val(temp);
 			startCount = startCount.val();
-			console.log('시작하는 숫자' +startCount);
 			
 			var viewCount = $("input#viewCount").val(cnt);
 			viewCount = viewCount.val();
-			console.log('보여주고 싶은 갯수 ' +viewCount);
 			
 			$.ajax({
 				url: "/recipe/loading",
@@ -115,15 +111,12 @@
 		//더보기 실행하기(페이징) -- 검색 결과ver
 		function searchLoadingMore(cnt) {
 			var temp = $("#getRecipeList>div>div.blog-item").length;
-			console.log(temp);
 	
 			var startCount = $("input#startCount").val(temp);
 			startCount = startCount.val();
-			console.log('시작하는 숫자' +startCount);
 			
 			var viewCount = $("input#viewCount").val(cnt);
 			viewCount = viewCount.val();
-			console.log('보여주고 싶은 갯수 ' +viewCount);
 			
 			var searchword = $("#word").val();
 			

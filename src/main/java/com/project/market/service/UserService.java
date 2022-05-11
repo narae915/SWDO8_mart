@@ -90,4 +90,9 @@ public class UserService {
 		return dao.selectUser(user);
 	}
 
+	//사용가능한 메일인지 확인
+	public String mailChk(String userMail) {
+		return dao.mailChk(userMail);
+	}
+
 }

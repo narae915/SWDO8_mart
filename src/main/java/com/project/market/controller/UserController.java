@@ -15,6 +15,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -390,6 +391,25 @@ public class UserController {
 			logger.info("없는 유저");
 			return "no";
 		}
+	}
+	
+	//사용가능한 메일인지 확인
+	@ResponseBody
+	@RequestMapping(value = "/mailChk", method = RequestMethod.GET)
+	public String mailChk(String userMail) {
+		logger.info("mailChk 메일확인 메소드 실행(GET)");
+		logger.info("userMail: {}", userMail);
+		
+		String returnVal = null;
+		
+		String checkedMail = service.mailChk(userMail);
+		if(checkedMail == null) {
+			returnVal = "yes";
+		} else {
+			returnVal = "no";
+		}
+		
+		return returnVal;
 	}
 	
 }

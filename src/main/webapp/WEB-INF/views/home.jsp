@@ -544,9 +544,7 @@
 	
 	//장바구니에 넣기
 	function insertCart(itemNum) {
-		console.log(itemNum);
 		var userMail = $("#loginMail").val();
-		console.log(userMail);
 		itemNum = parseInt(itemNum);
 		var cartAmount = 1;
 

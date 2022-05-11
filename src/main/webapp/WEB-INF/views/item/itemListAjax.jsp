@@ -77,7 +77,6 @@
 	//더보기 실행하기(페이징)
 	function loadingMore(cnt){
 		var temp = $("#productList>div>div>div>ul").length;
-		console.log(temp);
 		var sorting = $("#sorting").val();
 		var searchNum = $("#cate-num").val();
 		
@@ -103,9 +102,8 @@
 				searchNum: searchNum
 			},
     		success: function(res){
-    			console.log(res);
-    				$(".row > .col-lg-4 col-sm-6").remove();
-    				$("#productList").html(res);
+   				$(".row > .col-lg-4 col-sm-6").remove();
+   				$("#productList").html(res);
     		},
     		error: function(e){
    				$("#footer-modal-content").html("<spring:message code='message.itemList.nomoreItem'/>");
@@ -118,9 +116,7 @@
 	
 	//장바구니에 넣기
 	function insertCart(itemNum) {
-		console.log(itemNum);
 		var userMail = $("#loginMail").val();
-		console.log(userMail);
 		itemNum = parseInt(itemNum);
 		var cartAmount = 1;
 

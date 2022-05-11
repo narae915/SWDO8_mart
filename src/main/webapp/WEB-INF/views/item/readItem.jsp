@@ -245,11 +245,9 @@
 	
 	//장바구니에 상품 넣기
 	function insertCart(itemNum) {
-		console.log(itemNum);
 		itemNum = parseInt(itemNum);
 		cartAmount = $("input[name=cartAmount]").val();
 		var userMail = $("#loginMail").val();
-		console.log(cartAmount);
 		var itemAmount = $("#item-amount").val();
 		
 		//아이템 수량이 0개 이하일 때 더이상 구매할 수 없게 한 뒤, 페이지 이동
