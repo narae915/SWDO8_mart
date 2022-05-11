@@ -95,12 +95,12 @@
 		color: #fff58c;
 		padding: 0;
 		position: absolute;
-	    z-index: 1;
-	    display: inline-block;
-	    top: 0;
-	    left: 0;
-	    overflow: hidden;
-	    -webkit-text-fill-color: gold;
+		z-index: 1;
+		display: flex;
+		top: 0;
+		left: 0;
+		overflow: hidden;
+		-webkit-text-fill-color: gold;
 	}
 	
 	.star-ratings-base {
@@ -257,7 +257,7 @@
 																	${recipe.title }
 																</p>
 																<div class="star-ratings">
-																	<div class="star-ratings-fill space-x-2 text-lg" id="star-rate${status.count }" style="width:calc(${recipe.score } * 20)%">
+																	<div class="star-ratings-fill space-x-2 text-lg" id="star-rate${status.count }">
 																		<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
 																	</div>
 																	<div class="star-ratings-base space-x-2 text-lg">
@@ -308,17 +308,15 @@
 		
 		var score = 0;
 		var countPost = $(".scores").length;
-		console.log(countPost);
 		var starFill = null;
 		
-		/*  for(var i = 1; i <= countPost; i++) {
+		for(var i = 1; i <= countPost; i++) {
 			score = $("#avg-score"+i).val();
-			score = score*20;
-			console.log(score);
+			score = (score*20) + 1;
 			
 			//1를 더하여 주는 이유는 half star일 시 미세하게 절반이 안되어보여서 보여지는 값을 조정하기 위해 추가한 offset 값이다.
 			$("#star-rate"+i).css("width", score+"%");
-		}  */
+		} 
 	});
     </script>
 </body>
