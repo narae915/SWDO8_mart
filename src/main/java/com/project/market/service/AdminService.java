@@ -81,26 +81,6 @@ public class AdminService {
 		return dao.adminRegister(newEmp, newFile) > 0;
 	}
 	
-	/* 로그인 */
-	public String selectEmpNm(int empNum, String empPw) 
-	{
-		EmpVO emp = new EmpVO();
-		emp.setEmpNum(empNum);
-		emp.setEmpPw(empPw);
-		
-		return dao.selectEmpNm(emp);
-	}
-	
-	/* 로그인 정보 가져오기 */
-	public ArrayList<EmpVO> getEmpInfoList(int empNum, String empPw) 
-	{
-		HashMap<String, Object> map = new HashMap<>();
-		map.put("empNum", empNum);
-		map.put("empPw", empPw);
-		
-		return dao.getEmpInfoList(map);
-	}
-
 	/* 직원 리스트 조회 */
 	public ArrayList<EmpVO> getEmpList(int startRecord, int countPerPage, String searchType, String searchWord, String loginPosition) 
 	{

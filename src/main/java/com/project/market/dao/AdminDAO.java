@@ -107,44 +107,6 @@ public class AdminDAO {
 		return result;
 	}
 	
-	/* 로그인 */
-	public String selectEmpNm(EmpVO emp) 
-	{
-		String result = null;
-		AdminMapper mapper = null;
-		
-		try 
-		{
-			mapper = session.getMapper(AdminMapper.class);
-			result = mapper.selectEmpNm(emp);
-		} 
-		catch (Exception e) 
-		{
-			e.printStackTrace();
-		}
-		
-		return result;
-	}
-	
-	/* 로그인 정보 가져오기 */
-	public ArrayList<EmpVO> getEmpInfoList(HashMap<String, Object> map) 
-	{
-		ArrayList<EmpVO> result = null;
-		AdminMapper mapper = null;
-		
-		try 
-		{
-			mapper = session.getMapper(AdminMapper.class);
-			result = mapper.getEmpInfoList(map);
-		} 
-		catch (Exception e) 
-		{
-			e.printStackTrace();
-		}
-		
-		return result;
-	}
-	
 	/* 직원 리스트  */
 	public ArrayList<EmpVO> getEmpList(HashMap<String, Object> map) 
 	{

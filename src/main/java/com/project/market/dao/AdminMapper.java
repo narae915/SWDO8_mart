@@ -29,10 +29,6 @@ public interface AdminMapper {
 	
 	void empSetFile(@Param("originalFilename") String originalFilename, @Param("savedFilename") String savedFilename); // 직원 ID 등록 시 사진 등록
 
-	String selectEmpNm(EmpVO emp); // 로그인
-	
-	ArrayList<EmpVO> getEmpInfoList(HashMap<String, Object> map); // 로그인 정보 가져오기
-
 	ArrayList<EmpVO> getEmpList(HashMap<String, Object> map); // 직원 리스트 조회
 	
 	EmpVO readEmp(int empNum); // 직원 번호로 해당 직원 정보 조회
