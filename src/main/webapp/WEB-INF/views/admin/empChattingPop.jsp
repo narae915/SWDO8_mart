@@ -244,8 +244,6 @@
         
         ws.onmessage = function(event)
         {
-            console.log("writeResponse");
-            console.log(event.data)
             writeResponse(event.data);
         };
         
@@ -280,9 +278,6 @@
 
     function clearText()
     {
-        // console.log(messages.parentNode);
-        // messages.parentNode.removeChild(messages);
-        // $("h2").after($("<div id='messages'>"));
         $("#messages").empty();
         
   	}

@@ -231,7 +231,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> | Tea
     	//이름과 사원번호를 합쳐서 입력하면 관리자 페이지로 이동하는 ajax 만들기
     	function staffOnlyChk() {
 			var chkMessage = $("input[name=admin]").val();
-			console.log(chkMessage);
     		var result = false;
     		
     		$.ajax({

@@ -79,7 +79,6 @@
 	<script src="/resources/js/owl.carousel.min.js"></script>
 	<script src="/resources/js/main.js"></script>
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-
 	<!-- 썸머노트 -->
 	<script src="/resources/js/summernote/lang/summernote-ko-KR.js"></script>
 	<script src="/resources/js/summernote/summernote-lite.js"></script>

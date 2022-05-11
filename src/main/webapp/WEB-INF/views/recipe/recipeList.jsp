@@ -258,7 +258,6 @@
 		//검색어 폼 체크
 		function searchFormChk() {
 			var searchword = $("#search-word").val().trim();
-			console.log(searchword);
 			if(searchword == null || searchword.length == 0 || searchword == "") {
 				$("#footer-modal-content").html("<spring:message code='message.recipeList.inputSearch'/>");
 				exitAlert();
@@ -273,7 +272,6 @@
 		$(function() {
 			var score = 0;
 			var countPost = $(".scores").length;
-			console.log(countPost);
 			
 			for(var i = 1; i <= countPost; i++) {
 				score = $("#avg-score"+i).val();
@@ -288,7 +286,6 @@
 		//더보기 실행하기(페이징) - 일반ver
 		function loadingMore(cnt){
 			var temp = $("#getRecipeList>div>div.blog-item").length;
-			console.log(temp);
 	
 			var startCount = $("input#startCount").val(temp);
 			startCount = startCount.val();
@@ -323,7 +320,6 @@
 		//더보기 실행하기(페이징) -- 검색 결과ver
 		function searchLoadingMore(cnt) {
 			var temp = $("#getRecipeList>div>div.blog-item").length;
-			console.log(temp);
 	
 			var startCount = $("input#startCount").val(temp);
 			startCount = startCount.val();

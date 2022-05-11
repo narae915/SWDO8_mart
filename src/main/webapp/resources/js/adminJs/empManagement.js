@@ -7,7 +7,6 @@ function empUpdate(empNum)
 /* 직원 정보 삭제 */
 function empDelete(empNum, empImg) 
 {
-    console.log(empImg)
     $("#modalAlert_content").html("");
     $("#modalAlert_content").prepend("정말 삭제하시겠습니까?<br><br>");
     $("#modalAlert_content").append('<input type="button" class="modalAccept" value="확인" style="position: absolute; right: 13.5em; bottom: 3em;"><br>');

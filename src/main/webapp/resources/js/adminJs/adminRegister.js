@@ -170,7 +170,6 @@ $("#sendMailBtn").click(function()
 				pinNumBox.attr("id", "pinNumChk_true");  // 인증 번호 발송시 id를 변경함으로서 css적용
 				checkBtn.attr("id", "pinNumChk_Btn_true");
 				pinNum = result;
-				console.log(pinNum);
 			}
 		});
 	}

@@ -34,4 +34,6 @@ public interface UserMapper {
 	// 유저 본인 확인
 	String selectUser(UserVO user);
 
+	//사용가능한 메일인지 확인
+	String mailChk(String userMail);
 }

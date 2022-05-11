@@ -119,4 +119,14 @@
 	where
 		user_mail = #{userMail }
 </select>
+
+<!-- 사용가능한 메일인지 확인 -->
+<select id="mailChk" parameterType="String" resultType="String">
+	select
+		user_mail as userMail
+	from
+		user_table
+	where
+		user_mail = #{userMail }
+</select>
 </mapper>

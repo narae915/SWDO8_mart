@@ -287,7 +287,7 @@
 					recipeNum : $("input[name=recipeNum]").val()
 				},
 				success: function(reply) {
-					console.log("조회 성공");
+					console.log("성공");
 					str += "<div id='comment-wrapper"+reply.replyNum +"' class='comment-wrapper'>";
 					str += "<div class='comment-name'><strong>"+ reply.userMail +"</strong></div>";
 					str += "	<div class='comment-content'>"+ reply.replyContent + "</div>";
@@ -310,7 +310,7 @@
 					$(".comment-list").append(str);
 				},
 				error: function(e) {
-					console.log("조회 실패");
+					console.log("실패");
 				}
 			});
 		} 
@@ -348,7 +348,7 @@
 					recipeNum : $("input[name=recipeNum]").val()
 				},
 				success: function(res) {
-					console.log("삭제 성공");
+					console.log("성공");
 					$(".comment-list").empty(); // comment-list의 하위태그 삭제
 					var str = "";
 					$.each(res, function (index, reply) {
@@ -378,7 +378,7 @@
 				},
 				error: function(e) {
 					console.log(e);
-					console.log("삭제 실패");
+					console.log("실패");
 				}
 			});
 		}
@@ -410,7 +410,7 @@
 					updateContent : updateContent
 				},
 				success: function(res) {
-					console.log("수정 성공");
+					console.log("성공");
 					$(".comment-list").empty(); // comment-list의 하위태그 삭제
 					var str = "";
 					$.each(res, function (index, reply) {
@@ -440,7 +440,7 @@
 				},
 				error: function(e) {
 					console.log(e);
-					console.log("수정 실패");
+					console.log("실패");
 				}
 			}); 
 		}

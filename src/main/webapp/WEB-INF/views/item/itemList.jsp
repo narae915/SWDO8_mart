@@ -213,7 +213,6 @@
     //카테고리 번호 찾기(정렬 select에서 categoryNum을 알 수 없기 때문)
     function searchCategoryNum(categoryNum) {
     	var searchNum = $("#cate-num").val();
-    	console.log(searchNum);
 
     	if(searchNum == null || searchNum == "" ){
     		searchNum = 0;
@@ -229,8 +228,6 @@
     	$("#cate-num").val(categoryNum);
     	
     	var sorting = $("#sorting").val();
-		console.log(sorting);
-    	console.log(categoryNum);
 
     	//ajax에 jstl태그를 사용할 수 없으므로 ajax용 jsp를 만들어서 태그를 끌어오는 방식
     	$.ajax({
@@ -241,7 +238,6 @@
     			sendNum:categoryNum
     		},
     		success: function(res){
-				console.log(res); 
 				$(".row > .col-lg-4 col-sm-6").remove();
 				$("#productList").html(res);
     		},
@@ -254,7 +250,6 @@
 	//더보기 실행하기(페이징)
 	function loadingMore(cnt){
 		var temp = $("#productList>div>div>div>ul").length;
-		console.log(temp);
 		var sorting = $("#sorting").val();
 		var searchNum = $("#cate-num").val();
 
@@ -295,9 +290,7 @@
 	
 	//장바구니에 넣기
 	function insertCart(itemNum) {
-		console.log(itemNum);
 		var userMail = $("#loginMail").val();
-		console.log(userMail);
 		itemNum = parseInt(itemNum);
 		var cartAmount = 1;
 

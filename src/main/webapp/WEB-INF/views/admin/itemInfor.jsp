@@ -151,7 +151,6 @@
 	        $('#summernote').summernote(setting);
 		});
 		
-		
 		function uploadSummernoteImageFile(file, el) {
 			data = new FormData();
 			data.append("file", file);
@@ -167,7 +166,6 @@
 				}
 			});
 		}
-
 
 		// 작성 중 페이지를 벗어날 시,
 		var checkUnload = true;
