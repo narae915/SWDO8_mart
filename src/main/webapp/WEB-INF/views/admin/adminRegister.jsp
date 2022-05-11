@@ -87,7 +87,7 @@
 							   <span id="pinNumChk_warn"></span>
                             </div>
                             <div class="group-input">
-								<input type="button" id="sendMailBtn" value="인증번호 전송" style="right: 0.95em; bottom: 20.4em;">
+								<input type="button" id="sendMailBtn" value="인증번호 전송" style="right: 0.95em; bottom: 19.95em;">
                             </div>
                             <div class="group-input">
 								<select id="position" name="position">

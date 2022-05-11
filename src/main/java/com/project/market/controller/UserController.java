@@ -217,6 +217,7 @@ public class UserController {
 			 toMail = userMail;
 			 title = "봄날 식자재에서 요청하신 인증번호를 알려드립니다.";
 			 content = 
+					"<img src='https://scontent-ssn1-1.xx.fbcdn.net/v/t39.30808-6/280439065_115023511201584_7362285571554206155_n.jpg?_nc_cat=108&ccb=1-6&_nc_sid=730e14&_nc_ohc=VgAgAtZLy1AAX9Hyv1x&tn=4zJtUO85DSbj-9h_&_nc_ht=scontent-ssn1-1.xx&oh=00_AT_-lgIBCRgdTJdtsCA7l63B3uNpOhQSG9V447L8wYxN7Q&oe=628041B7' style='width: 311px'><br>" +
 	                "<b>아래의 인증번호를 인증번호 입력창에 입력해 주세요.</b>" +
 	                "<br><br>" + 
 	                "<b>인증번호 : </b>" + "<b style='color: #e7ab3c;'>" + pinNum + "</b>" +

@@ -11,7 +11,7 @@
 #pinNumChk_warn{
 	position: absolute;
 	left: 2.23em;
-	bottom: 14.15em;
+	bottom: 220px;
 }
 
 .correct
@@ -26,7 +26,7 @@
 #pw_warn {
 	position: absolute;
 	left: 2.23em;
-	bottom: 28.2em;
+	bottom: 446px;
 }
 
 /* 버튼 */
@@ -38,7 +38,7 @@
 	color: #ebebe4;
 	position: absolute;
 	right: 0.95em;
-	bottom: 15.7em;
+	bottom: 15.25em;
 }
 
 #pinNumChk_Btn_true

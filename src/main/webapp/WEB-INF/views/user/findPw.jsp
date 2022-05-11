@@ -80,13 +80,13 @@
 							</div>
 							<div class="group-input" id="pinNumChk_false">
 								<input type="text" id="pinNumChk" name="pinNumChk" placeholder="<spring:message code='message.findPw.form.pinNumChk'/>" disabled="disabled"> 
-								<input type="button" id="pinNumChk_Btn" value="<spring:message code='message.findPw.form.pinNumChkBtn'/>" disabled="disabled" style="position: absolute; left: 25.1em; bottom: 4.82em;">
-								<span id="pinNumChk_warn" style="position: absolute; left: 2.23em; bottom: 3.1em;"></span>
+								<input type="button" id="pinNumChk_Btn" value="<spring:message code='message.findPw.form.pinNumChkBtn'/>" disabled="disabled" style="position: absolute; left: 23.2em; bottom: 4.82em;">
+								<span id="pinNumChk_warn" style="position: absolute; right: 15px; bottom: 3.1em;"></span>
 							</div>
 							<div class="group-input">
-								<input type="button" id="sendMailBtn" value="<spring:message code='message.findPw.form.sendMailBtn'/>" style="background-color: #434445; position: absolute; width: 30%; height: 50px; border-radius: 5px; left: 25.1em; bottom: 9.5em; color: white;">
+								<input type="button" id="sendMailBtn" value="<spring:message code='message.findPw.form.sendMailBtn'/>" style="background-color: #434445; position: absolute; width: 30%; height: 50px; border-radius: 5px; left: 23.2em; bottom: 9.5em; color: white;">
 							</div>
-							<span id="errorMessage" style="position: absolute; left: 2.23em; bottom: 7.95em; color: red;"></span>
+							<span id="errorMessage" style="position: absolute; right: 15px; bottom: 7.95em; color: red;"></span>
 							<button type="submit" id="sendMailBtn" class="site-btn register-btn">
 								<spring:message code="message.findId.form.nextBtn"/>
 							</button>

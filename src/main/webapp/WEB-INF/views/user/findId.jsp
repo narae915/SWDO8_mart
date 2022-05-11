@@ -74,7 +74,9 @@
 								<input type="text" id="userCall" name="userCall" placeholder="<spring:message code='message.findId.form.userCall'/>">
 							</div>
 							<c:if test="${not empty errorMessageId }">
-								<span style="position: absolute; left: 2.23em; bottom: 3.1em; color: red;">${errorMessageId }</span>
+								<span style="position: absolute; left: 2.23em; bottom: 3.1em; color: red;">
+									<spring:message code="message.findId.errorMessageId" />
+								</span>
 							</c:if>
 							<button type="submit" class="site-btn register-btn">
 								<spring:message code="message.findId.form.nextBtn" />

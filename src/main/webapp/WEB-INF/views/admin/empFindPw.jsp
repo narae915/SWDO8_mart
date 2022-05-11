@@ -69,7 +69,7 @@
                                 <input type="text" id="empMail" name="empMail" placeholder="이메일을 입력해주세요.">
                             </div>
                             <c:if test="${not empty errorMessageId }">
-                            	<span style="position: absolute; left: 2.23em; bottom: 3.1em; color: red;">${errorMessageId }</span>
+                            	<span style="position: absolute; left: 2.23em; bottom: 44px; color: red;">${errorMessageId }</span>
                             </c:if>
                             <button type="submit" id="sendMailBtn" class="site-btn register-btn">확인</button>
                         </form>
