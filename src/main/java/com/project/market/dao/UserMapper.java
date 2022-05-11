@@ -19,7 +19,7 @@ public interface UserMapper {
 	// ID 찾기
 	String selectId(UserVO user);
 
-	// PW 찾기 전 아이디 확인
+	// PW 찾기 전 일치하는 아이디가 있는지 확인
 	String findUser(UserVO user);
 
 	// PW 초기화

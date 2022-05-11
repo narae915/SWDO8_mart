@@ -22,7 +22,7 @@ public class ItemService {
 		return dao.getCategoryList();
 	}
 
-	//상품 리스트 불러오기
+	// 상품 리스트 불러오기
 	public ArrayList<ItemVO> getItemList(int countPerPage, String sorting, int categoryNum) {
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("sorting", sorting);
@@ -61,12 +61,12 @@ public class ItemService {
 		return dao.getProduceList();
 	}
 
-	//상품테이블에 등록된 상품 수 확인
+	// 상품테이블에 등록된 상품 수 확인
 	public int countRecipeList(int categoryNum) {
 		return dao.countRecipeList(categoryNum);
 	}
 
-	//전체 파일 불러오기
+	// 사진 파일 전체 불러오기
 	public ArrayList<FileListVO> getFileList() {
 		return dao.getFileList();
 	}

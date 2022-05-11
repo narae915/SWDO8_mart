@@ -38,7 +38,8 @@ public class ItemController {
 		if(categoryNum != 0) {
 			model.addAttribute("categoryNum", categoryNum);
 		}
-		//DB에 저장된 카테고리 테이블 출력
+		
+		// 카테고리 테이블 불러오기
 		ArrayList<HashMap<String, Object>> category = service.getCategoryList();
 		logger.info("category: {}",category);
 		
@@ -46,6 +47,8 @@ public class ItemController {
 
 		String sorting = null;
 		model.addAttribute("countPerPage", countPerPage);
+		
+		//상품 리스트 불러오기
 		ArrayList<ItemVO> itemList = service.getItemList(countPerPage, sorting, categoryNum);
 
 		//파일을 불러오는 list 생성
@@ -69,12 +72,16 @@ public class ItemController {
 		logger.info("값 확인 -> sorting : {} , sendNum : {}",sorting, sendNum);
 		int categoryNum = Integer.parseInt(sendNum); // int형으로 자료형변환
 		
+		//상품 리스트 불러오기
 		ArrayList<ItemVO> itemList = service.getItemList(countPerPage, sorting, categoryNum);
+		
 		//파일을 불러오는 list 생성
 		ArrayList<FileListVO> fileList = service.getFileList();
 		logger.info("상품 페이지 이미지파일 리스트 : {}", fileList);
+
 		//파일 이미지 저장
 		itemList = imgSrc.setFileImg(itemList, fileList);
+		
 		// 세일 상품 저장
 		itemList = service.sale(itemList);
 		logger.info("세일,파일 포함:{}", itemList);
@@ -99,7 +106,7 @@ public class ItemController {
 		
 		int countPerPage = startNum + viewNum;
 
-		//상품 테이블의 등록된 상품 수 확인
+		// 상품 테이블의 등록된 상품 수 확인
 		int countColumn = service.countRecipeList(categoryNum);
 		logger.info("countColumn:{}",countColumn);
 
@@ -108,12 +115,17 @@ public class ItemController {
 			return null;
 		//총 게시글 수가 조회되어 있는 게시글 수보다 많을 경우
 		} else {
+			// 상품 리스트 불러오기
 			ArrayList<ItemVO> itemList = service.getItemList(countPerPage,sorting,categoryNum);
-			//파일을 불러오는 list 생성
+			
+			// 파일을 불러오는 list 생성
+			// 사진 파일 전체 불러오기
 			ArrayList<FileListVO> fileList = service.getFileList();
 			logger.info("상품 페이지 이미지파일 리스트 : {}", fileList);
+			
 			//파일 이미지 저장
 			itemList = imgSrc.setFileImg(itemList, fileList);
+			
 			// 세일 상품 저장
 			itemList = service.sale(itemList);
 			logger.info("세일,파일 포함:{}", itemList);
@@ -130,12 +142,13 @@ public class ItemController {
 		logger.info("상품 상세 페이지 이동(GET)");
 		logger.info("넘어온 아이템 번호:{}", itemNum);
 		
-		//DB에 저장된 카테고리 테이블 출력
+		// 카테고리 테이블 불러오기
 		ArrayList<HashMap<String, Object>> category = service.getCategoryList();
 		logger.info("category: {}",category);
 		
 		model.addAttribute("categoryList", category);
 
+		// 상품 1개의 정보 불러오기
 		ItemVO item = service.getOneItem(itemNum);
 		logger.info("item:{}", item);
 		

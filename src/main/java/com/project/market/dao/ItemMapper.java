@@ -11,7 +11,7 @@ public interface ItemMapper {
 	//카테고리 테이블 불러오기
 	ArrayList<HashMap<String, Object>> getCategoryList();
 
-	//상품 리스트 불러오기
+	// 상품 리스트 불러오기
 	ArrayList<ItemVO> getItemList(HashMap<String,Object> map);
 
 	//상품 1개의 정보 불러오기
@@ -26,13 +26,13 @@ public interface ItemMapper {
 	//과일, 채소 조회하는 메소드(메인화면에서 사용)
 	ArrayList<ItemVO> getProduceList();
 
-	//상품테이블에 등록된 상품 수 확인
+	// 상품테이블에 등록된 상품 수 확인
 	int countRecipeList(int categoryNum);
 
 	//상품 리스트 불러오기(메인화면용)
 	ArrayList<ItemVO> mainItemList(int categoryNum);
 
-	//전체 파일 불러오기
+	// 사진 파일 전체 불러오기
 	ArrayList<FileListVO> getFileList();
 
 	//세일 상품을 불러옴

@@ -35,7 +35,7 @@ public class AdminDAO {
 		return result;
 	}
 
-	// 1.페이징
+	// 페이징
 	public int getTotalRecordsCount(HashMap<String, Object> map) {
 		int result = 0;
 		AdminMapper mapper = null;
@@ -50,7 +50,7 @@ public class AdminDAO {
 		return result;
 	}
 
-	// 1.상품 리스트 불러오기 메소드
+	// 상품 리스트 불러오기 메소드
 	public ArrayList<ItemVO> getItemList(HashMap<String, Object> map) {
 		AdminMapper mapper = session.getMapper(AdminMapper.class);
 		ArrayList<ItemVO> itemList = mapper.getItemList(map);
@@ -58,7 +58,7 @@ public class AdminDAO {
 		return itemList;
 	}
 
-	// 2.상품 삭제 메소드
+	// 상품 삭제 메소드
 	public int itemDelete(List<Integer> intCancelNum) {
 		int result = 0;
 		AdminMapper mapper = null;
@@ -72,7 +72,7 @@ public class AdminDAO {
 		return result;
 	}
 
-	// 3.상품 추가 메소드
+	// 상품 추가 메소드
 	public int itemInsert(HashMap<String, Object> map) {
 		int result = 0;
 		AdminMapper mapper = null;
@@ -107,7 +107,7 @@ public class AdminDAO {
 		return result;
 	}
 	
-	/* 직원 리스트  */
+	/* 직원 리스트  조회 */
 	public ArrayList<EmpVO> getEmpList(HashMap<String, Object> map) 
 	{
 		ArrayList<EmpVO> result = null;
@@ -126,7 +126,7 @@ public class AdminDAO {
 		return result;
 	}
 	
-	/* 총 직원 수 조회  (페이징) */
+	// 총 직원 수를 가져옴
 	public int getEmpTotalRecordsCount(HashMap<String, Object> map) 
 	{
 		int result = 0;
@@ -175,7 +175,6 @@ public class AdminDAO {
 			mapper = session.getMapper(AdminMapper.class);
 			result = mapper.empUpdate(updateEmp);
 			mapper.empSetFile(updateImg.getOriginalFilename(), updateImg.getSavedFilename());
-			// mapper.empUpdateFile(updateImg.getEmpImg() ,updateImg.getOriginalFilename(), updateImg.getSavedFilename());
 			
 		}
 		catch(Exception e)
@@ -205,6 +204,7 @@ public class AdminDAO {
 		return result;
 	}
 	
+	// 직원 사진 정보 삭제
 	public int empDeleteFile(String empImg) 
 	{
 		int result = 0;
@@ -280,7 +280,7 @@ public class AdminDAO {
 		return result;
 	}
 	
-	// 상품 수정 페이지 기존 정보 가져오기
+	// 상품 기존 정보 가져오기
 	public ArrayList<ItemVO> getAdminItemList(String itemChk) {
 		ArrayList<ItemVO> result = null;
 		AdminMapper mapper = null;
@@ -295,7 +295,7 @@ public class AdminDAO {
 		return result;
 	}
 
-	// 상품 수정
+	// 상품 정보 수정
 	public int itemUpdate(HashMap<String, Object> map) {
 		int result = 0;
 		AdminMapper mapper = null;
@@ -311,7 +311,7 @@ public class AdminDAO {
 		return result;
 	}
 
-	//회원 검색
+	// 회원 검색
 	public ArrayList<UserVO> searchUser(HashMap<String, Object> map) {
 		ArrayList<UserVO> result = null;
 		AdminMapper mapper = null;
@@ -325,7 +325,7 @@ public class AdminDAO {
 		return result;
 	}
 
-	//총 유저수 확인
+	// 총 유저수 확인
 	public int getUserTotalRecordsCount(HashMap<String, Object> map) {
 		int result = 0;
 		AdminMapper mapper = null;
@@ -411,7 +411,7 @@ public class AdminDAO {
 		return result;
 	}
 
-	// 사진 삭제
+	// 상품 사진 삭제
 	public int itemImgDelete(String fileName) {
 		int result = 0;
 		AdminMapper mapper = null;
@@ -456,6 +456,7 @@ public class AdminDAO {
 		return result;
 	}
 
+	// 상품 사진 파일 수정
 	public int itemFileUpdate(HashMap<String, Object> map) {
 		int result = 0;
 		AdminMapper mapper = null;
@@ -470,7 +471,7 @@ public class AdminDAO {
 		return result;
 	}
 
-	//강제 회원 탈퇴
+	// 강제 회원 탈퇴
 	public int deleteUser(int userNum) {
 		int result = 0;
 		AdminMapper mapper = null;
@@ -485,7 +486,7 @@ public class AdminDAO {
 		return result;
 	}
 
-	//세일 상품임을 알림
+	// 세일 상품임을 알림
 	public int saleFlag(HashMap<String, Object> map) {
 		int result = 0;
 		AdminMapper mapper = null;

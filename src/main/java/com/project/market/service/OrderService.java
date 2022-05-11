@@ -43,7 +43,7 @@ public class OrderService {
 		return dao.getOrderList(map);
 	}
 
-	// 주문 취소 메소드
+	// 주문 취소 메서드
 	public boolean orderCancel(List<String> cancelNum) {
 		
 		List<Integer> intCancelNum = cancelNum.stream().map(s -> Integer.parseInt(s)).collect(Collectors.toList());
@@ -51,7 +51,7 @@ public class OrderService {
 		return dao.orderCancel(intCancelNum) > 0;
 	}
 
-	// 장바구니 리스트 페이징 메소드
+	// 장바구니 리스트 페이징 메서드
 	public int getCartTotalRecordsCount(String userMail) {
 
 		return dao.getCartTotalRecordsCount(userMail);
@@ -114,13 +114,13 @@ public class OrderService {
 		return dao.updateCartAmount(map) > 0;
 	}
 
-	// orderForm에 회원정보 가져오기
+	// 회원정보 가져오기
 	public ArrayList<UserVO> getUserList(String userMail) {
 
 		return dao.getUserList(userMail);
 	}
 	
-	// orderForm에 상품정보 가져오기
+	// 상품정보 가져오기
 	public ArrayList<ItemVO> getItemList(String buy) {
 		HashMap<String, Object> map = new HashMap<>();
 		String[] buyArr = buy.split(",");

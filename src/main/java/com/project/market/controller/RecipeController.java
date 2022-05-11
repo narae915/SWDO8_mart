@@ -52,6 +52,8 @@ public class RecipeController {
 	public String recipeList(Model model) {
 		logger.info("recipeList 게시판(GET)");
 		String nothing = null;
+		
+		// 레시피 게시판 조회
 		ArrayList<RecipeVO> recipeList = service.getRecipeList(countPerPage);
 
 		//레시피 게시판에 게시글이 없을 때
@@ -111,6 +113,7 @@ public class RecipeController {
 		logger.info("search 검색 메소드(GET)");
 		logger.info("searchword : {}", searchword);
 
+		// 레시피 검색
 		//검색결과 list에 저장
 		ArrayList<RecipeVO> sRecipeList = service.searchRecipe(searchword, countPerPage);
 		logger.info("검색 결과 : {}", sRecipeList);
@@ -170,6 +173,7 @@ public class RecipeController {
 		int viewNum = Integer.parseInt(viewCount);
 		
 		int countPerPage = startNum + viewNum;
+		
 		//게시판 테이블의 등록된 게시글 수 확인
 		int countColumn = service.countRecipeList(searchword);
 		//총 게시글 수가 조회되어 있는 게시글 수보다 같거나,적을 경우 null을 보내므로서 ajax실패를 만듬
@@ -267,6 +271,8 @@ public class RecipeController {
 		model.addAttribute("scoreFlag", scoreFlag);
 		// 게시글 번호가 있으면 실행
 		if(recipeNum != 0) {
+			
+			// 상세 게시글 조회
 			//게시글을 조회할때 dao에서 조회수도 1회 올라가게 하였음
 			RecipeVO recipe = service.getRecipe(recipeNum);
 			
@@ -283,7 +289,7 @@ public class RecipeController {
 			logger.info("recipe : {} ", recipe);
 
 			
-			//댓글 조회 댓글
+			//댓글 조회
 			ArrayList<ReplyVO> replyList = service.readReply(recipeNum);
 			
 			logger.info("replyList : {}", replyList);
@@ -296,6 +302,7 @@ public class RecipeController {
 
 			String emptyMessage = null;
 			
+			//상세 게시글 조회
 			// 이전글과 다음글이 존재한다면 조회하여 model에 저장
 			if(prev != -1) {
 				RecipeVO prevRecipe = service.getRecipe(prev);
@@ -307,6 +314,7 @@ public class RecipeController {
 				model.addAttribute("emptyPrevMessage", emptyMessage);
 			}
 			if(next != -1) {
+				//상세 게시글 조회
 				RecipeVO nextRecipe = service.getRecipe(next);
 				if(nextRecipe != null) {
 					model.addAttribute("next", nextRecipe);
@@ -352,6 +360,8 @@ public class RecipeController {
 	public String updateRecipe(int recipeNum, String subject, String editordata, String recipeTag) {
 		logger.info("recipe 게시글 수정(POST)");
 		logger.info("recipeTag : {}", recipeNum);
+		
+		// 게시판 글  수정
 		boolean result = service.updateWriting(recipeNum, subject, editordata, recipeTag);
 		
 		if(result) {
@@ -368,6 +378,7 @@ public class RecipeController {
 		logger.info("recipe 게시글 삭제(GET)");
 		logger.info("삭제할 게시글 번호 : {}", recipeNum);
 		
+		//레시피 게시글 삭제
 		boolean result = service.deleteRecipe(recipeNum);
 		if(result) {
 			logger.info("게시글 삭제 성공");
@@ -389,7 +400,9 @@ public class RecipeController {
 		UserVO loginUser = uDao.getUser(userMail);
 		reply.setUserNum(loginUser.getUserNum());
 
+		// 댓글 등록
 		boolean result = service.insertReply(reply);
+		
 		if(result) {
 			logger.info("댓글 등록 완료");
 		} else {
@@ -404,6 +417,8 @@ public class RecipeController {
 	public ReplyVO newReply(int recipeNum, Model model) {
 		logger.info("readReply 댓글 조회 (GET)");
 		logger.info("recipeNum : {}", recipeNum);
+		
+		//댓글 작성 후 작성 된 댓글 업로드
 		//추가하고 싶은 댓글 하나만을 조회
 		ReplyVO reply = service.newReply(recipeNum);
 		
@@ -425,6 +440,7 @@ public class RecipeController {
 		updateReply.setReplyNum(replyNum);
 		updateReply.setReplyContent(updateContent);
 		
+		// 댓글 수정
 		int result = service.updateReply(updateReply);
 		if(result > 0) {
 			//수정에 성공하면 댓글 조회
@@ -441,10 +457,12 @@ public class RecipeController {
 		logger.info("deleteReply 댓글 삭제(POST)");
 		logger.info("replyNum : {}", replyNum);
 		
+		// 댓글 삭제
 		int result = service.deleteReply(replyNum);
 		
-		if(result > 0) {
-			//삭제에 성공하면 댓글 조회
+		if(result > 0) { //삭제에 성공하면
+			 
+			// 댓글 조회
 			ArrayList<ReplyVO> replyList = service.readReply(recipeNum);
 			return replyList;
 		}
@@ -459,10 +477,12 @@ public class RecipeController {
 		logger.info("ScoreVO: {}", ratingScore);
 		double score = 0;
 		
+		// 점수 주기
 		// 평가한 점수를 DB에 저장하기
 		boolean result = service.addScore(ratingScore);
 		
 		if(result) {
+			//평가 평균 구하기
 			//게시판 점수의 평균 값을 내서 DB에 저장
 			score = service.avgScore(ratingScore.getRecipeNum());
 			logger.info("score: {}", score);
@@ -489,6 +509,8 @@ public class RecipeController {
 		logger.info("editordata:{}",editordata);
 		logger.info("userMail:{}",userMail);
 		logger.info("recipeTag: {}", recipeTag);
+		
+		// 게시판 글 작성
 		boolean result = service.insertRecipe(subject, editordata, userMail, recipeTag);
 		if(result) {
 			logger.info("게시글 작성 성공");

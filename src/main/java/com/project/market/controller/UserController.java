@@ -60,6 +60,7 @@ public class UserController {
 		String userPw = pwdEncoder.encode(user.getUserPw());
 		user.setUserPw(userPw);
 		
+		// 회원가입
 		boolean result = service.signUpUser(user);
 		String returnUrl = null;
 
@@ -82,13 +83,13 @@ public class UserController {
 		return "user/login";
 	}
 
-	// 22-04-05 노채린
 	// 회원 탈퇴
 	@ResponseBody 
 	@RequestMapping(value="/userDelete", method = RequestMethod.GET)
 	public String userDelete(String userMail) {
 		logger.info("회원탙퇴 실행(GET)");
 		
+		// 회원 탈퇴
 		boolean result = service.userDelete(userMail);
 		
 		if(result) {
@@ -121,6 +122,7 @@ public class UserController {
 		logger.info("userName: {}", userName);
 		logger.info("userCall: {}", userCall);
 		
+		// ID 찾기
 		String findId = service.selectId(userName, userCall);
 		
 		String errorMessage = "입력하신 정보와 일치하는 ID를 찾을 수 없습니다.";
@@ -274,6 +276,7 @@ public class UserController {
 		
 		String encodeUserPw = pwdEncoder.encode(userPw);
 		
+		// PW 초기화
 		boolean result = service.updatePw(userMail, encodeUserPw);
 		
 		String returnUrl = null;
@@ -301,6 +304,7 @@ public class UserController {
 		logger.info("userId: {}", userId);
 		logger.info("userPw: {}", userPw);
 		
+		// 유저 본인 확인
 		String selectUser = service.selectUser(userId);
 		
 		String resultString = null;
@@ -326,6 +330,7 @@ public class UserController {
 		logger.info("userUpdate 메소드 실행(GET).");
 		logger.info("userMail: {}", userMail);
 		
+		// 아이디로 수정할 정보 읽어오기
 		UserVO user = service.readUser(userMail);
 		model.addAttribute("user", user);
 		
@@ -335,8 +340,6 @@ public class UserController {
 		}
 		else
 		{	
-			// 220504 노채린 수정 
-			// return "redirect:mypage";
 			return "/order/orderList";
 		}
 	}
@@ -352,6 +355,7 @@ public class UserController {
 		logger.info("postcode: {}", postcode);
 		logger.info("userAddress: {}", userAddress);
 		
+		// 회원 정보 수정
 		boolean result = service.userUpdate(userName, userMail, userCall, postcode, userAddress);
 		
 		String returnUrl = null;
@@ -360,8 +364,6 @@ public class UserController {
 		{
 			logger.info("회원 정보 수정 성공.");
 			
-			// 220504 노채린
-			// returnUrl = "user/mypage";
 			returnUrl = "/order/orderList";
 		}
 		else
@@ -382,6 +384,7 @@ public class UserController {
 		logger.info("userId: {}", userId);
 		logger.info("userPw: {}", userPw);
 		
+		// 유저 본인 확인
 		String selectUser = service.selectUser(userId);
 		
 		if ( pwdEncoder.matches(userPw, selectUser) ) {
@@ -402,6 +405,7 @@ public class UserController {
 		
 		String returnVal = null;
 		
+		// 사용가능한 메일인지 확인
 		String checkedMail = service.mailChk(userMail);
 		if(checkedMail == null) {
 			returnVal = "yes";

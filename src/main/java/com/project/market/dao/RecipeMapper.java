@@ -9,7 +9,7 @@ import com.project.market.vo.ScoreVO;
 
 public interface RecipeMapper {
 
-	//게시판 테이블 컬럼 개수 확인(페이징 용)
+	//게시판 테이블의 등록된 게시글 수 확인
 	int countRecipeList(String searchword);
 
 	//레시피 게시판 조회
@@ -33,7 +33,7 @@ public interface RecipeMapper {
 	//댓글 조회
 	ArrayList<ReplyVO> readReply(int recipeNum);
 
-	////댓글 작성 후 작성 된 댓글 업로드
+	//댓글 작성 후 작성 된 댓글 업로드
 	ReplyVO newReply(int recipeNum);
 
 	//댓글 삭제
@@ -54,7 +54,7 @@ public interface RecipeMapper {
 	//테이블 내 평균 점수 수정
 	void updateAvgScore(HashMap<String, Object> map);
 
-	// 게시판 테이블에 데이터 입력.
+	// 게시판 글 작성
 	int insertRecipe(HashMap<String, Object> map);
 
 	// 작성된 글의 제목과 내용을 불러오기
@@ -62,6 +62,7 @@ public interface RecipeMapper {
 
 	// 게시판 글  수정
 	int updateWriting(HashMap<String, Object> map);
+	
 	//댓글의 개수 확인
 	int countReply(int recipeNum);
 

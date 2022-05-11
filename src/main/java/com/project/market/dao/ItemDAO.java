@@ -31,7 +31,7 @@ public class ItemDAO {
 		return result;
 	}
 
-	//상품 리스트 불러오기
+	// 상품 리스트 불러오기
 	public ArrayList<ItemVO> getItemList(HashMap<String,Object> map) {
 		ArrayList<ItemVO> result = null;
 		ItemMapper mapper = null;
@@ -101,7 +101,7 @@ public class ItemDAO {
 		return result;
 	}
 
-	//상품테이블에 등록된 상품 수 확인
+	// 상품테이블에 등록된 상품 수 확인
 	public int countRecipeList(int categoryNum) {
 		int result = 0;
 		ItemMapper mapper = null;
@@ -129,7 +129,7 @@ public class ItemDAO {
 		return result;
 	}
 
-	//전체파일 불러오기
+	// 사진 파일 전체 불러오기
 	public ArrayList<FileListVO> getFileList() {
 		ArrayList<FileListVO> result = null;
 		ItemMapper mapper = null;

@@ -17,13 +17,13 @@ public interface AdminMapper {
 
 	String StaffOnlyChk(String chkMessage); //직원인지 확인
 
-	int getEmpTotalRecordsCount(HashMap<String, Object> map); // 총 직원 수 조회 (페이징)
+	int getEmpTotalRecordsCount(HashMap<String, Object> map); // 총 직원 수를 가져옴
 
 	ArrayList<ItemVO> getItemList(HashMap<String, Object> map); // 상품 리스트 불러오기 메소드
 
-	int itemDelete(List<Integer> intCancelNum);// 2.상품 삭제 메소드
+	int itemDelete(List<Integer> intCancelNum);// 상품 삭제 메소드
 
-	int itemInsert(HashMap<String, Object> map); // 3.상품 추가 메소드
+	int itemInsert(HashMap<String, Object> map); // 상품 추가 메소드
 
 	int adminRegister(EmpVO map); // 직원 ID 등록
 	
@@ -37,8 +37,6 @@ public interface AdminMapper {
 	
 	int empDeleteFile(String empImg); // 직원 사진 정보 삭제
 	
-//	void empUpdateFile(@Param("empImg") String empImg, @Param("originalFilename") String originalFilename, @Param("savedFilename") String savedFilename); // 직원 사진 정보 수정
-	
 	int empDelete(int empNum); // 직원 정보 삭제
 
 	int selectEmpId(EmpVO emp); // ID 찾기
@@ -47,13 +45,13 @@ public interface AdminMapper {
 
 	int updatePw(EmpVO newPw); // PW 리셋
 
-	ArrayList<ItemVO> getAdminItemList(String itemChk); // 상품 수정 페이지 기존 정보 가져오기
+	ArrayList<ItemVO> getAdminItemList(String itemChk); // 상품 기존 정보 가져오기
 
-	int itemUpdate(HashMap<String, Object> map); // 상품 수정
+	int itemUpdate(HashMap<String, Object> map); // 상품 정보 수정
 
 	int getUserTotalRecordsCount(HashMap<String, Object> map); // 총 유저수 확인
 
-	ArrayList<UserVO> searchUser(HashMap<String, Object> map); //회원 검색
+	ArrayList<UserVO> searchUser(HashMap<String, Object> map); // 회원 검색
 
 	int itemInventoryWrite(HashMap<String, Object> map); // 상품 판매글-보관법 작성
 
@@ -71,11 +69,11 @@ public interface AdminMapper {
 
 	int itemFileInsert(HashMap<String, Object> map); // 상품 사진 파일 추가
 
-	int itemFileUpdate(HashMap<String, Object> map);
+	int itemFileUpdate(HashMap<String, Object> map); // 상품 사진 파일 수정
 
-	int deleteUser(int userNum); //강제 회원 탈퇴
+	int deleteUser(int userNum); // 강제 회원 탈퇴
 
-	int saleFlag(HashMap<String, Object> map); //세일 상품임을 알림
+	int saleFlag(HashMap<String, Object> map); // 세일 상품임을 알림
 
 	ArrayList<EmpVO> selectAdmin(HashMap<String, Object> map);	//로그인 확인
 

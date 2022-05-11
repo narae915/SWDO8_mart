@@ -200,7 +200,7 @@ public class OrderController {
 		logger.info("orderCancel 메소드 실행");
 		logger.info("cancelNum:{}", cancelNum);
 		
-		 // 상품 목록 삭제 메소드
+		 // 주문 취소 메소드
 		boolean result = service.orderCancel(cancelNum);
 		
 		if(result) {
@@ -216,7 +216,6 @@ public class OrderController {
 		
 	}
 	
-	// 2022-04-01 노채린
 	// 장바구니 페이지 열기
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
 	public String cart(@RequestParam(defaultValue = "1") int currentPage, Model model, Authentication authentication) {
@@ -225,7 +224,7 @@ public class OrderController {
 		String userMail = authentication.getName();
 		logger.info("userMail:{}",userMail);
 		
-		// 페이징
+		// 장바구니 페이징 메서드
 		int totalRecordsCount = service.getCartTotalRecordsCount(userMail);
 		PageNavigator navi = new PageNavigator(COUNT_PER_PAGE, PAGE_PER_GROUP, currentPage, totalRecordsCount);
 		model.addAttribute("navi", navi);
@@ -240,14 +239,13 @@ public class OrderController {
 		return "/order/cart";
 	}
 	
-	// 22-04-04 노채린
 	// 장바구니 삭제
 	@RequestMapping(value = "/cartCancel", method = RequestMethod.POST)
 	public String cartCancel(int cartNum) {
 		logger.info("cartCancel 메소드 실행(POST)");
 		logger.info("cartNum:{}", cartNum);
 		
-		 // 장바구니 삭제 메소드
+		 // 장바구니 삭제
 		boolean result = service.cartCancel(cartNum);
 		
 		if(result) {
@@ -261,7 +259,6 @@ public class OrderController {
 		}
 	}
 	
-	// 22-04-06 노채린
 	// 결제 정보 입력 페이지
 	@RequestMapping(value = "/orderForm", method = RequestMethod.GET)
 	public String orderForm(Authentication authentication, Model model, String totalPrice, String buy, String p_num) {
@@ -313,7 +310,7 @@ public class OrderController {
 		String userMail = authentication.getName();
 		model.addAttribute("userMail", userMail);
 
-		// 주문 테이블 입력 메소드
+		// 주문 테이블에 입력
 		boolean result1 = service.insertOrder(amount, cartNum, orderMail, orderCall,
 													address, detailAddress, userMail);
 

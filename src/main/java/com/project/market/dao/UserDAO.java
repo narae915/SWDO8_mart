@@ -77,7 +77,7 @@ public class UserDAO {
 		return result;
 	}
 
-	/* PW 찾기 전 아이디 확인 */
+	// PW 찾기 전 일치하는 아이디가 있는지 확인
 	public String findUser(UserVO user) 
 	{
 		String result = null;

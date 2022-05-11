@@ -58,7 +58,7 @@ public class OrderDAO {
 	}
 
 
-	// 장바구니 페이징
+	// 장바구니 페이징 메서드
 	public int getCartTotalRecordsCount(String userMail) {
 		int result = 0;
 		OrderMapper mapper = null;
@@ -169,7 +169,7 @@ public class OrderDAO {
 		return result;
 	}
 
-	// orderForm에 회원정보 가져오기
+	// 회원정보 가져오기
 	public ArrayList<UserVO> getUserList(String userMail) {
 		ArrayList<UserVO> result = null;
 		OrderMapper mapper = null;
@@ -183,7 +183,7 @@ public class OrderDAO {
 		
 		return result;
 	}
-	// orderForm에 상품정보 가져오기
+	// 상품정보 가져오기
 	public ArrayList<ItemVO> getItemList(HashMap<String, Object> map) {
 		ArrayList<ItemVO> result = null;
 		OrderMapper mapper = null;

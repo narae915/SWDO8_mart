@@ -63,6 +63,7 @@ public class AdminController {
 		logger.info("staffOnlyChk 메소드(GET)");
 		logger.info("사용자가 입력한 텍스트 : {} ", chkMessage);
 		
+		//직원인지 확인
 		String staffInfo = service.StaffOnlyChk(chkMessage);
 		logger.info("staffInfo:{}", staffInfo);
 		
@@ -94,6 +95,7 @@ public class AdminController {
 		PageNavigator navi = new PageNavigator(COUNT_PER_PAGE, PAGE_PER_GROUP, currentPage, totalRecordsCount);
 		model.addAttribute("navi", navi);
 		model.addAttribute("searchWord", searchWord);
+		
 		// 상품 리스트 불러오기 메소드
 		ArrayList<ItemVO> itemList = service.getItemList(navi.getStartRecord(), COUNT_PER_PAGE, searchWord, category);
 		model.addAttribute("itemList", itemList);
@@ -186,6 +188,7 @@ public class AdminController {
 			logger.info("직원 사진 저장 실패.");
 		}
 		
+		/* 직원 ID 등록 */
 		boolean result = service.adminRegister(empName, empPw, empCall, empMail, position, originalFilename, savedFilename);
 		String returnUrl = "admin/adminRegister";
 		
@@ -257,7 +260,8 @@ public class AdminController {
 		model.addAttribute("navi", navi);
 		model.addAttribute("searchType", searchType);
 		model.addAttribute("searchWord", searchWord);
-		
+
+		// 직원 리스트 조회
 		// 게시글 시작 번호, 불러올 게시글 수를 전달해서 현재 페이지에 해당하는 5개의 게시글만 가져오도록 설정
 		ArrayList<EmpVO> empList = service.getEmpList(navi.getStartRecord(), COUNT_PER_PAGE, searchType, searchWord, loginPosition);
 		logger.info("empList: {}", empList);
@@ -282,6 +286,7 @@ public class AdminController {
 		logger.info("empUpdate 메소드 실행(GET).");
 		logger.info("empNum: {}", empNum);
 		
+		/* 직원 번호로 해당 직원 정보 조회 */
 		EmpVO emp = service.readEmp(empNum);
 		
 		model.addAttribute("emp", emp);
@@ -327,6 +332,7 @@ public class AdminController {
 			logger.info("직원 사진 저장 실패.");
 		}
 		
+		/* 직원 정보 수정 */
 		boolean result = service.empUpdate(empNum, empName, empPw, empCall, empMail, position, originalFilename, savedFilename);
 		
 		String returnUrl = null;
@@ -366,6 +372,7 @@ public class AdminController {
 		{
 			logger.info("직원 사진 삭제 성공.");
 			
+			// 직원 사진 정보 삭제
 			boolean result = service.empDeleteFile(empImg);
 			
 			if ( result ) 
@@ -396,6 +403,7 @@ public class AdminController {
 		
 		logger.info("empNum: {}", empNum);
 		
+		/* 직원 정보 삭제 */
 		boolean result = service.empDelete(empNum);
 		
 		if ( result ) 
@@ -478,6 +486,7 @@ public class AdminController {
 		logger.info("empName: {}", empName);
 		logger.info("empMail: {}", empMail);
 		
+		/* ID 찾기 */
 		int findEmpId = service.selectEmpId(empName, empMail);
 		
 		String errorMessage = "입력하신 정보와 일치하는 ID를 찾을 수 없습니다.";
@@ -521,7 +530,7 @@ public class AdminController {
 		logger.info("empNum: {}", empNum);
 		logger.info("empMail: {}", empMail);
 		
-		// 일치하는 직원 찾기
+		/* PW 리셋 전 해당하는 직원 찾기 */
 		int findEmp = service.findEmp(empNum, empMail);
 		String errorMessage = "입력하신 정보와 일치하는 ID를 찾을 수 없습니다.";
 		
@@ -570,6 +579,7 @@ public class AdminController {
 			randomPw = uuid.concat(String.valueOf(randomChar)); // 생성한 uuid와 특수문자를 이어줌
 		}
 		
+		/* PW 리셋 */
 		boolean result = service.updatePw(empMail, randomPw);
 		
 		/* 이메일 보내기 */
@@ -659,7 +669,7 @@ public class AdminController {
 			logger.info("사진 저장 실패");
 		}
 		
-		// 상품 정보 등록
+		// 상품 추가 메소드
 		boolean result1 = service.itemInsert(category, itemName, price, itemAmount, introduce);
 		
 		if(result1) {
@@ -668,7 +678,7 @@ public class AdminController {
 			logger.info("상품 신규 등록 실패");
 		}
 		
-		// 파일 등록
+		// 상품 사진 파일 추가
 		boolean result2 = service.itemFileInsert(originalFilename, savedFilename);
 		
 		if(result2) {
@@ -721,6 +731,7 @@ public class AdminController {
 			logger.info("사진 저장 실패");
 		}
 				
+		// 상품 정보 수정
 		boolean result = service.itemUpdate(itemNum, itemName, price, itemAmount, category, introduce);
 		
 		if(result) {
@@ -729,6 +740,7 @@ public class AdminController {
 			logger.info("수정 실패");
 		}
 		if(basicFile != null) {
+			// 상품 사진 파일 수정
 			boolean result2 = service.itemFileUpdate(originalFilename, savedFilename, basicFile);
 			if(result2) {
 				logger.info("사진 수정 성공");
@@ -736,6 +748,7 @@ public class AdminController {
 				logger.info("사진 수정 실패");
 			}
 		} else {
+			// 사진 등록 메서드
 			boolean result2 = service.itemImgSave(originalFilename, savedFilename, itemNum);
 			if(result2) {
 				logger.info("사진 수정 성공");
@@ -763,7 +776,7 @@ public class AdminController {
 		
 		model.addAttribute("itemNum", itemNum);
 		
-		// 기존 상품 정보 불러오기
+		// 상품 기존 정보 불러오기
 		ArrayList<ItemVO> itemList = service.getAdminItemList(itemNum);
 		logger.info("itemList:{}",itemList);
 		model.addAttribute("itemList", itemList);
@@ -822,7 +835,9 @@ public class AdminController {
 		logger.info("itemImgDelete 메소드 실행(POST)");
 		logger.info("fileName:{}", fileName);
 		
+		// 상품 사진 삭제
 		boolean result = service.itemImgDelete(fileName);
+		
 		if(result) {
 			logger.info("성공");
 			return "success";
@@ -849,7 +864,7 @@ public class AdminController {
 		model.addAttribute("searchType", null);
 		model.addAttribute("searchWord", null);
 		
-		//모든 회원 정보를 조회
+		// 모든 회원 정보를 조회
 		ArrayList<UserVO> userList = service.searchUser(navi.getStartRecord(), COUNT_PER_PAGE, null, null);
 		
 		// 주소를 등록하지 않은 회원은 등록되지 않았다고 표시
@@ -873,7 +888,7 @@ public class AdminController {
 		logger.info("searchType: {}", searchType);
 		logger.info("searchWord: {}", searchWord);
 		
-		// 총 회원 수를 가져옴
+		// 총 회원 수를 확인
 		int totalRecordsCount = service.getUserTotalRecordsCount(searchType, searchWord);
 		logger.info("회원 수: {}", totalRecordsCount);
 
@@ -883,7 +898,7 @@ public class AdminController {
 		model.addAttribute("searchType", searchType);
 		model.addAttribute("searchWord", searchWord);
 	
-		//회원 검색 결과를 조회
+		// 회원 검색
 		// 게시글 시작 번호, 불러올 게시글 수를 전달해서 현재 페이지에 해당하는 5개의 게시글만 가져오도록 설정
 		ArrayList<UserVO> userList = service.searchUser(navi.getStartRecord(), COUNT_PER_PAGE, searchType, searchWord);
 		
@@ -1030,6 +1045,7 @@ public class AdminController {
 		logger.info("userNum: {}", userNum);
 		
 		String returnUrl = null;
+		// 강제 회원 탈퇴
 		boolean result = service.deleteUser(userNum);
 		if(result) {
 			logger.info("회원 탈퇴 성공");
@@ -1050,7 +1066,7 @@ public class AdminController {
 		logger.info("salePercent : {}, saleName : {}", salePercent, saleName);
 		
 		String returnVal = null;
-		//세일 상품임을 알림(퍼센트도 추가)
+		// 세일 상품임을 알림
 		boolean result = service.saleFlag(saleName, salePercent);
 		if(result) {
 			returnVal = "yes";

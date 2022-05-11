@@ -24,7 +24,7 @@ public class AdminService {
 		return dao.StaffOnlyChk(chkMessage);
 	}
 
-	// 1.페이징
+	// 페이징
 	public int getTotalRecordsCount(String searchWord, int category) {
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("searchWord", searchWord);
@@ -33,7 +33,7 @@ public class AdminService {
 		return dao.getTotalRecordsCount(map);
 	}
 
-	// 1. 상품 리스트 불러오기 메소드
+	// 상품 리스트 불러오기 메소드
 	public ArrayList<ItemVO> getItemList(int startRecord, int countPerPage, String searchWord, int category) {
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("startRecord", startRecord);
@@ -44,13 +44,13 @@ public class AdminService {
 		return dao.getItemList(map);
 	}
 
-	// 2.상품 삭제 메소드
+	// 상품 삭제 메소드
 	public boolean itemDelete(List<String> cancelNum) {
 		List<Integer> intCancelNum = cancelNum.stream().map(s -> Integer.parseInt(s)).collect(Collectors.toList());
 		return dao.itemDelete(intCancelNum) >0;
 	}
 
-	// 3.상품 추가 메소드
+	// 상품 추가 메소드
 	public boolean itemInsert(int category, String itemName, String price, String itemAmount, String introduce) {
 		int intPrice = Integer.parseInt(price);
 		
@@ -94,7 +94,7 @@ public class AdminService {
 		return dao.getEmpList(map);
 	}
 	
-	/* 총 직원 수 조회  (페이징) */
+	// 총 직원 수를 가져옴
 	public int getEmpTotalRecordsCount(String searchType, String searchWord) 
 	{
 		HashMap<String, Object> map = new HashMap<>();
@@ -134,6 +134,7 @@ public class AdminService {
 		return dao.empDelete(empNum) > 0;
 	}
 	
+	// 직원 사진 정보 삭제
 	public boolean empDeleteFile(String empImg) 
 	{
 		return dao.empDeleteFile(empImg) > 0;
@@ -169,13 +170,13 @@ public class AdminService {
 		return dao.updatePw(newPw) > 0;
 	}
 
-	// 상품 수정 페이지 기존 상품 정보 불러오기
+	// 상품 기존 정보 불러오기
 	public ArrayList<ItemVO> getAdminItemList(String itemChk) {
 		
 		return dao.getAdminItemList(itemChk);
 	}
 
-	// 상품 수정
+	// 상품 정보  수정
 	public boolean itemUpdate(String itemNum, String itemName, String price, String itemAmount, int category, String introduce) {
 		HashMap<String, Object> map = new HashMap<>();
 		
@@ -189,7 +190,7 @@ public class AdminService {
 		return dao.itemUpdate(map) > 0;
 	}
 
-	//회원 검색
+	// 회원 검색
 	public ArrayList<UserVO> searchUser(int startRecord, int countPerPage, String searchType, String searchWord) {
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("searchType", searchType);
@@ -199,7 +200,7 @@ public class AdminService {
 		return dao.searchUser(map);
 	}
 
-	//총 유저수 확인
+	// 총 유저수 확인
 	public int getUserTotalRecordsCount(String searchType, String searchWord) {
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("searchType", searchType);
@@ -253,7 +254,7 @@ public class AdminService {
 		return dao.getItemFileList(itemNum);
 	}
 
-	// 사진 삭제
+	// 상품 사진 삭제
 	public boolean itemImgDelete(String fileName) {
 
 		return dao.itemImgDelete(fileName) > 0;
@@ -265,7 +266,7 @@ public class AdminService {
 		return dao.getFileList(itemNumList);
 	}
 
-	// 상품 사진파일 추가
+	// 상품 사진 파일 추가
 	public boolean itemFileInsert(String originalFilename, String savedFilename) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("originalFilename", originalFilename);
@@ -274,6 +275,7 @@ public class AdminService {
 		return dao.itemFileInsert(map) > 0;
 	}
 
+	// 상품 사진 파일 수정
 	public boolean itemFileUpdate(String originalFilename, String savedFilename, String basicFile) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("originalFilename", originalFilename);
@@ -283,12 +285,12 @@ public class AdminService {
 		return dao.itemFileUpdate(map) > 0;
 	}
 
-	//강제 회원 탈퇴
+	// 강제 회원 탈퇴
 	public boolean deleteUser(int userNum) {
 		return dao.deleteUser(userNum) > 0;
 	}
 
-	//세일 상품임을 알림
+	// 세일 상품임을 알림
 	public boolean saleFlag(String saleName, int salePercent) {
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("saleName", saleName);
