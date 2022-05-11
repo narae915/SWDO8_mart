@@ -20,8 +20,7 @@
 
 	<!-- admin -->
 	<security:http auto-config="true" use-expressions="true" pattern="/admin/**" authentication-manager-ref="adminAuthManager"> 
-	
-		<security:intercept-url pattern="/admin/adminLogin"  access="permitAll()" />
+
 		<security:intercept-url pattern="/admin/adminMain" access="hasRole('EMP')" />
 		<security:intercept-url pattern="/admin/adminRegister" access="hasRole('EMP')" />
 		<security:intercept-url pattern="/admin/empChattingPop" access="hasRole('EMP')" />
@@ -40,6 +39,10 @@
 		<security:intercept-url pattern="/admin/itemUpdate" access="hasRole('EMP')" />
 		<security:intercept-url pattern="/admin/itemUpdateForward" access="hasRole('EMP')" />
 		<security:intercept-url pattern="/admin/userManagement" access="hasRole('EMP')" />
+		<security:intercept-url pattern="/admin/adminLogout"  access="permitAll()" />
+		<security:intercept-url pattern="/admin/logoLogout"  access="permitAll()" />
+		<security:intercept-url pattern="/admin/adminLogin"  access="permitAll()" />
+		<security:intercept-url pattern="/order/cartListAjax"  access="permitAll()" />
 		<security:intercept-url pattern="/" access="permitAll()"/>
 		
 		<security:form-login 
@@ -52,6 +55,13 @@
 	
 		<security:logout 
 			logout-url="/admin/logout" 
+			logout-success-url="/admin/adminMain"
+			invalidate-session="true" 
+			delete-cookies ="JSESSIONID" 
+		/> 
+		
+		<security:logout 
+			logout-url="/admin/logoLogout" 
 			logout-success-url="/admin/adminMain"
 			invalidate-session="true" 
 			delete-cookies ="JSESSIONID" 
