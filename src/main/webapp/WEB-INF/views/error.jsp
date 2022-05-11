@@ -13,6 +13,7 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>ERROR</title>
 	
+	<link rel="stylesheet" href="/resources/css/font.css" type="text/css">
 	<style type="text/css">
 		.errorcode {
 			color: red;
@@ -81,10 +82,45 @@
 			<div class="errordiv">
 				<img src="/resources/img/alert-g7a69a278d_1280.png" style="width: 20%; margin-top: 10%">
 				<div class="details">
-					<span class="errorcode"> 
-						<c:out value="${error.STATUS_CODE }"></c:out> 
-						&nbsp;:&nbsp;${error.MESSAGE } <br> 
-						<input type="button" class="primary-btn" value="메인 페이지로" onclick="location.href='/'">
+					<span class="errorcode">
+						<c:choose>
+							<c:when test="${error.STATUS_CODE == 400 }">
+								<c:out value="${error.STATUS_CODE }"></c:out> 
+								&nbsp;:&nbsp;
+								<spring:message code="message.error.400"/><br>
+							</c:when>
+							<c:when test="${error.STATUS_CODE == 403 }">
+								<c:out value="${error.STATUS_CODE }"></c:out> 
+								&nbsp;:&nbsp;
+								<spring:message code="message.error.403"/><br>
+							</c:when>
+							<c:when test="${error.STATUS_CODE == 404 }">
+								<c:out value="${error.STATUS_CODE }"></c:out> 
+								&nbsp;:&nbsp;
+								<spring:message code="message.error.404"/><br>
+							</c:when>
+							<c:when test="${error.STATUS_CODE == 405 }">
+								<c:out value="${error.STATUS_CODE }"></c:out> 
+								&nbsp;:&nbsp;
+								<spring:message code="message.error.405"/><br>
+							</c:when>
+							<c:when test="${error.STATUS_CODE == 500 }">
+								<c:out value="${error.STATUS_CODE }"></c:out> 
+								&nbsp;:&nbsp;
+								<spring:message code="message.error.500"/><br>
+							</c:when>
+							<c:when test="${error.STATUS_CODE == 503 }">
+								<c:out value="${error.STATUS_CODE }"></c:out> 
+								&nbsp;:&nbsp;
+								<spring:message code="message.error.503"/><br>
+							</c:when>
+							<c:otherwise>
+								<c:out value="${error.STATUS_CODE }"></c:out> 
+								&nbsp;:&nbsp;
+								<spring:message code="message.error.defaultMsg"/><br>
+							</c:otherwise>
+						</c:choose>
+						<input type="button" class="primary-btn" value="<spring:message code='message.error.homeBtn'/>" onclick="location.href='/'">
 					</span>
 				</div>
 			</div>

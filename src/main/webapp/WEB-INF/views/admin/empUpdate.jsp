@@ -83,7 +83,7 @@
 							</div>
 							<div class="group-input">
 								<input type="password" id="empPwCheck" name="empPwCheck" placeholder="비밀번호 확인">
-								<span id="pw_warn" style="position: absolute; left: 2.23em; bottom: 28.2em;"></span>
+								<span id="pw_warn" style="position: absolute; left: 2.23em; bottom: 443px;"></span>
 							</div>
 							<div class="group-input">
 								<input type="text" id="empCall" name="empCall" value="${emp.empCall }" placeholder="연락처">
@@ -93,14 +93,14 @@
 							</div>
 							<div class="group-input" id="pinNumChk_false">
 								<input type="text" id="pinNumChk" name="pinNumChk" placeholder="인증번호" disabled="disabled">
-								<input type="button" id="pinNumChk_Btn" value="확인" disabled="disabled" style="position: absolute; right: 0.95em; bottom: 15.7em;">
-								<span id="pinNumChk_warn" style="position: absolute; left: 2.23em; bottom: 14.1em;"></span>
+								<input type="button" id="pinNumChk_Btn" value="확인" disabled="disabled" style="position: absolute; right: 0.95em; bottom: 244px;">
+								<span id="pinNumChk_warn" style="position: absolute; left: 2.23em; bottom: 220px;"></span>
 							</div>
 							<div class="group-input">
-								<input type="button" id="updateMailBtn" value="e-mail 수정" style="background-color: #434445; position: absolute; width: 30%; height:50px; border-radius:5px; right: 0.95em; bottom: 20.4em; color: white;">
+								<input type="button" id="updateMailBtn" value="e-mail 수정" style="background-color: #434445; position: absolute; width: 30%; height:50px; border-radius:5px; right: 0.95em; bottom: 319px; color: white;">
 							</div>
 							<div class="group-input">
-								<input type="button" id="sendMailBtn" value="인증번호 전송" style="display: none; background-color: #434445; position: absolute; width: 30%; height:50px; border-radius:5px; right: 0.95em; bottom: 20.4em; color: white;">
+								<input type="button" id="sendMailBtn" value="인증번호 전송" style="display: none; background-color: #434445; position: absolute; width: 30%; height:50px; border-radius:5px; right: 0.95em; bottom: 319px; color: white;">
 							</div>
 							<c:if test="${sessionScope.loginPosition eq '사장' || sessionScope.loginPosition eq '부장'}">
 								<div class="group-input">
@@ -121,7 +121,7 @@
 									<c:when test="${not empty emp.savedFilename }">
 										<div style="position: absolute; right: 0.95em; bottom: 3.05em;"><img src="/resources/img/empBackgroundImg.png" alt="사원사진"></div>
 										<div id="empImg" class="empImg" style="position: absolute; right: 0.95em; bottom: 3.05em;"><img src="/uploadImg/${emp.savedFilename }" alt="사원사진"></div>
-										<input type="button" id="deleteImgBtn" value="사진 수정" style="width: 250px; height: 50px; position: absolute; left: 0.95em; bottom: 4.82em;" onclick="deleteImg('${emp.savedFilename }');">
+										<input type="button" id="deleteImgBtn" value="사진 수정" style="width: 250px; height: 50px; position: absolute; left: 0.95em; bottom: 70px;" onclick="deleteImg('${emp.savedFilename }');">
 										사진
 										<input type="file" name="uploadFile">
 									</c:when>

@@ -69,11 +69,11 @@
                             </div>
                             <div class="group-input" id="pinNumChk_false">
                                <input type="text" id="pinNumChk" name="pinNumChk" placeholder="인증번호" disabled="disabled">
-                               <input type="button" id="pinNumChk_Btn" value="확인" disabled="disabled" style="position: absolute; left: 24.5em; bottom: 4.8em;">
-							   <span id="pinNumChk_warn" style="position: absolute; left: 2.23em; bottom: 3.15em;"></span>
+                               <input type="button" id="pinNumChk_Btn" value="확인" disabled="disabled" style="position: absolute; left: 370px; bottom: 70px;">
+							   <span id="pinNumChk_warn" style="position: absolute; left: 2.23em; bottom: 44px;"></span>
                             </div>
                             <div class="group-input">
-								<input type="button" id="sendMailBtn" value="인증번호 전송" style="position: absolute; left: 24.5em; bottom: 9.5em;">
+								<input type="button" id="sendMailBtn" value="인증번호 전송" style="position: absolute; left: 370px; bottom: 145px;">
                             </div>
                             <c:if test="${not empty errorMessageId }">
                             	<span style="position: absolute; left: 2.23em; bottom: 7.95em; color: red;">${errorMessageId }</span>
