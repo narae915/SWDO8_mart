@@ -27,92 +27,7 @@
 	<link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
 	<link rel="stylesheet" href="/resources/css/style.css" type="text/css">
 	<link rel="stylesheet" href="/resources/css/font.css" type="text/css">
-	<!-- CSS -->
-	<style type="text/css">
-		.modal-button {
-			font-size: 16px;
-			color: #ffffff;
-			border: 1px solid #e7ab3c;
-			background: #e7ab3c;
-			height: 45px;
-			padding: 12px 16px 12px;
-		}
-		
-		.modal-button1 {
-			font-size: 16px;
-			color: #ffffff;
-			border: 1px solid #787878;
-			background: #787878;
-			height: 45px;
-			padding: 12px 16px 12px;
-		}
-		
-		.modal {
-			position: fixed;
-			top: 0;
-			left: 0;
-			bottom: 0;
-			right: 0;
-			background: rgba(0, 0, 0, 0.8); /* 투명도 */
-		}
-		
-		#ri-modal_content {
-			position: absolute; /* 배경 내에서 위치 조정 */
-			top: calc(50vh - 100px);
-			left: calc(50vw - 200px);
-			background-color: white;
-			border-radius: 10px;
-			width: 400px;
-			height: 200px;
-			display: flex;
-			flex-direction: column;
-			flex-wrap: wrap;
-			align-content: center;
-			justify-content: center;
-		}
-		
-		.product-itemImg {
-			cursor: pointer;
-		}
-		
-	    .primary-btn {
-			border:none;
-			position:rel.primary-btntive;
-			transition:800ms ease all;
-			outline:none;
-			height:40px;
-			border-radius:5px;
-		}
-		
-		.primary-btn:hover {
-			background:#000;
-			color:#E7AB3C;
-		}
-		
-		.primary-btn:before,.primary-btn:after {
-			content:'';
-			position:.primary-btnbsolute;
-			top:0;
-			right:0;
-			height:2px;
-			width:0;
-			b.primary-btnckground: #E7.primary-btnB3C;
-			transition:400ms ease all;
-		}
-		
-		.primary-btn:after {
-			right:inherit;
-			top:inherit;
-			left:0;
-			bottom:0;
-		}
-		
-		.primary-btn:hover:before, .primary-btn:hover:after {
-			width:100%;
-			transition:800ms ease all;
-	}
-	
-    </style>
+	<link rel="stylesheet" href="/resources/css/homeCss.css" type="text/css">
 </head>
 
 <body>
@@ -245,7 +160,13 @@
 							</li>
 						</ul>
 					</div>
-					<div class="product-slider owl-carousel">
+					<c:if test="${empty mealItemList }">
+						<div class="emptyItemList">
+							<img alt="" src="/resources/img/preparing_item_for_main.png">
+						</div>
+					</c:if>
+					<c:if test="${!empty mealItemList }">
+						<div class="product-slider owl-carousel">
 						<c:forEach items="${mealItemList }" var="mealItem" varStatus="status">
 							<div class="product-item">
 								<div class="pi-pic">
@@ -273,23 +194,24 @@
 										</c:if>
 									</div>
 									<a href="#">
-										<h5>${mealItem.itemName }</h5>
+									<h5>${mealItem.itemName }</h5>
 									</a>
 									<div class="product-price">
-										<c:if test="${mealItem.salePrice != 0 }">
-											<fmt:formatNumber value="${mealItem.salePrice }" pattern="#,###원" />
-											<span>
-												<fmt:formatNumber value="${mealItem.price }" pattern="#,###원" />
-											</span>
-										</c:if>
-										<c:if test="${mealItem.salePrice == 0 }">
+									<c:if test="${mealItem.salePrice != 0 }">
+										<fmt:formatNumber value="${mealItem.salePrice }" pattern="#,###원" />
+										<span>
 											<fmt:formatNumber value="${mealItem.price }" pattern="#,###원" />
-										</c:if>
+										</span>
+									</c:if>
+									<c:if test="${mealItem.salePrice == 0 }">
+										<fmt:formatNumber value="${mealItem.price }" pattern="#,###원" />
+									</c:if>
 									</div>
 								</div>
-							</div>
-						</c:forEach>
-					</div>
+								</div>
+							</c:forEach>
+						</div>
+					</c:if>
 				</div>
 			</div>
 		</div>
@@ -308,7 +230,13 @@
 							</li>
 						</ul>
 					</div>
-					<div class="product-slider owl-carousel">
+					<c:if test="${empty seafoodItemList }">
+						<div class="emptyItemList">
+							<img alt="" src="/resources/img/preparing_item_for_main.png">
+						</div>
+					</c:if>
+					<c:if test="${!empty seafoodItemList }">
+						<div class="product-slider owl-carousel">
 						<c:forEach items="${seafoodItemList }" var="seafoodItem" varStatus="status">
 							<div class="product-item">
 								<div class="pi-pic">
@@ -342,6 +270,7 @@
 							</div>
 						</c:forEach>
 					</div>
+					</c:if>
 				</div>
 				<div class="col-lg-3 offset-lg-1">
 					<div class="product-large set-bg m-large" id="product-large-seafood" data-setbg="/resources/img/products/man-large.jpg">
@@ -376,7 +305,13 @@
 							</li>
 						</ul>
 					</div>
-					<div class="product-slider owl-carousel">
+					<c:if test="${empty produceItemList }">
+						<div class="emptyItemList">
+							<img alt="" src="/resources/img/preparing_item_for_main.png">
+						</div>
+					</c:if>
+					<c:if test="${!empty produceItemList }">
+						<div class="product-slider owl-carousel">
 						<c:forEach items="${produceItemList }" var="produceItem" varStatus="status">
 							<div class="product-item">
 								<div class="pi-pic">
@@ -423,7 +358,8 @@
 								</div>
 							</div>
 						</c:forEach>
-					</div>
+						</div>
+					</c:if>
 				</div>
 			</div>
 		</div>
@@ -442,8 +378,35 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
-				<c:forEach items="${recipeList }" var="recipe" varStatus="status">
+			<c:if test="${empty recipeList }">
+				<div>
+					<table id="nothing">
+						<tr>
+							<td>
+								<img alt="<spring:message code="message.recipeList.nothing"/>" src="/resources/img/no-message.png">
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+						</tr>
+						<tr>
+							<th>
+								<spring:message code="message.recipeList.emptyPost" />
+							</th>
+						</tr>
+						<tr>
+							<td>
+								<a href="/recipe/write">
+									<spring:message code="message.recipeList.newPost1" />
+								</a>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</c:if>
+			<c:if test="${!empty recipeList }">
+				<div class="row">
+					<c:forEach items="${recipeList }" var="recipe" varStatus="status">
 					<div class="col-lg-4 col-md-6">
 						<div class="single-latest-blog" style="cursor: pointer;" onclick="location.href='/recipe/readRecipe?recipeNum=${recipe.recipeNum }';">
 							<img src="${recipe.titleImg }" alt="" style="width: 355px; height: 256px;">
@@ -463,8 +426,9 @@
 							</div>
 						</div>
 					</div>
-				</c:forEach>
-			</div>
+					</c:forEach>
+				</div>
+			</c:if>
 			<div class="benefit-items">
 				<div class="row">
 					<div class="col-lg-4">

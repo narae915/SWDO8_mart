@@ -1,0 +1,89 @@
+	.modal-button {
+		font-size: 16px;
+		color: #ffffff;
+		border: 1px solid #e7ab3c;
+		background: #e7ab3c;
+		height: 45px;
+		padding: 12px 16px 12px;
+	}
+	
+	.modal-button1 {
+		font-size: 16px;
+		color: #ffffff;
+		border: 1px solid #787878;
+		background: #787878;
+		height: 45px;
+		padding: 12px 16px 12px;
+	}
+	
+	.modal {
+		position: fixed;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		background: rgba(0, 0, 0, 0.8); /* 투명도 */
+	}
+	
+	#ri-modal_content {
+		position: absolute; /* 배경 내에서 위치 조정 */
+		top: calc(50vh - 100px);
+		left: calc(50vw - 200px);
+		background-color: white;
+		border-radius: 10px;
+		width: 400px;
+		height: 200px;
+		display: flex;
+		flex-direction: column;
+		flex-wrap: wrap;
+		align-content: center;
+		justify-content: center;
+	}
+	
+	.product-itemImg {
+		cursor: pointer;
+	}
+	
+    .primary-btn {
+		border:none;
+		position:rel.primary-btntive;
+		transition:800ms ease all;
+		outline:none;
+		height:40px;
+		border-radius:5px;
+	}
+	
+	.primary-btn:hover {
+		background:#000;
+		color:#E7AB3C;
+	}
+	
+	.primary-btn:before,.primary-btn:after {
+		content:'';
+		position:.primary-btnbsolute;
+		top:0;
+		right:0;
+		height:2px;
+		width:0;
+		b.primary-btnckground: #E7.primary-btnB3C;
+		transition:400ms ease all;
+	}
+	
+	.primary-btn:after {
+		right:inherit;
+		top:inherit;
+		left:0;
+		bottom:0;
+	}
+	
+	.primary-btn:hover:before, .primary-btn:hover:after {
+		width:100%;
+		transition:800ms ease all;
+	}
+	.emptyItemList {
+		text-align: center;
+	}
+	#nothing {
+		width: 100%;
+		text-align: center;
+	}
