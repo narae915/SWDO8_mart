@@ -28,6 +28,57 @@
 	<link rel="stylesheet" href="/resources/css/style.css" type="text/css">
 	<link rel="stylesheet" href="/resources/css/adminCss/empManagement.css" type="text/css">
 	<link rel="stylesheet" href="/resources/css/font.css" type="text/css">
+	<style>
+	    .modalClose,
+	    .modalAccept {
+			border:none;
+			position:relative;
+			transition:800ms ease all;
+			outline:none;
+			height:40px;
+			border-radius:5px;
+			
+			display: inline-block;
+			font-size: 14px;
+			font-weight: 700;
+			padding: 12px 30px;
+			color: #ffffff;
+			background: #e7ab3c;
+			text-transform: uppercase;
+		}
+		
+		.modalClose:hover,
+		.modalAccept:hover {
+			background:#000;
+			color:#E7AB3C;
+		}
+		
+		.modalClose:before,.modalClose:after,
+		.modalAccept:before,.modalAccept:after {
+			content:'';
+			position:absolute;
+			top:0;
+			right:0;
+			height:2px;
+			width:0;
+			background: #E7AB3C;
+			transition:400ms ease all;
+		}
+		
+		.modalClose:after,
+		.modalAccept:after {
+			right:inherit;
+			top:inherit;
+			left:0;
+			bottom:0;
+		}
+		
+		.modalClose:hover:before, .modalClose:hover:after,
+		.modalAccept:hover:before, .modalAccept:hover:after {
+			width:100%;
+			transition:800ms ease all;
+		}
+	</style>
 </head>
 
 <body>

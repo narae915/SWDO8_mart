@@ -11,7 +11,7 @@ function empDelete(empNum, empImg)
     $("#modalAlert_content").html("");
     $("#modalAlert_content").prepend("정말 삭제하시겠습니까?<br><br>");
     $("#modalAlert_content").append('<input type="button" class="modalAccept" value="확인" style="position: absolute; right: 13.5em; bottom: 3em;"><br>');
-    $("#modalAlert_content").append('<input type="button" class="modalClose" value="취소" style="position: absolute; left: 13.5em; bottom: 3em;">');
+    $("#modalAlert_content").append('<input type="button" class="modalClose" value="취소" style="position: absolute; left: 15.5em; bottom: 3em;">');
     confirmModal_v2(function(confirm)
     {
         if ( confirm )
