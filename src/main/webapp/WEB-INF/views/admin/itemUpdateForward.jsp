@@ -72,11 +72,11 @@
                        		<tr>
                        			<th id="th-image">IMAGE</th>
                        			<td id="td-image">
-									<c:if test="${not empty itemList }">
+									<c:if test="${not empty item.savedFilename }">
 	                                	<img src="/uploadImg/${item.savedFilename }" style="height:300px;width:280px; margin-top:1em"alt="">
 	                                	<input type="hidden" value="${item.savedFilename }" name="basicFile">
 	                                </c:if>
-	                                <c:if test="${empty itemList }">
+	                                <c:if test="${empty item.savedFilename }">
 	                        			<img src="/resources/img/itemDefault.png" style="height:300px;width:280px"alt="">
 	                        		</c:if>
 	                        		
@@ -133,40 +133,6 @@
     </div>
     <!-- Faq Section End -->
     
-    <!-- Partner Logo Section Begin -->
-    <div class="partner-logo">
-        <div class="container">
-            <div class="logo-carousel owl-carousel">
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="/resources/img/logo-carousel/logo-1.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="/resources/img/logo-carousel/logo-2.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="/resources/img/logo-carousel/logo-3.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="/resources/img/logo-carousel/logo-4.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="/resources/img/logo-carousel/logo-5.png" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Partner Logo Section End -->
-
     <!-- Footer Section Begin -->
     <%@ include file="/WEB-INF/views/admin/adminFooter.jsp" %>
     

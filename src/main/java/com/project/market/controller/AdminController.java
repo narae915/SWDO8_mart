@@ -784,12 +784,20 @@ public class AdminController {
 		} else {
 			logger.info("수정 실패");
 		}
-		
-		boolean result2 = service.itemFileUpdate(originalFilename, savedFilename, basicFile);
-		if(result2) {
-			logger.info("사진 수정 성공");
+		if(basicFile != null) {
+			boolean result2 = service.itemFileUpdate(originalFilename, savedFilename, basicFile);
+			if(result2) {
+				logger.info("사진 수정 성공");
+			} else {
+				logger.info("사진 수정 실패");
+			}
 		} else {
-			logger.info("사진 수정 실패");
+			boolean result2 = service.itemImgSave(originalFilename, savedFilename, itemNum);
+			if(result2) {
+				logger.info("사진 수정 성공");
+			} else {
+				logger.info("사진 수정 실패");
+			}
 		}
 		
 		return "redirect:/admin/itemManagement";
