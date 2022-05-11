@@ -83,7 +83,7 @@
 			                <input type="button" class="primary-btn" id="insert-button" value="상품 추가" onclick="location.href='/admin/itemRegister'">
 			                
 			                <!-- 세일 상품 설정 -->
-							<input type="button" class="primary-btn" id="sale-button" value="세일 상품 설정" onclick="setUpSale();" style="top: 3.55em;height: 40px;margin-left: 2.2em;">
+							<input type="button" class="primary-btn" id="sale-button" value="세일 상품 설정" onclick="setUpSale();" style="top: 3.55em;height: 40px;">
 
 		                    <form action="itemUpdate" method="get">
 		                    	<input type="submit" id="upButton" class="primary-btn" value="상품 수정" onclick = "return itemUpdate();">
