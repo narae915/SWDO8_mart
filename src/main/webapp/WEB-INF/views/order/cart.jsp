@@ -266,6 +266,7 @@
 		var totalPrice1 = "<spring:message code='message.cart.updateUI.totalPrice1'/>";
 		var totalPrice2 = "<spring:message code='message.cart.updateUI.totalPrice2'/>";
 		var purchaseEmpty = "<spring:message code='message.cart.formChk.modal.purchaseEmpty'/>";
+		var cancelMassage = "<spring:message code='message.cart.cancelMassage'/>";
 	</script>
 </body>
 

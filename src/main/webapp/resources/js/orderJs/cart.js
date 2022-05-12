@@ -92,14 +92,23 @@ function cartCancel() {
 		data: {
 			cartNum: $('#hiddenNum').val()
 		},
-		async: false,
-		success: function(res) {
-			
-			exitAlert();
-			location.reload();
+		success: function(result1) {
+			if(result1 == "sss") {
+				exitAlert();
+				$("#footer-modal-content").prepend(cancelMassage)
+				
+				$("#footer-modal").fadeIn();
+
+	    		$("button[name=modalClose]").click(function() {
+	    			location.reload();
+	    		});
+			}
+				
 		}
-	});
+
+	})
 }
+	
 
 // 체크된 값이 없는지 확인.
 $('#purchase').click(function () {

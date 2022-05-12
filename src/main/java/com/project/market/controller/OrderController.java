@@ -196,7 +196,7 @@ public class OrderController {
 	// 주문 취소 시작
 	@ResponseBody
 	@RequestMapping(value = "/orderCancel", method = RequestMethod.POST)
-	public String orderCancel(@RequestParam(value="cancelNumArray[]") List<String> cancelNum) {
+	public int orderCancel(@RequestParam(value="cancelNumArray[]") List<String> cancelNum) {
 		logger.info("orderCancel 메소드 실행");
 		logger.info("cancelNum:{}", cancelNum);
 		
@@ -206,12 +206,12 @@ public class OrderController {
 		if(result) {
 			logger.info("주문 취소 성공");
 			
-			return "success";
+			return 1;
 			
 		} else {
 			logger.info("주문 취소 실패");
 			
-			return null;
+			return 0;
 		}
 		
 	}
@@ -240,6 +240,7 @@ public class OrderController {
 	}
 	
 	// 장바구니 삭제
+	@ResponseBody
 	@RequestMapping(value = "/cartCancel", method = RequestMethod.POST)
 	public String cartCancel(int cartNum) {
 		logger.info("cartCancel 메소드 실행(POST)");
@@ -250,8 +251,8 @@ public class OrderController {
 		
 		if(result) {
 			logger.info("장바구니 삭제 성공");
-			
-			return "res";
+			String result1 = "sss";
+			return result1;
 		} else {
 			logger.info("장바구니 삭제 실패");
 			
