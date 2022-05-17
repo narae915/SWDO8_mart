@@ -122,6 +122,14 @@
  	<!-- 직원 ID 등록 -->
 	<insert id="adminRegister" parameterType="Emp">
 		insert into emp_table
+		(
+			emp_num,
+			emp_pw,
+			emp_name,
+			emp_call,
+			emp_mail,
+			position
+		)
 		values
 		(
 			emp_num_seq.nextval,

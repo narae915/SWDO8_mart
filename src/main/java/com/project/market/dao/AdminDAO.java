@@ -93,6 +93,9 @@ public class AdminDAO {
 		int result = 0;
 		AdminMapper mapper = null;
 		
+		System.out.println("adminDAO:" + newFile.getOriginalFilename() + "," + newFile.getSavedFilename());
+		System.out.println("adminDAO:" + newEmp);
+		
 		try
 		{
 			mapper = session.getMapper(AdminMapper.class);

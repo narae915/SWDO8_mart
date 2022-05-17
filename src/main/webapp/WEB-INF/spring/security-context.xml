@@ -24,10 +24,6 @@
 		<security:intercept-url pattern="/admin/adminMain" access="hasRole('EMP')" />
 		<security:intercept-url pattern="/admin/adminRegister" access="hasRole('EMP')" />
 		<security:intercept-url pattern="/admin/empChattingPop" access="hasRole('EMP')" />
-		<security:intercept-url pattern="/admin/empFindId" access="hasRole('EMP')" />
-		<security:intercept-url pattern="/admin/empFindPw" access="hasRole('EMP')" />
-		<security:intercept-url pattern="/admin/empFindPwView" access="hasRole('EMP')" />
-		<security:intercept-url pattern="/admin/empFindView" access="hasRole('EMP')" />
 		<security:intercept-url pattern="/admin/empManagement" access="hasRole('EMP')" />
 		<security:intercept-url pattern="/admin/empUpdate" access="hasRole('EMP')" />
 		<security:intercept-url pattern="/admin/itemCook" access="hasRole('EMP')" />
@@ -43,6 +39,10 @@
 		<security:intercept-url pattern="/admin/logoLogout"  access="permitAll()" />
 		<security:intercept-url pattern="/admin/adminLogin"  access="permitAll()" />
 		<security:intercept-url pattern="/order/cartListAjax"  access="permitAll()" />
+		<security:intercept-url pattern="/admin/empFindId" access="permitAll()" />
+		<security:intercept-url pattern="/admin/empFindPw" access="permitAll()" />
+		<security:intercept-url pattern="/admin/empFindPwView" access="permitAll()" />
+		<security:intercept-url pattern="/admin/empFindView" access="permitAll()" />
 		<security:intercept-url pattern="/" access="permitAll()"/>
 		
 		<security:form-login 

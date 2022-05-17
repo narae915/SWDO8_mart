@@ -25,7 +25,7 @@ public interface AdminMapper {
 
 	int itemInsert(HashMap<String, Object> map); // 상품 추가 메소드
 
-	int adminRegister(EmpVO map); // 직원 ID 등록
+	int adminRegister(EmpVO newEmp); // 직원 ID 등록
 	
 	void empSetFile(@Param("originalFilename") String originalFilename, @Param("savedFilename") String savedFilename); // 직원 ID 등록 시 사진 등록
 

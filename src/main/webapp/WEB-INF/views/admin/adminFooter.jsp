@@ -222,7 +222,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> | Tea
     	// 컨펌 모달
     	function confirmModal() {
     		$("#footer-modal-content").html("");
-    		$("#footer-modal-content").append('<button class="primary-btn" id="yes-button" style="border-radius:5px; position: relative; top: 49px; right: 60px; width: 106px;">예</button>');
+    		$("#footer-modal-content").append('<button class="primary-btn" id="yes-button" style="border-radius:5px; position: relative; top: 40px; right: 60px; width: 106px;">예</button>');
     		$("#footer-modal-content").append('<button class="primary-btn" id="no-button" style="border-radius:5px; position: relative; left: 60px;">아니오</button>');
     	}
 		
