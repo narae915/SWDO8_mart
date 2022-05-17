@@ -1102,17 +1102,5 @@ public class AdminController {
 		}
 	}
 	
-	@RequestMapping(value = "/logoLogout", method = RequestMethod.GET)
-	public String logoLogout(HttpSession session) 
-	{
-		logger.info("logoLogout 메소드 실행(GET).");
-		
-		session.removeAttribute("loginName");
-		session.removeAttribute("loginId");
-		session.removeAttribute("loginPosition");
-		
-		return "redirect:/";
-	}
-	
 	
 }

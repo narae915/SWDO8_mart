@@ -54,19 +54,11 @@
 		/> 
 	
 		<security:logout 
-			logout-url="/admin/logout" 
+			logout-url="/admin/adminLogout" 
 			logout-success-url="/admin/adminMain"
 			invalidate-session="true" 
 			delete-cookies ="JSESSIONID" 
-		/> 
-		
-		<security:logout 
-			logout-url="/admin/logoLogout" 
-			logout-success-url="/admin/adminMain"
-			invalidate-session="true" 
-			delete-cookies ="JSESSIONID" 
-		/> 
-
+		/>
 		<!-- http-basic -->
 		<security:http-basic />
 		

@@ -84,7 +84,12 @@
                 <div class="col-lg-3">
                     <div class="footer-left">
                         <div class="footer-logo">
-                           	<a href="/admin/logoLogout" id="footer-logo"><img src="/resources/img/footer-logo.png" alt=""></a>
+                        	<c:if test="${empty sessionScope.empNum }">
+                           		<a href="/"><img src="/resources/img/footer-logo.png" alt=""></a>
+                           	</c:if>
+							<c:if test="${not empty sessionScope.empNum }">
+								<div id="footer-logo"><img src="/resources/img/footer-logo.png" alt=""></div>
+							</c:if>
                         </div>
                         <ul>
                             <li>Address: 광주광역시 광산구</li>
@@ -230,13 +235,12 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> | Tea
     	{
     		window.open("empChattingPop", "직원용 채팅 팝업", "width=500px, height=500px, top=500px, left=500px, scrollbars=yes");
 		}
-    	/*
+    	
     	$('#footer-logo').click(function(){
-    		$.ajax({
-    			url: '/admin/logoLogout'
-    		});
+			alert("로그아웃 해주십시오.");
+			
+			return false;
     	});
-	    */
     </script>
 </body>
 
