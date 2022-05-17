@@ -45,8 +45,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
-                        <a href="/"><i class="fa fa-home"></i> Home</a>
-                        <a href="/admin/adminMain">Admin</a>
+                        <a href="adminMain"><i class="fa fa-home"></i> Home</a>
+                        <a>Item</a>
                         <a href="/admin/itemManagement">상품 조회</a>
                         <span>상품 추가</span>
                     </div>

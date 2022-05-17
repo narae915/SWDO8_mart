@@ -97,7 +97,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text product-more">
                         <a href="adminMain"><i class="fa fa-home"></i> Home</a>
-                        <a href="empManagement">직원</a>
+                        <a href="empManagement">Employee</a>
                         <span>직원 조회</span>
                     </div>
                 </div>

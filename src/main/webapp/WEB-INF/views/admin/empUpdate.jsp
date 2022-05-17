@@ -119,7 +119,7 @@
 							<div class="group-input">
 								<c:choose>
 									<c:when test="${not empty emp.savedFilename }">
-										<div style="position: absolute; right: 0.95em; bottom: 3.05em;"><img src="/resources/img/empBackgroundImg.png" alt="사원사진"></div>
+										<div style="position: absolute; right: 0.95em; bottom: 2.05em;"><img src="/resources/img/empBackgroundImg.png" alt="사원사진"></div>
 										<div id="empImg" class="empImg" style="position: absolute; right: 0.95em; bottom: 3.05em;"><img src="/uploadImg/${emp.savedFilename }" alt="사원사진"></div>
 										<input type="button" id="deleteImgBtn" value="사진 수정" style="width: 250px; height: 50px; position: absolute; left: 0.95em; bottom: 70px;" onclick="deleteImg('${emp.savedFilename }');">
 										사진
