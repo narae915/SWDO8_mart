@@ -206,6 +206,7 @@
 								</label>
 								
 								<input type="file" style="border:1px solid #000; padding:1em;display:none;" id= "input-file" name="uploadFile" accept="image/*" multiple>
+								<input type="submit" name="file-btn" id="submit-btn" value="등록하기" class="primary-btn" style="right: 2em;top: 4em;margin-bottom: 8em;">
                            	</form>
                            	<input type="hidden" value="${fileCount }" id="fileCount">
                         </div>
@@ -237,7 +238,6 @@
 		                    	<input type="button" class="primary-btn" value="작성" onclick="window.open('/admin/itemInventory?itemNum=${itemNum }', '상품 보관법 작성', 'width=800, height=600, location=no,status=no, scrollbars=yes')">
 		                    </div>
 		                        </div>
-		                        <input type="submit" name="file-btn" id="submit-btn" value="등록하기" class="primary-btn" style="top:-4.4em;left: 48em; border:3px black double">
 		                        </c:forEach>
 		                    </div>
 	                    </div>
