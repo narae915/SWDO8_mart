@@ -147,8 +147,8 @@
                     <div class="footer-widget">
                         <h5>My Account</h5>
                         <ul>
-                            <li><a href="/user/mypage"><spring:message code="message.header.group.mypage"/></a></li>
-                            <li><a href="/order/orderList"><spring:message code="message.footer.cart"/></a></li>
+                            <li><a href="/order/orderList"><spring:message code="message.header.group.mypage"/></a></li>
+                            <li><a href="/order/cart"><spring:message code="message.footer.cart"/></a></li>
                         </ul>
                     </div>
                 </div>
@@ -175,7 +175,7 @@
                     <div class="col-lg-12">
                         <div class="copyright-text">
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> | Team April showers | <spring:message code="message.footer.copyright"/> | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> | Team April showers | <spring:message code="message.footer.copyright"/> | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib </a> | <span>SWDO선생님들, 항상 감사합니다</span>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         </div>
                     </div>

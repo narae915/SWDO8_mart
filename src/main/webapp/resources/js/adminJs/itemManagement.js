@@ -55,7 +55,7 @@
 	function setUpSale() {
 		$("#footer-modal-content").html("");
 		$("#footer-modal-content").append("<div><input type='button' class='setup-sale' style='padding-left: 1em;padding-right: 1em;' id='sendSaleInfo' value='전송'> <input type='button' class='setup-sale' style='margin-left: 2em;padding-left: 0.5em;padding-right: 0.5em;'id='close' value='창닫기'></div>");
-		$("#footer-modal-content").prepend("<input type='text' id='salePercent' placeholder='ex) 30 (% 제외)' onkeyup='inNumber();'>");
+		$("#footer-modal-content").prepend("<input type='text' id='salePercent' placeholder='ex) 30 (% 제외)'>");
 		$("#footer-modal-content").prepend("<b>할인율</b>");
 		$("#footer-modal-content").prepend("<input type='text' id='saleName' placeholder='ex) 소고기'>");
 		$("#footer-modal-content").prepend("<b>세일 설정하고 싶은 상품</b>");
@@ -69,11 +69,6 @@
 		});
 	}
 
-	function inNumber() {
-		if(event.keyCode>48 || event.keyCode<57) {
-			alert("숫자만 입력해주세요.");
-		}
-	}
 	function setSale() {
 		$.ajax({
 			url: "/admin/saleProduct",

@@ -98,7 +98,7 @@
 								<label for="pass">
 									<spring:message code="message.signUp.form.password" /> <span>*</span>
 								</label> 
-								<input type="password" id="pass" name="userPw"> 
+								<input type="password" id="userPassword" name="userPw"> 
 								<span class="signChk" id="signChk-pw"></span>
 							</div>
 							<div class="group-input">
@@ -148,6 +148,7 @@
 			</div>
 		</div>
 	</div>
+	<input type="hidden" id="mailFlag">
 	<!-- Register Form Section End -->
 
 	<!-- Footer -->
@@ -200,7 +201,7 @@
 			});
 
 			//유저 비밀번호 확인
-			$("#pass").keyup(function() {
+			$("#userPassword").keyup(function() {
 				var userPw = $(this).val();
 				//글자수 8자 + 최소 한개의 영문자 + 최소 한개의 숫자 + 최소 한개의 특수 문자
 				var pattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
@@ -218,7 +219,7 @@
 			//유저 비밀번호 확인 입력 여부
 			$("#con-pass").keyup(function() {
 				var passwordChk = $(this).val();
-				var userPw = $("#pass").val();
+				var userPw = $("#userPassword").val();
 	
 				if (passwordChk != userPw) {
 					$("#signChk-pwChk").text("<spring:message code='message.signUp.form.pwChkMessage3'/>");
@@ -355,10 +356,10 @@
 
 			var userName = $("#username").val();
 			var userMail = $("#userMail").val();
-			var userPw = $("#pass").val();
+			var userPw = $("#userPassword").val();
 			var userPwChk = $("#con-pass").val();
 			var userCall = $("#userCall").val();
-
+			
 			if (userName.length == 0 || userMail.length == 0 || userPw.length == 0 || userCall.length == 0) {
 				$("#footer-modal-content").html("");
 				$("#footer-modal-content").append("<spring:message code='message.signUp.formChk.modal.blankChk'/>");
@@ -375,19 +376,10 @@
 				return returnVal;
 			}
 
-			//이메일 정규식
-			var pattern = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
-			if (pattern.test(userMail) == false) {
-				$("#footer-modal-content").html("");
-				$("#footer-modal-content").append("<spring:message code='message.signUp.formChk.modal.emailChk'/>");
-				exitAlert();
-				showModalAlert();
-				return returnVal;
-			}
-			
 			//등록된 메일인지 확인
 			if(userMail != null || userMail != "" || userMail !=" ") {
-				var temp = true;
+				var mailFlag = $("#mailFlag").val();
+				
 				$.ajax({
 					url: "/user/mailChk",
 					data: {
@@ -401,14 +393,17 @@
 							$("#footer-modal-content").append("<spring:message code='message.signUp.form.mailChk.no'/>");
 							exitAlert();
 							showModalAlert();
-							temp = returnVal;
+							mailFlag = "impossible";
 						}
 					},
 					error: function(e) {
 						console.log(e);	
 					}
 				});
-				return temp;
+				
+				if(mailFlag == "impossible") {
+					return returnVal;
+				}
 			}
 				
 			//비밀번호 정규식
@@ -417,6 +412,17 @@
 					|| (pattern.test(userPw) == false)) {
 				$("#footer-modal-content").html("");
 				$("#footer-modal-content").append("<spring:message code='message.signUp.formChk.modal.pwChk'/>");
+				exitAlert();
+				showModalAlert();
+				return returnVal;
+			}
+			
+			//이메일 정규식
+			var pattern = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+			if (pattern.test(userMail) == false) {
+				console.log("여기 됨ㅋ3");
+				$("#footer-modal-content").html("");
+				$("#footer-modal-content").append("<spring:message code='message.signUp.formChk.modal.emailChk'/>");
 				exitAlert();
 				showModalAlert();
 				return returnVal;
