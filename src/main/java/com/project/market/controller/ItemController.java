@@ -153,23 +153,17 @@ public class ItemController {
 		logger.info("item:{}", item);
 		
 		//세일 확인
-		String itemName = item.getItemName();
-		int salePrice = 0;
-		if(itemName.contains("포도")) {
-			//20%할인
-			salePrice = (int)(item.getPrice() * 0.80);
-			item.setSalePrice(salePrice);
-		} else if(itemName.contains("참외")) {
-			//30%할인
-			salePrice = (int)(item.getPrice() * 0.70);
-			item.setSalePrice(salePrice);
-		} else if(itemName.contains("오렌지")) {
-			//50%할인
-			salePrice = (int)(item.getPrice() * 0.50);
-			item.setSalePrice(salePrice);
-		} else if(itemName.contains("스테이크")) {
-			//30%할인
-			salePrice = (int)(item.getPrice() * 0.70);
+		
+		//세일 상품 처리하는 메소드
+		ItemVO saleMenu = service.getOneSaleProduct(itemNum);
+		int price = item.getPrice(); //원래 가격
+		int salePrice = 0; // 할인된 가격
+		double temp = 0; 
+		if(saleMenu != null) {
+			salePrice = saleMenu.getSalePercent();
+			//할인율 계산 -> 사용자가 입력한 값이 30퍼였을 경우, 70퍼의 값을 받아야함. 할인된 가격을 구하기위해 100에서 빼고, 0.01을 곱함
+			temp =(100-salePrice)*0.01;
+			salePrice = (int)(price*temp);
 			item.setSalePrice(salePrice);
 		} else {
 			item.setSalePrice(0);
