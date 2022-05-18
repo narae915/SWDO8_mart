@@ -102,4 +102,8 @@ public class ItemService {
 		
 		return itemList;
 	}
+
+	public ItemVO getOneSaleProduct(int itemNum) {
+		return dao.getSaleProduct(itemNum);
+	}
 }
