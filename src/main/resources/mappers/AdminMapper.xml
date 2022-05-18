@@ -283,8 +283,10 @@
 			emp_pw = #{empPw },
 			emp_name = #{empName },
 			emp_call = #{empCall },
-			emp_mail = #{empMail },
-			position = #{position }
+			emp_mail = #{empMail }
+			<if test="position != null">
+			, position = #{position }
+			</if>
 		where
 			emp_num = #{empNum }
 	</update>
