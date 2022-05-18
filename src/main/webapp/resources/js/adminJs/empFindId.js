@@ -119,6 +119,8 @@ $("#pinNumChk_Btn").click(function()
 		checkPinNum.attr("class", "correct");       
 		$("#pinNumChk_Btn_true").attr("disabled", true);
 		$("#pinNumChk_Btn_true").css({"background-color": "#ebebe4"});
+		$("#sendMailBtn").attr("disabled", true);
+		$("#sendMailBtn").css({"background-color": "#ebebe4"});
 	}
 	else 
 	{

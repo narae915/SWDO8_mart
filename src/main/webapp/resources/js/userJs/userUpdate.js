@@ -1,6 +1,17 @@
 /* 유효성 검사 */
 function checkForm()
 {
+	//주소 hidden태그에 채우기
+	var userAddress= $("#address").val() + "_" + $("#detailAddress").val() + " " + $("#extraAddress").text();
+	$("input[name=userAddress]").attr("value", userAddress);
+	
+	//주소 입력했으면 우편번호를 controller에 보내기 , 그렇지 않으면 hidden의 value인 0이 가도록 설정
+	var postcode = $("#postcode").val();
+	if ( postcode != null ) 
+	{
+		$("input[name=postcode]").attr("value", postcode);
+	}
+
 	var userName = $("#username").val();		// 입력되있는 이름
 	var userMail = $("#userMail").val();		// 입력되있는 ID
 	var userCall = $("#userCall").val();		// 연락처
@@ -35,5 +46,5 @@ function checkForm()
 		result = false;
 	}
 	
-	return false;
+	return result;
 }

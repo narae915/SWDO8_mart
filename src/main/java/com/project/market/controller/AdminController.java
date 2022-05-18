@@ -436,16 +436,15 @@ public class AdminController {
 	     String setFrom = "kings3517@naver.com";
 	     String toMail = empMail;
 	     String title = "봄날 식자재에서 요청하신 인증번호를 알려드립니다.";
-	     String content = 
-	    		"<img src='https://scontent-ssn1-1.xx.fbcdn.net/v/t39.30808-6/280442541_115037897866812_9142767169399483222_n.jpg?_nc_cat=106&ccb=1-6&_nc_sid=730e14&_nc_ohc=aYc4BJp0dBQAX8rqGZG&_nc_ht=scontent-ssn1-1.xx&oh=00_AT-flKK3BPjh0TsZL5ijXFcy11PPoV-Z7LYx5__O5Z3qfw&oe=62879070' style='width: 311px'><br>" +
-                "<b>아래의 인증번호를 인증번호 입력창에 입력해 주세요.</b>" +
-                "<br><br>" + 
-                "<b>인증번호 : </b>" + "<b style='color: #e7ab3c;'>" + pinNum + "</b>" +
-                "<br><br>" + 
-                "봄날 식자재를 이용해 주셔서 감사합니다." + 
-                "<br>" + 
-                "더욱 편리한 서비스를 제공하기 위해 항상 최선을 다하겠습니다.";
-        
+	     String content =
+	    		"<img src='https://scontent-ssn1-1.xx.fbcdn.net/v/t39.30808-6/280442541_115037897866812_9142767169399483222_n.jpg?_nc_cat=106&ccb=1-6&_nc_sid=730e14&_nc_ohc=WL8SQ15hgO8AX-G3aCY&_nc_ht=scontent-ssn1-1.xx&oh=00_AT99LPlS7KKO-Wsx2NhxlseLTeQ3oGglJ5Gnh1ywZNUgBA&oe=62898AB0' style='width: 311px'><br>" +
+				"<b>아래의 인증번호를 인증번호 입력창에 입력해 주세요.</b>" +
+				"<br><br>" + 
+				"<b>인증번호 : </b>" + "<b style='color: #e7ab3c;'>" + pinNum + "</b>" +
+				"<br><br>" + 
+				"봄날 식자재를 이용해 주셔서 감사합니다." + 
+				"<br>" + 
+				"더욱 편리한 서비스를 제공하기 위해 항상 최선을 다하겠습니다.";
 	     try 
 	     {
 	    	 MimeMessage message = mailSender.createMimeMessage();
@@ -589,7 +588,7 @@ public class AdminController {
 		String toMail = empMail;
 		String title = "봄날 식자재에서 요청하신 임시 비밀번호를 알려드립니다.";
 		String content = 
-				"<img src='https://scontent-ssn1-1.xx.fbcdn.net/v/t39.30808-6/280442541_115037897866812_9142767169399483222_n.jpg?_nc_cat=106&ccb=1-6&_nc_sid=730e14&_nc_ohc=aYc4BJp0dBQAX8rqGZG&_nc_ht=scontent-ssn1-1.xx&oh=00_AT-flKK3BPjh0TsZL5ijXFcy11PPoV-Z7LYx5__O5Z3qfw&oe=62879070' style='width: 311px'><br>" +
+				"<img src='https://scontent-ssn1-1.xx.fbcdn.net/v/t39.30808-6/280442541_115037897866812_9142767169399483222_n.jpg?_nc_cat=106&ccb=1-6&_nc_sid=730e14&_nc_ohc=WL8SQ15hgO8AX-G3aCY&_nc_ht=scontent-ssn1-1.xx&oh=00_AT99LPlS7KKO-Wsx2NhxlseLTeQ3oGglJ5Gnh1ywZNUgBA&oe=62898AB0' style='width: 311px'><br>" +
 				"<b>로그인 후 반드시 비밀번호를 변경해주세요.</b>" +
 				"<br><br>" + 
 				"<b>임시 비밀번호 : </b>" + "<b style='color: #e7ab3c;'>" + randomPw + "</b>" +

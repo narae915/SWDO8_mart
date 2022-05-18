@@ -84,7 +84,6 @@ $("#sendMailBtn").click(function()
 			success: function(result)
 			{
 				var pw = result;
-				console.log(pw);
 				if ( result.length != 6 )
 				{
 					$("#errorMessage").prepend(errorMessage);
@@ -121,6 +120,8 @@ $("#pinNumChk_Btn").click(function()
 		checkPinNum.attr("class", "correct");       
 		$("#pinNumChk_Btn_true").attr("disabled", true);
 		$("#pinNumChk_Btn_true").css({"background-color": "#ebebe4"});
+		$("#sendMailBtn").attr("disabled", true);
+		$("#sendMailBtn").css({"background-color": "#ebebe4"});
 	}
 	else 
 	{
